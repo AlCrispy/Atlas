@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velikor — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:       #8b1a1a;
+  --red-lt:    #c0392b;
+  --gold:      #c9a84c;
+  --gold-lt:   #e8c97a;
+  --green:     #2d5a27;
+  --green-lt:  #4a8a42;
+  --void:      #07080a;
+  --dark:      #0e100e;
+  --dark-mid:  #151a15;
+  --dark-card: #1a1f1a;
+  --stone:     #2a302a;
+  --text:      #d4d0c8;
+  --text-dim:  #848c78;
+  --border:    rgba(201,168,76,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--void);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.4;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(7,8,10,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+  display: flex; align-items: center;
+}
+
+.back-btn {
+  background: none; border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 18px 24px;
+  transition: color 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; text-decoration: none;
+}
+.back-btn:hover { color: var(--gold); background: rgba(201,168,76,0.05); }
+
+.tabs-nav {
+  display: flex; flex: 1; justify-content: center;
+  flex-wrap: wrap; padding: 0 8px;
+}
+
+.tab-btn {
+  position: relative; background: none; border: none; cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dim); padding: 18px 18px;
+  transition: color 0.3s; white-space: nowrap;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold), var(--red));
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.tab-btn:hover { color: var(--gold-lt); }
+.tab-btn.active { color: var(--gold); }
+.tab-btn.active::after { transform: translateX(-50%) scaleX(1); }
+
+/* ── NATION HEADER ── */
+.nation-header {
+  position: relative; text-align: center;
+  padding: 70px 20px 50px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,26,26,0.2) 0%, rgba(45,90,39,0.08) 60%, transparent 100%),
+    linear-gradient(180deg, #0a0e0a 0%, var(--void) 100%);
+  border-bottom: 1px solid var(--border); overflow: hidden;
+}
+.nation-header::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.03) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.03) 40px);
+  pointer-events: none;
+}
+
+.nation-header-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.4em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 8px; opacity: 0.75;
+}
+.nation-header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; color: #fff;
+  text-shadow: 0 0 40px rgba(139,26,26,0.7), 0 0 80px rgba(139,26,26,0.3), 0 2px 4px rgba(0,0,0,0.9);
+  line-height: 1.1; letter-spacing: 0.05em;
+}
+.nation-header h1 span {
+  display: block; font-size: 0.45em; font-weight: 400; color: var(--gold);
+  letter-spacing: 0.2em; margin-top: 10px;
+  text-shadow: 0 0 20px rgba(201,168,76,0.5);
+}
+
+/* Crest — star + wheat */
+.crest {
+  display: inline-block; width: 64px; height: 64px;
+  margin-bottom: 18px; opacity: 0.9;
+  animation: pulse-crest 4s ease-in-out infinite;
+}
+@keyframes pulse-crest {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(139,26,26,0.6)); transform: scale(1); }
+  50%       { filter: drop-shadow(0 0 22px rgba(139,26,26,0.9)); transform: scale(1.04); }
+}
+
+.lore-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+.lore-tag {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; padding: 5px 13px;
+  border: 1px solid var(--border); color: var(--gold); background: rgba(201,168,76,0.05);
+}
+
+/* ── CONTENT ── */
+.content { max-width: 1000px; margin: 0 auto; padding: 0 24px 80px; }
+
+.tab-panel { display: none; animation: fadeIn 0.45s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-banner { padding: 56px 0 32px; text-align: center; margin-bottom: 16px; }
+.section-banner::after {
+  content: ''; display: block; width: 180px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 18px auto 0;
+}
+.section-eyebrow { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.4em; color: var(--red-lt); text-transform: uppercase; margin-bottom: 8px; }
+.section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 700; color: #fff; text-shadow: 0 0 30px rgba(139,26,26,0.5); line-height: 1.2; }
+.section-subtitle { font-style: italic; color: var(--text-dim); font-size: 0.92rem; margin-top: 8px; }
+
+/* Images */
+.img-full { width: 100%; height: auto; display: block; border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08); margin-bottom: 40px; border-radius: 2px; }
+
+.img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+.img-grid img { width: 100%; height: auto; display: block; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.6); border-radius: 2px; }
+
+/* Chapter */
+.chapter { margin-bottom: 48px; }
+.chapter-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.chapter-num { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--red-lt); text-transform: uppercase; white-space: nowrap; }
+.chapter-title { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; }
+.chapter-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,76,0.35), transparent); }
+.chapter p { color: var(--text); font-size: 1.03rem; line-height: 1.85; margin-bottom: 14px; }
+
+/* Quote — red left border */
+.dark-quote {
+  border-left: 3px solid var(--red);
+  padding: 18px 26px; margin: 28px 0;
+  background: linear-gradient(90deg, rgba(139,26,26,0.1) 0%, transparent 100%);
+  font-style: italic; font-size: 1.12rem; color: var(--text); line-height: 1.7;
+}
+
+/* Slogan banner — full width, bold red */
+.slogan-banner {
+  background: var(--red);
+  padding: 20px 28px; margin: 36px 0;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(139,26,26,0.4);
+  position: relative; overflow: hidden;
+}
+.slogan-banner::before {
+  content: '★';
+  position: absolute; left: 24px; top: 50%; transform: translateY(-50%);
+  color: var(--gold); font-size: 1rem; opacity: 0.8;
+}
+.slogan-banner::after {
+  content: '★';
+  position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+  color: var(--gold); font-size: 1rem; opacity: 0.8;
+}
+
+/* Location cards */
+.location-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin: 24px 0; }
+.loc-card {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 26px 22px; position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.loc-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--red), var(--green));
+}
+.loc-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,26,26,0.25); }
+.loc-card-name { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+.loc-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
+
+/* Timeline — for the revolution section */
+.timeline { margin: 28px 0 40px; position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(180deg, var(--red), var(--green));
+}
+.timeline-item { position: relative; margin-bottom: 32px; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -26px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--red); border: 2px solid var(--gold);
+}
+.timeline-item:last-child::before { background: var(--green); }
+.timeline-label {
+  font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+}
+.timeline-item p { font-size: 1rem; color: var(--text); line-height: 1.8; }
+
+/* Footer */
+footer {
+  text-align: center; padding: 36px 20px; border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-dim); background: linear-gradient(180deg, transparent, rgba(139,26,26,0.04));
+}
+footer strong { color: var(--gold); }
+
+@media (max-width: 640px) {
+  .tab-btn { padding: 14px 10px; font-size: 0.58rem; }
+  .img-grid { grid-template-columns: 1fr; }
+  .location-cards { grid-template-columns: 1fr; }
+  .back-btn span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="back-btn" href="../index.html">← <span>Centuria</span></a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('geografia', this)">Geografia</button>
+    <button class="tab-btn" onclick="switchTab('citta', this)">Le Città</button>
+    <button class="tab-btn" onclick="switchTab('rivoluzione', this)">La Rivoluzione</button>
+    <button class="tab-btn" onclick="switchTab('oggi', this)">Velikor Oggi</button>
+  </nav>
+</div>
+
+<!-- HEADER -->
+<div class="nation-header">
+  <!-- Crest: stella rossa con spighe -->
+  <svg class="crest" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Cerchio esterno -->
+    <circle cx="32" cy="32" r="30" stroke="#c9a84c" stroke-width="1.2" opacity="0.6"/>
+    <!-- Stella a 5 punte -->
+    <path d="M32 8 L35.5 22 L50 22 L38.5 30.5 L42.5 45 L32 36.5 L21.5 45 L25.5 30.5 L14 22 L28.5 22 Z"
+      fill="#8b1a1a" stroke="#c9a84c" stroke-width="0.8"/>
+    <!-- Spiga sinistra -->
+    <path d="M10 52 Q14 44 18 48" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <path d="M10 52 Q8 44 12 46" stroke="#c9a84c" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <!-- Spiga destra -->
+    <path d="M54 52 Q50 44 46 48" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <path d="M54 52 Q56 44 52 46" stroke="#c9a84c" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+    <!-- Gambo spighe -->
+    <path d="M10 52 L32 54 L54 52" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.6"/>
+  </svg>
+
+  <p class="nation-header-eyebrow">Centuria · Vecchio Continente · Nord</p>
+  <h1>Velikor<span>La Repubblica delle Pianure</span></h1>
+  <div class="lore-tags">
+    <span class="lore-tag">Repubblica Collettivista</span>
+    <span class="lore-tag">Pianure Settentrionali</span>
+    <span class="lore-tag">Nata dalla Rivoluzione</span>
+    <span class="lore-tag">Costa sul Mare del Nord</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PANORAMICA -->
+  <div id="tab-overview" class="tab-panel active">
+    <div class="section-banner">
+      <p class="section-eyebrow">Introduzione</p>
+      <h2 class="section-title">Le Pianure Senza Fine</h2>
+    </div>
+
+    <!-- PLACEHOLDER: pianure al tramonto -->
+    <svg class="img-full" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Cielo -->
+      <defs>
+        <linearGradient id="sky-ov" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a0a0a"/>
+          <stop offset="40%" stop-color="#3a1010"/>
+          <stop offset="75%" stop-color="#8b3a10"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.6"/>
+        </linearGradient>
+        <linearGradient id="plain-ov" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2d5a27"/>
+          <stop offset="100%" stop-color="#1a3a15"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="400" fill="url(#sky-ov)"/>
+      <!-- Sole -->
+      <circle cx="450" cy="255" r="38" fill="#c9a84c" opacity="0.9"/>
+      <circle cx="450" cy="255" r="52" fill="#c9a84c" opacity="0.2"/>
+      <circle cx="450" cy="255" r="70" fill="#c9a84c" opacity="0.08"/>
+      <!-- Pianura -->
+      <path d="M0 260 Q150 240 300 255 Q450 270 600 250 Q750 235 900 255 L900 400 L0 400Z" fill="url(#plain-ov)"/>
+      <!-- Campi di grano — strisce orizzontali -->
+      <path d="M0 290 Q225 278 450 285 Q675 292 900 280 L900 300 Q675 312 450 305 Q225 298 0 310Z" fill="#4a8a42" opacity="0.5"/>
+      <path d="M0 320 Q225 308 450 315 Q675 322 900 310 L900 330 Q675 342 450 335 Q225 328 0 340Z" fill="#3a6b30" opacity="0.4"/>
+      <!-- Spighe di grano stilizzate -->
+      <g opacity="0.55" stroke="#c9a84c" stroke-width="0.8" fill="none">
+        <line x1="80" y1="295" x2="80" y2="268"/><line x1="76" y1="275" x2="80" y2="268"/><line x1="84" y1="275" x2="80" y2="268"/>
+        <line x1="200" y1="292" x2="200" y2="265"/><line x1="196" y1="272" x2="200" y2="265"/><line x1="204" y1="272" x2="200" y2="265"/>
+        <line x1="340" y1="298" x2="340" y2="271"/><line x1="336" y1="278" x2="340" y2="271"/><line x1="344" y1="278" x2="340" y2="271"/>
+        <line x1="560" y1="290" x2="560" y2="263"/><line x1="556" y1="270" x2="560" y2="263"/><line x1="564" y1="270" x2="560" y2="263"/>
+        <line x1="700" y1="286" x2="700" y2="259"/><line x1="696" y1="266" x2="700" y2="259"/><line x1="704" y1="266" x2="700" y2="259"/>
+        <line x1="820" y1="292" x2="820" y2="265"/><line x1="816" y1="272" x2="820" y2="265"/><line x1="824" y1="272" x2="820" y2="265"/>
+      </g>
+      <!-- Stella rossa in cielo -->
+      <path d="M450 80 L455 96 L472 96 L458 106 L463 122 L450 112 L437 122 L442 106 L428 96 L445 96Z" fill="#8b1a1a" opacity="0.8"/>
+      <!-- Label -->
+      <text x="450" y="380" text-anchor="middle" font-family="Cinzel, serif" font-size="11" fill="#c9a84c" opacity="0.5" letter-spacing="4">VELIKOR · LE PIANURE SENZA FINE</text>
+    </svg>
+
+    <div class="slogan-banner">La Terra, il Lavoro, il Popolo</div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Una Terra Vasta</span><div class="chapter-line"></div></div>
+      <p>Velikor si distende su vaste pianure ondulate dove l'orizzonte sembra non avere fine. I campi fertili si alternano a grandi distese erbose, interrotte qua e là da fiumi lenti che scorrono verso il mare settentrionale, sul quale Velikor si affaccia con una lunga costa frastagliata.</p>
+      <p>Lungo l'entroterra si estendono numerosi boschi e foreste rigogliose, antiche e profonde, che da secoli forniscono legname, selvaggina e rifugio a intere comunità.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Un Popolo Rinato</span><div class="chapter-line"></div></div>
+      <p>Velikor è una nazione giovane nella sua forma attuale, nata dalle ceneri di una monarchia consumata dalla guerra e dall'avidità. Il nuovo governo, fondato sui principi della collettività e della condivisione delle risorse, guarda al futuro con determinazione.</p>
+      <p>Le pianure, le foreste e il mare non sono più simboli di sfruttamento, ma di rinascita e speranza condivisa.</p>
+    </div>
+
+    <div class="dark-quote">"Le pianure ci hanno nutriti per secoli. Ora siamo noi a prenderci cura di loro — insieme."</div>
+  </div>
+
+  <!-- GEOGRAFIA -->
+  <div id="tab-geografia" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">I. Geografia</p>
+      <h2 class="section-title">Pianure, Foreste e Mare</h2>
+    </div>
+
+    <!-- PLACEHOLDER: mappa stilizzata -->
+    <svg class="img-full" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="map-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0d1a0d"/>
+          <stop offset="100%" stop-color="#07100a"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="420" fill="url(#map-bg)"/>
+      <!-- Mare settentrionale -->
+      <path d="M0 0 L900 0 L900 120 Q750 100 600 110 Q450 120 300 105 Q150 90 0 115Z" fill="#0a1a2a" opacity="0.9"/>
+      <text x="450" y="65" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#2a5f8f" opacity="0.7" letter-spacing="6" font-style="italic">MARE SETTENTRIONALE</text>
+      <!-- Territorio principale -->
+      <path d="M80 115 Q200 100 350 108 Q500 116 640 110 Q760 104 850 118 L850 320 Q700 310 550 318 Q400 326 250 315 Q130 306 80 320Z" fill="#2d5a27" opacity="0.85"/>
+      <!-- Foreste est -->
+      <path d="M620 130 Q720 125 820 135 L820 300 Q720 295 620 300Z" fill="#1a3a15" opacity="0.9"/>
+      <!-- Fiumi -->
+      <path d="M200 115 Q220 180 210 260 Q205 310 215 320" stroke="#2a5f8f" stroke-width="2" fill="none" opacity="0.7"/>
+      <path d="M450 110 Q460 200 440 310" stroke="#2a5f8f" stroke-width="1.5" fill="none" opacity="0.6"/>
+      <!-- Costa frastagliata nord -->
+      <path d="M100 115 Q130 105 160 112 Q190 108 220 115 Q260 108 300 113 Q340 107 380 112 Q420 106 460 111 Q500 105 540 110 Q580 104 620 109 Q660 103 700 108 Q740 102 780 107 Q820 101 850 107" stroke="#2a5f8f" stroke-width="1.5" fill="none" opacity="0.5" stroke-dasharray="4 3"/>
+      <!-- Città: Zoryagrad (centro) -->
+      <circle cx="380" cy="220" r="7" fill="#c9a84c"/>
+      <circle cx="380" cy="220" r="12" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+      <text x="380" y="245" text-anchor="middle" font-family="Cinzel, serif" font-size="9" fill="#c9a84c" letter-spacing="1">Zoryagrad</text>
+      <!-- Città: Moravinsk (nord) -->
+      <circle cx="250" cy="130" r="5" fill="#c9a84c" opacity="0.9"/>
+      <text x="250" y="152" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#c9a84c" opacity="0.8" letter-spacing="1">Moravinsk</text>
+      <!-- Città: Lesnograd (est-foreste) -->
+      <circle cx="680" cy="210" r="5" fill="#c9a84c" opacity="0.9"/>
+      <text x="680" y="232" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#c9a84c" opacity="0.8" letter-spacing="1">Lesnograd</text>
+      <!-- Bordo mappa -->
+      <rect x="10" y="10" width="880" height="400" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.2"/>
+      <rect x="18" y="18" width="864" height="384" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.1"/>
+      <!-- Label -->
+      <text x="450" y="400" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c9a84c" opacity="0.4" letter-spacing="4">CARTA GEOGRAFICA DI VELIKOR</text>
+    </svg>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Le Grandi Pianure</span><div class="chapter-line"></div></div>
+      <p>Il territorio di Velikor è dominato da pianure ondulate di straordinaria fertilità. I campi si estendono a perdita d'occhio, solcati da fiumi lenti e canali d'irrigazione che rendono questa terra tra le più produttive del continente. In primavera, il grano dorato copre l'orizzonte da nord a sud.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Le Foreste Orientali</span><div class="chapter-line"></div></div>
+      <p>A est, le pianure cedono il passo a boschi antichi e profondi. Queste foreste, sacre per molte comunità locali, sono custodite gelosamente e gestite secondo criteri collettivi: nessuno può abbattere più di quanto la foresta possa rigenerare. Le radici di questa cultura forestale affondano in secoli di convivenza tra uomo e natura.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">La Costa Settentrionale</span><div class="chapter-line"></div></div>
+      <p>A nord, Velikor si apre sul mare con una lunga costa frastagliata, ricca di insenature naturali, scogliere e porti riparati. Il mare settentrionale è spesso agitato e coperto di nebbia, ma per i velkoriani rappresenta la via verso il commercio, la diplomazia e l'esplorazione del nuovo continente.</p>
+    </div>
+  </div>
+
+  <!-- LE CITTÀ -->
+  <div id="tab-citta" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">II. Le Città</p>
+      <h2 class="section-title">I Tre Pilastri di Velikor</h2>
+    </div>
+
+    <div class="location-cards">
+      <div class="loc-card">
+        <div class="loc-card-name">★ Zoryagrad — La Capitale</div>
+        <p>Sorge al centro delle pianure ed è il cuore politico e culturale del paese. Un tempo sede del palazzo reale, oggi ospita le assemblee del nuovo governo e le grandi piazze dove il popolo si riunisce per deliberare.</p>
+      </div>
+      <div class="loc-card">
+        <div class="loc-card-name">⚓ Moravinsk — Il Porto</div>
+        <p>Sul mare settentrionale, Moravinsk controlla i traffici navali e rappresenta la porta di Velikor verso il mondo esterno. È una città vivace e multiculturale, dove mercanti, marinai e diplomatici si incontrano ogni giorno.</p>
+      </div>
+      <div class="loc-card">
+        <div class="loc-card-name">🌲 Lesnograd — La Città dei Boschi</div>
+        <p>Immersa ai margini delle grandi foreste orientali, Lesnograd è famosa per i suoi artigiani, i cacciatori e i custodi dei boschi sacri. Qui si producono i migliori manufatti in legno del continente e si tramandano antiche tradizioni forestali.</p>
+      </div>
+    </div>
+
+    <div class="img-grid">
+      <!-- PLACEHOLDER: Zoryagrad — piazza del popolo -->
+      <svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.6);border-radius:2px;">
+        <defs>
+          <linearGradient id="sky-z" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0d0d18"/>
+            <stop offset="100%" stop-color="#1a1a30"/>
+          </linearGradient>
+        </defs>
+        <rect width="440" height="300" fill="url(#sky-z)"/>
+        <!-- Edifici governo -->
+        <rect x="160" y="80" width="120" height="160" fill="#1a2a1a"/>
+        <rect x="170" y="60" width="100" height="30" fill="#2a3a2a"/>
+        <!-- Colonne -->
+        <rect x="175" y="90" width="8" height="120" fill="#0e1e0e"/>
+        <rect x="195" y="90" width="8" height="120" fill="#0e1e0e"/>
+        <rect x="215" y="90" width="8" height="120" fill="#0e1e0e"/>
+        <rect x="235" y="90" width="8" height="120" fill="#0e1e0e"/>
+        <rect x="255" y="90" width="8" height="120" fill="#0e1e0e"/>
+        <!-- Stella rossa sul palazzo -->
+        <path d="M220 52 L223 62 L234 62 L225 68 L228 78 L220 72 L212 78 L215 68 L206 62 L217 62Z" fill="#8b1a1a"/>
+        <!-- Edifici laterali -->
+        <rect x="60" y="130" width="90" height="110" fill="#151f15"/>
+        <rect x="290" y="130" width="90" height="110" fill="#151f15"/>
+        <!-- Piazza / pavimento -->
+        <rect x="0" y="240" width="440" height="60" fill="#1a1a1a"/>
+        <line x1="0" y1="240" x2="440" y2="240" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+        <!-- Folla stilizzata -->
+        <g fill="#2d5a27" opacity="0.6">
+          <circle cx="80" cy="248" r="5"/><circle cx="100" cy="250" r="4"/>
+          <circle cx="150" cy="247" r="5"/><circle cx="170" cy="249" r="4"/>
+          <circle cx="260" cy="248" r="5"/><circle cx="280" cy="250" r="4"/>
+          <circle cx="340" cy="247" r="5"/><circle cx="360" cy="249" r="4"/>
+        </g>
+        <!-- Bandiere rosse -->
+        <line x1="130" y1="130" x2="130" y2="200" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+        <rect x="130" y="130" width="20" height="12" fill="#8b1a1a" opacity="0.8"/>
+        <line x1="310" y1="130" x2="310" y2="200" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+        <rect x="310" y="130" width="20" height="12" fill="#8b1a1a" opacity="0.8"/>
+        <text x="220" y="290" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#c9a84c" opacity="0.5" letter-spacing="3">ZORYAGRAD</text>
+      </svg>
+
+      <!-- PLACEHOLDER: Moravinsk — porto -->
+      <svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.6);border-radius:2px;">
+        <defs>
+          <linearGradient id="sea-m" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#060e14"/>
+            <stop offset="100%" stop-color="#0a1a28"/>
+          </linearGradient>
+        </defs>
+        <rect width="440" height="300" fill="url(#sea-m)"/>
+        <!-- Mare -->
+        <path d="M0 200 Q110 188 220 195 Q330 202 440 190 L440 300 L0 300Z" fill="#0a1a2a"/>
+        <path d="M0 210 Q110 198 220 205 Q330 212 440 200" stroke="#2a5f8f" stroke-width="1" fill="none" opacity="0.5"/>
+        <path d="M0 225 Q110 213 220 220 Q330 227 440 215" stroke="#2a5f8f" stroke-width="0.8" fill="none" opacity="0.35"/>
+        <!-- Banchina -->
+        <rect x="0" y="195" width="440" height="12" fill="#1a1a18"/>
+        <!-- Edifici portuali -->
+        <rect x="20" y="120" width="60" height="80" fill="#151f15"/>
+        <rect x="90" y="100" width="80" height="100" fill="#1a2a1a"/>
+        <rect x="280" y="110" width="70" height="90" fill="#151f15"/>
+        <rect x="360" y="90" width="60" height="110" fill="#1a2a1a"/>
+        <!-- Gru -->
+        <line x1="200" y1="195" x2="200" y2="100" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <line x1="200" y1="100" x2="260" y2="100" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <line x1="260" y1="100" x2="260" y2="195" stroke="#c9a84c" stroke-width="0.8" opacity="0.3" stroke-dasharray="3 3"/>
+        <!-- Nave stilizzata -->
+        <path d="M80 212 Q150 205 220 210 Q180 198 150 198 Q110 198 80 212Z" fill="#2a2a20"/>
+        <line x1="150" y1="198" x2="150" y2="160" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+        <path d="M150 175 L170 185 L150 185Z" fill="#8b1a1a" opacity="0.8"/>
+        <text x="220" y="290" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#c9a84c" opacity="0.5" letter-spacing="3">MORAVINSK</text>
+      </svg>
+    </div>
+
+    <!-- PLACEHOLDER: Lesnograd — città nella foresta -->
+    <svg class="img-full" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky-l" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080d08"/>
+          <stop offset="100%" stop-color="#0f1a0f"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="360" fill="url(#sky-l)"/>
+      <!-- Foresta sfondo -->
+      <g fill="#1a3a15" opacity="0.9">
+        <path d="M0 280 L30 200 L60 280Z"/><path d="M40 280 L70 180 L100 280Z"/>
+        <path d="M80 280 L110 210 L140 280Z"/><path d="M120 280 L150 190 L180 280Z"/>
+        <path d="M700 280 L730 200 L760 280Z"/><path d="M740 280 L770 180 L800 280Z"/>
+        <path d="M780 280 L810 210 L840 280Z"/><path d="M820 280 L850 190 L880 280Z"/>
+        <path d="M860 280 L890 200 L920 280Z"/>
+      </g>
+      <!-- Alberi più chiari in primo piano -->
+      <g fill="#2d5a27">
+        <path d="M10 300 L45 210 L80 300Z"/><path d="M55 300 L90 195 L125 300Z"/>
+        <path d="M100 300 L135 215 L170 300Z"/>
+        <path d="M730 300 L765 210 L800 300Z"/><path d="M775 300 L810 195 L845 300Z"/>
+        <path d="M820 300 L855 215 L890 300Z"/>
+      </g>
+      <!-- Edifici città -->
+      <rect x="280" y="160" width="50" height="140" fill="#151e15"/>
+      <path d="M278 160 L305 130 L332 160Z" fill="#1a2a1a"/>
+      <rect x="345" y="140" width="70" height="160" fill="#1a221a"/>
+      <path d="M343 140 L380 105 L417 140Z" fill="#2a3a2a"/>
+      <rect x="430" y="170" width="50" height="130" fill="#151e15"/>
+      <path d="M428 170 L455 145 L482 170Z" fill="#1a2a1a"/>
+      <rect x="490" y="150" width="60" height="150" fill="#1a221a"/>
+      <path d="M488 150 L520 118 L552 150Z" fill="#2a3a2a"/>
+      <rect x="560" y="165" width="55" height="135" fill="#151e15"/>
+      <path d="M558 165 L587 138 L616 165Z" fill="#1a2a1a"/>
+      <!-- Bandiera -->
+      <line x1="380" y1="105" x2="380" y2="60" stroke="#c9a84c" stroke-width="1.2" opacity="0.6"/>
+      <rect x="380" y="60" width="26" height="15" fill="#8b1a1a" opacity="0.9"/>
+      <!-- Terra -->
+      <rect x="0" y="300" width="900" height="60" fill="#1a2a14"/>
+      <text x="450" y="348" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c9a84c" opacity="0.4" letter-spacing="4">LESNOGRAD</text>
+    </svg>
+  </div>
+
+  <!-- LA RIVOLUZIONE -->
+  <div id="tab-rivoluzione" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">III. Storia Recente</p>
+      <h2 class="section-title">La Grande Rivoluzione</h2>
+      <p class="section-subtitle">Come il vecchio mondo cadde e il nuovo nacque</p>
+    </div>
+
+    <div class="dark-quote">"Il trono era stato costruito sulle ossa dei nostri padri. Noi lo abbiamo abbattuto con le nostre mani."</div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-label">La Guerra</div>
+        <p>Velikor uscì stremato da una lunga guerra contro i regni confinanti. Il conflitto, presentato come necessario per la sicurezza dello stato, aveva in realtà arricchito soltanto la nobiltà e l'aristocrazia, mentre il popolo pagava il prezzo più alto in vite e miseria.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">La Pace Amara</div>
+        <p>Quando la pace fu firmata, la delusione e la rabbia del popolo erano al culmine. I sacrifici di anni di guerra non avevano portato alcun miglioramento alle condizioni di vita delle classi più povere. La promessa di un futuro migliore si era rivelata una menzogna.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">La Guerra Civile</div>
+        <p>Nel giro di un solo anno scoppiò una violenta guerra civile. Le campagne e le città si sollevarono contro la monarchia, con battaglie nelle piazze e nelle strade. I nobili cercarono di resistere, ma il numero e la determinazione del popolo erano troppo grandi.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">La Nascita della Repubblica</div>
+        <p>Il trono cadde e la dinastia reale venne deposta. Dalle ceneri del vecchio regime nacque un nuovo governo, fondato sui principi della collettività, della condivisione delle risorse e del benessere comune: un sistema dove il potere non fosse più concentrato nelle mani di pochi.</p>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER: la rivoluzione -->
+    <svg class="img-full" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky-r" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0505"/>
+          <stop offset="50%" stop-color="#2a0808"/>
+          <stop offset="100%" stop-color="#1a0505"/>
+        </linearGradient>
+        <radialGradient id="fire-r" cx="50%" cy="80%" r="50%">
+          <stop offset="0%" stop-color="#8b3a10" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <rect width="900" height="380" fill="url(#sky-r)"/>
+      <rect width="900" height="380" fill="url(#fire-r)"/>
+      <!-- Palazzo in fiamme a destra -->
+      <rect x="600" y="100" width="200" height="230" fill="#1a0808"/>
+      <rect x="620" y="80" width="160" height="30" fill="#200a0a"/>
+      <path d="M598 100 L700 60 L802 100Z" fill="#1a0808"/>
+      <!-- Finestre illuminate -->
+      <rect x="630" y="120" width="20" height="25" fill="#c9501a" opacity="0.8"/>
+      <rect x="665" y="120" width="20" height="25" fill="#c9501a" opacity="0.6"/>
+      <rect x="700" y="120" width="20" height="25" fill="#c9501a" opacity="0.9"/>
+      <rect x="735" y="120" width="20" height="25" fill="#c9501a" opacity="0.5"/>
+      <!-- Fuoco -->
+      <path d="M600 100 Q580 60 610 40 Q595 70 625 55 Q605 80 640 70 Q615 95 650 80 Q620 105 600 100Z" fill="#c9501a" opacity="0.7"/>
+      <path d="M780 90 Q800 50 770 30 Q785 60 755 45 Q775 70 740 60 Q765 85 730 75 Q760 100 780 90Z" fill="#c9501a" opacity="0.5"/>
+      <!-- Folla rivoluzionaria -->
+      <g fill="#2d5a27">
+        <rect x="50" y="290" width="12" height="50"/>
+        <rect x="80" y="285" width="12" height="55"/>
+        <rect x="110" y="292" width="12" height="48"/>
+        <rect x="140" y="288" width="12" height="52"/>
+        <rect x="170" y="291" width="12" height="49"/>
+        <rect x="200" y="286" width="12" height="54"/>
+        <rect x="230" y="293" width="12" height="47"/>
+        <rect x="260" y="289" width="12" height="51"/>
+        <rect x="290" y="292" width="12" height="48"/>
+        <rect x="320" y="287" width="12" height="53"/>
+        <rect x="350" y="290" width="12" height="50"/>
+        <rect x="380" y="284" width="12" height="56"/>
+        <rect x="410" y="291" width="12" height="49"/>
+        <rect x="440" y="288" width="12" height="52"/>
+        <rect x="470" y="293" width="12" height="47"/>
+        <rect x="500" y="286" width="12" height="54"/>
+        <rect x="530" y="290" width="12" height="50"/>
+        <rect x="560" y="285" width="12" height="55"/>
+      </g>
+      <!-- Bandiere rosse alzate -->
+      <line x1="100" y1="285" x2="100" y2="230" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/>
+      <rect x="100" y="230" width="28" height="16" fill="#8b1a1a" opacity="0.95"/>
+      <line x1="280" y1="288" x2="280" y2="228" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+      <rect x="280" y="228" width="28" height="16" fill="#8b1a1a" opacity="0.9"/>
+      <line x1="460" y1="284" x2="460" y2="220" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/>
+      <rect x="460" y="220" width="28" height="16" fill="#8b1a1a" opacity="0.95"/>
+      <!-- Terra -->
+      <rect x="0" y="340" width="900" height="40" fill="#0a0a08"/>
+      <text x="450" y="368" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c9a84c" opacity="0.4" letter-spacing="4">LA GRANDE RIVOLUZIONE</text>
+    </svg>
+  </div>
+
+  <!-- VELIKOR OGGI -->
+  <div id="tab-oggi" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">IV. Stato Attuale</p>
+      <h2 class="section-title">Velikor Oggi</h2>
+      <p class="section-subtitle">Una nazione in costruzione</p>
+    </div>
+
+    <!-- PLACEHOLDER: Velikor oggi — alba sulla repubblica -->
+    <svg class="img-full" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky-og" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a1a08"/>
+          <stop offset="45%" stop-color="#1a3a10"/>
+          <stop offset="75%" stop-color="#4a7a20"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.5"/>
+        </linearGradient>
+        <radialGradient id="sun-og" cx="50%" cy="65%" r="30%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.9"/>
+          <stop offset="40%" stop-color="#c9a84c" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <rect width="900" height="380" fill="url(#sky-og)"/>
+      <rect width="900" height="380" fill="url(#sun-og)"/>
+      <!-- Sole nascente -->
+      <circle cx="450" cy="248" r="30" fill="#c9a84c" opacity="0.95"/>
+      <!-- Raggi sole -->
+      <g stroke="#c9a84c" stroke-width="1.2" opacity="0.3">
+        <line x1="450" y1="210" x2="450" y2="185"/>
+        <line x1="476" y1="222" x2="494" y2="204"/>
+        <line x1="488" y1="248" x2="513" y2="248"/>
+        <line x1="476" y1="274" x2="494" y2="292"/>
+        <line x1="424" y1="222" x2="406" y2="204"/>
+        <line x1="412" y1="248" x2="387" y2="248"/>
+        <line x1="424" y1="274" x2="406" y2="292"/>
+      </g>
+      <!-- Pianura -->
+      <path d="M0 250 Q225 235 450 245 Q675 255 900 240 L900 380 L0 380Z" fill="#2d5a27"/>
+      <!-- Campi righe -->
+      <path d="M0 270 Q225 258 450 265 Q675 272 900 258 L900 278 Q675 292 450 285 Q225 278 0 290Z" fill="#4a8a42" opacity="0.45"/>
+      <path d="M0 300 Q225 288 450 295 Q675 302 900 288 L900 308 Q675 322 450 315 Q225 308 0 320Z" fill="#3a6b30" opacity="0.4"/>
+      <!-- Stella rossa sopra il sole -->
+      <path d="M450 185 L454 198 L468 198 L457 206 L461 219 L450 211 L439 219 L443 206 L432 198 L446 198Z" fill="#8b1a1a" opacity="0.9"/>
+      <!-- Spighe primo piano -->
+      <g stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5">
+        <line x1="60" y1="268" x2="60" y2="248"/><line x1="57" y1="254" x2="60" y2="248"/><line x1="63" y1="254" x2="60" y2="248"/>
+        <line x1="160" y1="265" x2="160" y2="245"/><line x1="157" y1="251" x2="160" y2="245"/><line x1="163" y1="251" x2="160" y2="245"/>
+        <line x1="700" y1="262" x2="700" y2="242"/><line x1="697" y1="248" x2="700" y2="242"/><line x1="703" y1="248" x2="700" y2="242"/>
+        <line x1="800" y1="258" x2="800" y2="238"/><line x1="797" y1="244" x2="800" y2="238"/><line x1="803" y1="244" x2="800" y2="238"/>
+      </g>
+      <text x="450" y="368" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c9a84c" opacity="0.45" letter-spacing="4">VELIKOR · ALBA DELLA REPUBBLICA</text>
+    </svg>
+
+    <div class="slogan-banner">Dal sacrificio di ieri, la prosperità di domani</div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Il Nuovo Governo</span><div class="chapter-line"></div></div>
+      <p>Il governo collettivista di Velikor si fonda su assemblee rappresentative dove ogni cittadino ha voce in capitolo. Le risorse del paese — la terra, le foreste, i porti — sono gestite collettivamente per il bene comune. La nobiltà è stata abolita e i grandi possedimenti terrieri redistribuiti.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Il Nuovo Continente come Opportunità</span><div class="chapter-line"></div></div>
+      <p>La scoperta del nuovo continente è vista dal governo di Velikor come una grande opportunità. Le risorse inesplorate di quelle terre potrebbero fornire la spinta necessaria per costruire il futuro prospero che la rivoluzione aveva promesso: nuovi materiali, nuove rotte commerciali, nuove alleanze.</p>
+      <p>A differenza di altre nazioni che cercano conquista o dominio, Velikor intende proporsi come partner leale — un modello di cooperazione e condivisione da esportare nel nuovo mondo.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Le Fragilità Interne</span><div class="chapter-line"></div></div>
+      <p>Non tutto è sereno. La guerra civile ha lasciato ferite profonde: intere famiglie divise, città ricostruite a metà, rancori sopiti ma non spenti. Alcune voci chiedono un ritorno all'ordine antico; altre spingono per una rivoluzione ancora più radicale. Il nuovo governo naviga tra queste correnti, cercando di mantenere la rotta.</p>
+    </div>
+
+    <div class="dark-quote">"Siamo una nazione giovane. Abbiamo commesso errori e ne commetteremo altri. Ma li commetteremo insieme."</div>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <strong>Velikor</strong> · La Repubblica delle Pianure
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
