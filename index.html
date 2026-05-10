@@ -358,31 +358,17 @@ a.nation-card:hover .nation-card,
         <span class="world-divider-ornament">☽</span>
         <div class="world-divider-line"></div>
       </div>
-      <div class="nations-label">Terre Inesplorate</div>
-      <p class="unexplored-desc">Regioni di cui si conosce poco o nulla. Ciò che vi si cela attende ancora di essere scoperto — o temuto.</p>
+      <div class="nations-label">Terre Ignote</div>
+      <p class="unexplored-desc">Un nuovo continente in esplorazione. Ogni sessione porta nuove scoperte: luoghi, fazioni, misteri.</p>
 
-      <div class="nations-grid">
-        <div class="nation-card locked" data-continent="unknown">
-          <div class="nation-tag">Posizione ignota</div>
-          <div class="nation-name" style="color:var(--atl-ink-dim);">???</div>
-          <div class="nation-epithet">Terra Sconosciuta</div>
-          <div class="nation-desc">Nessun esploratore è mai tornato per raccontarne i confini. Solo voci, leggende e mappe sbagliate.</div>
-          <span class="coming-soon">Inesplorata</span>
-        </div>
-        <div class="nation-card locked" data-continent="unknown">
-          <div class="nation-tag">Posizione ignota</div>
-          <div class="nation-name" style="color:var(--atl-ink-dim);">???</div>
-          <div class="nation-epithet">Terra Sconosciuta</div>
-          <div class="nation-desc">Segnalata solo da marinai deliranti e da antiche iscrizioni in lingue senza nome.</div>
-          <span class="coming-soon">Inesplorata</span>
-        </div>
-        <div class="nation-card locked" data-continent="unknown">
-          <div class="nation-tag">Posizione ignota</div>
-          <div class="nation-name" style="color:var(--atl-ink-dim);">???</div>
-          <div class="nation-epithet">Terra Sconosciuta</div>
-          <div class="nation-desc">Un'anomalia metafisica sul bordo delle mappe conosciute. Forse un luogo. Forse qualcos'altro.</div>
-          <span class="coming-soon">Inesplorata</span>
-        </div>
+      <div class="nations-grid" style="grid-template-columns: 1fr;">
+        <a class="nation-card" href="terre-ignote.html" data-continent="new" style="max-width:480px;margin:0 auto;width:100%;">
+          <div class="nation-tag">Nuovo Continente · In Esplorazione</div>
+          <div class="nation-name">Terre Ignote</div>
+          <div class="nation-epithet">Diario delle Scoperte</div>
+          <div class="nation-desc">Città dimenticate, anomalie inspiegabili, fazioni sconosciute. Tutto ciò che il gruppo ha esplorato, sessione dopo sessione.</div>
+          <span class="nation-arrow">→</span>
+        </a>
       </div>
 
     </div><!-- /world-frame -->
