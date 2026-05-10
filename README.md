@@ -24,7 +24,7 @@ centuria/
 |---|---|---|
 | **Kassendyr** | Vecchio Continente · Sud | ✅ Disponibile |
 | Lega di Aurelion | Vecchio Continente · Centro | 🔒 In arrivo |
-| Velikor | Vecchio Continente · Nord | 🔒 In arrivo |
+| Velikor | Vecchio Continente · Nord | 🔒 WIP |
 | Valdherba | Vecchio Continente · Est | 🔒 In arrivo |
 | Kalveor | Vecchio Continente · Sud | 🔒 In arrivo |
 | Isola Perennogelo | Arcipelago · Nord-Est | 🔒 In arrivo |
