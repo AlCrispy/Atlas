@@ -37,7 +37,7 @@ centuria/
 ## Hosting
 
 Il sito è hostato su **GitHub Pages**:
-`[https://[utente].github.io/centuria](https://alcrispy.github.io/Centuria/)`
+`https://alcrispy.github.io/Centuria`
 
 È un sito completamente statico — nessun backend, nessuna dipendenza esterna tranne Google Fonts.
 
