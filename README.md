@@ -1,47 +1,56 @@
-# Centuria — Atlante del Mondo Conosciuto
+# Centuria - Atlante del Mondo Conosciuto
 
 > *"Un mondo antico, segnato da guerre dimenticate, magie proibite e potenze che sfidano il tempo stesso."*
 
-Sito web interattivo per la campagna GDR **Centuria**. Permette di esplorare le nazioni, la storia e i luoghi del mondo di gioco in modo visivo e organizzato.
+Sito web statico per la campagna GDR **Centuria**. Permette di esplorare nazioni e territori tramite una mappa principale e pagine tematiche dedicate.
 
----
+## Struttura attuale del progetto
 
-## Struttura del progetto
-
-```
+```text
 centuria/
-├── index.html              # Schermata principale — mappa e selezione nazioni
-├── README.md
-├── resources/
-│   └── Centuria_plain.png  # Mappa del continente
-└── nations/
-    └── kassendyr.html      # L'Impero del Sangue Persistente
+|- index.html                  # Home con mappa, nazioni conosciute e Terre Ignote
+|- terre-ignote.html           # Diario del nuovo continente in esplorazione
+|- README.md
+|- LICENSE
+|- resources/
+|  |- Centuria_plain.png       # Mappa principale
+|  `- kassendyr/               # Asset visivi della nazione Kassendyr
+`- nations/
+   |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
+   `- velikor.html             # Scheda completa: La Repubblica delle Pianure
 ```
 
-## Nazioni
+## Stato contenuti
+
+### Nazioni conosciute
 
 | Nazione | Continente | Stato |
 |---|---|---|
-| **Kassendyr** | Vecchio Continente · Sud | ✅ Disponibile |
+| **Kassendyr** | Vecchio Continente · Estremo Sud | ✅ Disponibile |
+| **Velikor** | Vecchio Continente · Nord | ✅ Disponibile |
 | Lega di Aurelion | Vecchio Continente · Centro | 🔒 In arrivo |
-| Velikor | Vecchio Continente · Nord | 🔒 WIP |
 | Valdherba | Vecchio Continente · Est | 🔒 In arrivo |
 | Kalveor | Vecchio Continente · Sud | 🔒 In arrivo |
 | Isola Perennogelo | Arcipelago · Nord-Est | 🔒 In arrivo |
 
+### Altri territori
+
+| Area | Stato |
+|---|---|
+| **Terre Ignote** (Nuovo Continente) | ✅ Disponibile |
+
 ## Come aggiungere una nuova nazione
 
-1. Creare un file `nations/nomegazione.html` (usare `kassendyr.html` come template)
-2. Aggiungere la card corrispondente in `index.html` nella griglia delle nazioni, cambiando `locked` in link `<a href="nations/nomegazione.html">`
+1. Crea un file in `nations/` (es. `nations/nuova-nazione.html`), usando `kassendyr.html` o `velikor.html` come base.
+2. Aggiungi la card in `index.html` nella sezione **Nazioni Conosciute**.
+3. Se la nazione e disponibile, usa un link `<a class="nation-card" href="nations/nuova-nazione.html">`; se non lo e, mantieni la card con classe `locked`.
+4. Inserisci eventuali immagini in `resources/<nome-nazione>/` e collegale nella pagina della nazione.
 
 ## Hosting
 
-Il sito è hostato su **GitHub Pages**:
-[https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
+Il sito e pubblicato su GitHub Pages: [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
 
-È un sito completamente statico — nessun backend, nessuna dipendenza esterna tranne Google Fonts.
-
----
+Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts.
 
 ## Autori
 
@@ -53,6 +62,4 @@ Progetto creato e sviluppato da:
 - **Andrea Baima**
 - **Federica Pilloni**
 
----
-
-*Centuria — Campagna GDR*
+*Centuria - Campagna GDR*
