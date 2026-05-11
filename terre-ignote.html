@@ -19,9 +19,8 @@
   --text-dim:  #7a8c88;
   --border:    rgba(201,168,76,0.2);
 
-  /* Category colors */
   --col-citta:   #b8882a;
-  --col-misteri: #6a2a8a;
+  --col-misteri: #7a2a9a;
   --col-fazioni: #2a5a8a;
   --col-punti:   #2a7a4a;
 }
@@ -33,31 +32,25 @@ body {
   background-color: var(--void);
   color: var(--text);
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.75;
-  min-height: 100vh;
-  overflow-x: hidden;
+  font-size: 17px; line-height: 1.75;
+  min-height: 100vh; overflow-x: hidden;
 }
-
 body::before {
-  content: '';
-  position: fixed; inset: 0;
+  content: ''; position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 0; opacity: 0.4;
 }
 
 /* ── TOPBAR ── */
 .topbar {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(6,10,10,0.97);
-  backdrop-filter: blur(16px);
+  position: sticky; top: 0; z-index: 300;
+  background: rgba(6,10,10,0.97); backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 30px rgba(0,0,0,0.6);
   display: flex; align-items: center;
 }
 .back-btn {
-  background: none; border: none;
-  border-right: 1px solid var(--border);
+  background: none; border: none; border-right: 1px solid var(--border);
   cursor: pointer; font-family: 'Cinzel', serif;
   font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--text-dim); padding: 18px 24px;
@@ -67,21 +60,19 @@ body::before {
 }
 .back-btn:hover { color: var(--gold); background: rgba(201,168,76,0.05); }
 .topbar-title {
-  flex: 1; text-align: center;
+  flex: 1; text-align: center; padding-right: 80px;
   font-family: 'Cinzel', serif; font-size: 0.7rem;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--text-dim); padding-right: 100px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim);
 }
 
-/* ── HEADER ── */
+/* ── PAGE HEADER ── */
 .page-header {
   position: relative; text-align: center;
-  padding: 60px 20px 50px;
+  padding: 56px 20px 44px;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,58,58,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,58,58,0.4) 0%, transparent 70%),
     linear-gradient(180deg, #060e0e 0%, var(--void) 100%);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
+  border-bottom: 1px solid var(--border); overflow: hidden;
 }
 .page-header::before {
   content: ''; position: absolute; inset: 0;
@@ -97,205 +88,188 @@ body::before {
 }
 .page-header h1 {
   font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 900; color: #fff;
-  text-shadow: 0 0 40px rgba(13,58,58,0.9), 0 0 80px rgba(13,58,58,0.4), 0 2px 4px rgba(0,0,0,0.9);
+  font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 900; color: #fff;
+  text-shadow: 0 0 40px rgba(13,58,58,0.9), 0 2px 4px rgba(0,0,0,0.9);
   line-height: 1.15; letter-spacing: 0.05em;
 }
 .page-header h1 span {
-  display: block; font-size: 0.42em; font-weight: 400; color: var(--gold);
-  letter-spacing: 0.22em; margin-top: 10px;
+  display: block; font-size: 0.42em; font-weight: 400;
+  color: var(--gold); letter-spacing: 0.22em; margin-top: 10px;
   font-family: 'Cinzel', serif;
 }
-.header-divider {
+.header-rule {
   display: flex; align-items: center; gap: 16px;
-  max-width: 400px; margin: 22px auto 0;
+  max-width: 360px; margin: 20px auto 0;
 }
-.header-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
-.header-divider-icon { color: var(--teal-pale); font-size: 1rem; }
-
-/* Session badge */
+.header-rule-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
 .session-count {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: 'Cinzel', serif; font-size: 0.6rem;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--gold); border: 1px solid var(--border);
-  padding: 6px 14px; margin-top: 20px;
-  background: rgba(201,168,76,0.05);
+  padding: 6px 14px; margin-top: 18px; background: rgba(201,168,76,0.05);
 }
+
+/* ── VIEW TABS ── */
+.view-tabs {
+  position: sticky; top: 57px; z-index: 200;
+  background: rgba(6,10,10,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: stretch;
+}
+.view-tab-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.68rem;
+  font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); padding: 16px 28px;
+  position: relative; transition: color 0.3s; white-space: nowrap;
+}
+.view-tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%) scaleX(0); width: 80%; height: 2px;
+  background: linear-gradient(90deg, var(--teal-lt), var(--gold), var(--teal-lt));
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.view-tab-btn:hover { color: var(--gold-lt); }
+.view-tab-btn.active { color: var(--gold); }
+.view-tab-btn.active::after { transform: translateX(-50%) scaleX(1); }
 
 /* ── FILTERS ── */
 .filters-wrapper {
-  position: sticky; top: 57px; z-index: 100;
-  background: rgba(6,10,10,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
+  background: rgba(6,10,10,0.93);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  padding: 12px 24px;
 }
 .filters {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  max-width: 1200px; margin: 0 auto;
-  align-items: center;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  max-width: 1200px; margin: 0 auto; align-items: center;
 }
 .filter-label {
-  font-family: 'Cinzel', serif; font-size: 0.58rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text-dim); margin-right: 4px;
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
 }
 .filter-btn {
-  background: none; cursor: pointer;
-  font-family: 'Cinzel', serif; font-size: 0.6rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: 0;
-  transition: all 0.25s; white-space: nowrap;
-  border: 1px solid;
+  background: none; cursor: pointer; border: 1px solid;
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 5px 12px; transition: all 0.22s; white-space: nowrap;
 }
-.filter-btn[data-cat="tutti"] {
-  border-color: var(--gold); color: var(--gold);
-}
-.filter-btn[data-cat="tutti"].active {
-  background: var(--gold); color: #000;
-}
-.filter-btn[data-cat="citta"] {
-  border-color: var(--col-citta); color: var(--col-citta);
-}
-.filter-btn[data-cat="citta"].active {
-  background: var(--col-citta); color: #fff;
-}
-.filter-btn[data-cat="misteri"] {
-  border-color: var(--col-misteri); color: var(--col-misteri);
-}
-.filter-btn[data-cat="misteri"].active {
-  background: var(--col-misteri); color: #fff;
-}
-.filter-btn[data-cat="fazioni"] {
-  border-color: var(--col-fazioni); color: var(--col-fazioni);
-}
-.filter-btn[data-cat="fazioni"].active {
-  background: var(--col-fazioni); color: #fff;
-}
-.filter-btn[data-cat="punti"] {
-  border-color: var(--col-punti); color: var(--col-punti);
-}
-.filter-btn[data-cat="punti"].active {
-  background: var(--col-punti); color: #fff;
-}
-
-/* Count badge next to filter */
-.filter-btn .count {
-  display: inline-block; font-size: 0.55rem;
-  opacity: 0.7; margin-left: 4px;
-}
+.filter-btn .count { font-size: 0.52rem; opacity: 0.7; margin-left: 3px; }
+.filter-btn[data-cat="tutti"]   { border-color: var(--gold);        color: var(--gold); }
+.filter-btn[data-cat="citta"]   { border-color: var(--col-citta);   color: var(--col-citta); }
+.filter-btn[data-cat="misteri"] { border-color: var(--col-misteri); color: var(--col-misteri); }
+.filter-btn[data-cat="fazioni"] { border-color: var(--col-fazioni); color: var(--col-fazioni); }
+.filter-btn[data-cat="punti"]   { border-color: var(--col-punti);   color: var(--col-punti); }
+.filter-btn[data-cat="tutti"].active   { background: var(--gold);        color: #000; }
+.filter-btn[data-cat="citta"].active   { background: var(--col-citta);   color: #fff; }
+.filter-btn[data-cat="misteri"].active { background: var(--col-misteri); color: #fff; }
+.filter-btn[data-cat="fazioni"].active { background: var(--col-fazioni); color: #fff; }
+.filter-btn[data-cat="punti"].active   { background: var(--col-punti);   color: #fff; }
+.filter-btn[data-sess] { border-color: rgba(201,168,76,0.3); color: var(--text-dim); font-size: 0.56rem; }
+.filter-btn[data-sess].active { background: rgba(201,168,76,0.12); color: var(--gold); border-color: var(--gold); }
+.filter-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; align-self: center; }
 
 /* ── MASONRY GRID ── */
-.grid-wrapper {
-  max-width: 1200px; margin: 0 auto;
-  padding: 36px 24px 80px;
-}
-
-/* CSS columns masonry */
-.masonry {
-  columns: 3 320px;
-  column-gap: 20px;
-}
+.grid-wrapper { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+.masonry { columns: 3 300px; column-gap: 20px; }
 
 .discovery-card {
-  break-inside: avoid;
-  background: var(--dark-card);
-  border: 1px solid var(--border);
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
+  break-inside: avoid; background: var(--dark-card);
+  border: 1px solid var(--border); margin-bottom: 20px;
+  position: relative; overflow: hidden;
   transition: transform 0.25s, box-shadow 0.25s;
-  display: block;
 }
 .discovery-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.15);
 }
-
-/* Category accent stripe */
 .discovery-card::before {
-  content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
 }
 .discovery-card[data-cat="citta"]::before    { background: var(--col-citta); }
 .discovery-card[data-cat="misteri"]::before  { background: var(--col-misteri); }
 .discovery-card[data-cat="fazioni"]::before  { background: var(--col-fazioni); }
 .discovery-card[data-cat="punti"]::before    { background: var(--col-punti); }
+.discovery-card.hidden { display: none; }
 
-/* Card image */
-.card-img {
-  width: 100%; height: auto; display: block;
-  border-bottom: 1px solid var(--border);
-}
-
-/* Card body */
 .card-body { padding: 20px 22px 24px; }
-
-/* Category + session row */
-.card-meta {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+.card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .card-cat {
-  font-family: 'Cinzel', serif; font-size: 0.55rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  padding: 3px 8px; border: 1px solid;
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 8px; border: 1px solid;
 }
 .card-cat[data-cat="citta"]   { color: var(--col-citta);   border-color: var(--col-citta); }
 .card-cat[data-cat="misteri"] { color: var(--col-misteri); border-color: var(--col-misteri); }
 .card-cat[data-cat="fazioni"] { color: var(--col-fazioni); border-color: var(--col-fazioni); }
 .card-cat[data-cat="punti"]   { color: var(--col-punti);   border-color: var(--col-punti); }
+.card-session { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+.card-title { font-family: 'Cinzel', serif; font-size: 0.98rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; line-height: 1.3; }
+.card-text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+.card-quote { border-left: 2px solid var(--teal-lt); padding: 8px 14px; margin-top: 12px; font-style: italic; font-size: 0.86rem; color: var(--text-dim); opacity: 0.85; }
 
-.card-session {
-  font-family: 'Cinzel', serif; font-size: 0.52rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.card-title {
-  font-family: 'Cinzel', serif; font-size: 1rem;
-  font-weight: 700; color: var(--gold);
-  margin-bottom: 10px; line-height: 1.3;
-  letter-spacing: 0.03em;
-}
-
-.card-text {
-  font-size: 0.92rem; color: var(--text-dim);
-  line-height: 1.7;
-}
-
-/* Card quote */
-.card-quote {
-  border-left: 2px solid var(--teal-lt);
-  padding: 8px 14px; margin-top: 14px;
-  font-style: italic; font-size: 0.88rem;
-  color: var(--text-dim); opacity: 0.85;
-}
-
-/* Hidden state */
-.discovery-card.hidden {
-  display: none;
-}
-
-/* Empty state */
-.empty-state {
-  text-align: center; padding: 80px 20px;
-  font-family: 'Cinzel', serif; font-size: 0.75rem;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--text-dim); display: none;
-}
+.empty-state { text-align: center; padding: 80px 20px; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); display: none; }
 .empty-state.visible { display: block; }
+
+/* ── TIMELINE ── */
+.timeline-wrapper { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.tl-session { position: relative; margin-bottom: 64px; }
+.tl-session::before {
+  content: ''; position: absolute;
+  left: 18px; top: 44px; bottom: -64px; width: 2px;
+  background: linear-gradient(180deg, var(--teal-lt), rgba(42,138,122,0.08));
+}
+.tl-session:last-child::before { display: none; }
+
+.tl-header { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+.tl-dot {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--dark-card); border: 2px solid var(--teal-lt);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700;
+  color: var(--teal-pale); flex-shrink: 0; z-index: 1;
+  box-shadow: 0 0 0 4px rgba(26,96,96,0.15);
+}
+.tl-session-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal-pale); margin-bottom: 4px; }
+.tl-session-title { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.tl-session-date { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.2em; color: var(--text-dim); margin-top: 4px; }
+
+.tl-summary {
+  margin-left: 56px; margin-bottom: 16px;
+  padding: 16px 20px; background: var(--dark-card);
+  border: 1px solid var(--border); border-left: 3px solid var(--teal-lt);
+  font-size: 0.95rem; color: var(--text-dim); line-height: 1.75; font-style: italic;
+}
+
+.tl-discoveries { margin-left: 56px; display: flex; flex-direction: column; gap: 8px; }
+
+.tl-discovery-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; background: rgba(15,26,26,0.6);
+  border: 1px solid rgba(201,168,76,0.1);
+  cursor: pointer; transition: background 0.2s, border-color 0.2s;
+}
+.tl-discovery-item:hover { background: rgba(26,96,96,0.15); border-color: rgba(201,168,76,0.25); }
+
+.tl-disc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.tl-disc-dot[data-cat="citta"]   { background: var(--col-citta); }
+.tl-disc-dot[data-cat="misteri"] { background: var(--col-misteri); }
+.tl-disc-dot[data-cat="fazioni"] { background: var(--col-fazioni); }
+.tl-disc-dot[data-cat="punti"]   { background: var(--col-punti); }
+
+.tl-disc-content { flex: 1; }
+.tl-disc-cat { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 2px; }
+.tl-disc-title { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 600; color: var(--gold); line-height: 1.3; }
+.tl-disc-arrow { color: var(--text-dim); font-size: 0.9rem; margin-top: 3px; transition: transform 0.2s, color 0.2s; }
+.tl-discovery-item:hover .tl-disc-arrow { color: var(--gold); transform: translateX(4px); }
+
+.tl-empty { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); padding: 8px 0; }
 
 /* ── FOOTER ── */
 footer {
-  text-align: center; padding: 36px 20px;
-  border-top: 1px solid var(--border);
-  font-family: 'Cinzel', serif; font-size: 0.6rem;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--text-dim);
-  background: linear-gradient(180deg, transparent, rgba(13,58,58,0.06));
+  text-align: center; padding: 36px 20px; border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-dim); background: linear-gradient(180deg, transparent, rgba(13,58,58,0.06));
 }
 footer strong { color: var(--gold); }
 
@@ -304,145 +278,121 @@ footer strong { color: var(--gold); }
   .back-btn span { display: none; }
   .topbar-title { padding-right: 0; }
 }
-@media (max-width: 1000px) {
-  .masonry { columns: 2 280px; }
-}
+@media (max-width: 1000px) { .masonry { columns: 2 260px; } }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <a class="back-btn" href="index.html">← <span>Centuria</span></a>
   <span class="topbar-title">Terre Ignote</span>
 </div>
 
-<!-- HEADER -->
 <div class="page-header">
   <p class="page-header-eyebrow">Nuovo Continente · In Esplorazione</p>
   <h1>Terre Ignote<span>Diario delle Scoperte</span></h1>
-  <div class="header-divider">
-    <div class="header-divider-line"></div>
-    <span class="header-divider-icon">✦</span>
-    <div class="header-divider-line"></div>
+  <div class="header-rule">
+    <div class="header-rule-line"></div>
+    <span style="color:var(--teal-pale);font-size:1rem;">✦</span>
+    <div class="header-rule-line"></div>
   </div>
-  <div class="session-count" id="session-count">
-    ✦ <span id="total-count">0</span> scoperte registrate
-  </div>
-</div>
-
-<!-- FILTERS -->
-<div class="filters-wrapper">
-  <div class="filters">
-    <span class="filter-label">Filtra:</span>
-    <button class="filter-btn active" data-cat="tutti" onclick="filterCards('tutti', this)">
-      Tutti <span class="count" id="count-tutti"></span>
-    </button>
-    <button class="filter-btn" data-cat="citta" onclick="filterCards('citta', this)">
-      Città & Insediamenti <span class="count" id="count-citta"></span>
-    </button>
-    <button class="filter-btn" data-cat="misteri" onclick="filterCards('misteri', this)">
-      Misteri & Anomalie <span class="count" id="count-misteri"></span>
-    </button>
-    <button class="filter-btn" data-cat="fazioni" onclick="filterCards('fazioni', this)">
-      Fazioni & Personaggi <span class="count" id="count-fazioni"></span>
-    </button>
-    <button class="filter-btn" data-cat="punti" onclick="filterCards('punti', this)">
-      Punti di Interesse <span class="count" id="count-punti"></span>
-    </button>
+  <div class="session-count">
+    ✦ <span id="total-count">0</span> scoperte &nbsp;·&nbsp; <span id="total-sessions">0</span> sessioni
   </div>
 </div>
 
-<!-- GRID -->
-<div class="grid-wrapper">
-  <div class="masonry" id="masonry-grid">
+<!-- View tabs -->
+<div class="view-tabs">
+  <button class="view-tab-btn active" onclick="switchView('scoperte',this)">⊞ &nbsp;Scoperte</button>
+  <button class="view-tab-btn"        onclick="switchView('timeline',this)">◈ &nbsp;Timeline</button>
+</div>
 
-    <!-- ══════════════════════════════════════
-         SCOPERTE — aggiungere qui sotto
-         Copiare il blocco della categoria giusta
-    ══════════════════════════════════════ -->
-
-    <!-- ESEMPIO: Città & Insediamenti -->
-    <div class="discovery-card" data-cat="citta">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="citta">Città & Insediamenti</span>
-          <span class="card-session">Sessione 1</span>
-        </div>
-        <div class="card-title">Porto di Approdo</div>
-        <p class="card-text">Il primo insediamento avvistato sulla costa del nuovo continente. Una piccola comunità di pescatori e commercianti, apparentemente indipendente da qualsiasi grande potere. Gli abitanti sembrano diffidenti verso gli stranieri ma non ostili.</p>
-      </div>
+<!-- ══ SCOPERTE ══ -->
+<div id="view-scoperte">
+  <div class="filters-wrapper">
+    <div class="filters">
+      <span class="filter-label">Categoria:</span>
+      <button class="filter-btn active" data-cat="tutti"   onclick="filterCat('tutti',this)">Tutti <span class="count" id="cnt-tutti"></span></button>
+      <button class="filter-btn"        data-cat="citta"   onclick="filterCat('citta',this)">Città & Insediamenti <span class="count" id="cnt-citta"></span></button>
+      <button class="filter-btn"        data-cat="misteri" onclick="filterCat('misteri',this)">Misteri & Anomalie <span class="count" id="cnt-misteri"></span></button>
+      <button class="filter-btn"        data-cat="fazioni" onclick="filterCat('fazioni',this)">Fazioni & Personaggi <span class="count" id="cnt-fazioni"></span></button>
+      <button class="filter-btn"        data-cat="punti"   onclick="filterCat('punti',this)">Punti di Interesse <span class="count" id="cnt-punti"></span></button>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Sessione:</span>
+      <button class="filter-btn active" data-sess="tutte" onclick="filterSess('tutte',this)">Tutte</button>
+      <span id="sess-btns"></span>
     </div>
-
-    <!-- ESEMPIO: Misteri & Anomalie -->
-    <div class="discovery-card" data-cat="misteri">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="misteri">Misteri & Anomalie</span>
-          <span class="card-session">Sessione 1</span>
-        </div>
-        <div class="card-title">La Bussola Impazzita</div>
-        <p class="card-text">A meno di un miglio dalla costa, tutte le bussole della spedizione hanno iniziato a girare su sé stesse senza controllo. Il fenomeno è cessato dopo venti minuti, senza spiegazione apparente.</p>
-        <div class="card-quote">"Come se qualcosa sotto il mare stesse respirando."</div>
-      </div>
-    </div>
-
-    <!-- ESEMPIO: Punti di Interesse -->
-    <div class="discovery-card" data-cat="punti">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="punti">Punti di Interesse</span>
-          <span class="card-session">Sessione 1</span>
-        </div>
-        <div class="card-title">La Foresta della Nebbia Perenne</div>
-        <p class="card-text">Una vasta foresta visibile dall'approdo, perennemente avvolta da una nebbia che non si dissolve nemmeno nelle ore più soleggiate. Gli abitanti locali la evitano e non ne parlano volentieri. La vegetazione ai suoi margini è diversa da qualsiasi specie conosciuta.</p>
-      </div>
-    </div>
-
-    <!-- ESEMPIO: Fazioni & Personaggi -->
-    <div class="discovery-card" data-cat="fazioni">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span>
-          <span class="card-session">Sessione 1</span>
-        </div>
-        <div class="card-title">Il Concilio del Nuovo Mondo</div>
-        <p class="card-text">L'organismo internazionale che coordina l'esplorazione del nuovo continente. Comprende rappresentanti di varie nazioni del Vecchio Continente, incluso Zavash Kass. Le sue riunioni si tengono in un luogo segreto e le sue decisioni non vengono mai rese pubbliche per intero.</p>
-        <div class="card-quote">"Tutti siedono allo stesso tavolo. Non tutti guardano nella stessa direzione."</div>
-      </div>
-    </div>
-
-    <!-- ESEMPIO: Punti di Interesse (con immagine) -->
-    <div class="discovery-card" data-cat="punti">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="punti">Punti di Interesse</span>
-          <span class="card-session">Sessione 2</span>
-        </div>
-        <div class="card-title">Le Rovine della Costa Sud</div>
-        <p class="card-text">Strutture in pietra di dimensioni ciclopiche, parzialmente sommerse dal mare. L'architettura non corrisponde a nessuno stile conosciuto nel Vecchio Continente. Alcune pietre recano incisioni che potrebbero essere una forma di scrittura.</p>
-      </div>
-    </div>
-
-    <!-- ESEMPIO: Misteri (lungo) -->
-    <div class="discovery-card" data-cat="misteri">
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-cat" data-cat="misteri">Misteri & Anomalie</span>
-          <span class="card-session">Sessione 2</span>
-        </div>
-        <div class="card-title">Il Suono sotto la Terra</div>
-        <p class="card-text">Nella piana a nord dell'approdo, di notte, si avverte un suono ritmico provenire dal sottosuolo. Non è un terremoto — è troppo regolare, troppo deliberato. Alcuni lo descrivono come un battito cardiaco. Chi ha dormito vicino all'epicentro ha riferito sogni identici: un occhio enorme che guarda verso l'alto.</p>
-        <div class="card-quote">"Non è la terra a tremare. È qualcosa dentro la terra che vuole uscire."</div>
-      </div>
-    </div>
-
-  </div><!-- /masonry -->
-
-  <div class="empty-state" id="empty-state">
-    Nessuna scoperta in questa categoria — ancora.
   </div>
-</div><!-- /grid-wrapper -->
+
+  <div class="grid-wrapper">
+    <div class="masonry" id="masonry-grid">
+
+      <!-- ══════════════════════════════════════
+           SCOPERTE — aggiungere qui sotto
+           data-cat: citta | misteri | fazioni | punti
+           data-sess: numero sessione es. "1"
+      ══════════════════════════════════════ -->
+
+      <div class="discovery-card" data-cat="citta" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="citta">Città & Insediamenti</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">Porto di Approdo</div>
+          <p class="card-text">Il primo insediamento avvistato sulla costa del nuovo continente. Una piccola comunità di pescatori e commercianti, apparentemente indipendente da qualsiasi grande potere. Gli abitanti sembrano diffidenti verso gli stranieri ma non ostili.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="misteri" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">La Bussola Impazzita</div>
+          <p class="card-text">A meno di un miglio dalla costa, tutte le bussole della spedizione hanno iniziato a girare su sé stesse senza controllo. Il fenomeno è cessato dopo venti minuti, senza spiegazione apparente.</p>
+          <div class="card-quote">"Come se qualcosa sotto il mare stesse respirando."</div>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="punti" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">La Foresta della Nebbia Perenne</div>
+          <p class="card-text">Una vasta foresta visibile dall'approdo, perennemente avvolta da una nebbia che non si dissolve nemmeno nelle ore più soleggiate. Gli abitanti locali la evitano e non ne parlano volentieri.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="fazioni" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">Il Concilio del Nuovo Mondo</div>
+          <p class="card-text">L'organismo internazionale che coordina l'esplorazione del nuovo continente. Le sue riunioni si tengono in un luogo segreto e le sue decisioni non vengono mai rese pubbliche per intero.</p>
+          <div class="card-quote">"Tutti siedono allo stesso tavolo. Non tutti guardano nella stessa direzione."</div>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="punti" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Le Rovine della Costa Sud</div>
+          <p class="card-text">Strutture in pietra di dimensioni ciclopiche, parzialmente sommerse dal mare. L'architettura non corrisponde a nessuno stile conosciuto nel Vecchio Continente. Alcune pietre recano incisioni che potrebbero essere una forma di scrittura.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="misteri" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Il Suono sotto la Terra</div>
+          <p class="card-text">Nella piana a nord dell'approdo, di notte, si avverte un suono ritmico provenire dal sottosuolo. Non è un terremoto — è troppo regolare, troppo deliberato. Chi ha dormito vicino all'epicentro ha riferito sogni identici: un occhio enorme che guarda verso l'alto.</p>
+          <div class="card-quote">"Non è la terra a tremare. È qualcosa dentro la terra che vuole uscire."</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="empty-state" id="empty-state">Nessuna scoperta trovata.</div>
+  </div>
+</div>
+
+<!-- ══ TIMELINE ══ -->
+<div id="view-timeline" style="display:none;">
+  <div class="timeline-wrapper" id="timeline-wrapper"></div>
+</div>
 
 <footer>
   <strong>Terre Ignote</strong> · Diario delle Scoperte
@@ -452,45 +402,154 @@ footer strong { color: var(--gold); }
 </footer>
 
 <script>
-// ── COUNT BADGES ──
+/* ══════════════════════════════════════════
+   DATI SESSIONI
+   Aggiungere una voce per ogni nuova sessione.
+   "num" deve corrispondere al data-sess delle card.
+══════════════════════════════════════════ */
+const SESSIONS = [
+  {
+    num: 1,
+    title: "L'Approdo",
+    date: "",   // opzionale, es. "12 Aprile 2025"
+    summary: "Il gruppo raggiunge per la prima volta le coste del nuovo continente. L'arrivo non è privo di stranezze: le bussole impazziscono a vista della riva e il porto che li accoglie è più diffidente di quanto ci si aspettasse. I primi contatti con la popolazione locale rivelano una terra piena di segreti appena sotto la superficie."
+  },
+  {
+    num: 2,
+    title: "Oltre la Costa",
+    date: "",
+    summary: "L'esplorazione si spinge verso l'interno e verso sud. Le rovine ciclopiche sulla costa meridionale suggeriscono una civiltà antica e sconosciuta. Di notte, dal sottosuolo della piana settentrionale giunge un suono impossibile da ignorare — e da spiegare."
+  }
+];
+
+const CAT_LABELS = {
+  citta:   'Città & Insediamenti',
+  misteri: 'Misteri & Anomalie',
+  fazioni: 'Fazioni & Personaggi',
+  punti:   'Punti di Interesse'
+};
+
+let activeCat  = 'tutti';
+let activeSess = 'tutte';
+
+window.addEventListener('DOMContentLoaded', () => {
+  updateCounts();
+  buildSessionButtons();
+  buildTimeline();
+});
+
 function updateCounts() {
   const cards = document.querySelectorAll('.discovery-card');
-  const cats = ['citta','misteri','fazioni','punti'];
-  const counts = { tutti: cards.length };
-  cats.forEach(c => counts[c] = 0);
-  cards.forEach(card => {
-    const cat = card.dataset.cat;
-    if (counts[cat] !== undefined) counts[cat]++;
+  const c = { tutti:0, citta:0, misteri:0, fazioni:0, punti:0 };
+  cards.forEach(card => { c.tutti++; c[card.dataset.cat]++; });
+  Object.keys(c).forEach(k => {
+    const el = document.getElementById(`cnt-${k}`);
+    if (el) el.textContent = `(${c[k]})`;
   });
-  document.getElementById('count-tutti').textContent = `(${counts.tutti})`;
-  cats.forEach(c => {
-    const el = document.getElementById(`count-${c}`);
-    if (el) el.textContent = `(${counts[c]})`;
-  });
-  document.getElementById('total-count').textContent = counts.tutti;
+  document.getElementById('total-count').textContent    = c.tutti;
+  document.getElementById('total-sessions').textContent = SESSIONS.length;
 }
 
-// ── FILTER ──
-function filterCards(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+function buildSessionButtons() {
+  const container = document.getElementById('sess-btns');
+  SESSIONS.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.sess = String(s.num);
+    btn.textContent = `Sessione ${s.num}`;
+    btn.onclick = () => filterSess(String(s.num), btn);
+    container.appendChild(btn);
+  });
+}
 
+function filterCat(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('.filter-btn[data-cat]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterSess(sess, btn) {
+  activeSess = sess;
+  document.querySelectorAll('.filter-btn[data-sess]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
   const cards = document.querySelectorAll('.discovery-card');
   let visible = 0;
   cards.forEach(card => {
-    if (cat === 'tutti' || card.dataset.cat === cat) {
-      card.classList.remove('hidden');
-      visible++;
-    } else {
-      card.classList.add('hidden');
-    }
+    const ok = (activeCat  === 'tutti'  || card.dataset.cat  === activeCat)
+            && (activeSess === 'tutte'  || card.dataset.sess === activeSess);
+    card.classList.toggle('hidden', !ok);
+    if (ok) visible++;
   });
-
-  const empty = document.getElementById('empty-state');
-  empty.classList.toggle('visible', visible === 0);
+  document.getElementById('empty-state').classList.toggle('visible', visible === 0);
 }
 
-updateCounts();
+function switchView(view, btn) {
+  document.querySelectorAll('.view-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('view-scoperte').style.display = view === 'scoperte' ? 'block' : 'none';
+  document.getElementById('view-timeline').style.display = view === 'timeline' ? 'block' : 'none';
+}
+
+function buildTimeline() {
+  const wrapper = document.getElementById('timeline-wrapper');
+  wrapper.innerHTML = '';
+  // Most recent first
+  [...SESSIONS].reverse().forEach(sess => {
+    const cards = [...document.querySelectorAll(`.discovery-card[data-sess="${sess.num}"]`)];
+    const dateHtml = sess.date ? `<div class="tl-session-date">${sess.date}</div>` : '';
+
+    const block = document.createElement('div');
+    block.className = 'tl-session';
+    block.innerHTML = `
+      <div class="tl-header">
+        <div class="tl-dot">S${sess.num}</div>
+        <div>
+          <div class="tl-session-label">Sessione ${sess.num}</div>
+          <div class="tl-session-title">${sess.title}</div>
+          ${dateHtml}
+        </div>
+      </div>
+      <div class="tl-summary">${sess.summary}</div>
+      <div class="tl-discoveries" id="tl-disc-${sess.num}"></div>
+    `;
+    wrapper.appendChild(block);
+
+    const disc = block.querySelector(`#tl-disc-${sess.num}`);
+    if (cards.length === 0) {
+      disc.innerHTML = `<div class="tl-empty">Nessuna scoperta registrata</div>`;
+    } else {
+      cards.forEach(card => {
+        const cat   = card.dataset.cat;
+        const title = card.querySelector('.card-title')?.textContent || '';
+        const item  = document.createElement('div');
+        item.className = 'tl-discovery-item';
+        item.title = 'Mostra nella griglia';
+        item.innerHTML = `
+          <div class="tl-disc-dot" data-cat="${cat}"></div>
+          <div class="tl-disc-content">
+            <div class="tl-disc-cat">${CAT_LABELS[cat] || cat}</div>
+            <div class="tl-disc-title">${title}</div>
+          </div>
+          <div class="tl-disc-arrow">→</div>
+        `;
+        item.onclick = () => {
+          // Switch to scoperte, filter by this session
+          switchView('scoperte', document.querySelectorAll('.view-tab-btn')[0]);
+          filterCat('tutti', document.querySelector('.filter-btn[data-cat="tutti"]'));
+          const sessBtn = document.querySelector(`.filter-btn[data-sess="${sess.num}"]`);
+          if (sessBtn) filterSess(String(sess.num), sessBtn);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        disc.appendChild(item);
+      });
+    }
+  });
+}
 </script>
 </body>
 </html>
