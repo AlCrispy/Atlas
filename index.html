@@ -191,6 +191,7 @@ a.nation-card {
 }
 .nation-card[data-continent="south"] { border-top: 4px solid var(--atl-red); }
 .nation-card[data-continent="north"] { border-top: 4px solid var(--atl-ocean); }
+.nation-card[data-continent="center"] { border-top: 4px solid #2a8a9a; }
 .nation-card[data-continent="new"]   { border-top: 4px solid var(--atl-land); }
 .nation-card[data-continent="unknown"] {
   border-top: 4px dashed #9a9078;
@@ -310,13 +311,13 @@ a.nation-card:hover .nation-card,
           <span class="nation-arrow">→</span>
         </a>
 
-        <div class="nation-card locked" data-continent="north">
+        <a class="nation-card" href="nations/aurelion.html" data-continent="center">
           <div class="nation-tag">Vecchio Continente · Centro</div>
           <div class="nation-name">Lega di Aurelion</div>
-          <div class="nation-epithet">La Confederazione dei Liberi</div>
-          <div class="nation-desc">Una lega di città-stato unite da patti commerciali e trattati di mutua difesa. Crocevia di culture e mercati del continente.</div>
-          <span class="coming-soon">In arrivo</span>
-        </div>
+          <div class="nation-epithet">Commercio, Circolo e conoscenza</div>
+          <div class="nation-desc">Un regno costiero pragmatico: capitale portuale, Consiglio delle Gilde e Circolo, ricerca applicata e rotte che uniscono mare e fiume.</div>
+          <span class="nation-arrow">→</span>
+        </a>
 
         <a class="nation-card" href="nations/velikor.html" data-continent="north">
           <div class="nation-tag">Vecchio Continente · Nord</div>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lega di Aurelion — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sea-lt:    #1a7a8c;
+  --cyan:      #3db8c8;
+  --cyan-dim:  #2a8a9a;
+  --teal:      #1e6b6b;
+  --gold:      #c9a84c;
+  --gold-lt:   #e8c97a;
+  --void:      #050a12;
+  --dark-mid:  #0f1824;
+  --dark-card: #121c28;
+  --text:      #d4e0e8;
+  --text-dim:  #7a8f9c;
+  --border:    rgba(61,184,200,0.22);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--void);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.45;
+}
+
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(5,10,18,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+  display: flex; align-items: center;
+}
+
+.back-btn {
+  background: none; border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 18px 24px;
+  transition: color 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; text-decoration: none;
+}
+.back-btn:hover { color: var(--cyan); background: rgba(61,184,200,0.06); }
+
+.tabs-nav {
+  display: flex; flex: 1; justify-content: center;
+  flex-wrap: wrap; padding: 0 8px;
+}
+
+.tab-btn {
+  position: relative; background: none; border: none; cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dim); padding: 18px 14px;
+  transition: color 0.3s; white-space: nowrap;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%; height: 2px;
+  background: linear-gradient(90deg, var(--sea-lt), var(--cyan), var(--gold));
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.tab-btn:hover { color: var(--gold-lt); }
+.tab-btn.active { color: var(--gold); }
+.tab-btn.active::after { transform: translateX(-50%) scaleX(1); }
+
+.nation-header {
+  position: relative; text-align: center;
+  padding: 70px 20px 50px;
+  background:
+    radial-gradient(ellipse 85% 55% at 50% 0%, rgba(26,122,140,0.22) 0%, rgba(13,74,92,0.12) 45%, transparent 75%),
+    linear-gradient(180deg, #0a1520 0%, var(--void) 100%);
+  border-bottom: 1px solid var(--border); overflow: hidden;
+}
+.nation-header::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(61,184,200,0.035) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(61,184,200,0.035) 40px);
+  pointer-events: none;
+}
+
+.nation-header-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.4em;
+  color: var(--cyan); text-transform: uppercase; margin-bottom: 8px; opacity: 0.85;
+}
+.nation-header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.9rem, 5vw, 3.6rem); font-weight: 900; color: #fff;
+  text-shadow: 0 0 36px rgba(61,184,200,0.45), 0 0 72px rgba(26,122,140,0.25), 0 2px 4px rgba(0,0,0,0.9);
+  line-height: 1.1; letter-spacing: 0.04em;
+}
+.nation-header h1 span {
+  display: block; font-size: 0.45em; font-weight: 400; color: var(--gold);
+  letter-spacing: 0.18em; margin-top: 10px;
+  text-shadow: 0 0 20px rgba(201,168,76,0.45);
+}
+
+.crest {
+  display: inline-block; width: 64px; height: 64px;
+  margin-bottom: 18px; opacity: 0.92;
+  animation: pulse-crest 4s ease-in-out infinite;
+}
+@keyframes pulse-crest {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(61,184,200,0.5)); transform: scale(1); }
+  50%       { filter: drop-shadow(0 0 18px rgba(61,184,200,0.85)); transform: scale(1.03); }
+}
+
+.lore-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+.lore-tag {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; padding: 5px 13px;
+  border: 1px solid var(--border); color: var(--gold); background: rgba(61,184,200,0.06);
+}
+
+.content { max-width: 1000px; margin: 0 auto; padding: 0 24px 80px; }
+
+.tab-panel { display: none; animation: fadeIn 0.45s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-banner { padding: 56px 0 32px; text-align: center; margin-bottom: 16px; }
+.section-banner::after {
+  content: ''; display: block; width: 180px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan-dim), var(--gold), transparent);
+  margin: 18px auto 0;
+}
+.section-eyebrow { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.4em; color: var(--cyan-dim); text-transform: uppercase; margin-bottom: 8px; }
+.section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 700; color: #fff; text-shadow: 0 0 28px rgba(61,184,200,0.35); line-height: 1.2; }
+.section-subtitle { font-style: italic; color: var(--text-dim); font-size: 0.92rem; margin-top: 8px; }
+
+.map-svg-wrap {
+  width: 100%; max-width: 900px; margin: 0 auto 40px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,168,76,0.06);
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--dark-mid) 0%, var(--void) 100%);
+  overflow: hidden;
+}
+.map-svg-wrap svg { display: block; width: 100%; height: auto; }
+
+.chapter { margin-bottom: 48px; }
+.chapter-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.chapter-num { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--cyan); text-transform: uppercase; white-space: nowrap; }
+.chapter-title { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; }
+.chapter-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(61,184,200,0.35), transparent); }
+.chapter p { color: var(--text); font-size: 1.03rem; line-height: 1.85; margin-bottom: 14px; }
+
+.dark-quote {
+  border-left: 3px solid var(--cyan);
+  padding: 18px 26px; margin: 28px 0;
+  background: linear-gradient(90deg, rgba(61,184,200,0.1) 0%, transparent 100%);
+  font-style: italic; font-size: 1.12rem; color: var(--text); line-height: 1.7;
+}
+
+.location-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin: 24px 0; }
+.loc-card {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 26px 22px; position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.loc-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--cyan), var(--teal));
+}
+.loc-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(61,184,200,0.2); }
+.loc-card-name { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+.loc-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
+
+footer {
+  text-align: center; padding: 36px 20px; border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-dim); background: linear-gradient(180deg, transparent, rgba(61,184,200,0.04));
+}
+footer strong { color: var(--gold); }
+
+@media (max-width: 640px) {
+  .tab-btn { padding: 14px 8px; font-size: 0.55rem; }
+  .location-cards { grid-template-columns: 1fr; }
+  .back-btn span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="../index.html">← <span>Centuria</span></a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('territorio', this)">Territorio</button>
+    <button class="tab-btn" onclick="switchTab('governo', this)">Governo</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi &amp; ricerca</button>
+    <button class="tab-btn" onclick="switchTab('oggi', this)">Aurelion oggi</button>
+  </nav>
+</div>
+
+<div class="nation-header">
+  <svg class="crest" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="32" cy="32" r="28" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+    <circle cx="32" cy="32" r="20" stroke="#3db8c8" stroke-width="0.8" opacity="0.45"/>
+    <path d="M32 6 L34 26 L54 26 L38 36 L44 56 L32 46 L20 56 L26 36 L10 26 L30 26 Z" fill="none" stroke="#3db8c8" stroke-width="1.2" stroke-linejoin="round" opacity="0.9"/>
+    <circle cx="32" cy="32" r="4" fill="#c9a84c" opacity="0.85"/>
+  </svg>
+  <p class="nation-header-eyebrow">Centuria · Vecchio Continente · Centro</p>
+  <h1>Lega di Aurelion<span>Commercio, Circolo e conoscenza</span></h1>
+  <div class="lore-tags">
+    <span class="lore-tag">Stato costiero</span>
+    <span class="lore-tag">Gilde &amp; Circolo</span>
+    <span class="lore-tag">Ricerca applicata</span>
+    <span class="lore-tag">Laicità</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div id="tab-overview" class="tab-panel active">
+    <div class="section-banner">
+      <p class="section-eyebrow">Stato di Centuria</p>
+      <h2 class="section-title">Inquadramento</h2>
+    </div>
+    <div class="dark-quote">«In Aurelion il valore non è dato da ciò che si possiede, ma da ciò che si è in grado di far circolare.»</div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Una lega pragmatica</span><div class="chapter-line"></div></div>
+      <p>La Lega di Aurelion è uno Stato nato e cresciuto attorno al <strong style="color:var(--gold)">commercio</strong>, allo scambio di conoscenze e alla <strong style="color:var(--cyan)">ricerca applicata</strong>. Non è una monarchia tradizionale né una potenza militare dominante: ha costruito la propria influenza con relazioni economiche, mediazione politica e capacità di adattarsi ai mutamenti.</p>
+      <p>Durante la recente guerra tra i regni di Centuria ha mantenuto un coinvolgimento <em>limitato e selettivo</em>, concentrandosi sulla difesa di interessi strategici e rotte. Alla fine del conflitto non è emersa come vincitrice né come sconfitta, e nel dopoguerra gode di una relativa stabilità rispetto ad altri Stati più provati.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Filosofia civile</span><div class="chapter-line"></div></div>
+      <p>La cultura politica di Aurelion si fonda su un principio condiviso: <strong style="color:var(--gold)">la stabilità non nasce dall'immobilità, ma dalla capacità di adattarsi</strong>. La tradizione è rispettata come esperienza accumulata, non come vincolo assoluto; l'innovazione non è minaccia, bensì variabile da comprendere, regolare e integrare.</p>
+      <p>Il regno è costiero e di dimensioni contenute, ma il territorio è sfruttato con efficienza estrema: infrastrutture che collegano mare, fiume ed entroterra fanno muovere merci, persone e idee più di quanto non facciano le armi.</p>
+    </div>
+  </div>
+
+  <div id="tab-territorio" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">Geografia</p>
+      <h2 class="section-title">Mare, fiume, entroterra</h2>
+      <p class="section-subtitle">Una rete che non dorme mai del tutto</p>
+    </div>
+    <div class="map-svg-wrap">
+      <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema stilizzato: costa, capitale, fiume e entroterra della Lega">
+        <defs>
+          <linearGradient id="aureWater" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0d4a5c;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#050a12;stop-opacity:1"/>
+          </linearGradient>
+          <linearGradient id="aureRiver" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#2a8a9a;stop-opacity:0.9"/>
+            <stop offset="100%" style="stop-color:#1a5a6a;stop-opacity:0.6"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="420" fill="url(#aureWater)"/>
+        <path d="M0 0 L320 0 L300 120 L180 200 L0 240 Z" fill="rgba(18,28,40,0.85)"/>
+        <path d="M280 80 Q400 40 520 100 T780 140 L900 160 L900 420 L320 420 Q260 280 200 200 Z" fill="rgba(15,24,36,0.92)"/>
+        <path d="M450 20 Q480 180 470 400" stroke="url(#aureRiver)" stroke-width="28" fill="none" stroke-linecap="round" opacity="0.75"/>
+        <path d="M450 20 Q480 180 470 400" stroke="#3db8c8" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.35"/>
+        <rect x="380" y="300" width="100" height="56" rx="3" fill="rgba(201,168,76,0.15)" stroke="#c9a84c" stroke-width="1" opacity="0.8"/>
+        <text x="430" y="332" text-anchor="middle" font-family="Cinzel, serif" font-size="11" fill="#c9a84c">AURELION</text>
+        <rect x="620" y="80" width="90" height="44" rx="3" fill="rgba(61,184,200,0.12)" stroke="#3db8c8" stroke-width="1" opacity="0.85"/>
+        <text x="665" y="107" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#7a8f9c">PORTO ALTO</text>
+        <circle cx="720" cy="220" r="5" fill="#3db8c8" opacity="0.5"/>
+        <circle cx="760" cy="260" r="4" fill="#3db8c8" opacity="0.35"/>
+        <text x="450" y="400" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c9a84c" opacity="0.45" letter-spacing="4">LEGA DI AURELION · SCHEMA COSTA E ARTERIA FLUVIALE</text>
+      </svg>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Il cuore della Lega</span><div class="chapter-line"></div></div>
+      <p>Il cuore dello Stato è la città di <strong style="color:var(--gold)">Aurelion</strong>, capitale e principale centro portuale. Da qui partono e arrivano le grandi rotte oceaniche; il traffico fluviale distribuisce rapidamente merci e informazioni verso l'interno. Il fiume è trattato come una vera arteria economica: costantemente sorvegliato e mantenuto.</p>
+      <p>Aurelion è una grande città commerciale, costruita più per <em>funzionare</em> che per impressionare: quartieri portuali e mercantili in espansione, distretti artigianali e arcano-artigianali, magazzini, archivi, sale di contrattazione e laboratori. Cantieri, strutture temporanee e prototipi incompleti sono parte del paesaggio — e socialmente accettati. La città è viva, rumorosa, in costante trasformazione.</p>
+      <p>L'entroterra offre <strong style="color:var(--cyan)">campagne fertili</strong>, villaggi agricoli e piccoli centri di scambio. Non è una regione densamente urbanizzata: ampie zone restano aperte, coltivate o adibite a vie di passaggio, garantendo autosufficienza alimentare e spazio per magazzini, cantieri e strutture produttive.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Porto Alto</span><div class="chapter-line"></div></div>
+      <p><strong style="color:var(--gold)">Porto Alto</strong> è il secondo grande scalo commerciale della Lega. La struttura è a livelli: banchine basse per carico e scarico rapido, moli superiori per magazzini e uffici delle Gilde. È un porto <em>misto</em>: navi oceaniche e chiatte fluviali convivono, così le merci possono cambiare mezzo senza uscire dal circuito controllato.</p>
+      <p>Alcune aree fungono da <strong style="color:var(--cyan)">zona franca controllata</strong>: scambi rapidi senza dazi immediati, sempre sotto supervisione della Lega. La presenza del Circolo e delle Gilde è discreta ma costante. La popolazione è fluttuante — marinai, mercanti, mediatori, tecnici, emissari stranieri — ed è normale sentire più lingue sullo stesso molo. Porto Alto è rumoroso, affollato, pragmatico: non elegante, ma indispensabile.</p>
+    </div>
+  </div>
+
+  <div id="tab-governo" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">Struttura di governo</p>
+      <h2 class="section-title">Gilde, Circolo, Convergenze</h2>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Il Consiglio delle Gilde</span><div class="chapter-line"></div></div>
+      <p>Il <strong style="color:var(--gold)">Consiglio delle Gilde</strong> è il cuore economico dello Stato. Vi entrano grandi famiglie mercantili, corporazioni commerciali, armatori e finanziatori. Il Consiglio controlla le principali rotte, gestisce infrastrutture logistiche e portuali, finanzia spedizioni e progetti, e fornisce le risorse per il funzionamento dello Stato.</p>
+      <p>Il suo potere è concreto, ma non totale: può muovere capitali e influenzare le decisioni politiche, <em>ma non governa da solo</em>. In sintesi: le Gilde controllano il denaro, ma non decidono da sole la direzione dello Stato.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Il Circolo di Aurelion</span><div class="chapter-line"></div></div>
+      <p>Il <strong style="color:var(--cyan)">Circolo di Aurelion</strong> — il Circolo — è l'organo di governo centrale. Nacque come tavolo di mediazione tra interessi diversi e nel tempo si è consolidato come autorità politica. Definisce le linee generali, prende decisioni strategiche di lungo periodo, arbitra conflitti tra Gilde, ricerca e stabilità civile, e rappresenta ufficialmente Aurelion verso gli altri regni.</p>
+      <p>Il Circolo non decide solo ciò che è conveniente, ma ciò che è <em>accettabile e sostenibile</em> per lo Stato nel suo complesso. È composto da un ristretto numero di membri scelti per competenza, esperienza e influenza: rappresentanti delle Gilde più rilevanti, figure di spicco in ricerca e innovazione, mediatori politici e diplomatici. L'appartenenza non è permanente: chi perde rilevanza o credibilità può essere gradualmente escluso.</p>
+      <p>Il metodo non è quello di un parlamento classico: raramente si usano votazioni formali. Le decisioni emergono da confronto, negoziazione e compromessi; una decisione vale quando nessuna parte ha interesse concreto a bloccarla, i rischi sono ritenuti gestibili, e esiste un piano realistico per le conseguenze. Il Circolo è dunque meno rapido nelle emergenze improvvise, ma molto stabile nel lungo periodo.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Il Collegio delle Convergenze</span><div class="chapter-line"></div></div>
+      <p>Sotto l'autorità del Circolo opera il <strong style="color:var(--gold)">Collegio delle Convergenze</strong>, istituzione tecnica e consultiva. Analizza scoperte e innovazioni, valuta rischi, limiti e applicazioni possibili, traduce concetti complessi in indicazioni operative, e fornisce pareri al Circolo e alle Gilde. Il Collegio non governa, ma il suo giudizio pesa in modo significativo sulle scelte strategiche.</p>
+    </div>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">Territorio e laboratori</p>
+      <h2 class="section-title">Luoghi di ricerca e scambio</h2>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Ricerca nella società</span><div class="chapter-line"></div></div>
+      <p>La ricerca è strutturale: laboratori, officine arcano-artigianali e circoli di studio operano con ampia autonomia, spesso finanziati da Gilde o privati. Il Circolo interviene quando una scoperta può incidere su equilibri politici, economia o sicurezza generale.</p>
+      <p>Accanto ad agricoltura e commercio, la Lega ospita <strong style="color:var(--cyan)">distretti di ricerca e produzione</strong>, spesso fuori dai grandi centri: artigiani specializzati, ricercatori e tecnici, finanziati in gran parte dalle Gilde e supervisionati dalle istituzioni centrali.</p>
+    </div>
+    <div class="location-cards">
+      <div class="loc-card"><div class="loc-card-name">Distretto delle Officine Fluviali</div><p>Complesso di laboratori e cantieri lungo il fiume, a monte della capitale. Studi su meccanica, idraulica e trasporto; sperimentazione di imbarcazioni e strumenti fluviali, spesso finanziata dalle Gilde. Luogo ideale per incidenti «tecnici», prototipi instabili e missioni di valutazione.</p></div>
+      <div class="loc-card"><div class="loc-card-name">Laboratori isolati · Gullis Aggusta</div><p>Strutture volutamente lontane dai centri abitati: materiali, energia e magia applicata. La sicurezza è affidata più all'isolamento che alle guardie; pochi ricercatori, altamente specializzati. Qui nascono scoperte importanti e problemi che il Circolo preferisce tenere lontani dalla capitale.</p></div>
+      <div class="loc-card"><div class="loc-card-name">Archivio tecnico · Roccabruna Mora</div><p>Struttura secondaria rispetto al grande archivio centrale: raccoglie report, fallimenti, prototipi abbandonati; consultato da tecnici e mediatori con accesso regolato ma meno rigido. Utile per recuperare informazioni «scomode» o collegare eventi apparentemente scollegati.</p></div>
+      <div class="loc-card"><div class="loc-card-name">Campi di prova agricoli</div><p>Zone rurali dedicate alla sperimentazione: nuove colture, metodi di irrigazione, uso controllato di magia sulla produzione. Luoghi tranquilli in apparenza, ma strategici per la stabilità del regno.</p></div>
+    </div>
+  </div>
+
+  <div id="tab-oggi" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">Orizzonti</p>
+      <h2 class="section-title">Aurelion oggi</h2>
+      <p class="section-subtitle">Dopoguerra, Nuova Terra, equilibri</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">La Nuova Terra</span><div class="chapter-line"></div></div>
+      <p>La scoperta di una nuova terra oltre Centuria è trattata dal Circolo come questione strategica di lungo periodo. L'approccio ufficiale è <strong style="color:var(--cyan)">prudente e graduale</strong>: esplorazione controllata, raccolta di informazioni, test progressivi. L'obiettivo è comprendere il territorio prima di assumere posizioni definitive.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Religione e società</span><div class="chapter-line"></div></div>
+      <p>La Lega mantiene una posizione <strong style="color:var(--gold)">laica</strong>: le pratiche religiose sono diffuse e rispettate, ma non determinano la linea politica. Le diverse interpretazioni legate alla Nuova Terra sono considerate divergenze di visione, non conflitti strutturali dello Stato.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Forza e strategia</span><div class="chapter-line"></div></div>
+      <p>La forza di Aurelion non risiede nella potenza militare, ma nella capacità di far circolare beni, persone e idee. È uno Stato pragmatico, orientato alla stabilità e alla negoziazione, che preferisce adattarsi ai cambiamenti piuttosto che opporsi con rigidità sterile — nel nome di un futuro misurato contratto dopo contratto, rotta dopo rotta.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Lega di Aurelion</strong> · Commercio, Circolo e conoscenza
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
