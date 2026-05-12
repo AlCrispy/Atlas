@@ -26,7 +26,7 @@ centuria/
 
 | Nazione | Continente | Stato |
 |---|---|---|
-| **Kassendyr** | Vecchio Continente · Estremo Sud | ✅ Disponibile |
+| **Kassendyr** | Vecchio Continente · Sud-Ovest | ✅ Disponibile |
 | **Velikor** | Vecchio Continente · Nord | ✅ Disponibile |
 | **Lega di Aurelion** | Vecchio Continente · Centro | ✅ Disponibile |
 | Valdherba | Vecchio Continente · Sud-Est | 🔒 In arrivo |
