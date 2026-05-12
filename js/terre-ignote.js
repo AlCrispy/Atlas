@@ -9,15 +9,39 @@
 const SESSIONS = [
   {
     num: 1,
-    title: "L'Approdo",
-    date: "",   // opzionale, es. "12 Aprile 2025"
-    summary: "Il gruppo raggiunge per la prima volta le coste del nuovo continente. L'arrivo non è privo di stranezze: le bussole impazziscono a vista della riva e il porto che li accoglie è più diffidente di quanto ci si aspettasse. I primi contatti con la popolazione locale rivelano una terra piena di segreti appena sotto la superficie."
+    title: "L'Inaffondabile",
+    date: "",
+    summary: "Sul Vecchio Continente spendete gli ultimi averi per comprarvi un passaggio verso le Terre Ignote. Vi imbarcate sulla nave Inaffondabile, al comando del capitano Jeremy Bucket. Il viaggio è lungo; un'enorme creatura marina — metà kraken, metà figura umanoide — vi tende quasi un agguato fatale, ma riuscite a sfuggirle e a scorgere, finalmente, la costa agognata."
   },
   {
     num: 2,
-    title: "Oltre la Costa",
+    title: "Porto Nero e Sytrill",
     date: "",
-    summary: "L'esplorazione si spinge verso l'interno e verso sud. Le rovine ciclopiche sulla costa meridionale suggeriscono una civiltà antica e sconosciuta. Di notte, dal sottosuolo della piana settentrionale giunge un suono impossibile da ignorare — e da spiegare."
+    summary: "Sbarcate al Porto Nero, dove convergono i viaggiatori verso il nuovo mondo, segnato da monoliti di nerite, pietra nera intrisa di magia. Una notte alla locanda del Cardo Appassito vi fa incontrare Gorian, Cyrma, Lafa e Tarion. Poi vi dirigete verso Sytrill, capitale delle Terre ignote: vi accoglie la gilda dei cacciatori e Anne, che cura la vostra iscrizione."
+  },
+  {
+    num: 3,
+    title: "L'Iniziato e la foresta",
+    date: "",
+    summary: "Conoscete Phil Amor, titolare del negozio L'Iniziato, e partite per la missione: debellare i goblin nella foresta a nord-est e recuperare funghi cremisi in una caverna sulla stessa rotta. Abbattete cinque goblin, ma una calata numericamente superiore vi costringe a una ritirata precipitosa."
+  },
+  {
+    num: 4,
+    title: "Funghi e visione",
+    date: "",
+    summary: "Nella caverna trovate i funghi cremisi intorno allo scheletro di un beholder, quasi cresciuti dalle ossa. I vapori donano ad alcuni di voi una visione: gli ultimi istanti del beholder in fuga, abbattuto da una presenza enorme e ancora indefinita, ma di potenza terrificante."
+  },
+  {
+    num: 5,
+    title: "Ricompensa e ombre in gilda",
+    date: "",
+    summary: "Tornati a Sytrill riscuotete la ricompensa. Anne vi affida un incarico dei Consacratori, ordine di ecclesiastici e templari: far luce sulla sorte di cinque inviati in missione. Bardok Drum vi consegna il compito presentandosi come capo della gilda — ma uscendo dalla stanza udite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Chi comanda davvero?"
+  },
+  {
+    num: 6,
+    title: "Il culto e la sfera",
+    date: "",
+    summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sytrill l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sytrill con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
   }
 ];
 
@@ -143,8 +167,8 @@ function buildTimeline() {
           <div class="tl-disc-arrow">→</div>
         `;
         item.onclick = () => {
-          // Switch to scoperte, filter by this session
-          switchView('scoperte', document.querySelectorAll('.view-tab-btn')[0]);
+          // Switch to scoperte (second tab), filter by this session
+          switchView('scoperte', document.querySelectorAll('.view-tab-btn')[1]);
           filterCat('tutti', document.querySelector('.filter-btn[data-cat="tutti"]'));
           const sessBtn = document.querySelector(`.filter-btn[data-sess="${sess.num}"]`);
           if (sessBtn) filterSess(String(sess.num), sessBtn);
