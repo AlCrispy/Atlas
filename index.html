@@ -5,7 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Centuria — Il Mondo</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link rel="stylesheet" href="css/index.css">
+<style>
+/* ── LEAFLET MAP ── */
+#centuria-map {
+  width: 100%;
+  height: 520px;
+  background: #0a1a2a;
+  border: 2px solid var(--atl-border, #b8a070);
+  box-shadow: 4px 6px 0 rgba(184,160,112,0.3), 0 20px 60px rgba(0,0,0,0.4);
+  border-radius: 2px;
+  cursor: grab;
+}
+#centuria-map:active { cursor: grabbing; }
+
+/* Hide Leaflet default attribution */
+.leaflet-control-attribution { display: none !important; }
+.leaflet-control-zoom a {
+  background: #1e1a0e !important;
+  color: #b8882a !important;
+  border-color: #b8a070 !important;
+  font-family: 'Cinzel', serif !important;
+}
+.leaflet-control-zoom a:hover { background: #2a2418 !important; }
+
+/* Custom popup */
+.leaflet-popup-content-wrapper {
+  background: #1e1a0e;
+  border: 1px solid #b8a070;
+  border-radius: 0;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+  padding: 0;
+}
+.leaflet-popup-tip { background: #1e1a0e; }
+.leaflet-popup-content { margin: 0; min-width: 200px; }
+.map-popup {
+  padding: 16px 20px 12px;
+  font-family: 'EB Garamond', serif;
+}
+.map-popup-tag {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: #7a6e54; margin-bottom: 6px;
+}
+.map-popup-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.05rem; font-weight: 700; color: #fff;
+  line-height: 1.2; margin-bottom: 4px;
+}
+.map-popup-epithet {
+  font-size: 0.85rem; color: #b8882a;
+  font-style: italic; margin-bottom: 12px;
+}
+.map-popup-link {
+  display: block; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: #b8882a; border: 1px solid #b8a070;
+  padding: 7px 14px; text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+.map-popup-link:hover { background: #b8882a; color: #fff; }
+.map-popup-link.locked {
+  color: #4a3f28; border-color: #3a3020;
+  pointer-events: none; cursor: default;
+}
+
+/* Custom pin icon */
+.map-pin {
+  width: 28px; height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 2px solid #1e1a0e;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
+}
+.map-pin.active-nation  { background: #b8882a; }
+.map-pin.locked-nation  { background: #4a3f28; }
+.map-pin.explore-nation { background: #1a6060; }
+</style>
 
 </head>
 <body>
@@ -49,10 +130,10 @@
 
       <p class="world-desc">Un mondo antico, segnato da guerre dimenticate, magie proibite e potenze che sfidano il tempo stesso. Scegli una nazione per esplorarne storia, territorio e segreti.</p>
 
-      <!-- Mappa -->
+      <!-- Mappa Interattiva -->
       <div class="world-map">
-        <img src="resources/Centuria_plain.png" alt="Mappa di Centuria">
-        <div class="world-map-caption">Atlante di Centuria · Edizione del Concilio</div>
+        <div id="centuria-map"></div>
+        <div class="world-map-caption">Atlante di Centuria · Edizione del Concilio · Scorri e zooma per esplorare</div>
       </div>
 
       <!-- Nazioni Conosciute -->
@@ -138,5 +219,138 @@
   </div>
 </div>
 
+<script>
+/* ══════════════════════════════════════════
+   MAPPA INTERATTIVA — Leaflet + immagine custom
+   Le coordinate [y, x] sono in pixel sull'immagine
+   (origine in alto a sinistra).
+   Immagine originale: 1270 × 952 px (Centuria_plain.png)
+   Regola i valori sotto per spostare i pin.
+══════════════════════════════════════════ */
+
+const IMG_W = 1270;
+const IMG_H = 952;
+
+// Leaflet CRS.Simple usa [y, x] come [lat, lng]
+const bounds = [[0, 0], [IMG_H, IMG_W]];
+
+const map = L.map('centuria-map', {
+  crs: L.CRS.Simple,
+  minZoom: -2,
+  maxZoom: 2,
+  zoomSnap: 0.25,
+  attributionControl: false,
+});
+
+// Carica l'immagine come layer base
+L.imageOverlay('resources/Centuria_plain.png', bounds).addTo(map);
+map.fitBounds(bounds);
+
+// ── Icona pin custom ──
+function makeIcon(type) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="map-pin ${type}"></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -30],
+  });
+}
+
+// ── Popup HTML ──
+function makePopup(name, epithet, tag, url, locked) {
+  const linkHtml = locked
+    ? `<span class="map-popup-link locked">In arrivo</span>`
+    : `<a class="map-popup-link" href="${url}">Esplora →</a>`;
+  return `
+    <div class="map-popup">
+      <div class="map-popup-tag">${tag}</div>
+      <div class="map-popup-name">${name}</div>
+      <div class="map-popup-epithet">${epithet}</div>
+      ${linkHtml}
+    </div>`;
+}
+
+/* ══════════════════════════════════════════
+   NAZIONI — coordinate pixel [y, x]
+   Per calibrare: apri Centuria_plain.png in un
+   editor, trova il centro della nazione e
+   leggi le coordinate pixel.
+══════════════════════════════════════════ */
+const NATIONS = [
+  {
+    name: 'Kassendyr',
+    epithet: "L'Impero del Sangue Persistente",
+    tag: 'Vecchio Continente · Sud-Ovest',
+    url: 'nations/kassendyr.html',
+    pos: [720, 290],   // ← regola questi valori
+    locked: false,
+    type: 'active-nation',
+  },
+  {
+    name: 'Lega di Aurelion',
+    epithet: 'Commercio, Circolo e Conoscenza',
+    tag: 'Vecchio Continente · Centro',
+    url: 'nations/aurelion.html',
+    pos: [430, 590],
+    locked: false,
+    type: 'active-nation',
+  },
+  {
+    name: 'Velikor',
+    epithet: 'La Repubblica delle Pianure',
+    tag: 'Vecchio Continente · Nord',
+    url: 'nations/velikor.html',
+    pos: [210, 430],
+    locked: false,
+    type: 'active-nation',
+  },
+  {
+    name: 'Valdherba',
+    epithet: 'Il Regno delle Vette',
+    tag: 'Vecchio Continente · Sud-Est',
+    url: '',
+    pos: [650, 870],
+    locked: true,
+    type: 'locked-nation',
+  },
+  {
+    name: 'Kalveor',
+    epithet: 'La Terra della Fiamma Nera',
+    tag: 'Vecchio Continente · Sud',
+    url: '',
+    pos: [830, 590],
+    locked: true,
+    type: 'locked-nation',
+  },
+  {
+    name: 'Isola Perennogelo',
+    epithet: 'Il Confine del Mondo Conosciuto',
+    tag: 'Arcipelago · Nord-Est',
+    url: '',
+    pos: [80, 1050],
+    locked: true,
+    type: 'locked-nation',
+  },
+  {
+    name: 'Terre Ignote',
+    epithet: 'Diario delle Scoperte',
+    tag: 'Nuovo Continente · In Esplorazione',
+    url: 'terre-ignote.html',
+    pos: [500, 100],
+    locked: false,
+    type: 'explore-nation',
+  },
+];
+
+NATIONS.forEach(n => {
+  L.marker(n.pos, { icon: makeIcon(n.type) })
+    .addTo(map)
+    .bindPopup(makePopup(n.name, n.epithet, n.tag, n.url, n.locked), {
+      maxWidth: 240,
+      className: 'centuria-popup',
+    });
+});
+</script>
 </body>
 </html>
