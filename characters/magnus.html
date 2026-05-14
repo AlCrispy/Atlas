@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnus Volstrucker — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fire:      #c04a00;
+  --fire-lt:   #e8640a;
+  --fire-pale: #f0943a;
+  --amber:     #c9820a;
+  --amber-lt:  #e8b84a;
+  --sand:      #d4a96a;
+  --time:      #8a6a2a;
+  --void:      #080604;
+  --dark:      #100c08;
+  --dark-mid:  #18120a;
+  --dark-card: #1e1508;
+  --stone:     #2a2010;
+  --text:      #d8cfc0;
+  --text-dim:  #8a7a60;
+  --border:    rgba(200,160,60,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--void);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px; line-height: 1.75;
+  min-height: 100vh; overflow-x: hidden;
+}
+
+/* Noise texture */
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(8,6,4,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.7);
+  display: flex; align-items: center;
+}
+.back-btn {
+  background: none; border: none; border-right: 1px solid var(--border);
+  cursor: pointer; font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); padding: 18px 24px;
+  transition: color 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; text-decoration: none;
+}
+.back-btn:hover { color: var(--amber-lt); background: rgba(200,160,60,0.05); }
+.topbar-title {
+  flex: 1; text-align: center; padding-right: 80px;
+  font-family: 'Cinzel', serif; font-size: 0.68rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ── HERO HEADER ── */
+.char-header {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 80% at 30% 50%, rgba(192,74,0,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 80% 40%, rgba(138,106,42,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #100804 0%, var(--void) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px 50px;
+}
+
+/* Grid pattern */
+.char-header::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,160,60,0.03) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,160,60,0.03) 40px);
+  pointer-events: none;
+}
+
+/* Animated fire glow behind image */
+.char-header::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(to top, var(--void), transparent);
+  pointer-events: none; z-index: 1;
+}
+
+.char-header-inner {
+  position: relative; z-index: 2;
+  max-width: 1000px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+/* ── CHARACTER IMAGE ── */
+.char-portrait-wrap {
+  position: relative;
+}
+
+.char-portrait {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 1px rgba(200,160,60,0.1),
+    0 8px 60px rgba(192,74,0,0.35),
+    0 0 120px rgba(192,74,0,0.15);
+  display: block;
+  border-radius: 2px;
+}
+
+/* Placeholder portrait */
+.char-portrait-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border: 1px dashed rgba(200,160,60,0.3);
+  border-radius: 2px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  background: rgba(200,160,60,0.02);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: border-color 0.3s, background 0.3s;
+  box-shadow: 0 8px 60px rgba(192,74,0,0.2);
+}
+.char-portrait-placeholder:hover {
+  border-color: rgba(200,160,60,0.55);
+  background: rgba(200,160,60,0.05);
+}
+.char-portrait-placeholder input {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.char-portrait-placeholder svg { opacity: 0.25; }
+.portrait-label {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--amber); opacity: 0.7;
+}
+
+/* Level badge */
+.level-badge {
+  position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--dark-card); border: 1px solid var(--amber);
+  padding: 6px 18px;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--amber-lt);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(192,74,0,0.3);
+}
+
+/* ── CHARACTER INFO ── */
+.char-info { padding-top: 8px; }
+
+.char-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.4em; color: var(--fire-pale);
+  text-transform: uppercase; margin-bottom: 10px; opacity: 0.8;
+}
+
+.char-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: #fff;
+  line-height: 1.1; letter-spacing: 0.04em;
+  text-shadow:
+    0 0 40px rgba(192,74,0,0.6),
+    0 0 80px rgba(192,74,0,0.2),
+    0 2px 4px rgba(0,0,0,0.9);
+}
+
+.char-class {
+  font-family: 'Cinzel', serif; font-size: 0.85rem;
+  color: var(--amber-lt); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* Divider */
+.char-divider {
+  display: flex; align-items: center; gap: 14px; margin: 22px 0;
+}
+.char-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(200,160,60,0.4), transparent); }
+.char-divider-icon { color: var(--fire-pale); font-size: 0.9rem; }
+
+/* ── COMBAT STATS ROW ── */
+.combat-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.combat-stat {
+  background: rgba(30,21,8,0.8);
+  border: 1px solid var(--border);
+  padding: 14px 10px 12px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s;
+}
+.combat-stat::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--fire), var(--amber));
+}
+.combat-stat:hover { border-color: rgba(200,160,60,0.45); }
+
+.combat-stat-value {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--fire-pale);
+  line-height: 1; display: block;
+  text-shadow: 0 0 20px rgba(192,74,0,0.5);
+}
+.combat-stat-label {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); margin-top: 5px; display: block;
+}
+
+/* ── ABILITY SCORES ── */
+.abilities-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.ability {
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  padding: 12px 6px 10px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.ability:hover {
+  transform: translateY(-2px);
+  border-color: rgba(200,160,60,0.4);
+}
+
+.ability-score {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem; font-weight: 700;
+  line-height: 1; display: block;
+}
+.ability-mod {
+  font-family: 'Cinzel', serif; font-size: 0.75rem;
+  font-weight: 600; display: block; margin-top: 3px;
+}
+.ability-name {
+  font-family: 'Cinzel', serif; font-size: 0.48rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); margin-top: 5px; display: block;
+}
+
+/* Color per stat */
+.ability.str .ability-score { color: #c04a3a; }
+.ability.str .ability-mod   { color: #c04a3a; }
+.ability.dex .ability-score { color: #6aaa4a; }
+.ability.dex .ability-mod   { color: #6aaa4a; }
+.ability.con .ability-score { color: #4a8ac0; }
+.ability.con .ability-mod   { color: #4a8ac0; }
+.ability.int .ability-score { color: var(--fire-pale); }
+.ability.int .ability-mod   { color: var(--fire-pale); }
+.ability.wis .ability-score { color: #aa88cc; }
+.ability.wis .ability-mod   { color: #aa88cc; }
+.ability.cha .ability-score { color: #c0a040; }
+.ability.cha .ability-mod   { color: #c0a040; }
+
+/* ── CONTENT AREA ── */
+.content {
+  max-width: 1000px; margin: 0 auto; padding: 48px 40px 80px;
+}
+
+/* Section heading */
+.section-heading {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.section-heading-text {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.35em; text-transform: uppercase; color: var(--amber-lt);
+}
+.section-heading-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(200,160,60,0.35), transparent);
+}
+
+/* Lore block */
+.lore-block {
+  background: var(--dark-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--fire);
+  padding: 24px 28px; margin-bottom: 40px;
+  font-size: 1.02rem; color: var(--text); line-height: 1.85;
+}
+
+/* Time accent quote */
+.time-quote {
+  border-left: 3px solid var(--amber);
+  padding: 16px 24px; margin: 28px 0;
+  background: linear-gradient(90deg, rgba(138,106,42,0.1) 0%, transparent 100%);
+  font-style: italic; font-size: 1.08rem; color: var(--text); line-height: 1.7;
+}
+
+/* Trait cards */
+.traits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; margin-bottom: 40px;
+}
+.trait-card {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 20px 22px; position: relative; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.trait-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--fire), var(--amber));
+}
+.trait-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(192,74,0,0.2);
+}
+.trait-name {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+  color: var(--amber-lt); margin-bottom: 8px; letter-spacing: 0.05em;
+}
+.trait-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ── HOURGLASS DECORATION ── */
+.hourglass-deco {
+  text-align: center; margin: 40px 0 32px;
+  opacity: 0.35;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 36px 20px;
+  border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-dim);
+  background: linear-gradient(180deg, transparent, rgba(192,74,0,0.04));
+}
+footer strong { color: var(--amber-lt); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .char-header-inner { grid-template-columns: 1fr; gap: 36px; }
+  .char-portrait-placeholder { aspect-ratio: 4/3; max-width: 320px; margin: 0 auto; }
+  .abilities-grid { grid-template-columns: repeat(3, 1fr); }
+  .combat-stats { grid-template-columns: repeat(3, 1fr); }
+  .char-header { padding: 40px 20px 50px; }
+  .content { padding: 36px 20px 60px; }
+  .back-btn span { display: none; }
+  .topbar-title { padding-right: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="back-btn" href="../index.html">← <span>Centuria</span></a>
+  <span class="topbar-title">Personaggio · Mago Cronomante</span>
+</div>
+
+<!-- HERO HEADER -->
+<div class="char-header">
+  <div class="char-header-inner">
+
+    <!-- Portrait -->
+    <div class="char-portrait-wrap">
+      <img src="magnus.png" alt="Magnus Volstrucker" class="char-portrait">
+      <div class="level-badge">✦ Livello 3 · Mago</div>
+    </div>
+
+    <!-- Info -->
+    <div class="char-info">
+      <p class="char-eyebrow">Centuria · Personaggio Giocante</p>
+      <h1 class="char-name">Magnus<br>Volstrucker</h1>
+      <p class="char-class">Mago · Scuola di Cronomagia</p>
+
+      <div class="char-divider">
+        <div class="char-divider-line"></div>
+        <span class="char-divider-icon">⧗</span>
+        <div class="char-divider-line"></div>
+      </div>
+
+      <!-- Combat stats -->
+      <div class="combat-stats">
+        <div class="combat-stat">
+          <span class="combat-stat-value">26</span>
+          <span class="combat-stat-label">Punti Ferita</span>
+        </div>
+        <div class="combat-stat">
+          <span class="combat-stat-value">12</span>
+          <span class="combat-stat-label">Classe Armatura</span>
+        </div>
+        <div class="combat-stat">
+          <span class="combat-stat-value">+5</span>
+          <span class="combat-stat-label">Iniziativa</span>
+        </div>
+      </div>
+
+      <!-- Ability scores -->
+      <div class="abilities-grid">
+        <div class="ability str">
+          <span class="ability-score">10</span>
+          <span class="ability-mod">+0</span>
+          <span class="ability-name">FOR</span>
+        </div>
+        <div class="ability dex">
+          <span class="ability-score">14</span>
+          <span class="ability-mod">+2</span>
+          <span class="ability-name">DES</span>
+        </div>
+        <div class="ability con">
+          <span class="ability-score">14</span>
+          <span class="ability-mod">+2</span>
+          <span class="ability-name">COS</span>
+        </div>
+        <div class="ability int">
+          <span class="ability-score">17</span>
+          <span class="ability-mod">+3</span>
+          <span class="ability-name">INT</span>
+        </div>
+        <div class="ability wis">
+          <span class="ability-score">12</span>
+          <span class="ability-mod">+1</span>
+          <span class="ability-name">SAG</span>
+        </div>
+        <div class="ability cha">
+          <span class="ability-score">8</span>
+          <span class="ability-mod">−1</span>
+          <span class="ability-name">CAR</span>
+        </div>
+      </div>
+
+    </div><!-- /char-info -->
+  </div><!-- /char-header-inner -->
+</div><!-- /char-header -->
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- Lore -->
+  <div class="section-heading">
+    <span class="section-heading-text">Il Personaggio</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="lore-block">
+    Magnus Volstrucker è un mago specializzato nella Scuola di Cronomagia, l'arte di piegare il tessuto del tempo a proprio vantaggio. Nonostante la giovane età come avventuriero, il suo intelletto affilato e la padronanza del fuoco come elemento preferito lo rendono un alleato imprevedibile e un avversario pericoloso.
+  </div>
+
+  <div class="time-quote">
+    "Il tempo non è un fiume che scorre — è argilla. E io ho imparato a modellarla."
+  </div>
+
+  <!-- Traits -->
+  <div class="section-heading" style="margin-top:40px;">
+    <span class="section-heading-text">Tratti e Abilità</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="traits-grid">
+    <div class="trait-card">
+      <div class="trait-name">⧗ Distorsione Temporale</div>
+      <p>Capacità cronomante di alterare brevemente il flusso del tempo, accelerando i propri riflessi o rallentando quelli nemici nel momento cruciale.</p>
+    </div>
+    <div class="trait-card">
+      <div class="trait-name">🔥 Affinità col Fuoco</div>
+      <p>Magnus canalizza preferenzialmente magie di fuoco, combinando la distruzione dell'elemento con la precisione temporale per colpire nel momento esatto di massima vulnerabilità.</p>
+    </div>
+    <div class="trait-card">
+      <div class="trait-name">📖 Mente Analitica</div>
+      <p>Con un'Intelligenza di 17, Magnus eccelle nella risoluzione di enigmi, nella lettura di testi arcani e nell'identificare pattern magici che sfuggono agli altri.</p>
+    </div>
+  </div>
+
+  <!-- Hourglass decoration -->
+  <div class="hourglass-deco">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Frame -->
+      <rect x="8" y="4" width="44" height="4" rx="1" fill="#c9820a"/>
+      <rect x="8" y="72" width="44" height="4" rx="1" fill="#c9820a"/>
+      <line x1="10" y1="6" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
+      <line x1="50" y1="6" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
+      <line x1="10" y1="74" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
+      <line x1="50" y1="74" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
+      <!-- Sand top -->
+      <path d="M14 10 Q30 36 46 10Z" fill="#c04a00" opacity="0.5"/>
+      <!-- Sand bottom -->
+      <path d="M22 50 Q30 44 38 50 L34 70 L26 70Z" fill="#e8640a" opacity="0.7"/>
+      <!-- Falling grain -->
+      <circle cx="30" cy="41" r="1.5" fill="#f0943a" opacity="0.9"/>
+    </svg>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <strong>Magnus Volstrucker</strong> · Mago Cronomante · Livello 3
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script>
+function loadPortrait(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const ph = document.getElementById('portrait-ph');
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    img.className = 'char-portrait';
+    img.title = 'Clicca per cambiare';
+    img.style.cursor = 'pointer';
+    img.onclick = () => {
+      const ni = document.createElement('input');
+      ni.type = 'file'; ni.accept = 'image/*';
+      ni.onchange = ev => {
+        if (ev.target.files[0]) {
+          const r2 = new FileReader();
+          r2.onload = e2 => img.src = e2.target.result;
+          r2.readAsDataURL(ev.target.files[0]);
+        }
+      };
+      ni.click();
+    };
+    ph.replaceWith(img);
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
