@@ -12,12 +12,33 @@ centuria/
 |- terre-ignote.html           # Diario del nuovo continente in esplorazione
 |- README.md
 |- LICENSE
+|- CLAUDE.md                   # Guida per Claude Code
 |- resources/
 |  |- Centuria_plain.png       # Mappa principale
 |  `- kassendyr/               # Asset visivi della nazione Kassendyr
-`- nations/
-   |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
-   `- velikor.html             # Scheda completa: La Repubblica delle Pianure
+|- nations/
+|  |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
+|  |- velikor.html             # Scheda completa: La Repubblica delle Pianure
+|  `- aurelion.html            # Scheda completa: Lega di Aurelion
+|- characters/
+|  `- magnus/
+|     `- magnus.html           # Profilo del personaggio Magnus Volstruker
+|- campagne/
+|  `- campagna1/
+|     |- campagna1.html        # Pagina principale della Campagna I
+|     `- characters/
+|        `- magnus/
+|           `- magnus.html     # Link al profilo di Magnus
+|- css/
+|  |- index.css                # Styling della home
+|  |- campagne-base.css        # Styling base delle campagne
+|  |- campagne-components.css  # Componenti delle campagne
+|  |- nations-*.css            # Styling per ogni nazione
+|  `- terre-ignote-*.css       # Styling per le terre ignote
+`- js/
+   |- campagne.js              # Logica timeline e filtri campagne
+   |- terre-ignote.js          # Logica timeline e filtri terre ignote
+   `- nation-tabs.js           # Gestione tab per le nazioni
 ```
 
 ## Stato contenuti
@@ -33,18 +54,38 @@ centuria/
 | Kalveor | Vecchio Continente · Sud | 🔒 In arrivo |
 | Isola Perennogelo | Arcipelago · Nord-Est | 🔒 In arrivo |
 
-### Altri territori
+### Altre aree
 
 | Area | Stato |
 |---|---|
 | **Terre Ignote** (Nuovo Continente) | ✅ Disponibile |
+| **Campagna I** (Diario + Personaggi) | ✅ Disponibile |
+
+### Personaggi disponibili
+
+| Personaggio | Classe | Stato |
+|---|---|---|
+| **Magnus Volstruker** | Mago · Cronomagia | ✅ Disponibile |
+| Elara Stonefist | Guerriero · Compagnia del Ferro | 🔒 In arrivo |
+| Raven Nightwhisper | Ladro · Gilda dei Segreti | 🔒 In arrivo |
+| Brother Marcus | Clerico · Ordine della Luce | 🔒 In arrivo |
 
 ## Come aggiungere una nuova nazione
 
 1. Crea un file in `nations/` (es. `nations/nuova-nazione.html`), usando `kassendyr.html` o `velikor.html` come base.
-2. Aggiungi la card in `index.html` nella sezione **Nazioni Conosciute**.
-3. Se la nazione e disponibile, usa un link `<a class="nation-card" href="nations/nuova-nazione.html">`; se non lo e, mantieni la card con classe `locked`.
-4. Inserisci eventuali immagini in `resources/<nome-nazione>/` e collegale nella pagina della nazione.
+2. Crea un CSS personalizzato in `css/nations-<nome-nazione>.css`.
+3. Aggiungi la card in `index.html` nella sezione **Nazioni Conosciute**.
+4. Se disponibile, usa un link `<a class="nation-card" href="nations/nuova-nazione.html">`; altrimenti, usa `<div class="nation-card locked">`.
+5. Inserisci eventuali immagini in `resources/<nome-nazione>/`.
+
+## Come aggiungere un evento alla Campagna I
+
+1. Apri `campagne/campagna1/campagna1.html`.
+2. Nel tab **Diario**, aggiungi una nuova `<div class="discovery-card">` nella sezione masonry:
+   - Imposta `data-cat` a una di: `storia`, `avventure`, `npc`, `locazioni`
+   - Imposta `data-sess` al numero della sessione (deve corrispondere a `SESSIONS` in `js/campagne.js`)
+3. Usa gli esempi esistenti come template per il contenuto.
+4. Per aggiungere una nuova sessione, modifica l'array `SESSIONS` in `js/campagne.js`.
 
 ## Hosting
 
