@@ -165,7 +165,8 @@ footer strong { color: var(--gold); }
 
 /* ── TAB NAVIGATION (for diario/personaggi pages) ── */
 .tabs-nav {
-  display: flex; gap: 4px; margin-left: auto; margin-right: 24px;
+  display: flex; flex: 1; justify-content: center;
+  flex-wrap: wrap; padding: 0 8px;
 }
 .tab-btn {
   background: none; border: none; cursor: pointer;
@@ -222,7 +223,6 @@ footer strong { color: var(--gold); }
   .masonry { columns: 1; }
   .back-btn span { display: none; }
   .topbar-title { padding-right: 0; }
-  .tabs-nav { margin-right: 12px; gap: 2px; }
   .tab-btn { padding: 14px 10px; font-size: 0.55rem; }
   .characters-grid { grid-template-columns: 1fr; }
 }
