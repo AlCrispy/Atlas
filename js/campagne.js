@@ -45,18 +45,10 @@ const SESSIONS = [
 ];
 
 const CAT_LABELS = {
-  storia:    'Avvenimenti & Storia',
-  avventure: 'Avventure & Sfide',
-  npc:       'NPC & Incontri',
-  locazioni: 'Locazioni & Luoghi'
-};
-
-// Mapping delle categorie da terre-ignote a campagne
-const CATEGORY_MAP = {
-  citta:    'locazioni',
-  misteri:  'avventure',
-  fazioni:  'npc',
-  punti:    'locazioni'
+  citta:    'Città & Insediamenti',
+  misteri:  'Misteri & Anomalie',
+  fazioni:  'Fazioni & Personaggi',
+  punti:    'Punti di Interesse'
 };
 
 let activeCat  = 'tutti';
@@ -70,7 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function updateCounts() {
   const cards = document.querySelectorAll('.discovery-card');
-  const c = { tutti:0, storia:0, avventure:0, npc:0, locazioni:0 };
+  const c = { tutti:0, citta:0, misteri:0, fazioni:0, punti:0 };
   cards.forEach(card => { c.tutti++; c[card.dataset.cat]++; });
   Object.keys(c).forEach(k => {
     const el = document.getElementById(`cnt-${k}`);
