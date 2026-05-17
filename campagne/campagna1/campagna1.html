@@ -323,6 +323,14 @@ function switchMainView(view, btn) {
     document.getElementById('view-personaggi').style.display = 'block';
   }
 }
+
+// Check hash on page load and switch to appropriate view
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash === '#personaggi') {
+    const personaggiBtn = document.querySelectorAll('.tabs-nav .tab-btn')[1];
+    switchMainView('personaggi', personaggiBtn);
+  }
+});
 </script>
 </body>
 </html>
