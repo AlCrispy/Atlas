@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campagna I — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/campagne-base.css">
+<link rel="stylesheet" href="../css/campagne-components.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="../index.html">← <span>Centuria</span></a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchMainView('diario',this)">Diario</button>
+    <button class="tab-btn" onclick="switchMainView('personaggi',this)">Personaggi</button>
+  </nav>
+</div>
+
+<div class="page-header">
+  <p class="page-header-eyebrow">In Corso · La Prima Avventura</p>
+  <h1>Campagna I<span>Il Diario delle Avventure</span></h1>
+  <div class="header-rule">
+    <div class="header-rule-line"></div>
+    <span style="color:var(--gold);font-size:1rem;">✦</span>
+    <div class="header-rule-line"></div>
+  </div>
+  <div class="session-count">
+    ✦ <span id="total-count">0</span> eventi &nbsp;·&nbsp; <span id="total-sessions">0</span> sessioni
+  </div>
+</div>
+
+<!-- View tabs (diario subviews) -->
+<div id="diario-tabs" class="view-tabs" style="display:flex;">
+  <button class="view-tab-btn active" onclick="switchView('timeline',this)">◈ &nbsp;Timeline</button>
+  <button class="view-tab-btn" onclick="switchView('scoperte',this)">⊞ &nbsp;Eventi</button>
+</div>
+
+<!-- ══ EVENTI ══ -->
+<div id="view-scoperte" style="display:none;">
+  <div class="filters-wrapper">
+    <div class="filters">
+      <span class="filter-label">Categoria:</span>
+      <button class="filter-btn active" data-cat="tutti"       onclick="filterCat('tutti',this)">Tutti <span class="count" id="cnt-tutti"></span></button>
+      <button class="filter-btn"        data-cat="storia"      onclick="filterCat('storia',this)">Avvenimenti & Storia <span class="count" id="cnt-storia"></span></button>
+      <button class="filter-btn"        data-cat="avventure"   onclick="filterCat('avventure',this)">Avventure & Sfide <span class="count" id="cnt-avventure"></span></button>
+      <button class="filter-btn"        data-cat="npc"         onclick="filterCat('npc',this)">NPC & Incontri <span class="count" id="cnt-npc"></span></button>
+      <button class="filter-btn"        data-cat="locazioni"   onclick="filterCat('locazioni',this)">Locazioni & Luoghi <span class="count" id="cnt-locazioni"></span></button>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Sessione:</span>
+      <button class="filter-btn active" data-sess="tutte" onclick="filterSess('tutte',this)">Tutte</button>
+      <span id="sess-btns"></span>
+    </div>
+  </div>
+
+  <div class="grid-wrapper">
+    <div class="masonry" id="masonry-grid">
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           MASONRY (vista "Eventi") — come aggiungere un nuovo evento
+           ───────────────────────────────────────────────────────────────
+           1) Copia un blocco <div class="discovery-card" …> esistente.
+           2) Imposta gli attributi sulla card:
+              • data-cat = una sola tra: storia | avventure | npc | locazioni
+              • data-sess = numero sessione come stringa, es. "1"
+           3) Dentro .card-meta aggiorna:
+              • <span class="card-cat" data-cat="…"> con la stessa categoria
+              • <span class="card-session">Sessione N</span> con il numero
+           4) Modifica .card-title, .card-text e opzionalmente .card-quote.
+      ═══════════════════════════════════════════════════════════════ -->
+
+      <div class="discovery-card" data-cat="npc" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">Jeremy Bucket e l'Inaffondabile</div>
+          <p class="card-text">Capitano della nave che vi traghetta dal Vecchio Continente. L'Inaffondabile — nome forse ironico dopo l'incontro in mare — è il vostro unico legame con ciò che lasciate alle spalle e la prima voce autoritaria che incontrate verso l'ignoto.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="1">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 1</span></div>
+          <div class="card-title">La creatura dalle sembianze miste</div>
+          <p class="card-text">Un colosso marino che unisce tentacoli da kraken a una porzione di corpo quasi umanoide. Vi tende quasi un agguato fatale nel bel mezzo della traversata; la natura e l'intento restano oscuri, ma il ricordo dell'incontro vi accompagna fino alla vista della costa.</p>
+          <div class="card-quote">«Quasi uomo, quasi abisso: qualcosa che il mare non vuole nominare.»</div>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Porto Nero</div>
+          <p class="card-text">Primo approdo consolidato per chi raggiunge le Terre ignote: qui convergono rotte, merci e ambizioni. L'ingresso è segnato da imponenti pietre nere che annunciano una terra dove la magia non è un dettaglio ornamentale.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Le colonne di nerite</div>
+          <p class="card-text">Monoliti di nerite, minerale nero che vibra di potere arcano. Ne ignorate ancora leggi e limiti, ma la loro presenza all'ingresso del Porto Nero fa da promessa e da avvertimento: qui la magia è materia visibile.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Locanda del Cardo Appassito</div>
+          <p class="card-text">Dove passate la prima notte a terra. Tavolate, chiacchiere e incroci: un luogo neutro dove le strade di molti avventurieri si intrecciano prima che le strade vi spingano verso l'interno.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Gorian, Cyrma, Lafa e Tarion</div>
+          <p class="card-text">Un'altra compagnia incontrata al Cardo Appassito: volti nuovi, stesse frontiere. Potrebbero restare compagni di bevuta, alleati improvvisi o ombre su strade parallele — il tempo dirà se il destino vi manterrà affiancati.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Sytrill</div>
+          <p class="card-text">Capitale attuale delle Terre ignote: metropoli dove cercate tetto sicuro e prime commissioni. Qui la politica, il commercio e le organizzazioni di potere si compenetrano; la città è già un personaggio al vostro tavolo.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="2">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 2</span></div>
+          <div class="card-title">Anne e la Gilda dei Cacciatori</div>
+          <p class="card-text">Vi unite alla gilda e Anne segue l'iscrizione con precisione burocratica e sguardo attento. È il primo filtro tra voi e il lavoro legale (o meno) che Sytrill offre agli stranieri con le armi sguainate.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="3">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 3</span></div>
+          <div class="card-title">Phil Amor — L'Iniziato</div>
+          <p class="card-text">Proprietario del negozio L'Iniziato, punto di riferimento prima che partiate per la missione. Merci, voci di corridoio e contratti: da lui passa un pezzo del puzzle della vostra nuova vita a Sytrill.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="3">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 3</span></div>
+          <div class="card-title">La foresta a nord-est</div>
+          <p class="card-text">Boscaglia infestata dai goblin, obiettivo della caccia di gilda. Il sottobosco nasconde imboscate, rumori seccati e la consapevolezza che qui non siete più i soli predatori.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="3">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 3</span></div>
+          <div class="card-title">La caverna dei funghi cremisi</div>
+          <p class="card-text">Grotta sulla stessa rotta della foresta, dove la gilda vi manda a recuperare funghi cremisi. L'aria è densa, la pietra umida; qualcosa di più antico dei goblin respira tra le venature del buio.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="4">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 4</span></div>
+          <div class="card-title">Lo scheletro del beholder</div>
+          <p class="card-text">Resti imponenti attorno ai quali crescono i funghi cremisi, quasi parassiti arcani delle ossa. La caverna diventa sepolcro e serra al tempo stesso: il silenzio ha ancora la forma di un occhio che vedeva troppo.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="4">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 4</span></div>
+          <div class="card-title">La visione dell'ultimo volo</div>
+          <p class="card-text">I fumi legati al beholder regalano visioni condivise: la creatura in fuga, poi un colpo — o un giudizio — da un'entità enorme e ancora indistinta. Chi ha ucciso l'occhio? E perché resta un alone di terrore nella memoria?</p>
+          <div class="card-quote">«Qualcosa di più grande del buio ha chiuso quella vista.»</div>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="5">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 5</span></div>
+          <div class="card-title">I Consacratori</div>
+          <p class="card-text">Ordine di ecclesiastici e templari le cui richieste arrivano fino alla vostra tavola attraverso la gilda. Cinque dei loro uomini sono scomparsi in missione: il caso chiede discrezione, ferro e forse una coscienza più ampia del contratto.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="5">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 5</span></div>
+          <div class="card-title">Bardok Drum e il dubbio su Anne</div>
+          <p class="card-text">Bardok vi consegna l'incarico presentandosi come capo della gilda — ma fuori dalla stanza sentite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Le gerarchie, a Sytrill, potrebbero non coincidere con i titoli che vi vengono mostrati.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">Il villaggio delle vite prosciugate</div>
+          <p class="card-text">Abitanti privi di vita come succhiati da un vuoto interno, corpi deturpati. Quattro Consacratori giacciono tra le vittime; il silenzio ha il sapore di un rito interrotto o appena iniziato.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="locazioni" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="locazioni">Locazioni & Luoghi</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">La chiesa di Sytrill l'esploratore</div>
+          <p class="card-text">Luogo sacro dedicato all'esploratore che diede il nome alla capitale e, si dice, gettò per primo lo sguardo su queste terre. Qui le tracce del quinto consacratore si intrecciano con la storia ufficiale e con qualcosa di più sinistro.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="npc" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="npc">NPC & Incontri</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">Il cultista del rito parziale</div>
+          <p class="card-text">Cultista preso dal fervore del rito, intento a prelevare parti dai corpi. La sconfitta non chiude il cerchio: resta da capire a quale dio, patto o falla rispondeva quel gesto metodico.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">La stanza della sfera e delle rune antimagia</div>
+          <p class="card-text">Una cella di simboli che imprigionano o indeboliscono la magia, al centro una sfera strana tenuta a freno dal disegno complessivo. Non avete tempo di studiarla: qualcosa fuori dalla porta accelera il respiro della tomba.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">L'ondata dal cimitero</div>
+          <p class="card-text">Non morti che si riversano dal camposanto vicino alla chiesa. La fuga diventa priorità: portate con voi corpi, indizi e la paura che Sytrill non sia immune a ciò che avete visto.</p>
+        </div>
+      </div>
+
+      <div class="discovery-card" data-cat="avventure" data-sess="6">
+        <div class="card-body">
+          <div class="card-meta"><span class="card-cat" data-cat="avventure">Avventure & Sfide</span><span class="card-session">Sessione 6</span></div>
+          <div class="card-title">La pagina ritualistica illeggibile</div>
+          <p class="card-text">Un frammento di scritture che sfuggono alla lettura chiara, forse legato al rito del cultista. Torna con voi verso la capitale come promessa di risposte — o come esca per chi saprà decifrarla.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="empty-state" id="empty-state">Nessun evento trovato.</div>
+  </div>
+</div>
+
+<!-- ══ TIMELINE ══ -->
+<div id="view-timeline">
+  <div class="timeline-wrapper" id="timeline-wrapper"></div>
+</div>
+
+<!-- ══ PERSONAGGI ══ -->
+<div id="view-personaggi" style="display:none;">
+  <div class="grid-wrapper" style="padding-top: 40px;">
+    <div class="characters-grid">
+
+      <!-- Magnus Volstruker — Mago di Cronomagia -->
+      <a class="character-card" href="../characters/magnus/magnus.html">
+        <div class="char-class">Mago · Scuola di Cronomagia</div>
+        <div class="char-name">Magnus Volstruker</div>
+        <div class="char-title">Maestro del Tempo</div>
+        <div class="char-desc">Un mago giovane ma potente, specializzato nell'arte di piegare il tempo a proprio vantaggio. Il suo intelletto affilato e l'affinità col fuoco lo rendono un alleato imprevedibile.</div>
+      </a>
+
+      <!-- Elara Stonefist — Guerriero (locked) -->
+      <div class="character-card locked">
+        <div class="coming-soon-badge">In arrivo</div>
+        <div class="char-class">Guerriero · Compagnia del Ferro</div>
+        <div class="char-name">Elara Stonefist</div>
+        <div class="char-title">Scudo della Guardia</div>
+        <div class="char-desc">Una guerriera esperta con un'onore incrollabile. Protettore della gente comune, maestrale con spadone e scudo.</div>
+      </div>
+
+      <!-- Raven Nightwhisper — Ladro (locked) -->
+      <div class="character-card locked">
+        <div class="coming-soon-badge">In arrivo</div>
+        <div class="char-class">Ladro · Gilda dei Segreti</div>
+        <div class="char-name">Raven Nightwhisper</div>
+        <div class="char-title">Ombra tra le Ombre</div>
+        <div class="char-desc">Un ladro abilissimo che si muove nell'oscurità senza farsi notare. Specializzato nell'infiltrazione e nel recupero di oggetti preziosi.</div>
+      </div>
+
+      <!-- Brother Marcus — Clerico (locked) -->
+      <div class="character-card locked">
+        <div class="coming-soon-badge">In arrivo</div>
+        <div class="char-class">Clerico · Ordine della Luce</div>
+        <div class="char-name">Brother Marcus</div>
+        <div class="char-title">Portatore di Guarigione</div>
+        <div class="char-desc">Un devoto guaritore che cerca di alleviare le sofferenze del mondo. Maestro di magia curativa e protettiva.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>Campagna I</strong> · La Prima Avventura
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script src="../js/campagne.js"></script>
+<script>
+function switchMainView(view, btn) {
+  // Switch main view between diario and personaggi
+  document.querySelectorAll('.tabs-nav .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  if (view === 'diario') {
+    document.getElementById('diario-tabs').style.display = 'flex';
+    document.getElementById('view-timeline').style.display = 'block';
+    document.getElementById('view-scoperte').style.display = 'none';
+    document.getElementById('view-personaggi').style.display = 'none';
+    // Reset diario subview to timeline
+    document.querySelectorAll('.view-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view-tab-btn')[0].classList.add('active');
+  } else {
+    document.getElementById('diario-tabs').style.display = 'none';
+    document.getElementById('view-timeline').style.display = 'none';
+    document.getElementById('view-scoperte').style.display = 'none';
+    document.getElementById('view-personaggi').style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
