@@ -20,15 +20,12 @@ centuria/
 |  |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
 |  |- velikor.html             # Scheda completa: La Repubblica delle Pianure
 |  `- aurelion.html            # Scheda completa: Lega di Aurelion
-|- characters/
-|  `- magnus/
-|     `- magnus.html           # Profilo del personaggio Magnus Volstruker
 |- campagne/
 |  `- campagna1/
 |     |- campagna1.html        # Pagina principale della Campagna I
 |     `- characters/
 |        `- magnus/
-|           `- magnus.html     # Link al profilo di Magnus
+|           `- magnus.html     # Scheda Magnus
 |- css/
 |  |- index.css                # Styling della home
 |  |- campagne-base.css        # Styling base delle campagne
