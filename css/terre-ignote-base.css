@@ -1,28 +1,31 @@
 /* Terre Ignote — base: token, reset, corpo, topbar, intestazione pagina */
 :root {
-  --teal:      #0d3a3a;
-  --teal-lt:   #1a6060;
-  --teal-pale: #2a8a7a;
-  --gold:      #c9a84c;
-  --gold-lt:   #e8c97a;
-  --void:      #060a0a;
-  --dark-card: #0f1a1a;
-  --stone:     #1a2a2a;
-  --text:      #ccd4d0;
-  --text-dim:  #7a8c88;
-  --border:    rgba(201,168,76,0.2);
+  --teal:      #0a2030;
+  --teal-lt:   #1a7890;
+  --teal-pale: #38c8a8;
+  --gold:      #c8a040;
+  --gold-lt:   #e8c870;
+  --void:      #070810;
+  --dark-card: #0d1020;
+  --stone:     #181a2e;
+  --text:      #c2d4e8;
+  --text-dim:  #6a7a90;
+  --border:    rgba(160,120,240,0.18);
 
-  --col-citta:   #b8882a;
-  --col-misteri: #7a2a9a;
-  --col-fazioni: #2a5a8a;
-  --col-punti:   #2a7a4a;
+  --col-citta:   #c47820;
+  --col-misteri: #9028c8;
+  --col-fazioni: #2860a8;
+  --col-punti:   #18906a;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--void);
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 100%, rgba(18,10,50,0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 40% at 10% 60%,  rgba(10,40,70,0.3)  0%, transparent 55%),
+    var(--void);
   color: var(--text);
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 17px; line-height: 1.75;
@@ -30,16 +33,16 @@ body {
 }
 body::before {
   content: ''; position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0; opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.55;
 }
 
 /* ── TOPBAR ── */
 .topbar {
   position: sticky; top: 0; z-index: 300;
-  background: rgba(6,10,10,0.97); backdrop-filter: blur(16px);
+  background: rgba(7,8,16,0.97); backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.7);
   display: flex; align-items: center;
 }
 .back-btn {
@@ -61,28 +64,40 @@ body::before {
 /* ── PAGE HEADER ── */
 .page-header {
   position: relative; text-align: center;
-  padding: 56px 20px 44px;
+  padding: 64px 20px 52px;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,58,58,0.4) 0%, transparent 70%),
-    linear-gradient(180deg, #060e0e 0%, var(--void) 100%);
+    radial-gradient(ellipse 70% 80% at 50% -10%, rgba(100,20,180,0.38) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 15% 40%,  rgba(20,90,140,0.28) 0%, transparent 50%),
+    radial-gradient(ellipse 55% 45% at 85% 30%,  rgba(10,120,100,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 40% at 50% 100%, rgba(14,10,36,0.6)    0%, transparent 70%),
+    linear-gradient(180deg, #0c0818 0%, var(--void) 100%);
   border-bottom: 1px solid var(--border); overflow: hidden;
 }
 .page-header::before {
   content: ''; position: absolute; inset: 0;
   background:
-    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.025) 40px),
-    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.025) 40px);
+    radial-gradient(circle 1px at 20% 25%,  rgba(255,255,255,0.4) 0%, transparent 1px),
+    radial-gradient(circle 1px at 73% 18%,  rgba(255,255,255,0.3) 0%, transparent 1px),
+    radial-gradient(circle 1px at 45% 60%,  rgba(255,255,255,0.25) 0%, transparent 1px),
+    radial-gradient(circle 1px at 88% 55%,  rgba(255,255,255,0.35) 0%, transparent 1px),
+    radial-gradient(circle 1px at 10% 72%,  rgba(255,255,255,0.2)  0%, transparent 1px),
+    radial-gradient(circle 1px at 62% 38%,  rgba(255,255,255,0.3)  0%, transparent 1px),
+    radial-gradient(circle 1px at 33% 82%,  rgba(255,255,255,0.25) 0%, transparent 1px),
+    radial-gradient(circle 1px at 91% 80%,  rgba(255,255,255,0.2)  0%, transparent 1px);
   pointer-events: none;
 }
 .page-header-eyebrow {
   font-family: 'Cinzel', serif; font-size: 0.62rem;
   letter-spacing: 0.45em; color: var(--teal-pale);
-  text-transform: uppercase; margin-bottom: 10px; opacity: 0.8;
+  text-transform: uppercase; margin-bottom: 10px; opacity: 0.9;
 }
 .page-header h1 {
   font-family: 'Cinzel Decorative', serif;
   font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 900; color: #fff;
-  text-shadow: 0 0 40px rgba(13,58,58,0.9), 0 2px 4px rgba(0,0,0,0.9);
+  text-shadow:
+    0 0 60px rgba(100,20,180,0.55),
+    0 0 30px rgba(30,120,180,0.35),
+    0 2px 6px rgba(0,0,0,0.95);
   line-height: 1.15; letter-spacing: 0.05em;
 }
 .page-header h1 span {
