@@ -513,35 +513,5 @@ footer strong { color: var(--amber-lt); }
   <br><br>
   Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
 </footer>
-
-<script>
-function loadPortrait(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const ph = document.getElementById('portrait-ph');
-    const img = document.createElement('img');
-    img.src = e.target.result;
-    img.className = 'char-portrait';
-    img.title = 'Clicca per cambiare';
-    img.style.cursor = 'pointer';
-    img.onclick = () => {
-      const ni = document.createElement('input');
-      ni.type = 'file'; ni.accept = 'image/*';
-      ni.onchange = ev => {
-        if (ev.target.files[0]) {
-          const r2 = new FileReader();
-          r2.onload = e2 => img.src = e2.target.result;
-          r2.readAsDataURL(ev.target.files[0]);
-        }
-      };
-      ni.click();
-    };
-    ph.replaceWith(img);
-  };
-  reader.readAsDataURL(file);
-}
-</script>
 </body>
 </html>
