@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/terre-ignote-base.css">
 <link rel="stylesheet" href="css/terre-ignote-components.css">
+<link rel="stylesheet" href="css/terre-ignote-locations.css">
 </head>
 <body>
 
@@ -17,259 +18,127 @@
 
 <div class="page-header">
   <p class="page-header-eyebrow">Nuovo Continente · In Esplorazione</p>
-  <h1>Terre Ignote<span>Diario delle Scoperte</span></h1>
+  <h1>Terre Ignote<span>Il Continente</span></h1>
   <div class="header-rule">
     <div class="header-rule-line"></div>
     <span style="color:var(--teal-pale);font-size:1rem;">✦</span>
     <div class="header-rule-line"></div>
   </div>
-  <div class="session-count">
-    ✦ <span id="total-count">0</span> scoperte &nbsp;·&nbsp; <span id="total-sessions">0</span> sessioni
-  </div>
 </div>
 
-<!-- View tabs -->
-<div class="view-tabs">
-  <button class="view-tab-btn active" onclick="switchView('timeline',this)">◈ &nbsp;Timeline</button>
-  <button class="view-tab-btn" onclick="switchView('scoperte',this)">⊞ &nbsp;Scoperte</button>
+<div class="map-container">
+  <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" class="continent-map">
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Continente -->
+    <path d="M 100 150 Q 150 120 200 130 L 250 100 Q 300 80 350 100 L 400 90 Q 450 100 480 140 L 500 200 Q 510 280 500 350 L 490 420 Q 480 480 450 520 L 420 560 Q 380 600 320 620 L 250 640 Q 180 650 140 620 L 100 580 Q 80 520 90 450 L 100 350 Q 110 250 100 150 Z"
+          fill="rgba(10, 32, 48, 0.6)" stroke="rgba(56, 200, 168, 0.3)" stroke-width="2"/>
+
+    <!-- Zone -->
+    <!-- Porto Nero (costa ovest, sud) -->
+    <circle cx="120" cy="480" r="35" fill="none" stroke="rgba(201, 168, 76, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="120" y="530" text-anchor="middle" font-size="12" font-family="Cinzel" fill="var(--gold)" class="zone-label">Porto Nero</text>
+
+    <!-- Colonne Nerite (costa ovest, sud-vicino) -->
+    <circle cx="110" cy="420" r="28" fill="none" stroke="rgba(56, 200, 168, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="110" y="465" text-anchor="middle" font-size="11" font-family="Cinzel" fill="var(--teal-pale)" class="zone-label">Nerite</text>
+
+    <!-- Locanda Cardo (strada da porto a sytrill) -->
+    <circle cx="180" cy="360" r="32" fill="none" stroke="rgba(40, 96, 168, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="180" y="410" text-anchor="middle" font-size="11" font-family="Cinzel" fill="rgba(40, 96, 168, 0.8)" class="zone-label">Locanda</text>
+
+    <!-- Sytrill (centro) -->
+    <circle cx="300" cy="350" r="45" fill="none" stroke="rgba(200, 160, 64, 0.6)" stroke-width="3" class="zone-circle"/>
+    <text x="300" y="360" text-anchor="middle" font-size="14" font-weight="bold" font-family="Cinzel" fill="var(--gold)" class="zone-label">Sytrill</text>
+
+    <!-- Foresta Nord-Est -->
+    <ellipse cx="420" cy="280" rx="50" ry="40" fill="none" stroke="rgba(144, 40, 200, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="420" y="295" text-anchor="middle" font-size="11" font-family="Cinzel" fill="rgba(144, 40, 200, 0.8)" class="zone-label">Foresta</text>
+
+    <!-- Caverna Funghi (dentro foresta, leggermente sud) -->
+    <circle cx="450" cy="340" r="30" fill="none" stroke="rgba(24, 144, 106, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="450" y="385" text-anchor="middle" font-size="10" font-family="Cinzel" fill="rgba(24, 144, 106, 0.8)" class="zone-label">Caverna</text>
+
+    <!-- Villaggio Nord -->
+    <polygon points="320,180 350,160 370,190 350,210 320,200" fill="none" stroke="rgba(144, 40, 200, 0.6)" stroke-width="2" class="zone-circle"/>
+    <text x="345" y="145" text-anchor="middle" font-size="11" font-family="Cinzel" fill="rgba(144, 40, 200, 0.8)" class="zone-label">Villaggio</text>
+
+    <!-- Chiesa Sytrill (dentro villaggio zona) -->
+    <circle cx="340" cy="220" r="25" fill="none" stroke="rgba(200, 120, 32, 0.5)" stroke-width="2" class="zone-circle"/>
+    <text x="340" y="258" text-anchor="middle" font-size="10" font-family="Cinzel" fill="rgba(200, 120, 32, 0.8)" class="zone-label">Chiesa</text>
+
+    <!-- Connessioni (strade) -->
+    <line x1="150" y1="450" x2="250" y2="380" stroke="rgba(200, 160, 64, 0.15)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="200" y1="370" x2="280" y2="350" stroke="rgba(200, 160, 64, 0.15)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="330" y1="300" x2="380" y2="280" stroke="rgba(200, 160, 64, 0.15)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="350" y1="240" x2="420" y2="280" stroke="rgba(200, 160, 64, 0.15)" stroke-width="1" stroke-dasharray="3,3"/>
+  </svg>
 </div>
 
-<!-- ══ SCOPERTE ══ -->
-<div id="view-scoperte" style="display:none;">
-  <div class="filters-wrapper">
-    <div class="filters">
-      <span class="filter-label">Categoria:</span>
-      <button class="filter-btn active" data-cat="tutti"   onclick="filterCat('tutti',this)">Tutti <span class="count" id="cnt-tutti"></span></button>
-      <button class="filter-btn"        data-cat="citta"   onclick="filterCat('citta',this)">Città & Insediamenti <span class="count" id="cnt-citta"></span></button>
-      <button class="filter-btn"        data-cat="misteri" onclick="filterCat('misteri',this)">Misteri & Anomalie <span class="count" id="cnt-misteri"></span></button>
-      <button class="filter-btn"        data-cat="fazioni" onclick="filterCat('fazioni',this)">Fazioni & Personaggi <span class="count" id="cnt-fazioni"></span></button>
-      <button class="filter-btn"        data-cat="punti"   onclick="filterCat('punti',this)">Punti di Interesse <span class="count" id="cnt-punti"></span></button>
-      <div class="filter-sep"></div>
-      <span class="filter-label">Sessione:</span>
-      <button class="filter-btn active" data-sess="tutte" onclick="filterSess('tutte',this)">Tutte</button>
-      <span id="sess-btns"></span>
-    </div>
-  </div>
+<div class="locations-grid">
+  <a class="location-card" href="locations/porto-nero.html">
+    <div class="card-header">Porto Nero</div>
+    <p class="card-description">Primo approdo consolidato. Pietre nere che annunciano una terra dove la magia non è ornamento.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-  <div class="grid-wrapper">
-    <div class="masonry" id="masonry-grid">
+  <a class="location-card" href="locations/colonne-nerite.html">
+    <div class="card-header">Colonne di Nerite</div>
+    <p class="card-description">Monoliti di minerale nero che vibra di potere arcano. Guardiani silenziosi del Porto Nero.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <!-- ═══════════════════════════════════════════════════════════════
-           MASONRY (vista "Scoperte") — come aggiungere una nuova card
-           ───────────────────────────────────────────────────────────────
-           1) Copia un blocco <div class="discovery-card" …> esistente e incollalo qui.
-           2) Imposta gli attributi sulla card (servono ai filtri categoria/sessione):
-              • data-cat = una sola tra: citta | misteri | fazioni | punti
-              • data-sess = numero sessione come stringa, es. "3" (deve combaciare con
-                la sessione in SESSIONS in js/terre-ignote.js).
-           3) Dentro .card-meta aggiorna:
-              • <span class="card-cat" data-cat="…"> con la stessa categoria di data-cat
-                (usa le stesse etichette testuali degli esempi).
-              • <span class="card-session">Sessione N</span> con lo stesso N di data-sess.
-           4) Modifica .card-title, .card-text e opzionalmente .card-quote.
-           I conteggi nei pulsanti filtro e il totale in header si aggiornano da soli al
-           caricamento (updateCounts legge tutte le .discovery-card). La timeline in
-           vista "Timeline" elenca automaticamente questa card sotto la sessione giusta.
-      ═══════════════════════════════════════════════════════════════ -->
+  <a class="location-card" href="locations/locanda-cardo.html">
+    <div class="card-header">Locanda del Cardo Appassito</div>
+    <p class="card-description">Luogo neutro dove i viaggiatori si incrociano. Primo contatto con la comunità locale.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <div class="discovery-card" data-cat="fazioni" data-sess="1">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 1</span></div>
-          <div class="card-title">Jeremy Bucket e l'Inaffondabile</div>
-          <p class="card-text">Capitano della nave che vi traghetta dal Vecchio Continente. L'Inaffondabile — nome forse ironico dopo l'incontro in mare — è il vostro unico legame con ciò che lasciate alle spalle e la prima voce autoritaria che incontrate verso l'ignoto.</p>
-        </div>
-      </div>
+  <a class="location-card" href="locations/sytrill.html">
+    <div class="card-header">Sytrill</div>
+    <p class="card-description">Capitale delle Terre ignote. Metropoli dove politica, commercio e potere si compenetrano.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <div class="discovery-card" data-cat="misteri" data-sess="1">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 1</span></div>
-          <div class="card-title">La creatura dalle sembianze miste</div>
-          <p class="card-text">Un colosso marino che unisce tentacoli da kraken a una porzione di corpo quasi umanoide. Vi tende quasi un agguato fatale nel bel mezzo della traversata; la natura e l'intento restano oscuri, ma il ricordo dell'incontro vi accompagna fino alla vista della costa.</p>
-          <div class="card-quote">«Quasi uomo, quasi abisso: qualcosa che il mare non vuole nominare.»</div>
-        </div>
-      </div>
+  <a class="location-card" href="locations/foresta-nord-est.html">
+    <div class="card-header">Foresta a Nord-Est</div>
+    <p class="card-description">Boscaglia infestata dai goblin. Sottobosco dove non siete più i soli predatori.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <div class="discovery-card" data-cat="citta" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="citta">Città & Insediamenti</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Porto Nero</div>
-          <p class="card-text">Primo approdo consolidato per chi raggiunge le Terre ignote: qui convergono rotte, merci e ambizioni. L'ingresso è segnato da imponenti pietre nere che annunciano una terra dove la magia non è un dettaglio ornamentale.</p>
-        </div>
-      </div>
+  <a class="location-card" href="locations/caverna-funghi.html">
+    <div class="card-header">Caverna dei Funghi Cremisi</div>
+    <p class="card-description">Grotta di sepolcri arcani. Magia respira tra venature di buio e ossa antiche.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <div class="discovery-card" data-cat="punti" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Le colonne di nerite</div>
-          <p class="card-text">Monoliti di nerite, minerale nero che vibra di potere arcano. Ne ignorate ancora leggi e limiti, ma la loro presenza all'ingresso del Porto Nero fa da promessa e da avvertimento: qui la magia è materia visibile.</p>
-        </div>
-      </div>
+  <a class="location-card" href="locations/villaggio-maledetto.html">
+    <div class="card-header">Villaggio Maledetto</div>
+    <p class="card-description">Abitanti privi di vita, corpi deturpati. Un rito interrotto ha lasciato solo silenzio.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 
-      <div class="discovery-card" data-cat="punti" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Locanda del Cardo Appassito</div>
-          <p class="card-text">Dove passate la prima notte a terra. Tavolate, chiacchiere e incroci: un luogo neutro dove le strade di molti avventurieri si intrecciano prima che le strade vi spingano verso l'interno.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Gorian, Cyrma, Lafa e Tarion</div>
-          <p class="card-text">Un'altra compagnia incontrata al Cardo Appassito: volti nuovi, stesse frontiere. Potrebbero restare compagni di bevuta, alleati improvvisi o ombre su strade parallele — il tempo dirà se il destino vi manterrà affiancati.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="citta" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="citta">Città & Insediamenti</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Sytrill</div>
-          <p class="card-text">Capitale attuale delle Terre ignote: metropoli dove cercate tetto sicuro e prime commissioni. Qui la politica, il commercio e le organizzazioni di potere si compenetrano; la città è già un personaggio al vostro tavolo.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="2">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 2</span></div>
-          <div class="card-title">Anne e la Gilda dei Cacciatori</div>
-          <p class="card-text">Vi unite alla gilda e Anne segue l'iscrizione con precisione burocratica e sguardo attento. È il primo filtro tra voi e il lavoro legale (o meno) che Sytrill offre agli stranieri con le armi sguainate.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="3">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 3</span></div>
-          <div class="card-title">Phil Amor — L'Iniziato</div>
-          <p class="card-text">Proprietario del negozio L'Iniziato, punto di riferimento prima che partiate per la missione. Merci, voci di corridoio e contratti: da lui passa un pezzo del puzzle della vostra nuova vita a Sytrill.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="punti" data-sess="3">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 3</span></div>
-          <div class="card-title">La foresta a nord-est</div>
-          <p class="card-text">Boscaglia infestata dai goblin, obiettivo della caccia di gilda. Il sottobosco nasconde imboscate, rumori seccati e la consapevolezza che qui non siete più i soli predatori.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="punti" data-sess="3">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 3</span></div>
-          <div class="card-title">La caverna dei funghi cremisi</div>
-          <p class="card-text">Grotta sulla stessa rotta della foresta, dove la gilda vi manda a recuperare funghi cremisi. L'aria è densa, la pietra umida; qualcosa di più antico dei goblin respira tra le venature del buio.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="4">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 4</span></div>
-          <div class="card-title">Lo scheletro del beholder</div>
-          <p class="card-text">Resti imponenti attorno ai quali crescono i funghi cremisi, quasi parassiti arcani delle ossa. La caverna diventa sepolcro e serra al tempo stesso: il silenzio ha ancora la forma di un occhio che vedeva troppo.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="4">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 4</span></div>
-          <div class="card-title">La visione dell'ultimo volo</div>
-          <p class="card-text">I fumi legati al beholder regalano visioni condivise: la creatura in fuga, poi un colpo — o un giudizio — da un'entità enorme e ancora indistinta. Chi ha ucciso l'occhio? E perché resta un alone di terrore nella memoria?</p>
-          <div class="card-quote">«Qualcosa di più grande del buio ha chiuso quella vista.»</div>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="5">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 5</span></div>
-          <div class="card-title">I Consacratori</div>
-          <p class="card-text">Ordine di ecclesiastici e templari le cui richieste arrivano fino alla vostra tavola attraverso la gilda. Cinque dei loro uomini sono scomparsi in missione: il caso chiede discrezione, ferro e forse una coscienza più ampia del contratto.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="5">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 5</span></div>
-          <div class="card-title">Bardok Drum e il dubbio su Anne</div>
-          <p class="card-text">Bardok vi consegna l'incarico presentandosi come capo della gilda — ma fuori dalla stanza sentite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Le gerarchie, a Sytrill, potrebbero non coincidere con i titoli che vi vengono mostrati.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">Il villaggio delle vite prosciugate</div>
-          <p class="card-text">Abitanti privi di vita come succhiati da un vuoto interno, corpi deturpati. Quattro Consacratori giacciono tra le vittime; il silenzio ha il sapore di un rito interrotto o appena iniziato.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="punti" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="punti">Punti di Interesse</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">La chiesa di Sytrill l'esploratore</div>
-          <p class="card-text">Luogo sacro dedicato all'esploratore che diede il nome alla capitale e, si dice, gettò per primo lo sguardo su queste terre. Qui le tracce del quinto consacratore si intrecciano con la storia ufficiale e con qualcosa di più sinistro.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="fazioni" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="fazioni">Fazioni & Personaggi</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">Il cultista del rito parziale</div>
-          <p class="card-text">Cultista preso dal fervore del rito, intento a prelevare parti dai corpi. La sconfitta non chiude il cerchio: resta da capire a quale dio, patto o falla rispondeva quel gesto metodico.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">La stanza della sfera e delle rune antimagia</div>
-          <p class="card-text">Una cella di simboli che imprigionano o indeboliscono la magia, al centro una sfera strana tenuta a freno dal disegno complessivo. Non avete tempo di studiarla: qualcosa fuori dalla porta accelera il respiro della tomba.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">L'ondata dal cimitero</div>
-          <p class="card-text">Non morti che si riversano dal camposanto vicino alla chiesa. La fuga diventa priorità: portate con voi corpi, indizi e la paura che Sytrill non sia immune a ciò che avete visto.</p>
-        </div>
-      </div>
-
-      <div class="discovery-card" data-cat="misteri" data-sess="6">
-        <div class="card-body">
-          <div class="card-meta"><span class="card-cat" data-cat="misteri">Misteri & Anomalie</span><span class="card-session">Sessione 6</span></div>
-          <div class="card-title">La pagina ritualistica illeggibile</div>
-          <p class="card-text">Un frammento di scritture che sfuggono alla lettura chiara, forse legato al rito del cultista. Torna con voi verso la capitale come promessa di risposte — o come esca per chi saprà decifrarla.</p>
-        </div>
-      </div>
-
-    </div>
-    <div class="empty-state" id="empty-state">Nessuna scoperta trovata.</div>
-  </div>
-</div>
-
-<!-- ══ TIMELINE ══
-     La timeline non si scrive a mano qui: buildTimeline() in js/terre-ignote.js svuota
-     #timeline-wrapper e la ricostruisce al caricamento.
-     Per "aggiungere" contenuto alla timeline:
-     • Intestazione sessione (titolo, data opzionale, riassunto): aggiungi o modifica
-       un oggetto nell'array SESSIONS in js/terre-ignote.js (campi num, title, date, summary). num deve
-       essere uguale al data-sess delle card masonry di quella sessione.
-     • Voci sotto ogni sessione: sono le stesse scoperte della griglia — ogni
-       .discovery-card con data-sess corrispondente compare come riga cliccabile.
-     Quindi: nuova sessione = nuova riga in SESSIONS + card con quel data-sess;
-     nuova scoperta in sessione già esistente = solo una nuova card (SESSIONS già ok).
--->
-<div id="view-timeline">
-  <div class="timeline-wrapper" id="timeline-wrapper"></div>
+  <a class="location-card" href="locations/chiesa-sytrill.html">
+    <div class="card-header">Chiesa di Sytrill l'Esploratore</div>
+    <p class="card-description">Luogo sacro. Tracce sinistre si intrecciano con storia ufficiale.</p>
+    <div class="card-footer">→ Esplora</div>
+  </a>
 </div>
 
 <footer>
-  <strong>Terre Ignote</strong> · Diario delle Scoperte
+  <strong>Terre Ignote</strong> · Il Continente
   <br>Centuria · Il Mondo della Campagna
   <br><br>
   Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
 </footer>
 
-<script src="js/terre-ignote.js"></script>
 </body>
 </html>
