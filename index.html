@@ -98,6 +98,18 @@
 <span class="ocean-label br">Oceano Inesplorato</span>
 
 <div class="world-screen">
+  <div class="world-content">
+
+  <!-- Sidebar Campagne -->
+  <aside class="campaigns-sidebar">
+    <div class="campaigns-sidebar-title">Campagne</div>
+    <a class="campaign-icon-link" href="campaign/first_campaign/first_campaign.html" title="Campagna I — La Prima Avventura" data-active="true">
+      <span class="campaign-icon-glyph">⚔</span>
+      <span class="campaign-icon-label">I</span>
+      <span class="campaign-icon-status">In corso</span>
+    </a>
+  </aside>
+
   <div class="world-panel">
     <div class="world-frame">
       <div class="frame-corners-inner"></div>
@@ -200,8 +212,8 @@
       <div class="nations-label">Terre Ignote</div>
       <p class="unexplored-desc">Un nuovo continente in esplorazione. Ogni sessione porta nuove scoperte: luoghi, fazioni, misteri.</p>
 
-      <div class="nations-grid" style="grid-template-columns: 1fr;">
-        <a class="nation-card" href="terre-ignote.html" data-continent="new" style="max-width:480px;margin:0 auto;width:100%;">
+      <div class="nations-grid nations-grid--full">
+        <a class="nation-card" href="terre-ignote.html" data-continent="new">
           <div class="nation-tag">Nuovo Continente · In Esplorazione</div>
           <div class="nation-name">Terre Ignote</div>
           <div class="nation-epithet">Luoghi, Fazioni e Misteri</div>
@@ -209,26 +221,11 @@
           <span class="nation-arrow">→</span>
         </a>
       </div>
- 
-      <!-- Campagne -->
-      <div class="world-divider" style="margin-top:44px;">
-        <div class="world-divider-line"></div>
-        <span class="world-divider-ornament">⚔</span>
-        <div class="world-divider-line"></div>
-      </div>
-      <div class="nations-label">Campagne</div>
-      <div class="nations-grid" style="grid-template-columns: 1fr;">
-        <a class="nation-card" data-continent="new" href="campaign/first_campaign/first_campaign.html" style="max-width:480px;margin:0 auto;width:100%;">
-          <div class="nation-tag">In Corso</div>
-          <div class="nation-name">Campagna 1</div>
-          <div class="nation-epithet">La Prima Avventura</div>
-          <div class="nation-desc"> La campagna in corso, con storie e sfide in corso.</div>
-          <span class="nation-arrow">→</span>
-        </a>
-      </div>
 
     </div><!-- /world-frame -->
   </div><!-- /world-panel -->
+
+  </div><!-- /world-content -->
 
   <div class="world-footer-bar">
     Centuria · Atlante del Mondo Conosciuto

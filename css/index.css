@@ -51,13 +51,95 @@ body::before {
 .world-screen {
   position: relative; z-index: 2;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  min-height: 100vh; padding: 48px 24px;
+  align-items: center;
+  min-height: 100vh; padding: 48px 24px 0;
+}
+
+/* Panel + sidebar row */
+.world-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  max-width: 1090px;
 }
 
 /* Parchment panel */
 .world-panel {
-  width: 100%; max-width: 980px;
+  flex: 1;
+  min-width: 0;
+  max-width: 980px;
+}
+
+/* Campaigns sidebar */
+.campaigns-sidebar {
+  flex: 0 0 88px;
+  position: sticky;
+  top: 48px;
+  background: var(--atl-parch);
+  border: 2px solid var(--atl-border);
+  box-shadow:
+    0 0 0 4px rgba(184,160,112,0.15),
+    2px 4px 0 rgba(184,160,112,0.3),
+    0 10px 30px rgba(0,0,0,0.3);
+  padding: 16px 8px 20px;
+  text-align: center;
+}
+
+.campaigns-sidebar-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--atl-ink-dim);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--atl-border);
+}
+
+.campaign-icon-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 14px 6px 10px;
+  text-decoration: none;
+  background: #fff;
+  border: 1.5px solid var(--atl-border);
+  border-top: 3px solid var(--atl-land);
+  box-shadow: 1px 2px 0 rgba(184,160,112,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 8px;
+}
+.campaign-icon-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 2px 5px 0 rgba(184,160,112,0.45), 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.campaign-icon-glyph {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--atl-gold);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.campaign-icon-label {
+  display: block;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--atl-ink);
+  line-height: 1;
+}
+.campaign-icon-status {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.42rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--atl-land);
+  margin-top: 2px;
 }
 
 .world-frame {
@@ -166,6 +248,9 @@ body::before {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 18px; width: 100%;
 }
+.nations-grid--full {
+  grid-template-columns: 1fr;
+}
 
 /* Nation card â€” clickable */
 a.nation-card {
@@ -228,7 +313,7 @@ a.nation-card:hover .nation-card,
 
 /* Footer bar */
 .world-footer-bar {
-  width: 100%; padding: 16px 0; margin-top: 48px;
+  width: 100%; padding: 16px 0; margin-top: 40px;
   background: rgba(0,0,0,0.25);
   border-top: 1px solid rgba(255,255,255,0.08);
   font-family: 'Cinzel', serif; font-size: 0.55rem;
@@ -237,8 +322,20 @@ a.nation-card:hover .nation-card,
   position: relative; z-index: 2;
 }
 
+@media (max-width: 760px) {
+  .world-content { flex-direction: column; align-items: center; }
+  .campaigns-sidebar {
+    flex: unset; width: 100%; max-width: 980px;
+    position: static;
+    display: flex; flex-direction: row; align-items: center;
+    padding: 12px 16px; gap: 16px;
+  }
+  .campaigns-sidebar-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; border-right: 1px solid var(--atl-border); padding-right: 14px; white-space: nowrap; }
+  .campaign-icon-link { flex-direction: row; gap: 8px; padding: 10px 14px; margin-bottom: 0; }
+}
+
 @media (max-width: 640px) {
   .world-frame { padding: 32px 24px 40px; }
   .nations-grid { grid-template-columns: 1fr; }
   .ocean-label { display: none; }
-}
+}
