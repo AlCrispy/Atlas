@@ -14,12 +14,6 @@
 
 .zone-circle {
   transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.zone-circle:hover {
-  stroke-width: 3;
-  filter: drop-shadow(0 0 8px rgba(200, 160, 64, 0.6));
 }
 
 .zone-label {
@@ -27,8 +21,17 @@
   pointer-events: none;
 }
 
-.zone-circle:hover + .zone-label,
-.zone-circle:hover ~ .zone-label {
+.location-group {
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.location-group:hover {
+  filter: drop-shadow(0 0 8px rgba(200, 160, 64, 0.5));
+}
+
+.zone-circle:hover ~ .zone-label,
+.location-group:hover .zone-label {
   font-weight: bold;
 }
 
