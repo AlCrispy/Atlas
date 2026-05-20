@@ -360,15 +360,8 @@ footer strong { color: var(--gold-lt); }
 
     <!-- Portrait -->
     <div class="char-portrait-wrap">
-      <div class="char-portrait-placeholder">
-        <input type="file" accept="image/*" onchange="loadPortrait(event)">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="18" r="8" stroke="#c9a84c" stroke-width="1.5"/>
-          <path d="M8 40 C8 30 40 30 40 40" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <span class="portrait-label">Aggiungi Ritratto</span>
-      </div>
-      <div class="level-badge">⚔ Livello 3 · Paladino</div>
+      <img src="eutirox.jpeg" alt="Eutirox" class="char-portrait">
+      <div class="level-badge">✦ Livello 3 · Mago</div>
     </div>
 
     <!-- Info -->
@@ -540,22 +533,6 @@ function setShield(equipped, btn) {
   document.getElementById('ca-value').textContent = equipped ? '21' : '19';
   btn.parentElement.querySelectorAll('.shield-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-}
-
-function loadPortrait(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const wrap = event.target.closest('.char-portrait-wrap');
-    const placeholder = wrap.querySelector('.char-portrait-placeholder');
-    const img = document.createElement('img');
-    img.src = e.target.result;
-    img.alt = 'Eutirox';
-    img.className = 'char-portrait';
-    placeholder.replaceWith(img);
-  };
-  reader.readAsDataURL(file);
 }
 </script>
 </body>
