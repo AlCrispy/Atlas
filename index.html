@@ -176,13 +176,13 @@
           <span class="nation-arrow">→</span>
         </a>
 
-        <div class="nation-card locked" data-continent="north">
-          <div class="nation-tag">Vecchio Continente · Sud-Est</div>
+        <a class="nation-card" href="nations/valdherba.html" data-continent="south">
+          <div class="nation-tag">Vecchio Continente · Confini Meridionali</div>
           <div class="nation-name">Valdherba</div>
-          <div class="nation-epithet">Il Regno delle Vette</div>
-          <div class="nation-desc">Arroccata sulle catene montuose orientali, Valdherba controlla i passi strategici che collegano nord e sud del continente.</div>
-          <span class="coming-soon">In arrivo</span>
-        </div>
+          <div class="nation-epithet">Il Regno della Cura e della Conoscenza</div>
+          <div class="nation-desc">Terra di foreste incontaminate e guaritori sacri, governata dal Consiglio delle Cinque Casate discendenti delle madri fondatrici.</div>
+          <span class="nation-arrow">→</span>
+        </a>
 
         <div class="nation-card locked" data-continent="south">
           <div class="nation-tag">Vecchio Continente · Sud</div>
@@ -322,12 +322,12 @@ const NATIONS = [
   },
   {
     name: 'Valdherba',
-    epithet: 'Il Regno delle Vette',
-    tag: 'Vecchio Continente · Sud-Est',
-    url: '',
+    epithet: 'Il Regno della Cura e della Conoscenza',
+    tag: 'Vecchio Continente · Confini Meridionali',
+    url: 'nations/valdherba.html',
     pos: [400, 1100],
-    locked: true,
-    type: 'locked-nation',
+    locked: false,
+    type: 'active-nation',
   },
   {
     name: 'Kalveor',

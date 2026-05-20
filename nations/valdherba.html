@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valdherba — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/nations-valdherba.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="back-btn" href="../index.html">← <span>Centuria</span></a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('geografia', this)">Il Reame</button>
+    <button class="tab-btn" onclick="switchTab('capitale', this)">Lynthal</button>
+    <button class="tab-btn" onclick="switchTab('casate', this)">Le Cinque Casate</button>
+    <button class="tab-btn" onclick="switchTab('oggi', this)">Il Reame Oggi</button>
+  </nav>
+</div>
+
+<!-- HEADER -->
+<div class="nation-header">
+  <svg class="crest" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="32" y1="58" x2="32" y2="22" stroke="#2d8c47" stroke-width="2" stroke-linecap="round"/>
+    <path d="M32 6 C18 10 10 24 14 38 C18 50 32 56 32 56 C32 56 46 50 50 38 C54 24 46 10 32 6Z" fill="#1c6b30" opacity="0.9"/>
+    <path d="M32 12 C22 16 16 27 19 38 C22 48 32 53 32 53 C32 53 42 48 45 38 C48 27 42 16 32 12Z" fill="#2d8c47" opacity="0.55"/>
+    <line x1="32" y1="52" x2="32" y2="14" stroke="#c9a84c" stroke-width="1" opacity="0.45" stroke-linecap="round"/>
+    <line x1="32" y1="32" x2="22" y2="24" stroke="#c9a84c" stroke-width="0.8" opacity="0.35" stroke-linecap="round"/>
+    <line x1="32" y1="32" x2="42" y2="24" stroke="#c9a84c" stroke-width="0.8" opacity="0.35" stroke-linecap="round"/>
+    <circle cx="32" cy="6" r="3" fill="#c9a84c" opacity="0.8"/>
+  </svg>
+  <p class="nation-header-eyebrow">Centuria · Vecchio Continente · Confini Meridionali</p>
+  <h1>Valdherba<span>Il Regno della Cura e della Conoscenza</span></h1>
+  <div class="lore-tags">
+    <span class="lore-tag">Matriarcato</span>
+    <span class="lore-tag">Guaritori e Druidi</span>
+    <span class="lore-tag">Cinque Casate</span>
+    <span class="lore-tag">Foreste Incontaminate</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- PANORAMICA -->
+  <div id="tab-overview" class="tab-panel active">
+    <div class="section-banner">
+      <p class="section-eyebrow">Introduzione</p>
+      <h2 class="section-title">La Terra della Guarigione</h2>
+    </div>
+    <div class="dark-quote">"Nel regno di Valdherba, la conoscenza della cura è sacra quanto la vita stessa."</div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Un Reame Prosperoso</span><div class="chapter-line"></div></div>
+      <p>Valdherba è una terra prosperosa ai confini meridionali del continente di Centuria, dove la conoscenza della cura e della guarigione è considerata sacra. Grandi foreste incontaminate ricoprono il territorio e offrono erbe rare, piante antiche e risorse alchemiche che hanno reso il regno celebre in tutta Centuria.</p>
+      <p>Non è un regno di conquista né di guerra: Valdherba esiste per sanare, preservare e tramandare. La sua forza non risiede nelle armate, ma nella profondità di un sapere accumulato per generazioni.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Il Consiglio delle Cinque Casate</span><div class="chapter-line"></div></div>
+      <p>Al cuore del reame vi è il <strong style="color:var(--gold)">Consiglio delle Cinque Casate</strong>, eredi dirette delle madri fondatrici che guidano Valdherba da generazioni. Il potere si tramanda di figlia in figlia: non per sangue reale, ma per conoscenza e dedizione alla cura.</p>
+      <p>Le cinque casate incarnano discipline diverse — erboristeria, alchimia, guarigione spirituale, magia protettiva, studio dei veleni — e insieme compongono un sapere completo che nessuna singola famiglia potrebbe possedere da sola.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Scuole e Accademie</span><div class="chapter-line"></div></div>
+      <p>Nel corso dei secoli le Cinque Casate hanno fondato scuole e accademie in tutto il regno, con l'obiettivo di diffondere il sapere originario e formare nuovi guaritori. Chiunque mostri talento e dedizione può aspirare a diventare un curatore al servizio di Valdherba e dei bisognosi.</p>
+    </div>
+  </div>
+
+  <!-- IL REAME -->
+  <div id="tab-geografia" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">I. Geografia e Territorio</p>
+      <h2 class="section-title">Foreste, Fiumi e Città</h2>
+    </div>
+    <img src="../resources/valdherba/map.png" alt="Mappa di Valdherba" class="img-full">
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">La Terra e i suoi Confini</span><div class="chapter-line"></div></div>
+      <p>Valdherba si estende ai confini meridionali del continente di Centuria. Dal nord, protetta da una piccola catena montuosa, nasce il <strong style="color:var(--gold)">fiume Lýriam</strong>, che attraversa il cuore verde del reame fino alle pianure meridionali, dove sfocia nel Mare del Sud.</p>
+      <p>Le grandi foreste incontaminate che coprono buona parte del territorio non sono semplice paesaggio: sono la vera ricchezza di Valdherba, fonte inesauribile di erbe rare, piante antiche e risorse alchemiche.</p>
+    </div>
+    <div class="location-cards">
+      <div class="loc-card">
+        <div class="loc-card-name">🌿 Lynthal</div>
+        <p>La capitale del reame, cresciuta nel cuore verde delle foreste in simbiosi con la natura. Sede del Consiglio delle Cinque Casate e delle principali accademie del regno.</p>
+      </div>
+      <div class="loc-card">
+        <div class="loc-card-name">⚔ Monteluce</div>
+        <p>Roccaforte difensiva nel nord del reame, costruita a ridosso della catena montuosa che protegge Valdherba. Presidio militare guidato da chierici e maghi addestrati nelle accademie.</p>
+      </div>
+      <div class="loc-card">
+        <div class="loc-card-name">⚓ Lýriandor</div>
+        <p>Centro commerciale e culturale sulle pianure meridionali, lungo il corso finale del fiume Lýriam. Punto di scambio per erbe, pozioni e conoscenze con il resto di Centuria.</p>
+      </div>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">La Foresta Primordiale</span><div class="chapter-line"></div></div>
+      <p>Al centro del reame si estende la <strong style="color:var(--gold)">Foresta Primordiale</strong>, un territorio antico e denso dove le piante più rare crescono indisturbate da secoli. L'accesso è regolamentato dal Consiglio: solo i guaritori certificati e i druidi delle casate possono raccogliervi risorse.</p>
+    </div>
+  </div>
+
+  <!-- LYNTHAL -->
+  <div id="tab-capitale" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">II. La Capitale</p>
+      <h2 class="section-title">Lynthal</h2>
+      <p class="section-subtitle">La città cresciuta con la foresta</p>
+    </div>
+    <img src="../resources/valdherba/lynthal.png" alt="Lynthal, capitale di Valdherba" class="img-full">
+    <div class="dark-quote">"Lynthal non è stata costruita sulla foresta — è cresciuta insieme a essa."</div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Una Città Vivente</span><div class="chapter-line"></div></div>
+      <p>Lynthal sorge nel cuore verde del reame, una città cresciuta in simbiosi con la natura. Le sue torri bianche si innalzano tra cascate e alberi secolari; i canali alimentati dal Lýriam attraversano strade e piazze, portando acqua pura al centro di ogni quartiere.</p>
+      <p>L'architettura rispecchia i valori del regno: spazi aperti, giardini medicinali curati dalle casate, sale di studio accessibili a tutti i cittadini con talento e volontà di apprendere.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Il Palazzo del Consiglio</span><div class="chapter-line"></div></div>
+      <p>Al centro della capitale si trova il <strong style="color:var(--gold)">Palazzo del Consiglio</strong>, sede delle Cinque Casate. Non è una fortezza né una reggia, ma un edificio aperto, con grandi sale di consultazione e archivi che custodiscono secoli di conoscenza accumulata dalle madri fondatrici.</p>
+      <p>È qui che le cinque matriarche si riuniscono per governare il reame, risolvere dispute tra le casate e decidere il futuro di Valdherba.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Le Accademie</span><div class="chapter-line"></div></div>
+      <p>Lynthal ospita le più importanti accademie del reame: scuole di erboristeria, laboratori alchemici, ospedali sacri e scuole di guarigione spirituale. Studenti da tutto Centuria arrivano nella capitale per apprendere le arti curative di Valdherba.</p>
+    </div>
+  </div>
+
+  <!-- LE CINQUE CASATE -->
+  <div id="tab-casate" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">III. Il Consiglio</p>
+      <h2 class="section-title">Le Cinque Casate</h2>
+      <p class="section-subtitle">Discendenti delle madri fondatrici</p>
+    </div>
+    <img src="../resources/valdherba/matriarche.png" alt="Le Cinque Matriarche di Valdherba" class="img-full">
+    <div class="dark-quote">"Valdherba è sempre esistita da che ho memoria — fondata da cinque famiglie di antichi sciamani."</div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Le Madri Fondatrici</span><div class="chapter-line"></div></div>
+      <p>In principio vi erano cinque famiglie di antichi sciamani che decisero di unire le loro conoscenze e fondare un regno. Ognuna portava una disciplina unica e insostituibile; insieme, le cinque casate formavano un sistema di cura completo e bilanciato.</p>
+      <p>Alla loro dipartita, il potere è passato di figlia in figlia fino al giorno d'oggi. Le eredi attuali possiedono tutta la conoscenza delle casate fondatrici, custodita e arricchita da ogni generazione.</p>
+    </div>
+    <div class="casate-grid">
+      <div class="casata-card">
+        <div class="casata-name">Casata Silvaria</div>
+        <div class="casata-role">Erboristi Druidi</div>
+        <p>Conoscitrici di erbe medicinali e piante rare. Custodi della Foresta Primordiale e guide spirituali nel rapporto tra Valdherba e la natura.</p>
+      </div>
+      <div class="casata-card">
+        <div class="casata-name">Casata Theriquor</div>
+        <div class="casata-role">Alchimiste delle Pozioni</div>
+        <p>Creatrici di elisir curativi, distillati e pozioni sanificatrici. Gestiscono i principali laboratori alchemici del reame e formano nuovi preparatori.</p>
+      </div>
+      <div class="casata-card">
+        <div class="casata-name">Casata Santherius</div>
+        <div class="casata-role">Guaritrici Spirituali</div>
+        <p>Maestre della guarigione dell'anima e dello spirito. Si occupano di mali che vanno oltre il corpo fisico — maledizioni, traumi arcani, afflizioni dell'essenza.</p>
+      </div>
+      <div class="casata-card">
+        <div class="casata-name">Casata Florenthir</div>
+        <div class="casata-role">Maghe e Alchimiste</div>
+        <p>Incaricate della protezione del regno. Comandano i chierici e i maghi difensivi, e gestiscono le accademie di magia protettiva nelle grandi città.</p>
+      </div>
+      <div class="casata-card">
+        <div class="casata-name">Casata Myrravir</div>
+        <div class="casata-role">Esperte di Veleni e Cure</div>
+        <p>Studio dei veleni e delle relative antidoti. Una conoscenza doppia e delicata: per curare chi è avvelenato, bisogna prima capire il veleno stesso.</p>
+      </div>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">Il Governo Matriarcale</span><div class="chapter-line"></div></div>
+      <p>Il Consiglio delle Cinque Casate governa Valdherba per consensus: le decisioni più importanti richiedono l'accordo di almeno quattro casate su cinque. Nessuna famiglia detiene un potere assoluto sull'altra, e questa struttura ha garantito al reame secoli di stabilità e cooperazione.</p>
+    </div>
+  </div>
+
+  <!-- IL REAME OGGI -->
+  <div id="tab-oggi" class="tab-panel">
+    <div class="section-banner">
+      <p class="section-eyebrow">IV. Stato Attuale</p>
+      <h2 class="section-title">Il Reame Oggi</h2>
+      <p class="section-subtitle">La cura come forza nel mondo che cambia</p>
+    </div>
+    <div class="dark-quote">"Le difese di Valdherba non si misurano in lame sguainate, ma in vite salvate."</div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">I</span><span class="chapter-title">Struttura Difensiva</span><div class="chapter-line"></div></div>
+      <p>Le difese di Valdherba sono affidate principalmente a <strong style="color:var(--gold)">maghi e chierici</strong>, addestrati nelle accademie del regno e sottoposti agli ordini diretti del Consiglio. La loro forza risiede nella protezione, nel controllo e nella capacità di sostenere i propri alleati in battaglia.</p>
+      <p>La roccaforte di Monteluce presidia il confine nord, dove la catena montuosa offre protezione naturale. Lýriandor, con la sua posizione meridionale, mantiene un contingente difensivo lungo le vie commerciali del Mare del Sud.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">La Guerra per il Nuovo Continente</span><div class="chapter-line"></div></div>
+      <p>Di recente, Centuria è stata sconvolta da una guerra sanguinosa per il controllo di un nuovo continente inesplorato. Valdherba vi ha preso parte per assicurarsi l'accesso a <strong style="color:var(--gold)">nuove risorse utili alla cura</strong>: piante sconosciute, minerali alchemici vergini, e conoscenze curative mai incontrate prima.</p>
+      <p>Il Consiglio ha inviato un contingente di guaritori e maghi protettivi, con l'obiettivo non di conquistare, ma di esplorare, catalogare e stabilire accordi commerciali con chiunque si trovasse nel nuovo mondo.</p>
+    </div>
+    <div class="chapter">
+      <div class="chapter-heading"><span class="chapter-num">III</span><span class="chapter-title">Il Sapere come Potere</span><div class="chapter-line"></div></div>
+      <p>In un continente dilaniato da conflitti, Valdherba possiede una risorsa che ogni fazione desidera: la capacità di curare. Questo ha reso il regno tanto prezioso quanto vulnerabile. Il Consiglio naviga con cautela tra alleanze e richieste, consapevole che il sapere delle Cinque Casate è il vero tesoro da proteggere.</p>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <strong>Valdherba</strong> · Il Regno della Cura e della Conoscenza
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script src="../js/nation-tabs.js"></script>
+</body>
+</html>
