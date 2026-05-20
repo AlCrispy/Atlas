@@ -88,7 +88,7 @@ centuria/
 
 Il sito e pubblicato su GitHub Pages: [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
 
-Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts.
+Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts e leaflet.
 
 ## Autori
 
