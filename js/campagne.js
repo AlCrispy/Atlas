@@ -41,6 +41,12 @@ const SESSIONS = [
     title: "Il culto e la sfera",
     date: "",
     summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sytrill l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sytrill con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
+  },
+  {
+    num: 7,
+    title: "La Distesa dei Non Morti",
+    date: "",
+    summary: "Fuggiti dagli zombie, tornate al villaggio dei morti: la pietra si sta attivando e le rune — identiche a quelle della stanza segreta — compaiono solo alla luce della luna. Una sembra significare 'morte'. Orme vi conducono nel cuore di una foresta silenziosa, dove ragnatele di ragni giganti bloccano il cammino e occhi nell'oscurità osservano il vostro accampamento con curiosità immobile. All'uscita del bosco, lo scenario che non vi aspettavate: una distesa di non morti disposti in cerchio attorno a un macigno, sopra cui veglia una figura incappucciata con un amuleto dei Consacratori spezzato a metà. Ai suoi piedi, un cerchio interno di creature più grandi e due macchinari da guerra assembrati rozzamente. L'uomo non si muove — una statua? Tornate verso Sytrill con più domande che risposte."
   }
 ];
 
