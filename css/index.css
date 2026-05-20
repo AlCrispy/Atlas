@@ -267,7 +267,7 @@ a.nation-card {
   display: block;
 }
 .nation-card[data-continent="south"] { border-top: 4px solid var(--atl-red); }
-.nation-card[data-continent="north"] { border-top: 4px solid var(--atl-ocean); }
+.nation-card[data-continent="north"] { border-top: 4px solid #d21111; }
 .nation-card[data-continent="center"] { border-top: 4px solid #2a8a9a; }
 .nation-card[data-continent="new"]   { border-top: 4px solid var(--atl-land); }
 .nation-card[data-continent="unknown"] {
