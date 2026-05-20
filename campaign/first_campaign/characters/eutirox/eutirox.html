@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eutirox — Centuria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --iron:     #8b1a1a;
+  --iron-lt:  #c0392b;
+  --iron-pale:#d9534f;
+  --forest:   #2d5a27;
+  --forest-lt:#4a8a42;
+  --gold:     #c9a84c;
+  --gold-lt:  #e8c97a;
+  --void:     #080608;
+  --dark:     #100c0c;
+  --dark-mid: #181010;
+  --dark-card:#1e1414;
+  --stone:    #2c1e1e;
+  --text:     #d4ccc8;
+  --text-dim: #8a7870;
+  --border:   rgba(201,168,76,0.22);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--void);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px; line-height: 1.75;
+  min-height: 100vh; overflow-x: hidden;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(8,6,8,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+  display: flex; align-items: center;
+}
+.back-btn {
+  background: none; border: none; border-right: 1px solid var(--border);
+  cursor: pointer; font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); padding: 18px 24px;
+  transition: color 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; text-decoration: none;
+}
+.back-btn:hover { color: var(--gold-lt); background: rgba(201,168,76,0.05); }
+.topbar-title {
+  flex: 1; text-align: center; padding-right: 80px;
+  font-family: 'Cinzel', serif; font-size: 0.68rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ── HERO HEADER ── */
+.char-header {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 80% at 30% 50%, rgba(139,26,26,0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 80% 40%, rgba(45,90,39,0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #120808 0%, var(--void) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px 50px;
+}
+.char-header::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.03) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.03) 40px);
+  pointer-events: none;
+}
+.char-header::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(to top, var(--void), transparent);
+  pointer-events: none; z-index: 1;
+}
+
+.char-header-inner {
+  position: relative; z-index: 2;
+  max-width: 1000px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 56px; align-items: start;
+}
+
+/* ── PORTRAIT ── */
+.char-portrait-wrap { position: relative; }
+.char-portrait {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 1px rgba(139,26,26,0.15),
+    0 8px 60px rgba(139,26,26,0.4),
+    0 0 120px rgba(139,26,26,0.12);
+  display: block; border-radius: 2px;
+}
+.char-portrait-placeholder {
+  width: 100%; aspect-ratio: 3/4;
+  border: 1px dashed rgba(201,168,76,0.3);
+  border-radius: 2px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  background: rgba(139,26,26,0.03);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: border-color 0.3s, background 0.3s;
+  box-shadow: 0 8px 60px rgba(139,26,26,0.2);
+}
+.char-portrait-placeholder:hover {
+  border-color: rgba(201,168,76,0.55);
+  background: rgba(139,26,26,0.07);
+}
+.char-portrait-placeholder input {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.char-portrait-placeholder svg { opacity: 0.25; }
+.portrait-label {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.8;
+}
+.level-badge {
+  position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--dark-card); border: 1px solid var(--gold);
+  padding: 6px 18px;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold-lt);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(139,26,26,0.4);
+}
+
+/* ── CHAR INFO ── */
+.char-info { padding-top: 8px; }
+.char-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.4em; color: var(--iron-pale);
+  text-transform: uppercase; margin-bottom: 10px; opacity: 0.8;
+}
+.char-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: #fff;
+  line-height: 1.1; letter-spacing: 0.04em;
+  text-shadow:
+    0 0 40px rgba(139,26,26,0.7),
+    0 0 80px rgba(139,26,26,0.25),
+    0 2px 4px rgba(0,0,0,0.9);
+}
+.char-class {
+  font-family: 'Cinzel', serif; font-size: 0.85rem;
+  color: var(--gold-lt); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-top: 10px; opacity: 0.9;
+}
+.char-divider {
+  display: flex; align-items: center; gap: 14px; margin: 22px 0;
+}
+.char-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(139,26,26,0.5), transparent); }
+.char-divider-icon { color: var(--iron-pale); font-size: 1rem; }
+
+/* ── COMBAT STATS ── */
+.combat-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;
+}
+.combat-stat {
+  background: rgba(30,20,20,0.8); border: 1px solid var(--border);
+  padding: 14px 10px 12px; text-align: center;
+  position: relative; overflow: hidden; transition: border-color 0.25s;
+}
+.combat-stat::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--iron), var(--gold), var(--iron));
+}
+.combat-stat:hover { border-color: rgba(201,168,76,0.45); }
+.combat-stat-value {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--iron-pale);
+  line-height: 1; display: block;
+  text-shadow: 0 0 20px rgba(139,26,26,0.5);
+}
+.combat-stat-label {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); margin-top: 5px; display: block;
+}
+/* ── SHIELD TOGGLE ── */
+.shield-toggle {
+  display: flex; gap: 0; margin-top: 8px; justify-content: center;
+}
+.shield-btn {
+  background: none; border: 1px solid rgba(201,168,76,0.25); cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-dim);
+  padding: 5px 10px; transition: all 0.2s;
+}
+.shield-btn:first-child { border-right: none; }
+.shield-btn.active {
+  background: rgba(139,26,26,0.2);
+  border-color: rgba(139,26,26,0.5);
+  color: var(--iron-pale);
+}
+.shield-btn:hover:not(.active) { color: var(--gold); border-color: rgba(201,168,76,0.4); }
+
+/* ── ABILITY SCORES ── */
+.abilities-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.ability {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 12px 6px 10px; text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.ability:hover { transform: translateY(-2px); border-color: rgba(201,168,76,0.4); }
+.ability-score {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem; font-weight: 700; line-height: 1; display: block;
+}
+.ability-mod {
+  font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600;
+  display: block; margin-top: 3px;
+}
+.ability-name {
+  font-family: 'Cinzel', serif; font-size: 0.48rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); margin-top: 5px; display: block;
+}
+.ability.str .ability-score, .ability.str .ability-mod { color: var(--iron-pale); }
+.ability.dex .ability-score, .ability.dex .ability-mod { color: #6aaa4a; }
+.ability.con .ability-score, .ability.con .ability-mod { color: #4a8ac0; }
+.ability.int .ability-score, .ability.int .ability-mod { color: var(--gold); }
+.ability.wis .ability-score, .ability.wis .ability-mod { color: #aa88cc; }
+.ability.cha .ability-score, .ability.cha .ability-mod { color: var(--gold-lt); }
+
+/* ── CONTENT ── */
+.content { max-width: 1000px; margin: 0 auto; padding: 48px 40px 80px; }
+
+.section-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.section-heading-text {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-lt);
+}
+.section-heading-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(139,26,26,0.45), transparent);
+}
+
+.lore-block {
+  background: var(--dark-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--iron);
+  padding: 24px 28px; margin-bottom: 40px;
+  font-size: 1.02rem; color: var(--text); line-height: 1.85;
+}
+
+.oath-quote {
+  border-left: 3px solid var(--gold);
+  padding: 16px 26px; margin: 28px 0;
+  background: linear-gradient(90deg, rgba(139,26,26,0.1) 0%, transparent 100%);
+  font-style: italic; font-size: 1.12rem; color: var(--text); line-height: 1.7;
+}
+
+/* ── VOTO SECTION ── */
+.vow-block {
+  background: var(--dark-card); border: 1px solid rgba(139,26,26,0.4);
+  border-left: 3px solid var(--iron-lt);
+  padding: 24px 28px; margin-bottom: 40px;
+  position: relative; overflow: hidden;
+}
+.vow-block::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--iron), transparent);
+}
+.vow-title {
+  font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--iron-pale); margin-bottom: 12px;
+}
+.vow-block p { font-size: 1rem; color: var(--text); line-height: 1.85; }
+.vow-tenets {
+  margin-top: 16px; display: flex; flex-direction: column; gap: 10px;
+}
+.vow-tenet {
+  display: flex; gap: 14px; align-items: baseline;
+}
+.tenet-label {
+  font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); white-space: nowrap; flex-shrink: 0;
+}
+.tenet-desc { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; }
+
+/* ── TRAIT CARDS ── */
+.traits-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; margin-bottom: 40px;
+}
+.trait-card {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 20px 22px; position: relative; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.trait-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--iron-lt), var(--gold));
+}
+.trait-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,26,26,0.3);
+}
+.trait-name {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+  color: var(--gold-lt); margin-bottom: 8px; letter-spacing: 0.05em;
+}
+.trait-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ── SWORD DECORATION ── */
+.sword-deco { text-align: center; margin: 40px 0 32px; opacity: 0.3; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 36px 20px; border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--text-dim);
+  background: linear-gradient(180deg, transparent, rgba(139,26,26,0.05));
+}
+footer strong { color: var(--gold-lt); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .char-header-inner { grid-template-columns: 1fr; gap: 36px; }
+  .char-portrait-placeholder { aspect-ratio: 4/3; max-width: 320px; margin: 0 auto; }
+  .abilities-grid { grid-template-columns: repeat(3, 1fr); }
+  .combat-stats { grid-template-columns: repeat(3, 1fr); }
+  .char-header { padding: 40px 20px 50px; }
+  .content { padding: 36px 20px 60px; }
+  .back-btn span { display: none; }
+  .topbar-title { padding-right: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="back-btn" href="../../first_campaign.html#personaggi">← <span>Personaggi</span></a>
+  <span class="topbar-title">Personaggio · Paladino del Voto di Vendetta</span>
+</div>
+
+<!-- HERO HEADER -->
+<div class="char-header">
+  <div class="char-header-inner">
+
+    <!-- Portrait -->
+    <div class="char-portrait-wrap">
+      <div class="char-portrait-placeholder">
+        <input type="file" accept="image/*" onchange="loadPortrait(event)">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="18" r="8" stroke="#c9a84c" stroke-width="1.5"/>
+          <path d="M8 40 C8 30 40 30 40 40" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="portrait-label">Aggiungi Ritratto</span>
+      </div>
+      <div class="level-badge">⚔ Livello 3 · Paladino</div>
+    </div>
+
+    <!-- Info -->
+    <div class="char-info">
+      <p class="char-eyebrow">Centuria · Personaggio Giocante</p>
+      <h1 class="char-name">Eutirox</h1>
+      <p class="char-class">Paladino · Voto di Vendetta</p>
+
+      <div class="char-divider">
+        <div class="char-divider-line"></div>
+        <span class="char-divider-icon">⚔</span>
+        <div class="char-divider-line"></div>
+      </div>
+
+      <!-- Combat stats -->
+      <div class="combat-stats">
+        <div class="combat-stat">
+          <span class="combat-stat-value">30</span>
+          <span class="combat-stat-label">Punti Ferita</span>
+        </div>
+        <div class="combat-stat">
+          <span class="combat-stat-value" id="ca-value">17</span>
+          <span class="combat-stat-label">Classe Armatura</span>
+          <div class="shield-toggle">
+            <button class="shield-btn active" onclick="setShield(false, this)">Senza</button>
+            <button class="shield-btn" onclick="setShield(true, this)">Scudo</button>
+          </div>
+        </div>
+        <div class="combat-stat">
+          <span class="combat-stat-value">+1</span>
+          <span class="combat-stat-label">Iniziativa</span>
+        </div>
+      </div>
+
+      <!-- Ability scores -->
+      <div class="abilities-grid">
+        <div class="ability str">
+          <span class="ability-score">16</span>
+          <span class="ability-mod">+3</span>
+          <span class="ability-name">FOR</span>
+        </div>
+        <div class="ability dex">
+          <span class="ability-score">12</span>
+          <span class="ability-mod">+1</span>
+          <span class="ability-name">DES</span>
+        </div>
+        <div class="ability con">
+          <span class="ability-score">16</span>
+          <span class="ability-mod">+3</span>
+          <span class="ability-name">COS</span>
+        </div>
+        <div class="ability int">
+          <span class="ability-score">10</span>
+          <span class="ability-mod">+0</span>
+          <span class="ability-name">INT</span>
+        </div>
+        <div class="ability wis">
+          <span class="ability-score">8</span>
+          <span class="ability-mod">−1</span>
+          <span class="ability-name">SAG</span>
+        </div>
+        <div class="ability cha">
+          <span class="ability-score">14</span>
+          <span class="ability-mod">+2</span>
+          <span class="ability-name">CAR</span>
+        </div>
+      </div>
+
+    </div><!-- /char-info -->
+  </div><!-- /char-header-inner -->
+</div><!-- /char-header -->
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="section-heading">
+    <span class="section-heading-text">Il Personaggio</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="lore-block">
+    Eutirox proviene dalle foreste di confine del Velikor, cresciuto in una cultura dove giustizia e sopravvivenza si confondono. Non è un paladino che prega per la pace — è uno che ha visto cosa succede quando la pace viene concessa a chi non la merita. Il suo Voto di Vendetta non è rabbia cieca: è un contratto sacro con qualcosa di più grande, stipulato nel momento in cui ha scelto di non lasciare che certi torti restassero impuniti.
+  </div>
+
+  <div class="oath-quote">
+    "Non sono venuto a portare grazia. Sono venuto a riscuotere."
+  </div>
+
+  <!-- Voto -->
+  <div class="section-heading" style="margin-top: 8px;">
+    <span class="section-heading-text">Il Voto di Vendetta</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="vow-block">
+    <div class="vow-title">⚔ I Principi del Voto</div>
+    <p>Il Voto di Vendetta è giurato da paladini che si dedicano a punire chi commette il male senza rimorso. Non è odio — è risoluzione. Eutirox porta questo giuramento come si porta un'armatura: peso necessario, protezione assoluta.</p>
+    <div class="vow-tenets">
+      <div class="vow-tenet">
+        <span class="tenet-label">Combatti il Male</span>
+        <span class="tenet-desc">Non mostrare pietà ai malvagi. Il male che permetti di vivere è il male che tornerà.</span>
+      </div>
+      <div class="vow-tenet">
+        <span class="tenet-label">Nessuna Tregua</span>
+        <span class="tenet-desc">Niente accordi con chi ha violato la legge sacra. La vendetta non negozia.</span>
+      </div>
+      <div class="vow-tenet">
+        <span class="tenet-label">Strumento, Non Giudice</span>
+        <span class="tenet-desc">Eutirox non decide chi merita punizione per capriccio. Il Voto lo guida — lui esegue.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Traits -->
+  <div class="section-heading">
+    <span class="section-heading-text">Tratti e Abilità</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="traits-grid">
+    <div class="trait-card">
+      <div class="trait-name">⚔ Condanna del Nemico</div>
+      <p>Eutirox può evocare come azione un'aura di terrore divino attorno a una creatura entro 60 piedi. Il bersaglio deve superare un tiro salvezza o essere spaventato. Una condanna silenziosa prima del colpo.</p>
+    </div>
+    <div class="trait-card">
+      <div class="trait-name">🩸 Vendetta Divina</div>
+      <p>Quando colpisce, Eutirox può spendere uno slot incantesimo per aggiungere dadi di danno radiante o necrotico al colpo. Più alto lo slot, più devastante il risultato. FOR +3 e slot da 1° e 2° livello fanno danni enormi.</p>
+    </div>
+    <div class="trait-card">
+      <div class="trait-name">🛡 Muro di Velikor</div>
+      <p>Con COS +3 e CA 17 base, Eutirox assorbe punti ferita che spezzerebbero chiunque altro. La sua bassa Saggezza non lo frena — lo rende impermeabile al dubbio nel momento decisivo.</p>
+    </div>
+  </div>
+
+  <!-- Sword decoration -->
+  <div class="sword-deco">
+    <svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left blade -->
+      <line x1="10" y1="30" x2="50" y2="30" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Guard -->
+      <line x1="50" y1="18" x2="50" y2="42" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+      <!-- Right blade -->
+      <line x1="50" y1="30" x2="90" y2="30" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Grip -->
+      <line x1="90" y1="30" x2="110" y2="30" stroke="#8a7050" stroke-width="3" stroke-linecap="round"/>
+      <!-- Pommel -->
+      <circle cx="112" cy="30" r="4" fill="#c9a84c" opacity="0.9"/>
+      <!-- Tip -->
+      <path d="M10 30 L4 28 L4 32 Z" fill="#c0392b" opacity="0.8"/>
+      <!-- Gold center gem -->
+      <circle cx="50" cy="30" r="3.5" fill="#c9a84c" opacity="0.9"/>
+      <!-- Small dots along blade -->
+      <circle cx="25" cy="30" r="1.2" fill="#c0392b" opacity="0.4"/>
+      <circle cx="72" cy="30" r="1.2" fill="#c0392b" opacity="0.4"/>
+    </svg>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <strong>Eutirox</strong> · Paladino del Voto di Vendetta · Livello 3
+  <br>Centuria · Il Mondo della Campagna
+  <br><br>
+  Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
+</footer>
+
+<script>
+function setShield(equipped, btn) {
+  document.getElementById('ca-value').textContent = equipped ? '19' : '17';
+  btn.parentElement.querySelectorAll('.shield-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function loadPortrait(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const wrap = event.target.closest('.char-portrait-wrap');
+    const placeholder = wrap.querySelector('.char-portrait-placeholder');
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    img.alt = 'Eutirox';
+    img.className = 'char-portrait';
+    placeholder.replaceWith(img);
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
