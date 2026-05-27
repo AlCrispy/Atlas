@@ -19,17 +19,34 @@ centuria/
 |- nations/
 |  |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
 |  |- velikor.html             # Scheda completa: La Repubblica delle Pianure
-|  `- aurelion.html            # Scheda completa: Lega di Aurelion
-|- campagne/
-|  `- campagna1/
-|     |- campagna1.html        # Pagina principale della Campagna I
+|  |- aurelion.html            # Scheda completa: Lega di Aurelion
+|  `- valdherba.html           # Scheda completa: Valdherba
+|- locations/                  # Pagine dettaglio locazioni delle Terre Ignote
+|  |- sytrill.html
+|  |- porto-nero.html
+|  |- locanda-cardo.html
+|  |- foresta-nord-est.html
+|  |- colonne-nerite.html
+|  |- chiesa-sytrill.html
+|  |- caverna-funghi.html
+|  `- villaggio-maledetto.html
+|- campaign/
+|  `- first_campaign/
+|     |- first_campaign.html   # Pagina principale della Campagna I (7 sessioni)
 |     `- characters/
-|        `- magnus/
-|           `- magnus.html     # Scheda Magnus
+|        |- magnus/
+|        |  `- magnus.html     # Scheda Magnus Volstruker
+|        |- elaris/
+|        |  `- elaris.html     # Scheda Elaris Corven
+|        |- nemeia/
+|        |  `- nemeia.html     # Scheda Nemeia
+|        `- eutirox/
+|           `- eutirox.html    # Scheda Eutirox
 |- css/
 |  |- index.css                # Styling della home
 |  |- campagne-base.css        # Styling base delle campagne
 |  |- campagne-components.css  # Componenti delle campagne
+|  |- location-detail.css      # Styling pagine locazioni
 |  |- nations-*.css            # Styling per ogni nazione
 |  `- terre-ignote-*.css       # Styling per le terre ignote
 `- js/
@@ -47,7 +64,7 @@ centuria/
 | **Kassendyr** | Vecchio Continente · Sud-Ovest | ✅ Disponibile |
 | **Velikor** | Vecchio Continente · Nord | ✅ Disponibile |
 | **Lega di Aurelion** | Vecchio Continente · Centro | ✅ Disponibile |
-| Valdherba | Vecchio Continente · Sud-Est | 🔒 In arrivo |
+| **Valdherba** | Vecchio Continente · Sud-Est | ✅ Disponibile |
 | Kalveor | Vecchio Continente · Sud | 🔒 In arrivo |
 | Isola Perennogelo | Arcipelago · Nord-Est | 🔒 In arrivo |
 
@@ -56,16 +73,16 @@ centuria/
 | Area | Stato |
 |---|---|
 | **Terre Ignote** (Nuovo Continente) | ✅ Disponibile |
-| **Campagna I** (Diario + Personaggi) | ✅ Disponibile |
+| **Campagna I** (Diario + Personaggi · 7 sessioni) | ✅ Disponibile |
 
 ### Personaggi disponibili
 
-| Personaggio | Classe | Stato |
-|---|---|---|
-| **Magnus Volstruker** | Mago · Cronomagia | ✅ Disponibile |
-| Elara Stonefist | Guerriero · Compagnia del Ferro | 🔒 In arrivo |
-| Raven Nightwhisper | Ladro · Gilda dei Segreti | 🔒 In arrivo |
-| Brother Marcus | Clerico · Ordine della Luce | 🔒 In arrivo |
+| Personaggio | Stato |
+|---|---|
+| **Magnus Volstruker** | ✅ Disponibile |
+| **Elaris Corven** | ✅ Disponibile |
+| **Nemeia** | ✅ Disponibile |
+| **Eutirox** | ✅ Disponibile |
 
 ## Come aggiungere una nuova nazione
 
@@ -77,7 +94,7 @@ centuria/
 
 ## Come aggiungere un evento alla Campagna I
 
-1. Apri `campagne/campagna1/campagna1.html`.
+1. Apri `campaign/first_campaign/first_campaign.html`.
 2. Nel tab **Diario**, aggiungi una nuova `<div class="discovery-card">` nella sezione masonry:
    - Imposta `data-cat` a una di: `storia`, `avventure`, `npc`, `locazioni`
    - Imposta `data-sess` al numero della sessione (deve corrispondere a `SESSIONS` in `js/campagne.js`)
@@ -86,9 +103,9 @@ centuria/
 
 ## Hosting
 
-Il sito e pubblicato su GitHub Pages: [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
+Il sito è pubblicato su GitHub Pages: [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
 
-Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts e leaflet.
+Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts e Leaflet.js.
 
 ## Autori
 
