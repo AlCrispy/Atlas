@@ -47,6 +47,12 @@ const SESSIONS = [
     title: "La Distesa dei Non Morti",
     date: "",
     summary: "Fuggiti dagli zombie, tornate al villaggio dei morti: la pietra si sta attivando e le rune — identiche a quelle della stanza segreta — compaiono solo alla luce della luna. Una sembra significare 'morte'. Orme vi conducono nel cuore di una foresta silenziosa, dove ragnatele di ragni giganti bloccano il cammino e occhi nell'oscurità osservano il vostro accampamento con curiosità immobile. All'uscita del bosco, lo scenario che non vi aspettavate: una distesa di non morti disposti in cerchio attorno a un macigno, sopra cui veglia una figura incappucciata con un amuleto dei Consacratori spezzato a metà. Ai suoi piedi, un cerchio interno di creature più grandi e due macchinari da guerra assembrati rozzamente. L'uomo non si muove — una statua? Tornate verso Sytrill con più domande che risposte."
+  },
+  {
+    num: 8,
+    title: "L'Assedio di Sytrill",
+    date: "",
+    summary: "Tornati a Sytrill, trovate Annie, il sacerdote e i consacratori ad aspettarvi con notizie sconvolgenti: la figura incappucciata sul macigno è Padre Xartamas, un consacratore corrotto da un artefatto durante l'ultima spedizione. La follia lo ha convinto che Sytrill nasconda un male da estirpare — e ora guida l'orda contro la città. L'attacco è già in corso: le strade brulicano di non morti. Zavash Kass scende in campo con i suoi poteri mentre il gruppo tenta di raggiungere le armi d'assedio zombie. Uno zombie guardiano cade sotto i vostri colpi, ma il secondo avanza. Il tempo stringe: riuscirete ad armare la balista in tempo?"
   }
 ];
 

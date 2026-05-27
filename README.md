@@ -73,7 +73,7 @@ centuria/
 | Area | Stato |
 |---|---|
 | **Terre Ignote** (Nuovo Continente) | ✅ Disponibile |
-| **Campagna I** (Diario + Personaggi · 7 sessioni) | ✅ Disponibile |
+| **Campagna I** (Diario + Personaggi · 8 sessioni) | ✅ Disponibile |
 
 ### Personaggi disponibili
 
