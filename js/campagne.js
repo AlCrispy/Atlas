@@ -53,6 +53,12 @@ const SESSIONS = [
     title: "L'Assedio di Sitryll",
     date: "",
     summary: "Tornati a Sitryll, trovate Annie, il sacerdote e i consacratori ad aspettarvi con notizie sconvolgenti: la figura incappucciata sul macigno è Padre Xartamas, un consacratore corrotto da un artefatto durante l'ultima spedizione. La follia lo ha convinto che Sitryll nasconda un male da estirpare — e ora guida l'orda contro la città. L'attacco è già in corso: le strade brulicano di non morti. Zavash Kass scende in campo con i suoi poteri mentre il gruppo tenta di raggiungere le armi d'assedio zombie. Uno zombie guardiano cade sotto i vostri colpi, ma il secondo avanza. Il tempo stringe: riuscirete ad armare la balista in tempo?"
+  },
+  {
+    num: 9,
+    title: "La Fine dell'Assedio",
+    date: "",
+    summary: "Prendete il controllo della balista e distruggete la seconda arma d'assedio. Nel mezzo della battaglia, un gruppo di incappucciati apre un portale ovale con un rituale — lo distruggete prima che sia troppo tardi. Zavash Kass affronta Xartamas e lo sconfigge; le ultime parole del consacratore corrotto risuonano come una profezia: «Sentirete ancora parlare di me — la città di Sitryll cadrà, come cadrai tu, Zavash.» L'assedio è finito e la capitale è salva. Nel dopo-guerra emerge che il Generale a capo delle truppe cittadine proviene da Valikor ed è membro del concilio, al pari di Zavash Kass. Le voci per le strade rivelano che il concilio non gode della fiducia di tutti. Alla gilda, una Dragonide Rossa osserva gli avventurieri in silenzio dalla balconata."
   }
 ];
 
