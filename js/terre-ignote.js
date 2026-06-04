@@ -15,9 +15,9 @@ const SESSIONS = [
   },
   {
     num: 2,
-    title: "Porto Nero e Sytrill",
+    title: "Porto Nero e Sitryll",
     date: "",
-    summary: "Sbarcate al Porto Nero, dove convergono i viaggiatori verso il nuovo mondo, segnato da monoliti di nerite, pietra nera intrisa di magia. Una notte alla locanda del Cardo Appassito vi fa incontrare Gorian, Cyrma, Lafa e Tarion. Poi vi dirigete verso Sytrill, capitale delle Terre ignote: vi accoglie la gilda dei cacciatori e Anne, che cura la vostra iscrizione."
+    summary: "Sbarcate al Porto Nero, dove convergono i viaggiatori verso il nuovo mondo, segnato da monoliti di nerite, pietra nera intrisa di magia. Una notte alla locanda del Cardo Appassito vi fa incontrare Gorian, Cyrma, Lafa e Tarion. Poi vi dirigete verso Sitryll, capitale delle Terre ignote: vi accoglie la gilda dei cacciatori e Anne, che cura la vostra iscrizione."
   },
   {
     num: 3,
@@ -35,13 +35,13 @@ const SESSIONS = [
     num: 5,
     title: "Ricompensa e ombre in gilda",
     date: "",
-    summary: "Tornati a Sytrill riscuotete la ricompensa. Anne vi affida un incarico dei Consacratori, ordine di ecclesiastici e templari: far luce sulla sorte di cinque inviati in missione. Bardok Drum vi consegna il compito presentandosi come capo della gilda — ma uscendo dalla stanza udite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Chi comanda davvero?"
+    summary: "Tornati a Sitryll riscuotete la ricompensa. Anne vi affida un incarico dei Consacratori, ordine di ecclesiastici e templari: far luce sulla sorte di cinque inviati in missione. Bardok Drum vi consegna il compito presentandosi come capo della gilda — ma uscendo dalla stanza udite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Chi comanda davvero?"
   },
   {
     num: 6,
     title: "Il culto e la sfera",
     date: "",
-    summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sytrill l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sytrill con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
+    summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sitryll l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sitryll con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
   }
 ];
 

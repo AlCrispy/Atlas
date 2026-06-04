@@ -14,9 +14,9 @@ const SESSIONS = [
   },
   {
     num: 2,
-    title: "Porto Nero e Sytrill",
+    title: "Porto Nero e Sitryll",
     date: "",
-    summary: "Sbarcate al Porto Nero, dove convergono i viaggiatori verso il nuovo mondo, segnato da monoliti di nerite, pietra nera intrisa di magia. Una notte alla locanda del Cardo Appassito vi fa incontrare Gorian, Cyrma, Lafa e Tarion. Poi vi dirigete verso Sytrill, capitale delle Terre ignote: vi accoglie la gilda dei cacciatori e Anne, che cura la vostra iscrizione."
+    summary: "Sbarcate al Porto Nero, dove convergono i viaggiatori verso il nuovo mondo, segnato da monoliti di nerite, pietra nera intrisa di magia. Una notte alla locanda del Cardo Appassito vi fa incontrare Gorian, Cyrma, Lafa e Tarion. Poi vi dirigete verso Sitryll, capitale delle Terre ignote: vi accoglie la gilda dei cacciatori e Anne, che cura la vostra iscrizione."
   },
   {
     num: 3,
@@ -34,25 +34,25 @@ const SESSIONS = [
     num: 5,
     title: "Ricompensa e ombre in gilda",
     date: "",
-    summary: "Tornati a Sytrill riscuotete la ricompensa. Anne vi affida un incarico dei Consacratori, ordine di ecclesiastici e templari: far luce sulla sorte di cinque inviati in missione. Bardok Drum vi consegna il compito presentandosi come capo della gilda — ma uscendo dalla stanza udite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Chi comanda davvero?"
+    summary: "Tornati a Sitryll riscuotete la ricompensa. Anne vi affida un incarico dei Consacratori, ordine di ecclesiastici e templari: far luce sulla sorte di cinque inviati in missione. Bardok Drum vi consegna il compito presentandosi come capo della gilda — ma uscendo dalla stanza udite una voce chiedere ad Anne se abbia adempiuto al dovere nel modo giusto. Chi comanda davvero?"
   },
   {
     num: 6,
     title: "Il culto e la sfera",
     date: "",
-    summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sytrill l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sytrill con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
+    summary: "Riprendete la strada verso nord-est, superate la foresta e affrontate il capo goblin che vi aveva scacciati. Il villaggio è un carnaio: abitanti prostrati, quasi succhiati di vita, corpi deturpati. Quattro Consacratori giacciono tra le vittime; le tracce del quinto portano a una chiesa dedicata a Sitryll l'esploratore, omonimo della capitale. Sconfiggete un cultista intento a prelevare parti dei corpi per un rituale e ritrovate l'ultimo consacratore. Una stanza nascosta brulica di rune antimagia attorno a una sfera enigmatica. Un'orda di non morti dal cimitero vi costringe a fuggire verso Sitryll con i corpi, gli indizi e una pagina di scritture ancora illeggibili."
   },
   {
     num: 7,
     title: "La Distesa dei Non Morti",
     date: "",
-    summary: "Fuggiti dagli zombie, tornate al villaggio dei morti: la pietra si sta attivando e le rune — identiche a quelle della stanza segreta — compaiono solo alla luce della luna. Una sembra significare 'morte'. Orme vi conducono nel cuore di una foresta silenziosa, dove ragnatele di ragni giganti bloccano il cammino e occhi nell'oscurità osservano il vostro accampamento con curiosità immobile. All'uscita del bosco, lo scenario che non vi aspettavate: una distesa di non morti disposti in cerchio attorno a un macigno, sopra cui veglia una figura incappucciata con un amuleto dei Consacratori spezzato a metà. Ai suoi piedi, un cerchio interno di creature più grandi e due macchinari da guerra assembrati rozzamente. L'uomo non si muove — una statua? Tornate verso Sytrill con più domande che risposte."
+    summary: "Fuggiti dagli zombie, tornate al villaggio dei morti: la pietra si sta attivando e le rune — identiche a quelle della stanza segreta — compaiono solo alla luce della luna. Una sembra significare 'morte'. Orme vi conducono nel cuore di una foresta silenziosa, dove ragnatele di ragni giganti bloccano il cammino e occhi nell'oscurità osservano il vostro accampamento con curiosità immobile. All'uscita del bosco, lo scenario che non vi aspettavate: una distesa di non morti disposti in cerchio attorno a un macigno, sopra cui veglia una figura incappucciata con un amuleto dei Consacratori spezzato a metà. Ai suoi piedi, un cerchio interno di creature più grandi e due macchinari da guerra assembrati rozzamente. L'uomo non si muove — una statua? Tornate verso Sitryll con più domande che risposte."
   },
   {
     num: 8,
-    title: "L'Assedio di Sytrill",
+    title: "L'Assedio di Sitryll",
     date: "",
-    summary: "Tornati a Sytrill, trovate Annie, il sacerdote e i consacratori ad aspettarvi con notizie sconvolgenti: la figura incappucciata sul macigno è Padre Xartamas, un consacratore corrotto da un artefatto durante l'ultima spedizione. La follia lo ha convinto che Sytrill nasconda un male da estirpare — e ora guida l'orda contro la città. L'attacco è già in corso: le strade brulicano di non morti. Zavash Kass scende in campo con i suoi poteri mentre il gruppo tenta di raggiungere le armi d'assedio zombie. Uno zombie guardiano cade sotto i vostri colpi, ma il secondo avanza. Il tempo stringe: riuscirete ad armare la balista in tempo?"
+    summary: "Tornati a Sitryll, trovate Annie, il sacerdote e i consacratori ad aspettarvi con notizie sconvolgenti: la figura incappucciata sul macigno è Padre Xartamas, un consacratore corrotto da un artefatto durante l'ultima spedizione. La follia lo ha convinto che Sitryll nasconda un male da estirpare — e ora guida l'orda contro la città. L'attacco è già in corso: le strade brulicano di non morti. Zavash Kass scende in campo con i suoi poteri mentre il gruppo tenta di raggiungere le armi d'assedio zombie. Uno zombie guardiano cade sotto i vostri colpi, ma il secondo avanza. Il tempo stringe: riuscirete ad armare la balista in tempo?"
   }
 ];
 
