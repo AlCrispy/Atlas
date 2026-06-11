@@ -141,6 +141,147 @@
       <div class="loc-card"><div class="loc-card-name">Archivio tecnico · Roccabruna Mora</div><p>Struttura secondaria rispetto al grande archivio centrale: raccoglie report, fallimenti, prototipi abbandonati; consultato da tecnici e mediatori con accesso regolato ma meno rigido. Utile per recuperare informazioni «scomode» o collegare eventi apparentemente scollegati.</p></div>
       <div class="loc-card"><div class="loc-card-name">Campi di prova agricoli</div><p>Zone rurali dedicate alla sperimentazione: nuove colture, metodi di irrigazione, uso controllato di magia sulla produzione. Luoghi tranquilli in apparenza, ma strategici per la stabilità del regno.</p></div>
     </div>
+
+    <div class="chapter" style="margin-top:48px;">
+      <div class="chapter-heading"><span class="chapter-num">II</span><span class="chapter-title">La Convergenza</span><div class="chapter-line"></div></div>
+      <p>Nave ammiraglia della Lega di Aurelion. Non una nave da guerra — una dichiarazione. Costruita per ospitare delegazioni diplomatiche, condurre sessioni del Circolo in acque neutrali, e dimostrare a ogni porto che approda cosa Aurelion è davvero in grado di fare.</p>
+    </div>
+
+    <div id="convergenza">
+      <style>
+        #convergenza .cv-nav { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        #convergenza .cv-nav-btn { padding: 6px 16px; border-radius: 4px; border: 0.5px solid rgba(61,184,200,0.15); background: transparent; cursor: pointer; font-size: 13px; color: #7a8f9c; transition: all 0.15s; font-family: 'Cinzel', serif; letter-spacing: 0.05em; }
+        #convergenza .cv-nav-btn.active { background: #0f1824; color: #d4e0e8; border-color: rgba(61,184,200,0.22); font-weight: 500; }
+        #convergenza .cv-section { display: none; }
+        #convergenza .cv-section.active { display: block; }
+        #convergenza .cv-deck-card { background: #121c28; border: 0.5px solid rgba(61,184,200,0.1); border-radius: 6px; padding: 1.25rem; margin-bottom: 1.5rem; }
+        #convergenza .cv-deck-intro { font-size: 0.88rem; color: #7a8f9c; line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
+        #convergenza .cv-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        #convergenza .cv-detail-label { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(122,143,156,0.65); margin-bottom: 5px; font-family: 'Cinzel', serif; }
+        #convergenza .cv-detail-body { font-size: 0.88rem; color: #7a8f9c; line-height: 1.65; }
+        #convergenza .cv-quote { border-left: 2px solid rgba(61,184,200,0.3); padding: 0.5rem 1rem; font-size: 0.88rem; color: #7a8f9c; font-style: italic; margin: 1rem 0 0; background: #0f1824; border-radius: 0 4px 4px 0; }
+        #convergenza .cv-full { grid-column: 1 / -1; }
+        @media (max-width: 500px) { #convergenza .cv-detail-grid { grid-template-columns: 1fr; } }
+      </style>
+
+      <div class="cv-nav">
+        <button class="cv-nav-btn active" onclick="cvShow('cv-esterno', this)">Esterno</button>
+        <button class="cv-nav-btn" onclick="cvShow('cv-superiore', this)">Ponte superiore</button>
+        <button class="cv-nav-btn" onclick="cvShow('cv-intermedio', this)">Ponte intermedio</button>
+        <button class="cv-nav-btn" onclick="cvShow('cv-stiva', this)">Stiva</button>
+      </div>
+
+      <div id="cv-esterno" class="cv-section active">
+        <div class="cv-deck-card">
+          <p class="cv-deck-intro">"Non è una nave. È una dichiarazione."</p>
+          <div class="cv-detail-grid">
+            <div>
+              <p class="cv-detail-label">Dimensioni</p>
+              <p class="cv-detail-body">Tre volte più lunga di qualsiasi nave da guerra del continente. Vista dall'esterno ricorda una città costiera staccata dalla terraferma — torri, terrazze, livelli sovrapposti che si alzano sulla linea di galleggiamento.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Scafo</p>
+              <p class="cv-detail-body">Legno scuro laccato e fasce di marmo bianco estratto dalle cave di Aurelion. Lungo tutta la fiancata corrono incisioni runiche dorate che brillano debolmente di notte — non decorative: sono il sistema di tenuta magica dello scafo.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Vele</p>
+              <p class="cv-detail-body">Seta pesante color avorio, ricamata con rune di propulsione. Non dipendono interamente dal vento — le rune possono essere attivate per spingerla in bonaccia. Di notte i ricami si illuminano di un bianco-oro freddo, visibile a chilometri.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Illuminazione esterna</p>
+              <p class="cv-detail-body">Nessuna lanterna. Cristalli sferici di quarzo incantato sono incastonati lungo le murate e sugli alberi — emettono una luce bianca stabile, non tremolante, che non si spegne con il vento e non consuma olio.</p>
+            </div>
+            <div class="cv-full">
+              <p class="cv-detail-label">Prima impressione</p>
+              <p class="cv-detail-body">Quando le delegazioni straniere la vedono all'orizzonte per la prima volta, il silenzio cade spontaneo. Non è intimidazione militare — è qualcosa di più sottile. Aurelion non ha la forza bruta di Kassendyr né l'ideologia di Velikor. Ha questo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="cv-superiore" class="cv-section">
+        <div class="cv-deck-card">
+          <p class="cv-deck-intro">Il volto pubblico della nave. Costruito per impressionare, ma anche per far lavorare.</p>
+          <div class="cv-detail-grid">
+            <div>
+              <p class="cv-detail-label">Sala del Concilio</p>
+              <p class="cv-detail-body">Una sala a cielo aperto sul ponte di prua, circondata da colonnati di marmo bianco con capitelli dorati. Al centro un tavolo circolare di legno di noce scuro inciso con la mappa di Centuria. Sopra il tavolo, una sfera di cristallo incantato proietta una luce diffusa uniforme — nessuna ombra, nessun punto buio. Impossibile nascondere espressioni.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Cabine delle delegazioni</p>
+              <p class="cv-detail-body">Quattro suite identiche per dimensioni e comfort — Aurelion non favorisce nessuno. Pareti in legno chiaro, pavimenti in maiolica blu e bianca, finestre a oblò con vetro magico che non si appanna. Ogni cabina ha un sigillo di privacy attivo — nessun suono esce, nessuno entra senza permesso.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Giardino di poppa</p>
+              <p class="cv-detail-body">Una terrazza verde sul retro della nave — piante mediterranee in vasi di terracotta, un piccolo canale d'acqua che scorre in circolo per mezzo di una pompa magica. Pensato come spazio neutro per conversazioni informali. Di notte è il posto più bello della nave.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Guardia e sicurezza</p>
+              <p class="cv-detail-body">I PG pattugliano questo livello. Ogni accesso è segnalato da un cristallo sentinella — piccole gemme incastonate negli stipiti che cambiano colore al passaggio non autorizzato. Kern Dast conosce i punti ciechi del sistema.</p>
+            </div>
+          </div>
+          <div class="cv-quote">La sala del Concilio è progettata perché nessuno possa mentire comodamente. La luce è ovunque. Maren Sol lo sa — è stato fatto apposta.</div>
+        </div>
+      </div>
+
+      <div id="cv-intermedio" class="cv-section">
+        <div class="cv-deck-card">
+          <p class="cv-deck-intro">Il cuore vivo della nave. Dove si vede cosa Aurelion è capace di fare davvero.</p>
+          <div class="cv-detail-grid">
+            <div>
+              <p class="cv-detail-label">Sala macchine</p>
+              <p class="cv-detail-body">Un ambiente alto due piani, aperto su una balconata superiore. Al centro un nucleo di cristallo dell'altezza di un uomo che pulsa di luce blu-bianca — è il cuore energetico della nave, alimentato da magia applicata. Ingranaggi d'ottone ruotano intorno ad esso senza toccarsi, sincronizzati da rune. L'esplosione dell'Atto I avviene qui.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Officine e laboratori</p>
+              <p class="cv-detail-body">Una serie di stanze compatte lungo il fianco sinistro — banco da lavoro, strumenti di precisione, prototipi incompleti coperti da teli. Il Collegio delle Convergenze mantiene sempre qualcuno a bordo a lavorare. Daven Crost vive praticamente qui.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Corridoi</p>
+              <p class="cv-detail-body">Più stretti del ponte superiore, soffitto più basso. Illuminati da sfere di vetro soffiato con dentro una piccola fiamma magica perpetua — calda, ambrata, diversa dalla luce fredda dei cristalli sopra. L'atmosfera cambia bruscamente scendendo di un livello.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Armeria</p>
+              <p class="cv-detail-body">Una stanza chiusa a doppia serratura — meccanica e magica. Contiene le armi di riserva dell'equipaggio e i sigilli di emergenza del Circolo. Ila Fenn ha una delle due chiavi. L'altra ce l'ha Maren Sol.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="cv-stiva" class="cv-section">
+        <div class="cv-deck-card">
+          <p class="cv-deck-intro">Nessuno viene qui senza un motivo. Ed è esattamente il problema.</p>
+          <div class="cv-detail-grid">
+            <div>
+              <p class="cv-detail-label">Atmosfera</p>
+              <p class="cv-detail-body">Buio, umido, il suono dello scafo che lavora è costante. La luce dei cristalli non arriva qui — solo torce magiche a muro, rade e rossastre. Il pavimento è legno grezzo, i soffitti bassi. Dopo il ponte superiore sembra un altro mondo.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Magazzini</p>
+              <p class="cv-detail-body">Casse, barili, reti. Provviste per settimane di navigazione, materiali di ricambio per le officine, campioni e archivi del Collegio. È labirintico — Kern Dast è uno dei pochi a orientarsi senza esitare.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Portelli laterali</p>
+              <p class="cv-detail-body">Quattro portelli a pelo d'acqua, usati normalmente per caricare merci pesanti. Nell'Atto III Kern li apre dall'interno per permettere l'aggancio delle navi di Kassendyr. Dall'esterno sembrano semplici assi di legno scuro — dall'interno hanno serrature runiche che solo chi conosce il codice può disattivare.</p>
+            </div>
+            <div>
+              <p class="cv-detail-label">Alloggi equipaggio</p>
+              <p class="cv-detail-body">Brande a castello lungo la fiancata di dritta. Spazio minimo, effetti personali appesi alle travi. È qui che i sabotatori dell'Atto II si sono nascosti — qualcuno li ha fatti salire a bordo prima della partenza.</p>
+            </div>
+          </div>
+          <div class="cv-quote">La stiva è l'unica parte della nave che Aurelion non ha progettato per essere vista. Ed è esattamente per questo che è pericolosa.</div>
+        </div>
+      </div>
+
+      <script>
+      function cvShow(id, btn) {
+        document.querySelectorAll('#convergenza .cv-section').forEach(function(s){ s.classList.remove('active'); });
+        document.querySelectorAll('#convergenza .cv-nav-btn').forEach(function(b){ b.classList.remove('active'); });
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+      }
+      </script>
+    </div>
   </div>
 
   <div id="tab-oggi" class="tab-panel">
