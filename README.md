@@ -15,19 +15,21 @@ centuria/
 |- CLAUDE.md                   # Guida per Claude Code
 |- resources/
 |  |- Centuria_plain.png       # Mappa principale
-|  `- kassendyr/               # Asset visivi della nazione Kassendyr
+|  |- kassendyr/               # Asset visivi della nazione Kassendyr
+|  |- aurelion/                # Asset visivi della Lega di Aurelion
+|  `- valdherba/               # Asset visivi della nazione Valdherba
 |- nations/
 |  |- kassendyr.html           # Scheda completa: L'Impero del Sangue Persistente
 |  |- velikor.html             # Scheda completa: La Repubblica delle Pianure
 |  |- aurelion.html            # Scheda completa: Lega di Aurelion
 |  `- valdherba.html           # Scheda completa: Valdherba
 |- locations/                  # Pagine dettaglio locazioni delle Terre Ignote
-|  |- sytrill.html
+|  |- sitryll.html
 |  |- porto-nero.html
 |  |- locanda-cardo.html
 |  |- foresta-nord-est.html
 |  |- colonne-nerite.html
-|  |- chiesa-sytrill.html
+|  |- chiesa-sitryll.html
 |  |- caverna-funghi.html
 |  `- villaggio-maledetto.html
 |- campaign/
@@ -48,7 +50,8 @@ centuria/
 |  |- campagne-components.css  # Componenti delle campagne
 |  |- location-detail.css      # Styling pagine locazioni
 |  |- nations-*.css            # Styling per ogni nazione
-|  `- terre-ignote-*.css       # Styling per le terre ignote
+|  |- terre-ignote-*.css       # Styling per le terre ignote
+|  `- terre-ignote-locations.css  # Styling pagine locazioni delle terre ignote
 `- js/
    |- campagne.js              # Logica timeline e filtri campagne
    |- terre-ignote.js          # Logica timeline e filtri terre ignote
@@ -73,7 +76,8 @@ centuria/
 | Area | Stato |
 |---|---|
 | **Terre Ignote** (Nuovo Continente) | ✅ Disponibile |
-| **Campagna I** (Diario + Personaggi · 8 sessioni) | ✅ Disponibile |
+| **Campagna I** (Diario + Personaggi · 9 sessioni) | ✅ Disponibile |
+| **One-Shot** | 🔒 In arrivo |
 
 ### Personaggi disponibili
 
