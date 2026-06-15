@@ -219,6 +219,23 @@ footer strong { color: var(--gold); }
 .char-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold); font-style: italic; margin-bottom: 16px; }
 .char-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
 
+/* Per-character accent colors */
+.character-card.magnus::before  { background: #e8640a; }
+.character-card.magnus:hover     { box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,100,10,0.25); }
+.character-card.magnus .char-title { color: #e8640a; }
+
+.character-card.nemeia::before   { background: #2d8c47; }
+.character-card.nemeia:hover      { box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(45,140,71,0.25); }
+.character-card.nemeia .char-title { color: #4ab55e; }
+
+.character-card.elaris::before   { background: #3db8c8; }
+.character-card.elaris:hover      { box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(61,184,200,0.25); }
+.character-card.elaris .char-title { color: #3db8c8; }
+
+.character-card.eutirox::before  { background: #c0392b; }
+.character-card.eutirox:hover     { box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(192,57,43,0.25); }
+.character-card.eutirox .char-title { color: #d9534f; }
+
 .character-card.locked::before { background: var(--text-dim); opacity: 0.3; }
 .character-card.locked { opacity: 0.6; }
 .character-card.locked .coming-soon-badge {
