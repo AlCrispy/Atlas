@@ -181,7 +181,10 @@ function buildTimeline() {
           filterCat('tutti', document.querySelector('.filter-btn[data-cat="tutti"]'));
           const sessBtn = document.querySelector(`.filter-btn[data-sess="${sess.num}"]`);
           if (sessBtn) filterSess(String(sess.num), sessBtn);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          document.querySelectorAll('.discovery-card.highlighted').forEach(c => c.classList.remove('highlighted'));
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('highlighted');
+          card.addEventListener('animationend', () => card.classList.remove('highlighted'), { once: true });
         };
         disc.appendChild(item);
       });
