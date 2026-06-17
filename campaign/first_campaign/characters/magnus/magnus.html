@@ -35,7 +35,6 @@ body {
   min-height: 100vh; overflow-x: hidden;
 }
 
-/* Noise texture */
 body::before {
   content: ''; position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
@@ -76,8 +75,6 @@ body::before {
   border-bottom: 1px solid var(--border);
   padding: 60px 40px 50px;
 }
-
-/* Grid pattern */
 .char-header::before {
   content: ''; position: absolute; inset: 0;
   background:
@@ -85,15 +82,12 @@ body::before {
     repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,160,60,0.03) 40px);
   pointer-events: none;
 }
-
-/* Animated fire glow behind image */
 .char-header::after {
   content: ''; position: absolute;
   bottom: 0; left: 0; right: 0; height: 200px;
   background: linear-gradient(to top, var(--void), transparent);
   pointer-events: none; z-index: 1;
 }
-
 .char-header-inner {
   position: relative; z-index: 2;
   max-width: 1000px; margin: 0 auto;
@@ -104,29 +98,19 @@ body::before {
 }
 
 /* ── CHARACTER IMAGE ── */
-.char-portrait-wrap {
-  position: relative;
-}
-
+.char-portrait-wrap { position: relative; }
 .char-portrait {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
   border: 1px solid var(--border);
   box-shadow:
     0 0 0 1px rgba(200,160,60,0.1),
     0 8px 60px rgba(192,74,0,0.35),
     0 0 120px rgba(192,74,0,0.15);
-  display: block;
-  border-radius: 2px;
+  display: block; border-radius: 2px;
 }
-
-/* Placeholder portrait */
 .char-portrait-placeholder {
-  width: 100%;
-  aspect-ratio: 3/4;
-  border: 1px dashed rgba(200,160,60,0.3);
-  border-radius: 2px;
+  width: 100%; aspect-ratio: 3/4;
+  border: 1px dashed rgba(200,160,60,0.3); border-radius: 2px;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 12px;
   background: rgba(200,160,60,0.02);
@@ -147,27 +131,22 @@ body::before {
   letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--amber); opacity: 0.7;
 }
-
-/* Level badge */
 .level-badge {
   position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
   background: var(--dark-card); border: 1px solid var(--amber);
   padding: 6px 18px;
   font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em;
   text-transform: uppercase; color: var(--amber-lt);
-  white-space: nowrap;
-  box-shadow: 0 4px 20px rgba(192,74,0,0.3);
+  white-space: nowrap; box-shadow: 0 4px 20px rgba(192,74,0,0.3);
 }
 
 /* ── CHARACTER INFO ── */
 .char-info { padding-top: 8px; }
-
 .char-eyebrow {
   font-family: 'Cinzel', serif; font-size: 0.62rem;
   letter-spacing: 0.4em; color: var(--fire-pale);
   text-transform: uppercase; margin-bottom: 10px; opacity: 0.8;
 }
-
 .char-name {
   font-family: 'Cinzel Decorative', serif;
   font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: #fff;
@@ -177,15 +156,11 @@ body::before {
     0 0 80px rgba(192,74,0,0.2),
     0 2px 4px rgba(0,0,0,0.9);
 }
-
 .char-class {
   font-family: 'Cinzel', serif; font-size: 0.85rem;
   color: var(--amber-lt); letter-spacing: 0.15em;
-  text-transform: uppercase; margin-top: 10px;
-  opacity: 0.9;
+  text-transform: uppercase; margin-top: 10px; opacity: 0.9;
 }
-
-/* Divider */
 .char-divider {
   display: flex; align-items: center; gap: 14px; margin: 22px 0;
 }
@@ -194,31 +169,30 @@ body::before {
 
 /* ── COMBAT STATS ROW ── */
 .combat-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 28px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;
 }
-
 .combat-stat {
-  background: rgba(30,21,8,0.8);
-  border: 1px solid var(--border);
-  padding: 14px 10px 12px;
-  text-align: center;
-  position: relative; overflow: hidden;
-  transition: border-color 0.25s;
+  background: rgba(30,21,8,0.8); border: 1px solid var(--border);
+  padding: 14px 10px 12px; text-align: center;
+  position: relative; overflow: hidden; transition: border-color 0.25s;
 }
 .combat-stat::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--fire), var(--amber));
 }
 .combat-stat:hover { border-color: rgba(200,160,60,0.45); }
-
+.combat-stat.editable { cursor: pointer; }
+.combat-stat.editable:hover .combat-stat-value { color: var(--amber-lt); }
 .combat-stat-value {
   font-family: 'Cinzel Decorative', serif;
   font-size: 1.6rem; font-weight: 700; color: var(--fire-pale);
   line-height: 1; display: block;
   text-shadow: 0 0 20px rgba(192,74,0,0.5);
+}
+.combat-stat-sub {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem; color: var(--text-dim);
+  display: inline; vertical-align: baseline;
 }
 .combat-stat-label {
   font-family: 'Cinzel', serif; font-size: 0.52rem;
@@ -228,27 +202,17 @@ body::before {
 
 /* ── ABILITY SCORES ── */
 .abilities-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
 }
-
 .ability {
-  background: var(--dark-card);
-  border: 1px solid var(--border);
-  padding: 12px 6px 10px;
-  text-align: center;
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 12px 6px 10px; text-align: center;
   transition: transform 0.2s, border-color 0.2s;
 }
-.ability:hover {
-  transform: translateY(-2px);
-  border-color: rgba(200,160,60,0.4);
-}
-
+.ability:hover { transform: translateY(-2px); border-color: rgba(200,160,60,0.4); }
 .ability-score {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 1.4rem; font-weight: 700;
-  line-height: 1; display: block;
+  font-size: 1.4rem; font-weight: 700; line-height: 1; display: block;
 }
 .ability-mod {
   font-family: 'Cinzel', serif; font-size: 0.75rem;
@@ -259,59 +223,347 @@ body::before {
   letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--text-dim); margin-top: 5px; display: block;
 }
+.ability.str .ability-score, .ability.str .ability-mod { color: #c04a3a; }
+.ability.dex .ability-score, .ability.dex .ability-mod { color: #6aaa4a; }
+.ability.con .ability-score, .ability.con .ability-mod { color: #4a8ac0; }
+.ability.int .ability-score, .ability.int .ability-mod { color: var(--fire-pale); }
+.ability.wis .ability-score, .ability.wis .ability-mod { color: #aa88cc; }
+.ability.cha .ability-score, .ability.cha .ability-mod { color: #c0a040; }
 
-/* Color per stat */
-.ability.str .ability-score { color: #c04a3a; }
-.ability.str .ability-mod   { color: #c04a3a; }
-.ability.dex .ability-score { color: #6aaa4a; }
-.ability.dex .ability-mod   { color: #6aaa4a; }
-.ability.con .ability-score { color: #4a8ac0; }
-.ability.con .ability-mod   { color: #4a8ac0; }
-.ability.int .ability-score { color: var(--fire-pale); }
-.ability.int .ability-mod   { color: var(--fire-pale); }
-.ability.wis .ability-score { color: #aa88cc; }
-.ability.wis .ability-mod   { color: #aa88cc; }
-.ability.cha .ability-score { color: #c0a040; }
-.ability.cha .ability-mod   { color: #c0a040; }
+/* ── TAB NAVIGATION ── */
+.tab-nav-wrap {
+  position: sticky; top: 57px; z-index: 100;
+  background: rgba(8,6,4,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.tab-nav {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; padding: 0 40px;
+}
+.tab-btn {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; font-family: 'Cinzel', serif;
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-dim); padding: 14px 20px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.tab-btn:hover { color: var(--amber-lt); }
+.tab-btn.active { color: var(--fire-pale); border-bottom-color: var(--fire); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* ── CONTENT AREA ── */
 .content {
   max-width: 1000px; margin: 0 auto; padding: 48px 40px 80px;
 }
 
-/* Section heading */
+/* ── SECTION HEADING ── */
 .section-heading {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
 }
 .section-heading-text {
   font-family: 'Cinzel', serif; font-size: 0.65rem;
   letter-spacing: 0.35em; text-transform: uppercase; color: var(--amber-lt);
+  white-space: nowrap;
 }
 .section-heading-line {
   flex: 1; height: 1px;
   background: linear-gradient(to right, rgba(200,160,60,0.35), transparent);
 }
 
-/* Lore block */
+/* ── TURN ACTIONS ── */
+.actions-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px;
+}
+.action-box {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 16px 10px 14px; text-align: center;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: all 0.2s; user-select: none;
+}
+.action-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--fire), var(--amber));
+  transition: opacity 0.2s;
+}
+.action-box:hover { border-color: rgba(200,160,60,0.4); }
+.action-box.used {
+  opacity: 0.38;
+  background: rgba(192,74,0,0.06);
+}
+.action-box.used::before { opacity: 0.2; }
+.action-icon { font-size: 1.3rem; display: block; margin-bottom: 5px; line-height: 1; }
+.action-label {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-lt); display: block;
+}
+.action-detail { font-size: 0.78rem; color: var(--text-dim); margin-top: 3px; display: block; }
+
+.actions-bottom { display: flex; gap: 10px; align-items: stretch; margin-bottom: 36px; }
+.concentration-box {
+  flex: 1; background: var(--dark-card); border: 1px solid rgba(170,136,204,0.25);
+  padding: 12px 18px; display: flex; align-items: center; gap: 14px;
+  cursor: pointer; transition: all 0.25s;
+}
+.concentration-box:hover { border-color: rgba(170,136,204,0.5); }
+.concentration-box.active {
+  border-color: rgba(170,136,204,0.7);
+  background: rgba(170,136,204,0.08);
+  box-shadow: 0 0 20px rgba(170,136,204,0.12);
+}
+.conc-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1px solid rgba(170,136,204,0.5); flex-shrink: 0;
+  transition: all 0.2s;
+}
+.concentration-box.active .conc-dot {
+  background: #aa88cc; border-color: #aa88cc;
+  box-shadow: 0 0 8px rgba(170,136,204,0.6);
+}
+.conc-label {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
+}
+.conc-spell { font-size: 0.88rem; color: #aa88cc; font-style: italic; }
+.reset-btn {
+  background: none; border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer; padding: 12px 20px;
+  font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em;
+  text-transform: uppercase; transition: all 0.2s; white-space: nowrap;
+}
+.reset-btn:hover { border-color: var(--amber); color: var(--amber-lt); }
+
+/* ── SAVING THROWS ── */
+.saves-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 28px;
+}
+.save-item {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 10px 6px; text-align: center;
+}
+.save-item.proficient { border-color: rgba(200,160,60,0.45); }
+.save-value {
+  font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+  color: var(--text-dim); display: block;
+}
+.save-item.proficient .save-value { color: var(--amber-lt); }
+.save-name {
+  font-family: 'Cinzel', serif; font-size: 0.46rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-dim); margin-top: 4px; display: block;
+}
+.save-prof-mark { color: var(--amber); font-size: 0.5rem; display: block; margin-top: 2px; }
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 36px;
+}
+.skill-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 12px; background: var(--dark-card);
+  border: 1px solid transparent; border-left: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.skill-row:hover { border-color: rgba(200,160,60,0.15); }
+.skill-row.proficient { border-left-color: var(--amber); }
+.skill-bonus {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+  color: var(--text-dim); min-width: 30px; text-align: right; flex-shrink: 0;
+}
+.skill-row.proficient .skill-bonus { color: var(--amber-lt); }
+.skill-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  border: 1px solid rgba(200,160,60,0.35); flex-shrink: 0;
+}
+.skill-row.proficient .skill-dot { background: var(--amber); border-color: var(--amber); }
+.skill-name { font-family: 'EB Garamond', serif; font-size: 0.9rem; color: var(--text); flex: 1; }
+.skill-attr {
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ── MISC STATS ── */
+.misc-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 36px;
+}
+.misc-stat {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+}
+.misc-stat-value {
+  font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+  color: var(--fire-pale); flex-shrink: 0;
+}
+.misc-stat-label {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* ── CLASS FEATURES ── */
+.feature-card {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 20px 24px; margin-bottom: 14px; position: relative;
+}
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--amber), var(--time));
+}
+.feature-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; flex-wrap: wrap; gap: 10px;
+}
+.feature-name {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+  color: var(--amber-lt); letter-spacing: 0.05em;
+}
+.feature-tag {
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-dim);
+  border: 1px solid var(--border); padding: 2px 8px;
+}
+.feature-charges { display: flex; gap: 8px; align-items: center; }
+.charge-pip {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--amber); cursor: pointer;
+  background: var(--amber); box-shadow: 0 0 6px rgba(200,160,60,0.4);
+  transition: all 0.15s; flex-shrink: 0;
+}
+.charge-pip.used { background: transparent; box-shadow: none; border-color: rgba(200,160,60,0.3); }
+.charge-pip:hover { transform: scale(1.2); }
+.feature-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+.feature-reset {
+  background: none; border: 1px solid rgba(200,160,60,0.25);
+  color: var(--text-dim); cursor: pointer; padding: 5px 12px;
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em;
+  text-transform: uppercase; transition: all 0.2s; margin-top: 10px;
+}
+.feature-reset:hover { border-color: var(--amber); color: var(--amber-lt); }
+
+/* ── SPELL META ── */
+.spell-meta-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px;
+}
+.spell-meta-item {
+  background: var(--dark-card); border: 1px solid var(--border);
+  padding: 14px 12px; text-align: center; position: relative; overflow: hidden;
+}
+.spell-meta-item::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--fire), var(--amber));
+}
+.spell-meta-value {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--fire-pale); display: block;
+  text-shadow: 0 0 20px rgba(192,74,0,0.4);
+}
+.spell-meta-label {
+  font-family: 'Cinzel', serif; font-size: 0.5rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px;
+}
+
+/* ── SPELL SLOTS ── */
+.slot-section { margin-bottom: 32px; }
+.slot-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 20px; background: var(--dark-card); border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.slot-level-label {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--amber-lt); min-width: 140px; flex-shrink: 0;
+}
+.slot-pips { display: flex; gap: 10px; flex: 1; }
+.slot-pip {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--amber); cursor: pointer;
+  background: var(--amber); box-shadow: 0 0 8px rgba(200,160,60,0.45);
+  transition: all 0.15s; flex-shrink: 0;
+}
+.slot-pip.used {
+  background: transparent; box-shadow: none;
+  border-color: rgba(200,160,60,0.25);
+}
+.slot-pip:hover { transform: scale(1.15); }
+.slot-count {
+  font-family: 'Cinzel', serif; font-size: 0.55rem; color: var(--text-dim);
+  letter-spacing: 0.1em; white-space: nowrap;
+}
+
+/* ── SPELL LIST ── */
+.spell-level-head {
+  display: flex; align-items: center; gap: 14px; margin: 32px 0 12px;
+}
+.spell-level-title {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber-lt);
+  white-space: nowrap;
+}
+.spell-level-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(200,160,60,0.3), transparent); }
+
+.spell-list { border: 1px solid var(--border); background: var(--dark-card); }
+.spell-row {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 16px; align-items: start;
+  padding: 13px 18px;
+  border-bottom: 1px solid rgba(200,160,60,0.07);
+  transition: background 0.15s;
+}
+.spell-row:last-child { border-bottom: none; }
+.spell-row:hover { background: rgba(200,160,60,0.03); }
+.spell-name-line { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
+.spell-name {
+  font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--amber-lt); font-weight: 700;
+}
+.spell-badge {
+  font-family: 'Cinzel', serif; font-size: 0.46rem; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 1px;
+}
+.badge-conc { border: 1px solid rgba(170,136,204,0.5); color: #aa88cc; }
+.badge-ritual { border: 1px solid rgba(106,170,74,0.5); color: #6aaa4a; }
+.badge-reaction { border: 1px solid rgba(200,160,60,0.4); color: var(--amber-lt); }
+.badge-bonus { border: 1px solid rgba(74,138,192,0.4); color: #4a8ac0; }
+.spell-desc { font-size: 0.83rem; color: var(--text-dim); line-height: 1.55; }
+.spell-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+.spell-tag {
+  font-family: 'Cinzel', serif; font-size: 0.46rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 2px 7px;
+  border: 1px solid var(--border); color: var(--text-dim);
+}
+.spell-tag.fire { border-color: rgba(192,74,0,0.45); color: var(--fire-pale); }
+.spell-tag.force { border-color: rgba(200,140,220,0.35); color: #c08cd8; }
+.spell-tag.abjur { border-color: rgba(74,138,192,0.4); color: #4a8ac0; }
+.spell-tag.enchant { border-color: rgba(170,136,204,0.4); color: #aa88cc; }
+.spell-tag.trans { border-color: rgba(106,170,74,0.4); color: #6aaa4a; }
+.spell-tag.div { border-color: rgba(200,160,60,0.3); color: var(--amber-lt); }
+.spell-stat {
+  text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+.spell-damage {
+  font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700;
+  color: var(--fire-pale); white-space: nowrap;
+}
+.spell-damage.force { color: #c08cd8; }
+.spell-damage.utility { color: var(--text-dim); font-weight: 400; font-size: 0.72rem; }
+.spell-range-label {
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-dim); white-space: nowrap;
+}
+
+/* ── LORE SECTION ── */
 .lore-block {
   background: var(--dark-card); border: 1px solid var(--border);
   border-left: 3px solid var(--fire);
   padding: 24px 28px; margin-bottom: 40px;
   font-size: 1.02rem; color: var(--text); line-height: 1.85;
 }
-
-/* Time accent quote */
 .time-quote {
   border-left: 3px solid var(--amber);
   padding: 16px 24px; margin: 28px 0;
   background: linear-gradient(90deg, rgba(138,106,42,0.1) 0%, transparent 100%);
   font-style: italic; font-size: 1.08rem; color: var(--text); line-height: 1.7;
 }
-
-/* Trait cards */
 .traits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px; margin-bottom: 40px;
 }
 .trait-card {
@@ -333,20 +585,14 @@ body::before {
   color: var(--amber-lt); margin-bottom: 8px; letter-spacing: 0.05em;
 }
 .trait-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
-
-/* ── HOURGLASS DECORATION ── */
-.hourglass-deco {
-  text-align: center; margin: 40px 0 32px;
-  opacity: 0.35;
-}
+.hourglass-deco { text-align: center; margin: 40px 0 32px; opacity: 0.35; }
 
 /* ── FOOTER ── */
 footer {
   text-align: center; padding: 36px 20px;
   border-top: 1px solid var(--border);
   font-family: 'Cinzel', serif; font-size: 0.6rem;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--text-dim);
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim);
   background: linear-gradient(180deg, transparent, rgba(192,74,0,0.04));
 }
 footer strong { color: var(--amber-lt); }
@@ -361,6 +607,13 @@ footer strong { color: var(--amber-lt); }
   .content { padding: 36px 20px 60px; }
   .back-btn span { display: none; }
   .topbar-title { padding-right: 0; }
+  .tab-nav { padding: 0 10px; }
+  .tab-btn { padding: 12px 14px; font-size: 0.55rem; }
+  .actions-grid { grid-template-columns: repeat(2, 1fr); }
+  .saves-grid { grid-template-columns: repeat(3, 1fr); }
+  .skills-grid { grid-template-columns: 1fr; }
+  .misc-stats { grid-template-columns: 1fr; }
+  .spell-meta-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -379,7 +632,7 @@ footer strong { color: var(--amber-lt); }
     <!-- Portrait -->
     <div class="char-portrait-wrap">
       <img src="magnus.png" alt="Magnus Volstruker" class="char-portrait">
-      <div class="level-badge">✦ Livello 3 · Mago</div>
+      <div class="level-badge">✦ Livello 4 · Mago</div>
     </div>
 
     <!-- Info -->
@@ -396,8 +649,8 @@ footer strong { color: var(--amber-lt); }
 
       <!-- Combat stats -->
       <div class="combat-stats">
-        <div class="combat-stat">
-          <span class="combat-stat-value">26</span>
+        <div class="combat-stat editable" onclick="editHP()" title="Clicca per modificare i PF">
+          <span class="combat-stat-value" id="hp-display">34</span><span class="combat-stat-sub" id="hp-max-display">/34</span>
           <span class="combat-stat-label">Punti Ferita</span>
         </div>
         <div class="combat-stat">
@@ -405,7 +658,7 @@ footer strong { color: var(--amber-lt); }
           <span class="combat-stat-label">Classe Armatura</span>
         </div>
         <div class="combat-stat">
-          <span class="combat-stat-value">+5</span>
+          <span class="combat-stat-value">+6</span>
           <span class="combat-stat-label">Iniziativa</span>
         </div>
       </div>
@@ -428,8 +681,8 @@ footer strong { color: var(--amber-lt); }
           <span class="ability-name">COS</span>
         </div>
         <div class="ability int">
-          <span class="ability-score">17</span>
-          <span class="ability-mod">+3</span>
+          <span class="ability-score">18</span>
+          <span class="ability-mod">+4</span>
           <span class="ability-name">INT</span>
         </div>
         <div class="ability wis">
@@ -448,10 +701,632 @@ footer strong { color: var(--amber-lt); }
   </div><!-- /char-header-inner -->
 </div><!-- /char-header -->
 
-<!-- CONTENT -->
-<div class="content">
+<!-- TAB NAVIGATION -->
+<div class="tab-nav-wrap">
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchView('scheda', this)">⚔ Scheda</button>
+    <button class="tab-btn" onclick="switchView('incantesimi', this)">✦ Incantesimi</button>
+    <button class="tab-btn" onclick="switchView('lore', this)">⧗ Lore</button>
+  </nav>
+</div>
 
-  <!-- Lore -->
+<!-- ═══════════════════════════════════════════════════════
+     TAB: SCHEDA
+════════════════════════════════════════════════════════ -->
+<div id="tab-scheda" class="tab-content active content">
+
+  <!-- AZIONI DEL TURNO -->
+  <div class="section-heading">
+    <span class="section-heading-text">Azioni del Turno</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="actions-grid">
+    <div class="action-box" id="action-azione" onclick="toggleAction(this)" title="Clicca per segnare come usata">
+      <span class="action-icon">⚔</span>
+      <span class="action-label">Azione</span>
+      <span class="action-detail">Attacco · Incantesimo · Corsa</span>
+    </div>
+    <div class="action-box" id="action-bonus" onclick="toggleAction(this)" title="Clicca per segnare come usata">
+      <span class="action-icon">⚡</span>
+      <span class="action-label">Azione Bonus</span>
+      <span class="action-detail">Passo Velato · Oggetto</span>
+    </div>
+    <div class="action-box" id="action-reazione" onclick="toggleAction(this)" title="Clicca per segnare come usata">
+      <span class="action-icon">🛡</span>
+      <span class="action-label">Reazione</span>
+      <span class="action-detail">Scudo · Spostamento Cronale</span>
+    </div>
+    <div class="action-box" id="action-movimento" onclick="toggleAction(this)" title="Clicca per segnare come usata">
+      <span class="action-icon">👣</span>
+      <span class="action-label">Movimento</span>
+      <span class="action-detail">9 m (30 ft)</span>
+    </div>
+  </div>
+
+  <div class="actions-bottom">
+    <div class="concentration-box" id="conc-box" onclick="toggleConcentration()">
+      <div class="conc-dot"></div>
+      <div>
+        <div class="conc-label">Concentrazione</div>
+        <div class="conc-spell" id="conc-spell">Nessuna concentrazione</div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetTurn()">↺ Reset Turno</button>
+  </div>
+
+  <!-- STATISTICHE VARIE -->
+  <div class="section-heading">
+    <span class="section-heading-text">Statistiche</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="misc-stats">
+    <div class="misc-stat">
+      <span class="misc-stat-value">+2</span>
+      <span class="misc-stat-label">Bonus Competenza</span>
+    </div>
+    <div class="misc-stat">
+      <span class="misc-stat-value">11</span>
+      <span class="misc-stat-label">Percezione Passiva</span>
+    </div>
+    <div class="misc-stat">
+      <span class="misc-stat-value">9 m</span>
+      <span class="misc-stat-label">Velocità</span>
+    </div>
+  </div>
+
+  <!-- TIRI SALVEZZA -->
+  <div class="section-heading">
+    <span class="section-heading-text">Tiri Salvezza</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="saves-grid">
+    <div class="save-item">
+      <span class="save-value">+0</span>
+      <span class="save-name">Forza</span>
+    </div>
+    <div class="save-item">
+      <span class="save-value">+2</span>
+      <span class="save-name">Destrezza</span>
+    </div>
+    <div class="save-item">
+      <span class="save-value">+2</span>
+      <span class="save-name">Costituzione</span>
+    </div>
+    <div class="save-item proficient">
+      <span class="save-value">+6</span>
+      <span class="save-name">Intelligenza</span>
+      <span class="save-prof-mark">✦</span>
+    </div>
+    <div class="save-item proficient">
+      <span class="save-value">+3</span>
+      <span class="save-name">Saggezza</span>
+      <span class="save-prof-mark">✦</span>
+    </div>
+    <div class="save-item">
+      <span class="save-value">−1</span>
+      <span class="save-name">Carisma</span>
+    </div>
+  </div>
+
+  <!-- ABILITÀ -->
+  <div class="section-heading">
+    <span class="section-heading-text">Abilità</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-row">
+      <span class="skill-bonus">+2</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Acrobazia</span>
+      <span class="skill-attr">DES</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+6</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Arcano</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+0</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Atletica</span>
+      <span class="skill-attr">FOR</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Inganno</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+6</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Indagare</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+3</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Intuizione</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Intimidazione</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Medicina</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+4</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Natura</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Percezione</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Persuasione</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+2</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Rapidità di Mano</span>
+      <span class="skill-attr">DES</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+4</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Religione</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Sopravvivenza</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+6</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Storia</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+2</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Furtività</span>
+      <span class="skill-attr">DES</span>
+    </div>
+  </div>
+
+  <!-- CAPACITÀ DI CLASSE -->
+  <div class="section-heading">
+    <span class="section-heading-text">Capacità di Classe</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <!-- Arcane Recovery -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Recupero Arcano</span>
+      <span class="feature-tag">Riposo Breve · 1/Giorno</span>
+    </div>
+    <p class="feature-desc">
+      Una volta per giorno, dopo un riposo breve, Magnus può recuperare slot incantesimo per un totale di livelli pari a <strong style="color:var(--amber-lt)">2</strong>
+      (metà del livello da mago, arrotondato per eccesso). Non può recuperare slot di livello 6 o superiore.
+    </p>
+    <div style="margin-top: 12px; display:flex; gap:8px; align-items:center;">
+      <div class="feature-charges">
+        <div class="charge-pip" id="ar-pip" onclick="toggleArcaneRecovery()" title="Clicca per segnare come usato"></div>
+      </div>
+      <span style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-dim);">Disponibile</span>
+    </div>
+  </div>
+
+  <!-- Chronal Shift -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Spostamento Cronale</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="feature-charges" id="chronal-charges">
+          <div class="charge-pip" onclick="toggleCharge(this, 'chronal')" title="Carica 1"></div>
+          <div class="charge-pip" onclick="toggleCharge(this, 'chronal')" title="Carica 2"></div>
+        </div>
+        <span class="feature-tag">Reazione · Riposo Lungo</span>
+      </div>
+    </div>
+    <p class="feature-desc">
+      Quando una creatura visibile effettua un tiro per colpire, un tiro di caratteristica o un tiro salvezza,
+      Magnus può usare la sua reazione per costringere quella creatura a ritirare il dado.
+      Sceglie quale risultato utilizzare. Ogni volta che lo usa, spende una carica — si recuperano entrambe dopo un riposo lungo.
+    </p>
+    <button class="feature-reset" onclick="resetCharges('chronal')">↺ Riposo Lungo — Recupera Cariche</button>
+  </div>
+
+  <!-- Temporal Awareness -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Consapevolezza Temporale</span>
+      <span class="feature-tag">Passiva</span>
+    </div>
+    <p class="feature-desc">
+      Magnus aggiunge il suo modificatore di Intelligenza (<strong style="color:var(--fire-pale)">+4</strong>)
+      ai tiri di Iniziativa, in aggiunta al modificatore di Destrezza. Iniziativa totale: <strong style="color:var(--amber-lt)">+6</strong>.
+    </p>
+  </div>
+
+  <!-- ASI -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Miglioramento Caratteristica</span>
+      <span class="feature-tag">Livello 4</span>
+    </div>
+    <p class="feature-desc">
+      Al livello 4, Magnus ha incrementato la sua Intelligenza da 17 a <strong style="color:var(--fire-pale)">18</strong>,
+      portando il modificatore a <strong style="color:var(--fire-pale)">+4</strong>.
+    </p>
+  </div>
+
+</div><!-- /tab-scheda -->
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB: INCANTESIMI
+════════════════════════════════════════════════════════ -->
+<div id="tab-incantesimi" class="tab-content content">
+
+  <!-- Spell meta stats -->
+  <div class="spell-meta-row">
+    <div class="spell-meta-item">
+      <span class="spell-meta-value">14</span>
+      <span class="spell-meta-label">CD Tiro Salvezza</span>
+    </div>
+    <div class="spell-meta-item">
+      <span class="spell-meta-value">+6</span>
+      <span class="spell-meta-label">Bonus Attacco Magico</span>
+    </div>
+    <div class="spell-meta-item">
+      <span class="spell-meta-value">8</span>
+      <span class="spell-meta-label">Incantesimi Preparati</span>
+    </div>
+  </div>
+
+  <!-- Spell Slots -->
+  <div class="section-heading">
+    <span class="section-heading-text">Slot Incantesimo</span>
+    <div class="section-heading-line"></div>
+    <button class="reset-btn" onclick="resetAllSlots()" style="margin-left:10px;">↺ Riposo Lungo</button>
+  </div>
+
+  <div class="slot-section">
+    <div class="slot-row">
+      <span class="slot-level-label">1° Livello</span>
+      <div class="slot-pips" id="slots-1">
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 1"></div>
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 2"></div>
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 3"></div>
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 4"></div>
+      </div>
+      <span class="slot-count" id="slots-1-count">4 / 4</span>
+    </div>
+    <div class="slot-row">
+      <span class="slot-level-label">2° Livello</span>
+      <div class="slot-pips" id="slots-2">
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 1"></div>
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 2"></div>
+        <div class="slot-pip" onclick="toggleSlot(this)" title="Slot 3"></div>
+      </div>
+      <span class="slot-count" id="slots-2-count">3 / 3</span>
+    </div>
+  </div>
+
+  <!-- Cantrips -->
+  <div class="spell-level-head">
+    <span class="spell-level-title">Trucchetti</span>
+    <div class="spell-level-line"></div>
+    <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">A VOLONTÀ</span>
+  </div>
+
+  <div class="spell-list">
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Dardo di Fuoco</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Fire Bolt)</span>
+        </div>
+        <div class="spell-desc">Tiro per colpire a distanza contro bersaglio. In caso di successo, infligge danni da fuoco.</div>
+        <div class="spell-tags">
+          <span class="spell-tag fire">Fuoco</span>
+          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage">1d10 🔥</span>
+        <span class="spell-range-label">36 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Mano Magica</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mage Hand)</span>
+        </div>
+        <div class="spell-desc">Crea una mano spettrale fluttuante che può manipolare oggetti, aprire porte, recuperare oggetti entro 9 m.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Congiunzione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">9 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Prestidigitazione</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Prestidigitation)</span>
+        </div>
+        <div class="spell-desc">Piccoli effetti magici: accendere o spegnere fiamme, creare odori, pulire oggetti, tracciare simboli, produrre suoni.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Trasmutazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">3 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Illusione Minore</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Minor Illusion)</span>
+        </div>
+        <div class="spell-desc">Crea un suono o un'immagine illusoria entro portata. L'immagine è immobile; un'indagine riuscita la rivela come illusoria.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Illusione</span>
+          <span class="spell-tag">S, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">9 m</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1st Level Spells -->
+  <div class="spell-level-head">
+    <span class="spell-level-title">Incantesimi di 1° Livello</span>
+    <div class="spell-level-line"></div>
+    <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">4 SLOT</span>
+  </div>
+
+  <div class="spell-list">
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Armatura del Mago</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mage Armor)</span>
+        </div>
+        <div class="spell-desc">La CA del bersaglio privo di armatura diventa 13 + mod. DES. Durata: 8 ore.</div>
+        <div class="spell-tags">
+          <span class="spell-tag abjur">Abiurazione</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">Tocco</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">CA 15</span>
+        <span class="spell-range-label">8 ore</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Scudo</span>
+          <span class="spell-badge badge-reaction">Reazione</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Shield)</span>
+        </div>
+        <div class="spell-desc">Reazione a essere colpiti: +5 alla CA fino all'inizio del prossimo turno, incluso contro l'attacco scatenante. Nega Proiettile Magico.</div>
+        <div class="spell-tags">
+          <span class="spell-tag abjur">Abiurazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">+5 CA</span>
+        <span class="spell-range-label">1 round</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Proiettile Magico</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Magic Missile)</span>
+        </div>
+        <div class="spell-desc">Tre dardi di forza magica che colpiscono automaticamente. Possono bersagliare la stessa creatura o creature diverse.</div>
+        <div class="spell-tags">
+          <span class="spell-tag force">Forza</span>
+          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage force">3×(1d4+1)</span>
+        <span class="spell-range-label">36 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Mani Brucianti</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Burning Hands)</span>
+        </div>
+        <div class="spell-desc">Cono di fiamme di 4,5 m davanti a Magnus. TS Destrezza CD 14 o subisce danni da fuoco, metà in caso di successo.</div>
+        <div class="spell-tags">
+          <span class="spell-tag fire">Fuoco</span>
+          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag">V, S</span>
+          <span class="spell-tag">TS DES</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage">3d6 🔥</span>
+        <span class="spell-range-label">Cono 4.5 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Orb Cromatico</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Chromatic Orb)</span>
+        </div>
+        <div class="spell-desc">Tiro per colpire a distanza. Magnus sceglie il tipo di danno: acido, freddo, fuoco, fulmine, tuono o veleno.</div>
+        <div class="spell-tags">
+          <span class="spell-tag fire">Fuoco</span>
+          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag">V, S, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage">3d8</span>
+        <span class="spell-range-label">27 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Individuazione del Magico</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span class="spell-badge badge-ritual">Rituale</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Detect Magic)</span>
+        </div>
+        <div class="spell-desc">Per 10 minuti Magnus percepisce la presenza di magia entro 9 m e può vedere la sua aura scintillante, identificando la scuola di magia.</div>
+        <div class="spell-tags">
+          <span class="spell-tag div">Divinazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">9 m / 10 min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2nd Level Spells -->
+  <div class="spell-level-head">
+    <span class="spell-level-title">Incantesimi di 2° Livello</span>
+    <div class="spell-level-line"></div>
+    <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">3 SLOT</span>
+  </div>
+
+  <div class="spell-list">
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Raggio di Scottatura</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Scorching Ray)</span>
+        </div>
+        <div class="spell-desc">Magnus lancia tre raggi di fuoco separati. Ogni raggio richiede un proprio tiro per colpire e può bersagliare creature diverse.</div>
+        <div class="spell-tags">
+          <span class="spell-tag fire">Fuoco</span>
+          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage">3×2d6 🔥</span>
+        <span class="spell-range-label">27 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Fermare la Persona</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Hold Person)</span>
+        </div>
+        <div class="spell-desc">Un umanoide entro portata deve superare un TS Saggezza CD 14 o essere paralizzato per 1 minuto. Può ripetere il tiro a fine turno.</div>
+        <div class="spell-tags">
+          <span class="spell-tag enchant">Ammaliamento</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">TS SAG</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Paralisi</span>
+        <span class="spell-range-label">18 m / 1 min</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Passo Velato</span>
+          <span class="spell-badge badge-bonus">Az. Bonus</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Misty Step)</span>
+        </div>
+        <div class="spell-desc">Come azione bonus, Magnus si teletrasporta istantaneamente in uno spazio non occupato visibile entro 18 m.</div>
+        <div class="spell-tags">
+          <span class="spell-tag trans">Trasmutazione</span>
+          <span class="spell-tag">V</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Teleporto</span>
+        <span class="spell-range-label">18 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Levitare</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Levitate)</span>
+        </div>
+        <div class="spell-desc">Una creatura o oggetto entro portata si solleva verticalmente di 6 m per 10 minuti. TS Costituzione CD 14 per creature non consenzienti.</div>
+        <div class="spell-tags">
+          <span class="spell-tag trans">Trasmutazione</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">TS COS</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Volo 6 m</span>
+        <span class="spell-range-label">18 m / 10 min</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-incantesimi -->
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB: LORE
+════════════════════════════════════════════════════════ -->
+<div id="tab-lore" class="tab-content content">
+
   <div class="section-heading">
     <span class="section-heading-text">Il Personaggio</span>
     <div class="section-heading-line"></div>
@@ -465,7 +1340,6 @@ footer strong { color: var(--amber-lt); }
     "Il tempo non è un fiume che scorre — è argilla. E io ho imparato a modellarla."
   </div>
 
-  <!-- Traits -->
   <div class="section-heading" style="margin-top:40px;">
     <span class="section-heading-text">Tratti e Abilità</span>
     <div class="section-heading-line"></div>
@@ -486,32 +1360,143 @@ footer strong { color: var(--amber-lt); }
     </div>
   </div>
 
-  <!-- Hourglass decoration -->
   <div class="hourglass-deco">
     <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Frame -->
       <rect x="8" y="4" width="44" height="4" rx="1" fill="#c9820a"/>
       <rect x="8" y="72" width="44" height="4" rx="1" fill="#c9820a"/>
       <line x1="10" y1="6" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
       <line x1="50" y1="6" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
       <line x1="10" y1="74" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
       <line x1="50" y1="74" x2="30" y2="40" stroke="#c9820a" stroke-width="1.2"/>
-      <!-- Sand top -->
       <path d="M14 10 Q30 36 46 10Z" fill="#c04a00" opacity="0.5"/>
-      <!-- Sand bottom -->
       <path d="M22 50 Q30 44 38 50 L34 70 L26 70Z" fill="#e8640a" opacity="0.7"/>
-      <!-- Falling grain -->
       <circle cx="30" cy="41" r="1.5" fill="#f0943a" opacity="0.9"/>
     </svg>
   </div>
 
-</div><!-- /content -->
+</div><!-- /tab-lore -->
 
 <footer>
-  <strong>Magnus Volstruker</strong> · Mago Cronomante · Livello 3
+  <strong>Magnus Volstruker</strong> · Mago Cronomante · Livello 4
   <br>Centuria · Il Mondo della Campagna
   <br><br>
   Alessandro Crispini · Alessandro Gusta · Matteo Tonetta · Andrea Baima · Federica Pilloni
 </footer>
+
+<script>
+// ── Tab switching ──────────────────────────────────────
+function switchView(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── HP tracking ───────────────────────────────────────
+let currentHP = 34;
+const maxHP = 34;
+
+function editHP() {
+  const val = prompt('Punti Ferita attuali (max ' + maxHP + '):', currentHP);
+  if (val === null) return;
+  const n = parseInt(val);
+  if (!isNaN(n)) {
+    currentHP = Math.max(0, Math.min(maxHP, n));
+    document.getElementById('hp-display').textContent = currentHP;
+    const color = currentHP <= 0 ? '#c04a3a' : currentHP <= maxHP / 2 ? '#e8b84a' : '#f0943a';
+    document.getElementById('hp-display').style.color = color;
+  }
+}
+
+// ── Turn actions ──────────────────────────────────────
+function toggleAction(el) {
+  el.classList.toggle('used');
+}
+
+function resetTurn() {
+  document.querySelectorAll('.action-box.used').forEach(el => el.classList.remove('used'));
+}
+
+// ── Concentration ─────────────────────────────────────
+let concentrationSpell = '';
+
+function toggleConcentration() {
+  const box = document.getElementById('conc-box');
+  const label = document.getElementById('conc-spell');
+  if (box.classList.contains('active')) {
+    if (confirm('Interrompere la concentrazione su "' + concentrationSpell + '"?')) {
+      box.classList.remove('active');
+      concentrationSpell = '';
+      label.textContent = 'Nessuna concentrazione';
+    }
+  } else {
+    const spell = prompt('Incantesimo di concentrazione:');
+    if (spell && spell.trim()) {
+      concentrationSpell = spell.trim();
+      box.classList.add('active');
+      label.textContent = concentrationSpell;
+    }
+  }
+}
+
+// ── Spell slots ───────────────────────────────────────
+function toggleSlot(pip) {
+  pip.classList.toggle('used');
+  updateSlotCount(pip.parentElement);
+}
+
+function updateSlotCount(container) {
+  const total = container.querySelectorAll('.slot-pip').length;
+  const used = container.querySelectorAll('.slot-pip.used').length;
+  const remaining = total - used;
+  const countEl = container.closest('.slot-row').querySelector('.slot-count');
+  if (countEl) countEl.textContent = remaining + ' / ' + total;
+}
+
+function resetAllSlots() {
+  document.querySelectorAll('.slot-pip.used').forEach(p => p.classList.remove('used'));
+  document.querySelectorAll('.slot-row').forEach(row => {
+    const container = row.querySelector('.slot-pips');
+    if (container) updateSlotCount(container);
+  });
+  // Reset arcane recovery too
+  const arPip = document.getElementById('ar-pip');
+  if (arPip) {
+    arPip.classList.remove('used');
+    arPip.nextElementSibling && (arPip.nextElementSibling.textContent = 'Disponibile');
+  }
+  // Reset chronal shift charges
+  resetCharges('chronal');
+}
+
+// ── Class feature charges ──────────────────────────────
+function toggleCharge(pip) {
+  pip.classList.toggle('used');
+}
+
+function resetCharges(id) {
+  const container = document.getElementById(id + '-charges');
+  if (container) container.querySelectorAll('.charge-pip.used').forEach(p => p.classList.remove('used'));
+}
+
+function toggleArcaneRecovery() {
+  const pip = document.getElementById('ar-pip');
+  pip.classList.toggle('used');
+  const label = pip.nextElementSibling;
+  if (label) label.textContent = pip.classList.contains('used') ? 'Usato (ripristina al prossimo riposo breve)' : 'Disponibile';
+}
+
+// ── Init slot counts ───────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.slot-pips').forEach(container => {
+    const total = container.querySelectorAll('.slot-pip').length;
+    const row = container.closest('.slot-row');
+    const countEl = row && row.querySelector('.slot-count');
+    if (countEl) countEl.textContent = total + ' / ' + total;
+  });
+});
+</script>
+
 </body>
 </html>
