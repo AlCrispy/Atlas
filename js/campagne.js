@@ -59,6 +59,12 @@ const SESSIONS = [
     title: "La Fine dell'Assedio",
     date: "",
     summary: "Prendete il controllo della balista e distruggete la seconda arma d'assedio. Nel mezzo della battaglia, un gruppo di incappucciati apre un portale ovale con un rituale — lo distruggete prima che sia troppo tardi. Zavash Kass affronta Xartamas e lo sconfigge; le ultime parole del consacratore corrotto risuonano come una profezia: «Sentirete ancora parlare di me — la città di Sitryll cadrà, come cadrai tu, Zavash.» L'assedio è finito e la capitale è salva. Nel dopo-guerra emerge che il Generale a capo delle truppe cittadine proviene da Valikor ed è membro del concilio, al pari di Zavash Kass. Le voci per le strade rivelano che il concilio non gode della fiducia di tutti. Alla gilda, una Dragonide Rossa osserva gli avventurieri in silenzio dalla balconata."
+  },
+  {
+    num: 10,
+    title: "La Festa in Maschera",
+    date: "",
+    summary: "Esplorate il mercato di Sitryll: visitate il Sogno dell'Avventuriero, emporio di Lydia Soutart, e Da Tabalion e le sue meraviglie. Anne vi rivela l'identità della Dragonide Rossa: è Luwara Firefist, il vero capo della gilda, ultimamente ritirata dagli affari pubblici. La gilda è stata fondata dai Razorclaw — Anna, Bardok, Luwara, Cecil Madok ed Elaia Windspeaker — poco dopo l'insediamento nelle Terre Ignote, per aiutare cittadini e popolo. Dopo qualche giorno ricevete una lettera: un invito a una festa in maschera del nobile Mobius Teodonius, cacciato dalla Lega di Aurelion per infamia. La festa è affollata e bizzarra — Mobius non nasconde i propri gusti, e la serata è appena cominciata."
   }
 ];
 
