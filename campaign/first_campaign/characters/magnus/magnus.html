@@ -260,6 +260,7 @@ body::before {
 /* ── SECTION HEADING ── */
 .section-heading {
   display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  cursor: pointer; user-select: none;
 }
 .section-heading-text {
   font-family: 'Cinzel', serif; font-size: 0.65rem;
@@ -597,6 +598,83 @@ footer {
 }
 footer strong { color: var(--amber-lt); }
 
+/* ── INVENTORY ── */
+.inv-list { border: 1px solid var(--border); margin-bottom: 28px; }
+.inv-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 18px; background: var(--dark-card);
+  border-bottom: 1px solid rgba(200,160,60,0.07); transition: background 0.15s;
+}
+.inv-row:last-child { border-bottom: none; }
+.inv-row:hover { background: rgba(200,160,60,0.03); }
+.inv-row.consumed { opacity: 0.32; }
+.inv-icon { font-size: 1rem; flex-shrink: 0; width: 22px; text-align: center; line-height: 1; }
+.inv-name { font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--amber-lt); flex: 1; }
+.inv-desc { font-size: 0.82rem; color: var(--text-dim); margin-top: 2px; }
+.inv-use-btn {
+  background: none; border: 1px solid rgba(200,160,60,0.25); flex-shrink: 0;
+  color: var(--text-dim); cursor: pointer; padding: 4px 10px;
+  font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.15em;
+  text-transform: uppercase; transition: all 0.2s;
+}
+.inv-use-btn:hover { border-color: var(--fire); color: var(--fire-pale); }
+.inv-row.consumed .inv-use-btn { border-color: rgba(200,160,60,0.4); color: var(--amber-lt); }
+.gem-counter { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.gem-btn {
+  background: none; border: 1px solid var(--border); cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.1em;
+  color: var(--text-dim); padding: 6px 13px; transition: all 0.2s;
+}
+.gem-btn:hover { border-color: var(--amber); color: var(--amber-lt); }
+.gem-btn.spend { border-color: rgba(192,74,0,0.35); color: var(--fire-pale); }
+.gem-btn.spend:hover { border-color: var(--fire-lt); }
+.gem-display {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; font-weight: 700;
+  color: var(--fire-pale); text-shadow: 0 0 20px rgba(192,74,0,0.4);
+  min-width: 44px; text-align: center;
+}
+.gem-max { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--text-dim); }
+
+/* ── SPELL LEVEL TOGGLE ── */
+.spell-level-head { cursor: pointer; user-select: none; }
+.spell-level-head:hover .spell-level-title { color: var(--amber-lt); }
+.spell-toggle-arrow {
+  color: var(--text-dim); font-size: 0.65rem; flex-shrink: 0;
+  transition: transform 0.2s; display: inline-block; line-height: 1;
+}
+.spell-level-head.collapsed .spell-toggle-arrow { transform: rotate(-90deg); }
+
+/* ── SKILL GROUPS ── */
+.skill-group-label {
+  grid-column: 1 / -1;
+  font-family: 'Cinzel', serif; font-size: 0.5rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  padding: 12px 4px 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+.skill-group-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: currentColor; opacity: 0.2;
+}
+.section-heading.collapsed .spell-toggle-arrow { transform: rotate(-90deg); }
+
+/* ── SPELL PREPARATION ── */
+.prep-toggle {
+  background: none; border: 1px solid rgba(200,160,60,0.28); border-radius: 2px;
+  width: 15px; height: 15px; cursor: pointer; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0; font-size: 0.55rem; color: transparent;
+  transition: all 0.15s; align-self: center; margin-right: 2px;
+}
+.prep-toggle::after { content: '✓'; }
+.prep-toggle:hover { border-color: rgba(200,160,60,0.7); color: rgba(200,160,60,0.5); }
+.prep-toggle.prepared { background: rgba(200,160,60,0.2); border-color: var(--amber-lt); color: var(--amber-lt); }
+.prep-always { font-size: 0.65rem; color: var(--fire-pale); flex-shrink: 0; align-self: center; margin-right: 2px; opacity: 0.85; }
+.spell-row.unprepared { opacity: 0.35; transition: opacity 0.2s; }
+.spell-row.unprepared:hover { opacity: 0.52; }
+.ritual-note { display: block; font-size: 0.76rem; color: #6aaa4a; font-style: italic; margin-top: 3px; }
+.spell-name-line { align-items: center; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 720px) {
   .char-header-inner { grid-template-columns: 1fr; gap: 36px; }
@@ -707,6 +785,7 @@ footer strong { color: var(--amber-lt); }
     <button class="tab-btn active" onclick="switchView('scheda', this)">⚔ Scheda</button>
     <button class="tab-btn" onclick="switchView('incantesimi', this)">✦ Incantesimi</button>
     <button class="tab-btn" onclick="switchView('lore', this)">⧗ Lore</button>
+    <button class="tab-btn" onclick="switchView('inventario', this)">⚜ Inventario</button>
   </nav>
 </div>
 
@@ -716,7 +795,8 @@ footer strong { color: var(--amber-lt); }
 <div id="tab-scheda" class="tab-content active content">
 
   <!-- AZIONI DEL TURNO -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Azioni del Turno</span>
     <div class="section-heading-line"></div>
   </div>
@@ -756,7 +836,8 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- STATISTICHE VARIE -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Statistiche</span>
     <div class="section-heading-line"></div>
   </div>
@@ -777,7 +858,8 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- TIRI SALVEZZA -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Tiri Salvezza</span>
     <div class="section-heading-line"></div>
   </div>
@@ -791,9 +873,10 @@ footer strong { color: var(--amber-lt); }
       <span class="save-value">+2</span>
       <span class="save-name">Destrezza</span>
     </div>
-    <div class="save-item">
-      <span class="save-value">+2</span>
+    <div class="save-item proficient">
+      <span class="save-value">+4</span>
       <span class="save-name">Costituzione</span>
+      <span class="save-prof-mark">✦</span>
     </div>
     <div class="save-item proficient">
       <span class="save-value">+6</span>
@@ -812,77 +895,29 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- ABILITÀ -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Abilità</span>
     <div class="section-heading-line"></div>
   </div>
 
   <div class="skills-grid">
+
+    <div class="skill-group-label" style="color:#c04a3a;">Forza</div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+2</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Atletica</span>
+      <span class="skill-attr">FOR</span>
+    </div>
+    <div style="grid-column:2"></div>
+
+    <div class="skill-group-label" style="color:#6aaa4a;">Destrezza</div>
     <div class="skill-row">
       <span class="skill-bonus">+2</span>
       <span class="skill-dot"></span>
       <span class="skill-name">Acrobazia</span>
       <span class="skill-attr">DES</span>
-    </div>
-    <div class="skill-row proficient">
-      <span class="skill-bonus">+6</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Arcano</span>
-      <span class="skill-attr">INT</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">+0</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Atletica</span>
-      <span class="skill-attr">FOR</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">−1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Inganno</span>
-      <span class="skill-attr">CAR</span>
-    </div>
-    <div class="skill-row proficient">
-      <span class="skill-bonus">+6</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Indagare</span>
-      <span class="skill-attr">INT</span>
-    </div>
-    <div class="skill-row proficient">
-      <span class="skill-bonus">+3</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Intuizione</span>
-      <span class="skill-attr">SAG</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">−1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Intimidazione</span>
-      <span class="skill-attr">CAR</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">+1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Medicina</span>
-      <span class="skill-attr">SAG</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">+4</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Natura</span>
-      <span class="skill-attr">INT</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">+1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Percezione</span>
-      <span class="skill-attr">SAG</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-bonus">−1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Persuasione</span>
-      <span class="skill-attr">CAR</span>
     </div>
     <div class="skill-row">
       <span class="skill-bonus">+2</span>
@@ -891,33 +926,98 @@ footer strong { color: var(--amber-lt); }
       <span class="skill-attr">DES</span>
     </div>
     <div class="skill-row">
+      <span class="skill-bonus">+2</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Furtività</span>
+      <span class="skill-attr">DES</span>
+    </div>
+    <div style="grid-column:2"></div>
+
+    <div class="skill-group-label" style="color:var(--fire-pale);">Intelligenza</div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+6</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Arcano</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+6</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Indagare</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+4</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Natura</span>
+      <span class="skill-attr">INT</span>
+    </div>
+    <div class="skill-row">
       <span class="skill-bonus">+4</span>
       <span class="skill-dot"></span>
       <span class="skill-name">Religione</span>
       <span class="skill-attr">INT</span>
     </div>
     <div class="skill-row">
-      <span class="skill-bonus">+1</span>
-      <span class="skill-dot"></span>
-      <span class="skill-name">Sopravvivenza</span>
-      <span class="skill-attr">SAG</span>
-    </div>
-    <div class="skill-row proficient">
-      <span class="skill-bonus">+6</span>
+      <span class="skill-bonus">+4</span>
       <span class="skill-dot"></span>
       <span class="skill-name">Storia</span>
       <span class="skill-attr">INT</span>
     </div>
+    <div style="grid-column:2"></div>
+
+    <div class="skill-group-label" style="color:#aa88cc;">Saggezza</div>
     <div class="skill-row">
-      <span class="skill-bonus">+2</span>
+      <span class="skill-bonus">+1</span>
       <span class="skill-dot"></span>
-      <span class="skill-name">Furtività</span>
-      <span class="skill-attr">DES</span>
+      <span class="skill-name">Intuizione</span>
+      <span class="skill-attr">SAG</span>
     </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Medicina</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">+1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Percezione</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div class="skill-row proficient">
+      <span class="skill-bonus">+3</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Sopravvivenza</span>
+      <span class="skill-attr">SAG</span>
+    </div>
+    <div style="grid-column:2"></div>
+
+    <div class="skill-group-label" style="color:#c0a040;">Carisma</div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Inganno</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Intimidazione</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-bonus">−1</span>
+      <span class="skill-dot"></span>
+      <span class="skill-name">Persuasione</span>
+      <span class="skill-attr">CAR</span>
+    </div>
+
   </div>
 
   <!-- CAPACITÀ DI CLASSE -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Capacità di Classe</span>
     <div class="section-heading-line"></div>
   </div>
@@ -972,15 +1072,46 @@ footer strong { color: var(--amber-lt); }
     </p>
   </div>
 
-  <!-- ASI -->
+  <!-- Tocco Fatato -->
   <div class="feature-card">
     <div class="feature-header">
-      <span class="feature-name">Miglioramento Caratteristica</span>
-      <span class="feature-tag">Livello 4</span>
+      <span class="feature-name">Tocco Fatato</span>
+      <span class="feature-tag">Talento</span>
     </div>
     <p class="feature-desc">
-      Al livello 4, Magnus ha incrementato la sua Intelligenza da 17 a <strong style="color:var(--fire-pale)">18</strong>,
-      portando il modificatore a <strong style="color:var(--fire-pale)">+4</strong>.
+      La magia del Feywild ha sfiorato Magnus. Ottiene +1 Intelligenza (già incluso, INT
+      <strong style="color:var(--fire-pale)">18</strong>) e impara
+      <strong style="color:var(--amber-lt)">Passo Velato</strong> e
+      <strong style="color:var(--amber-lt)">Sortilegio</strong>, entrambi sempre preparati.
+      Ciascuno può essere lanciato una volta per riposo lungo senza spendere uno slot
+      (segna i pip nella tab Incantesimi).
+    </p>
+  </div>
+
+  <!-- Resiliente -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Resiliente (Costituzione)</span>
+      <span class="feature-tag">Talento</span>
+    </div>
+    <p class="feature-desc">
+      Magnus ha sviluppato una resistenza fisica straordinaria. Ottiene +1 Costituzione
+      (già incluso, CON <strong style="color:var(--fire-pale)">14</strong>) e
+      <strong style="color:var(--amber-lt)">competenza nei tiri salvezza su Costituzione</strong>
+      (+2 mod + 2 comp = <strong style="color:var(--fire-pale)">+4</strong>). Fondamentale per
+      mantenere la concentrazione quando subisce danni in combattimento.
+    </p>
+  </div>
+
+  <!-- Robusto -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Robusto</span>
+      <span class="feature-tag">Talento</span>
+    </div>
+    <p class="feature-desc">
+      La vitalità di Magnus è notevolmente aumentata: il massimo di punti ferita aumenta di
+      <strong style="color:var(--fire-pale)">2</strong> per ogni livello del personaggio.
     </p>
   </div>
 
@@ -1002,16 +1133,17 @@ footer strong { color: var(--amber-lt); }
       <span class="spell-meta-label">Bonus Attacco Magico</span>
     </div>
     <div class="spell-meta-item">
-      <span class="spell-meta-value">8</span>
-      <span class="spell-meta-label">Incantesimi Preparati</span>
+      <span class="spell-meta-value" id="prep-count-display" style="font-size:1.2rem;">0 / 8</span>
+      <span class="spell-meta-label">Preparati</span>
     </div>
   </div>
 
   <!-- Spell Slots -->
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Slot Incantesimo</span>
     <div class="section-heading-line"></div>
-    <button class="reset-btn" onclick="resetAllSlots()" style="margin-left:10px;">↺ Riposo Lungo</button>
+    <button class="reset-btn" onclick="resetAllSlots();event.stopPropagation();" style="margin-left:10px;">↺ Riposo Lungo</button>
   </div>
 
   <div class="slot-section">
@@ -1037,7 +1169,8 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- Cantrips -->
-  <div class="spell-level-head">
+  <div class="spell-level-head" onclick="toggleSpellLevel(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="spell-level-title">Trucchetti</span>
     <div class="spell-level-line"></div>
     <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">A VOLONTÀ</span>
@@ -1047,10 +1180,45 @@ footer strong { color: var(--amber-lt); }
     <div class="spell-row">
       <div>
         <div class="spell-name-line">
+          <span class="spell-name">Scheggia della Mente</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mind Sliver)</span>
+        </div>
+        <div class="spell-desc">Un frammento di energia psichica lacera la mente di una creatura entro portata. TS Intelligenza CD 14: in caso di fallimento, subisce 1d6 danni psichici e deve sottrarre 1d4 al prossimo tiro salvezza effettuato prima della fine del turno successivo di Magnus.</div>
+        <div class="spell-tags">
+          <span class="spell-tag enchant">Ammaliamento</span>
+          <span class="spell-tag">V</span>
+          <span class="spell-tag">TS INT</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage" style="color:#aa88cc;">1d6 🧠</span>
+        <span class="spell-range-label">18 m</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
+          <span class="spell-name">Illusione Minore</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Minor Illusion)</span>
+        </div>
+        <div class="spell-desc">Crea un suono o un'immagine illusoria immobile entro portata per 1 minuto. Un'indagine riuscita (INT CD 14) la rivela come illusoria.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Illusione</span>
+          <span class="spell-tag">S, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">9 m / 1 min</span>
+      </div>
+    </div>
+    <div class="spell-row">
+      <div>
+        <div class="spell-name-line">
           <span class="spell-name">Dardo di Fuoco</span>
           <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Fire Bolt)</span>
         </div>
-        <div class="spell-desc">Tiro per colpire a distanza contro bersaglio. In caso di successo, infligge danni da fuoco.</div>
+        <div class="spell-desc">Tiro per colpire (+6) a distanza contro un bersaglio. In caso di successo, infligge danni da fuoco. Oggetti infiammabili non indossati vengono incendiati.</div>
         <div class="spell-tags">
           <span class="spell-tag fire">Fuoco</span>
           <span class="spell-tag">Evocazione</span>
@@ -1065,47 +1233,14 @@ footer strong { color: var(--amber-lt); }
     <div class="spell-row">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Mano Magica</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mage Hand)</span>
+          <span class="spell-name">Modellare Acqua</span>
+          <span class="spell-badge badge-conc">Conc.*</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Shape Water)</span>
         </div>
-        <div class="spell-desc">Crea una mano spettrale fluttuante che può manipolare oggetti, aprire porte, recuperare oggetti entro 9 m.</div>
+        <div class="spell-desc">Muove o altera il flusso di un cubo d'acqua di 1,5 m entro portata. Effetti istantanei (flusso, spostamento) non richiedono concentrazione. Cambiare colore/opacità o congelare in forma richiedono concentrazione fino a 1 ora.</div>
         <div class="spell-tags">
-          <span class="spell-tag">Congiunzione</span>
-          <span class="spell-tag">V, S</span>
-        </div>
-      </div>
-      <div class="spell-stat">
-        <span class="spell-damage utility">—</span>
-        <span class="spell-range-label">9 m</span>
-      </div>
-    </div>
-    <div class="spell-row">
-      <div>
-        <div class="spell-name-line">
-          <span class="spell-name">Prestidigitazione</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Prestidigitation)</span>
-        </div>
-        <div class="spell-desc">Piccoli effetti magici: accendere o spegnere fiamme, creare odori, pulire oggetti, tracciare simboli, produrre suoni.</div>
-        <div class="spell-tags">
-          <span class="spell-tag">Trasmutazione</span>
-          <span class="spell-tag">V, S</span>
-        </div>
-      </div>
-      <div class="spell-stat">
-        <span class="spell-damage utility">—</span>
-        <span class="spell-range-label">3 m</span>
-      </div>
-    </div>
-    <div class="spell-row">
-      <div>
-        <div class="spell-name-line">
-          <span class="spell-name">Illusione Minore</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Minor Illusion)</span>
-        </div>
-        <div class="spell-desc">Crea un suono o un'immagine illusoria entro portata. L'immagine è immobile; un'indagine riuscita la rivela come illusoria.</div>
-        <div class="spell-tags">
-          <span class="spell-tag">Illusione</span>
-          <span class="spell-tag">S, M</span>
+          <span class="spell-tag trans">Trasmutazione</span>
+          <span class="spell-tag">S</span>
         </div>
       </div>
       <div class="spell-stat">
@@ -1116,21 +1251,123 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- 1st Level Spells -->
-  <div class="spell-level-head">
+  <div class="spell-level-head" onclick="toggleSpellLevel(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="spell-level-title">Incantesimi di 1° Livello</span>
     <div class="spell-level-line"></div>
     <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">4 SLOT</span>
   </div>
 
   <div class="spell-list">
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="trova-famiglio">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Armatura del Mago</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'trova-famiglio')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Trova Famiglio</span>
+          <span class="spell-badge badge-ritual">Rituale</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Find Familiar)</span>
+        </div>
+        <div class="spell-desc">Evoca uno spirito in forma animale come famiglio (civetta, gatto, topo, ecc.). Magnus può comunicare telepaticamente e vedere attraverso i suoi sensi. Richiede 1 ora e materiali da 10 mo (consumati).</div>
+        <span class="ritual-note">★ Rituale — usabile senza slot anche non preparato (1 ora extra di lancio)</span>
+        <div class="spell-tags">
+          <span class="spell-tag">Congiunzione</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">1 ora</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Famiglio</span>
+        <span class="spell-range-label">3 m</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="servitore-inosservato">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'servitore-inosservato')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Servitore Inosservato</span>
+          <span class="spell-badge badge-ritual">Rituale</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Unseen Servant)</span>
+        </div>
+        <div class="spell-desc">Crea una forza invisibile e informe per 1 ora che esegue compiti semplici entro 18 m: aprire porte, raccogliere oggetti, versare liquidi, tenere torce. Non può attaccare né portare più di 4,5 kg.</div>
+        <span class="ritual-note">★ Rituale — usabile senza slot anche non preparato (1 ora extra di lancio)</span>
+        <div class="spell-tags">
+          <span class="spell-tag">Congiunzione</span>
+          <span class="spell-tag">V, S, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">18 m / 1h</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="individuazione-magico">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'individuazione-magico')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Individuazione del Magico</span>
           <span class="spell-badge badge-conc">Conc.</span>
+          <span class="spell-badge badge-ritual">Rituale</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Detect Magic)</span>
+        </div>
+        <div class="spell-desc">Concentrazione, fino a 10 minuti. Magnus percepisce la presenza di magia entro 9 m e può vedere le aure magiche, identificandone la scuola di appartenenza.</div>
+        <span class="ritual-note">★ Rituale — usabile senza slot anche non preparato (1 ora extra di lancio)</span>
+        <div class="spell-tags">
+          <span class="spell-tag div">Divinazione</span>
+          <span class="spell-tag">V, S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">9 m / 10 min</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="comprensione-linguaggi">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'comprensione-linguaggi')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Comprensione dei Linguaggi</span>
+          <span class="spell-badge badge-ritual">Rituale</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Comprehend Languages)</span>
+        </div>
+        <div class="spell-desc">Per 1 ora Magnus comprende il significato letterale di qualsiasi linguaggio parlato o scritto. Per i testi scritti richiede contatto fisico con la superficie.</div>
+        <span class="ritual-note">★ Rituale — usabile senza slot anche non preparato (1 ora extra di lancio)</span>
+        <div class="spell-tags">
+          <span class="spell-tag div">Divinazione</span>
+          <span class="spell-tag">V, S, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">1 ora</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="sonno">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'sonno')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Sonno</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Sleep)</span>
+        </div>
+        <div class="spell-desc">Lancia 5d8 per ottenere un pool di PF. Le creature entro 6 m dal punto scelto vengono addormentate in ordine dal minimo PF al massimo finché il pool si esaurisce. Non funziona su non morti, costrutti e creature immune a charmed.</div>
+        <div class="spell-tags">
+          <span class="spell-tag enchant">Ammaliamento</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">27 m</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">5d8 PF</span>
+        <span class="spell-range-label">1 min</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="armatura-magica">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'armatura-magica')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Armatura Magica</span>
           <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mage Armor)</span>
         </div>
-        <div class="spell-desc">La CA del bersaglio privo di armatura diventa 13 + mod. DES. Durata: 8 ore.</div>
+        <div class="spell-desc">La CA del bersaglio privo di armatura diventa 13 + mod. Destrezza per 8 ore. L'incantesimo termina se il bersaglio indossa un'armatura o viene dissolto.</div>
         <div class="spell-tags">
           <span class="spell-tag abjur">Abiurazione</span>
           <span class="spell-tag">V, S, M</span>
@@ -1142,31 +1379,14 @@ footer strong { color: var(--amber-lt); }
         <span class="spell-range-label">8 ore</span>
       </div>
     </div>
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="dardo-incantato">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Scudo</span>
-          <span class="spell-badge badge-reaction">Reazione</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Shield)</span>
-        </div>
-        <div class="spell-desc">Reazione a essere colpiti: +5 alla CA fino all'inizio del prossimo turno, incluso contro l'attacco scatenante. Nega Proiettile Magico.</div>
-        <div class="spell-tags">
-          <span class="spell-tag abjur">Abiurazione</span>
-          <span class="spell-tag">V, S</span>
-        </div>
-      </div>
-      <div class="spell-stat">
-        <span class="spell-damage utility">+5 CA</span>
-        <span class="spell-range-label">1 round</span>
-      </div>
-    </div>
-    <div class="spell-row">
-      <div>
-        <div class="spell-name-line">
-          <span class="spell-name">Proiettile Magico</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'dardo-incantato')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Dardo Incantato</span>
           <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Magic Missile)</span>
         </div>
-        <div class="spell-desc">Tre dardi di forza magica che colpiscono automaticamente. Possono bersagliare la stessa creatura o creature diverse.</div>
+        <div class="spell-desc">Tre dardi di forza magica che colpiscono automaticamente (nessun tiro). Possono bersagliare la stessa creatura o creature diverse, ciascuno infligge 1d4+1 danni da forza.</div>
         <div class="spell-tags">
           <span class="spell-tag force">Forza</span>
           <span class="spell-tag">Evocazione</span>
@@ -1178,79 +1398,165 @@ footer strong { color: var(--amber-lt); }
         <span class="spell-range-label">36 m</span>
       </div>
     </div>
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="scudo">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Mani Brucianti</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Burning Hands)</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'scudo')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Scudo</span>
+          <span class="spell-badge badge-reaction">Reazione</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Shield)</span>
         </div>
-        <div class="spell-desc">Cono di fiamme di 4,5 m davanti a Magnus. TS Destrezza CD 14 o subisce danni da fuoco, metà in caso di successo.</div>
+        <div class="spell-desc">Reazione a essere colpiti: +5 alla CA fino all'inizio del turno successivo di Magnus, incluso contro l'attacco scatenante. Blocca completamente Dardo Incantato.</div>
         <div class="spell-tags">
-          <span class="spell-tag fire">Fuoco</span>
-          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag abjur">Abiurazione</span>
           <span class="spell-tag">V, S</span>
-          <span class="spell-tag">TS DES</span>
         </div>
       </div>
       <div class="spell-stat">
-        <span class="spell-damage">3d6 🔥</span>
-        <span class="spell-range-label">Cono 4.5 m</span>
+        <span class="spell-damage utility">+5 CA</span>
+        <span class="spell-range-label">1 round</span>
       </div>
     </div>
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="caduta-morbida">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Orb Cromatico</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Chromatic Orb)</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'caduta-morbida')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Caduta Morbida</span>
+          <span class="spell-badge badge-reaction">Reazione</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Feather Fall)</span>
         </div>
-        <div class="spell-desc">Tiro per colpire a distanza. Magnus sceglie il tipo di danno: acido, freddo, fuoco, fulmine, tuono o veleno.</div>
+        <div class="spell-desc">Reazione a una caduta: fino a 5 creature entro 18 m scendono a soli 18 m/round e non subiscono danni da caduta al momento dell'atterraggio. Durata: 1 minuto o fino all'atterraggio.</div>
         <div class="spell-tags">
-          <span class="spell-tag fire">Fuoco</span>
-          <span class="spell-tag">Evocazione</span>
+          <span class="spell-tag trans">Trasmutazione</span>
+          <span class="spell-tag">V, M</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Caduta</span>
+        <span class="spell-range-label">18 m</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="assorbire-elementi">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'assorbire-elementi')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Assorbire Elementi</span>
+          <span class="spell-badge badge-reaction">Reazione</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Absorb Elements)</span>
+        </div>
+        <div class="spell-desc">Reazione a subire danni da acido, freddo, fuoco, fulmine o tuono: Magnus ottiene resistenza a quel tipo per il round e il suo prossimo attacco melee infligge +1d6 extra dello stesso tipo.</div>
+        <div class="spell-tags">
+          <span class="spell-tag abjur">Abiurazione</span>
+          <span class="spell-tag">S</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Resistenza</span>
+        <span class="spell-range-label">Sé stesso</span>
+      </div>
+    </div>
+    <div class="spell-row" data-spell-id="sortilegio">
+      <div>
+        <div class="spell-name-line">
+          <span class="prep-always" title="Sempre preparato — non richiede preparazione">✦</span>
+          <span class="spell-name">Sortilegio</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span class="spell-badge badge-bonus">Az. Bonus</span>
+          <span class="spell-badge" style="border:1px solid rgba(192,74,0,0.55);color:var(--fire-pale);">Sempre</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Hex)</span>
+        </div>
+        <div class="spell-desc">Concentrazione, fino a 1 ora. Maledice un bersaglio entro 27 m: gli attacchi di Magnus infliggono +1d6 danni necrotici e il bersaglio ha svantaggio ai tiri di caratteristica su un'abilità a scelta. Se il bersaglio muore, Magnus può trasferire l'effetto come azione bonus.</div>
+        <div class="spell-tags">
+          <span class="spell-tag enchant">Ammaliamento</span>
           <span class="spell-tag">V, S, M</span>
         </div>
-      </div>
-      <div class="spell-stat">
-        <span class="spell-damage">3d8</span>
-        <span class="spell-range-label">27 m</span>
-      </div>
-    </div>
-    <div class="spell-row">
-      <div>
-        <div class="spell-name-line">
-          <span class="spell-name">Individuazione del Magico</span>
-          <span class="spell-badge badge-conc">Conc.</span>
-          <span class="spell-badge badge-ritual">Rituale</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Detect Magic)</span>
-        </div>
-        <div class="spell-desc">Per 10 minuti Magnus percepisce la presenza di magia entro 9 m e può vedere la sua aura scintillante, identificando la scuola di magia.</div>
-        <div class="spell-tags">
-          <span class="spell-tag div">Divinazione</span>
-          <span class="spell-tag">V, S</span>
+        <div style="margin-top:7px;display:flex;align-items:center;gap:8px;">
+          <div class="charge-pip" id="fey-sortilegio-pip" onclick="toggleCharge(this)" style="width:13px;height:13px;" title="Cast gratuito disponibile — Tocco Fatato (riposo lungo)"></div>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--text-dim);">1× gratuito · Tocco Fatato · Riposo Lungo</span>
         </div>
       </div>
       <div class="spell-stat">
-        <span class="spell-damage utility">—</span>
-        <span class="spell-range-label">9 m / 10 min</span>
+        <span class="spell-damage" style="color:#aa88cc;">+1d6 💀</span>
+        <span class="spell-range-label">27 m / 1h</span>
       </div>
     </div>
   </div>
 
   <!-- 2nd Level Spells -->
-  <div class="spell-level-head">
+  <div class="spell-level-head" onclick="toggleSpellLevel(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="spell-level-title">Incantesimi di 2° Livello</span>
     <div class="spell-level-line"></div>
     <span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-dim);">3 SLOT</span>
   </div>
 
   <div class="spell-list">
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="invisibilita">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Raggio di Scottatura</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'invisibilita')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Invisibilità</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Invisibility)</span>
+        </div>
+        <div class="spell-desc">Concentrazione, fino a 1 ora. Una creatura che Magnus tocca diventa invisibile. L'incantesimo termina anticipatamente se la creatura attacca o lancia un incantesimo.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Illusione</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">Tocco</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Invisibile</span>
+        <span class="spell-range-label">1 ora</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="ragnatela">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'ragnatela')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Ragnatela</span>
+          <span class="spell-badge badge-conc">Conc.</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Web)</span>
+        </div>
+        <div class="spell-desc">Concentrazione, fino a 1 ora. Un cubo di 6 m riempito di ragnatele appiccicose su un punto entro 18 m. TS Destrezza CD 14 all'ingresso o creatura trattenuta. Le ragnatele sono infiammabili.</div>
+        <div class="spell-tags">
+          <span class="spell-tag">Congiunzione</span>
+          <span class="spell-tag">V, S, M</span>
+          <span class="spell-tag">TS DES</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">Trattenuto</span>
+        <span class="spell-range-label">18 m / 1h</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="scassinare">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'scassinare')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Scassinare</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Knock)</span>
+        </div>
+        <div class="spell-desc">Apre istantaneamente una serratura, chiavistello, catena, porta bloccata o cassa sigillata (anche magicamente) entro portata. Un forte botto risuona fino a 90 m. Rimuove anche Chiusura Arcana.</div>
+        <div class="spell-tags">
+          <span class="spell-tag trans">Trasmutazione</span>
+          <span class="spell-tag">V</span>
+        </div>
+      </div>
+      <div class="spell-stat">
+        <span class="spell-damage utility">—</span>
+        <span class="spell-range-label">18 m</span>
+      </div>
+    </div>
+    <div class="spell-row unprepared" data-spell-id="raggio-rovente">
+      <div>
+        <div class="spell-name-line">
+          <button class="prep-toggle" onclick="togglePrepared(this, 'raggio-rovente')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Raggio Rovente</span>
           <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Scorching Ray)</span>
         </div>
-        <div class="spell-desc">Magnus lancia tre raggi di fuoco separati. Ogni raggio richiede un proprio tiro per colpire e può bersagliare creature diverse.</div>
+        <div class="spell-desc">Magnus lancia tre raggi di fuoco separati. Ogni raggio richiede un proprio tiro per colpire (+6) e può bersagliare creature diverse, ognuno infligge 2d6 danni da fuoco.</div>
         <div class="spell-tags">
           <span class="spell-tag fire">Fuoco</span>
           <span class="spell-tag">Evocazione</span>
@@ -1262,36 +1568,41 @@ footer strong { color: var(--amber-lt); }
         <span class="spell-range-label">27 m</span>
       </div>
     </div>
-    <div class="spell-row">
+    <div class="spell-row unprepared" data-spell-id="immagine-speculare">
       <div>
         <div class="spell-name-line">
-          <span class="spell-name">Fermare la Persona</span>
-          <span class="spell-badge badge-conc">Conc.</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Hold Person)</span>
+          <button class="prep-toggle" onclick="togglePrepared(this, 'immagine-speculare')" title="Prepara / Rimuovi preparazione"></button>
+          <span class="spell-name">Immagine Speculare</span>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Mirror Image)</span>
         </div>
-        <div class="spell-desc">Un umanoide entro portata deve superare un TS Saggezza CD 14 o essere paralizzato per 1 minuto. Può ripetere il tiro a fine turno.</div>
+        <div class="spell-desc">Tre duplicati illusori di Magnus appaiono per 1 minuto. Quando un attacco lo colpirebbe, tira 1d20: 6+ colpisce un duplicato (CA 10 + mod. DES) distruggendolo invece di Magnus.</div>
         <div class="spell-tags">
-          <span class="spell-tag enchant">Ammaliamento</span>
-          <span class="spell-tag">V, S, M</span>
-          <span class="spell-tag">TS SAG</span>
+          <span class="spell-tag">Illusione</span>
+          <span class="spell-tag">V, S</span>
         </div>
       </div>
       <div class="spell-stat">
-        <span class="spell-damage utility">Paralisi</span>
-        <span class="spell-range-label">18 m / 1 min</span>
+        <span class="spell-damage utility">3 Doppi</span>
+        <span class="spell-range-label">Sé stesso / 1 min</span>
       </div>
     </div>
-    <div class="spell-row">
+    <div class="spell-row" data-spell-id="passo-velato">
       <div>
         <div class="spell-name-line">
+          <span class="prep-always" title="Sempre preparato — non richiede preparazione">✦</span>
           <span class="spell-name">Passo Velato</span>
           <span class="spell-badge badge-bonus">Az. Bonus</span>
+          <span class="spell-badge" style="border:1px solid rgba(192,74,0,0.55);color:var(--fire-pale);">Sempre</span>
           <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Misty Step)</span>
         </div>
-        <div class="spell-desc">Come azione bonus, Magnus si teletrasporta istantaneamente in uno spazio non occupato visibile entro 18 m.</div>
+        <div class="spell-desc">Come azione bonus, Magnus si teletrasporta istantaneamente in uno spazio non occupato visibile entro 18 m, avvolto da un velo di nebbia argentea.</div>
         <div class="spell-tags">
           <span class="spell-tag trans">Trasmutazione</span>
           <span class="spell-tag">V</span>
+        </div>
+        <div style="margin-top:7px;display:flex;align-items:center;gap:8px;">
+          <div class="charge-pip" id="fey-passo-pip" onclick="toggleCharge(this)" style="width:13px;height:13px;" title="Cast gratuito disponibile — Tocco Fatato (riposo lungo)"></div>
+          <span style="font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--text-dim);">1× gratuito · Tocco Fatato · Riposo Lungo</span>
         </div>
       </div>
       <div class="spell-stat">
@@ -1299,35 +1610,123 @@ footer strong { color: var(--amber-lt); }
         <span class="spell-range-label">18 m</span>
       </div>
     </div>
-    <div class="spell-row">
-      <div>
-        <div class="spell-name-line">
-          <span class="spell-name">Levitare</span>
-          <span class="spell-badge badge-conc">Conc.</span>
-          <span style="font-family:'Cinzel',serif;font-size:0.5rem;color:var(--text-dim);font-style:italic;">(Levitate)</span>
-        </div>
-        <div class="spell-desc">Una creatura o oggetto entro portata si solleva verticalmente di 6 m per 10 minuti. TS Costituzione CD 14 per creature non consenzienti.</div>
-        <div class="spell-tags">
-          <span class="spell-tag trans">Trasmutazione</span>
-          <span class="spell-tag">V, S, M</span>
-          <span class="spell-tag">TS COS</span>
-        </div>
+  </div>
+
+</div><!-- /tab-incantesimi -->
+
+<!-- ═══════════════════════════════════════════════════════
+     TAB: INVENTARIO
+════════════════════════════════════════════════════════ -->
+<div id="tab-inventario" class="tab-content content">
+
+  <!-- Equipaggiamento -->
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
+    <span class="section-heading-text">Equipaggiamento</span>
+    <div class="section-heading-line"></div>
+  </div>
+  <div class="inv-list">
+    <div class="inv-row">
+      <span class="inv-icon">📖</span>
+      <div style="flex:1">
+        <div class="inv-name">Libro degli Incantesimi</div>
+        <div class="inv-desc">Contiene tutti gli incantesimi noti di Magnus.</div>
       </div>
-      <div class="spell-stat">
-        <span class="spell-damage utility">Volo 6 m</span>
-        <span class="spell-range-label">18 m / 10 min</span>
+    </div>
+    <div class="inv-row">
+      <span class="inv-icon">🎒</span>
+      <div style="flex:1">
+        <div class="inv-name">Borsa</div>
+      </div>
+    </div>
+    <div class="inv-row">
+      <span class="inv-icon">◻</span>
+      <div style="flex:1">
+        <div class="inv-name">Coperta</div>
+      </div>
+    </div>
+    <div class="inv-row">
+      <span class="inv-icon">◈</span>
+      <div style="flex:1">
+        <div class="inv-name">Veste Iniziato Kassend-holm</div>
+        <div class="inv-desc">Abito cerimoniale dell'ordine degli iniziati di Kassend-holm.</div>
+      </div>
+    </div>
+    <div class="inv-row">
+      <span class="inv-icon">🧪</span>
+      <div style="flex:1">
+        <div class="inv-name">Borsa per Componenti</div>
+        <div class="inv-desc">Contiene i componenti materiali necessari per il lancio degli incantesimi.</div>
       </div>
     </div>
   </div>
 
-</div><!-- /tab-incantesimi -->
+  <!-- Pergamene -->
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
+    <span class="section-heading-text">Pergamene</span>
+    <div class="section-heading-line"></div>
+  </div>
+  <div class="inv-list">
+    <div class="inv-row" id="scroll-knock">
+      <span class="inv-icon">📜</span>
+      <div style="flex:1">
+        <div class="inv-name">Pergamena: Scassinare</div>
+        <div class="inv-desc">Pergamena magica a uso singolo. Lancia Scassinare (Knock) senza spendere uno slot.</div>
+      </div>
+      <button class="inv-use-btn" onclick="toggleScroll('scroll-knock', this)">Usa</button>
+    </div>
+    <div class="inv-row" id="scroll-shadow">
+      <span class="inv-icon">📜</span>
+      <div style="flex:1">
+        <div class="inv-name">Pergamena: Bestia d'Ombra</div>
+        <div class="inv-desc">Pergamena magica a uso singolo. Lancia Bestia d'Ombra senza spendere uno slot.</div>
+      </div>
+      <button class="inv-use-btn" onclick="toggleScroll('scroll-shadow', this)">Usa</button>
+    </div>
+  </div>
+
+  <!-- Oggetti Magici -->
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
+    <span class="section-heading-text">Oggetti Magici</span>
+    <div class="section-heading-line"></div>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-header">
+      <span class="feature-name">Bastone con Gemma della Luminosità</span>
+      <span class="feature-tag">50 Cariche · Alba</span>
+    </div>
+    <p class="feature-desc" style="margin-bottom:10px;">
+      Una gemma incastonata nella sommità del bastone irradia luce magica. Gli effetti più potenti consumano cariche;
+      la gemma recupera tutte le cariche spese ogni alba.
+    </p>
+    <div style="display:flex; flex-direction:column; gap:7px; font-size:0.85rem; color:var(--text-dim); margin-bottom:14px;">
+      <div><strong style="color:var(--amber-lt);">Gratuito</strong> — Emette luce per 9 m (intensa) e 9 m (fioca) fino al successivo comando.</div>
+      <div><strong style="color:var(--amber-lt);">1 Carica</strong> — Lancia un raggio accecante contro una creatura entro portata. TS Costituzione CD 15 o accecata fino alla fine del suo prossimo turno.</div>
+      <div><strong style="color:var(--amber-lt);">5 Cariche</strong> — Proietta un cono di luce abbagliante. Tutte le creature nel cono devono superare un TS Costituzione CD 15 o risultare accecate fino alla fine del loro prossimo turno.</div>
+    </div>
+    <div class="gem-counter">
+      <button class="gem-btn spend" onclick="changeGemCharge(-5)">− 5</button>
+      <button class="gem-btn spend" onclick="changeGemCharge(-1)">− 1</button>
+      <span class="gem-display" id="gem-charges">50</span>
+      <span class="gem-max">/ 50</span>
+      <button class="gem-btn" onclick="changeGemCharge(1)">+ 1</button>
+      <button class="gem-btn" onclick="changeGemCharge(5)">+ 5</button>
+      <button class="feature-reset" onclick="resetGemCharges()" style="margin-left:auto;">↺ Alba — Tutte le Cariche</button>
+    </div>
+  </div>
+
+</div><!-- /tab-inventario -->
 
 <!-- ═══════════════════════════════════════════════════════
      TAB: LORE
 ════════════════════════════════════════════════════════ -->
 <div id="tab-lore" class="tab-content content">
 
-  <div class="section-heading">
+  <div class="section-heading" onclick="toggleSection(this)">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Il Personaggio</span>
     <div class="section-heading-line"></div>
   </div>
@@ -1340,7 +1739,8 @@ footer strong { color: var(--amber-lt); }
     "Il tempo non è un fiume che scorre — è argilla. E io ho imparato a modellarla."
   </div>
 
-  <div class="section-heading" style="margin-top:40px;">
+  <div class="section-heading" onclick="toggleSection(this)" style="margin-top:40px;">
+    <span class="spell-toggle-arrow">▾</span>
     <span class="section-heading-text">Tratti e Abilità</span>
     <div class="section-heading-line"></div>
   </div>
@@ -1468,6 +1868,11 @@ function resetAllSlots() {
   }
   // Reset chronal shift charges
   resetCharges('chronal');
+  // Reset Fey Touched free casts
+  ['fey-sortilegio-pip', 'fey-passo-pip'].forEach(id => {
+    const p = document.getElementById(id);
+    if (p) p.classList.remove('used');
+  });
 }
 
 // ── Class feature charges ──────────────────────────────
@@ -1487,6 +1892,111 @@ function toggleArcaneRecovery() {
   if (label) label.textContent = pip.classList.contains('used') ? 'Usato (ripristina al prossimo riposo breve)' : 'Disponibile';
 }
 
+// ── Section collapse ───────────────────────────────────
+function toggleSection(headEl) {
+  const collapsed = headEl.classList.toggle('collapsed');
+  let el = headEl.nextElementSibling;
+  while (el && !el.classList.contains('section-heading')) {
+    el.style.display = collapsed ? 'none' : '';
+    el = el.nextElementSibling;
+  }
+}
+
+// ── Spell level collapse ───────────────────────────────
+function toggleSpellLevel(headEl) {
+  const list = headEl.nextElementSibling;
+  if (!list || !list.classList.contains('spell-list')) return;
+  const collapsed = headEl.classList.toggle('collapsed');
+  list.style.display = collapsed ? 'none' : '';
+}
+
+// ── Gem staff charges ─────────────────────────────────
+let gemCharges = 50;
+
+function loadGemCharges() {
+  const saved = localStorage.getItem('magnus-gem-charges');
+  if (saved !== null) gemCharges = Math.min(50, Math.max(0, parseInt(saved)));
+  updateGemDisplay();
+}
+
+function changeGemCharge(delta) {
+  gemCharges = Math.max(0, Math.min(50, gemCharges + delta));
+  localStorage.setItem('magnus-gem-charges', gemCharges);
+  updateGemDisplay();
+}
+
+function resetGemCharges() {
+  gemCharges = 50;
+  localStorage.setItem('magnus-gem-charges', 50);
+  updateGemDisplay();
+}
+
+function updateGemDisplay() {
+  const el = document.getElementById('gem-charges');
+  if (!el) return;
+  el.textContent = gemCharges;
+  el.style.color = gemCharges === 0 ? 'var(--fire)'
+    : gemCharges <= 10 ? 'var(--amber-lt)'
+    : 'var(--fire-pale)';
+}
+
+// ── Scroll toggle ──────────────────────────────────────
+function toggleScroll(id, btn) {
+  const row = document.getElementById(id);
+  const consumed = row.classList.toggle('consumed');
+  btn.textContent = consumed ? 'Ripristina' : 'Usa';
+}
+
+// ── Spell Preparation ─────────────────────────────────
+const PREPARED_KEY = 'magnus-prepared-spells';
+let preparedSpells = new Set();
+
+function loadPreparedState() {
+  try {
+    const saved = localStorage.getItem(PREPARED_KEY);
+    if (saved) preparedSpells = new Set(JSON.parse(saved));
+  } catch(e) {}
+  document.querySelectorAll('.prep-toggle').forEach(btn => {
+    const row = btn.closest('.spell-row');
+    const id = row && row.dataset.spellId;
+    if (preparedSpells.has(id)) {
+      btn.classList.add('prepared');
+      row.classList.remove('unprepared');
+    } else {
+      btn.classList.remove('prepared');
+      row.classList.add('unprepared');
+    }
+  });
+  updatePrepCount();
+}
+
+function savePreparedState() {
+  try { localStorage.setItem(PREPARED_KEY, JSON.stringify([...preparedSpells])); } catch(e) {}
+}
+
+function togglePrepared(btn, spellId) {
+  const row = btn.closest('.spell-row');
+  if (preparedSpells.has(spellId)) {
+    preparedSpells.delete(spellId);
+    btn.classList.remove('prepared');
+    row.classList.add('unprepared');
+  } else {
+    preparedSpells.add(spellId);
+    btn.classList.add('prepared');
+    row.classList.remove('unprepared');
+  }
+  savePreparedState();
+  updatePrepCount();
+}
+
+function updatePrepCount() {
+  const count = preparedSpells.size;
+  const el = document.getElementById('prep-count-display');
+  if (!el) return;
+  el.textContent = count + ' / 8';
+  el.style.color = count > 8 ? 'var(--fire)' : count === 8 ? 'var(--amber-lt)' : 'var(--fire-pale)';
+}
+
 // ── Init slot counts ───────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.slot-pips').forEach(container => {
@@ -1495,6 +2005,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const countEl = row && row.querySelector('.slot-count');
     if (countEl) countEl.textContent = total + ' / ' + total;
   });
+  loadPreparedState();
+  loadGemCharges();
+  // Collassa tutte le sezioni all'avvio
+  document.querySelectorAll('.section-heading').forEach(h => toggleSection(h));
 });
 </script>
 
