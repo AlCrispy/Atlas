@@ -784,8 +784,8 @@ footer strong { color: var(--amber-lt); }
   <nav class="tab-nav">
     <button class="tab-btn active" onclick="switchView('scheda', this)">⚔ Scheda</button>
     <button class="tab-btn" onclick="switchView('incantesimi', this)">✦ Incantesimi</button>
-    <button class="tab-btn" onclick="switchView('lore', this)">⧗ Lore</button>
     <button class="tab-btn" onclick="switchView('inventario', this)">⚜ Inventario</button>
+    <button class="tab-btn" onclick="switchView('lore', this)">⧗ Lore</button>
   </nav>
 </div>
 
@@ -1139,11 +1139,10 @@ footer strong { color: var(--amber-lt); }
   </div>
 
   <!-- Spell Slots -->
-  <div class="section-heading" onclick="toggleSection(this)">
-    <span class="spell-toggle-arrow">▾</span>
+  <div class="section-heading">
     <span class="section-heading-text">Slot Incantesimo</span>
     <div class="section-heading-line"></div>
-    <button class="reset-btn" onclick="resetAllSlots();event.stopPropagation();" style="margin-left:10px;">↺ Riposo Lungo</button>
+    <button class="reset-btn" onclick="resetAllSlots();" style="margin-left:10px;">↺ Riposo Lungo</button>
   </div>
 
   <div class="slot-section">
