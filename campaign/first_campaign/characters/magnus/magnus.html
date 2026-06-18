@@ -2006,8 +2006,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   loadPreparedState();
   loadGemCharges();
-  // Collassa tutte le sezioni all'avvio
-  document.querySelectorAll('.section-heading').forEach(h => toggleSection(h));
+  // Collassa tutte le sezioni collassabili all'avvio (esclude heading senza onclick)
+  document.querySelectorAll('.section-heading[onclick]').forEach(h => toggleSection(h));
 });
 </script>
 
