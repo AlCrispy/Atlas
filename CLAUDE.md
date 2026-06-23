@@ -108,6 +108,7 @@ Simply edit the HTML files directly—no build step is needed. Content sections 
 ## Important Notes
 
 - **Language**: All content is in Italian; maintain this language when adding text.
+- **Code language**: All code — comments, variable names, function names, commit messages — must be written in **English**. Only the user-visible HTML content stays in Italian.
 - **External Dependencies**: The site relies on Google Fonts and Leaflet.js from CDNs. Ensure `<link>` and `<script>` tags remain in HTML `<head>` sections.
 - **Character Encoding**: All HTML files use UTF-8. Maintain this when editing.
 - **Relative Paths**: Use relative paths for all internal links (e.g., `../css/`, `../resources/`) so the site works both locally and on GitHub Pages.
