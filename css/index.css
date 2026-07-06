@@ -1,15 +1,17 @@
-﻿:root {
-  --atl-ocean:     #1a3a5c;
-  --atl-parch:     #f5efd8;
-  --atl-parch-dk:  #e8ddb8;
-  --atl-ink:       #1e1a0e;
-  --atl-ink-mid:   #4a3f28;
-  --atl-ink-dim:   #7a6e54;
-  --atl-gold:      #b8882a;
-  --atl-gold-lt:   #d4a84a;
-  --atl-red:       #8b2020;
-  --atl-land:      #3a6b3a;
-  --atl-border:    #b8a070;
+:root {
+  --got-night:    #101318;   /* page background — slate sea of the map */
+  --got-iron:     #181d23;   /* main panel */
+  --got-iron-lt:  #20262d;   /* cards */
+  --got-steel:    #3c434e;   /* borders */
+  --got-steel-dk: #282e37;
+  --got-ash:      #8f939a;   /* dim text */
+  --got-bone:     #d8d0bd;   /* body text */
+  --got-gold:     #c2984a;   /* bronze accents — map lands */
+  --got-gold-lt:  #e6c684;
+  --got-gold-dk:  #8a6a2a;
+  --got-blood:    #7a1f1f;   /* south */
+  --got-ice:      #6e8ea0;   /* north */
+  --got-green:    #55643f;   /* new lands */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,17 +22,20 @@ body {
   font-size: 18px;
   line-height: 1.75;
   min-height: 100vh;
-  background: var(--atl-ocean);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(110,142,160,0.08), transparent 55%),
+    radial-gradient(ellipse at 50% 110%, rgba(194,152,74,0.06), transparent 60%),
+    var(--got-night);
   overflow-x: hidden;
 }
 
-/* Ocean hatching texture */
+/* Cold stone texture */
 body::before {
   content: '';
   position: fixed; inset: 0;
   background-image:
-    repeating-linear-gradient(30deg,  transparent 0px, transparent 18px, rgba(255,255,255,0.025) 18px, rgba(255,255,255,0.025) 19px),
-    repeating-linear-gradient(150deg, transparent 0px, transparent 18px, rgba(255,255,255,0.015) 18px, rgba(255,255,255,0.015) 19px);
+    repeating-linear-gradient(30deg,  transparent 0px, transparent 22px, rgba(255,255,255,0.015) 22px, rgba(255,255,255,0.015) 23px),
+    repeating-linear-gradient(150deg, transparent 0px, transparent 22px, rgba(255,255,255,0.010) 22px, rgba(255,255,255,0.010) 23px);
   pointer-events: none; z-index: 0;
 }
 
@@ -39,7 +44,7 @@ body::before {
   position: fixed;
   font-family: 'Cinzel', serif; font-size: 0.65rem;
   letter-spacing: 0.35em; text-transform: uppercase;
-  color: rgba(255,255,255,0.14); font-style: italic;
+  color: rgba(213,207,192,0.10); font-style: italic;
   pointer-events: none; user-select: none; z-index: 1;
 }
 .ocean-label.tl { top: 80px;    left: 40px;  transform: rotate(-8deg); }
@@ -65,7 +70,7 @@ body::before {
   max-width: 1090px;
 }
 
-/* Parchment panel */
+/* Dark iron panel */
 .world-panel {
   flex: 1;
   min-width: 0;
@@ -74,17 +79,21 @@ body::before {
 
 /* Campaigns sidebar */
 .campaigns-sidebar {
-  flex: 0 0 88px;
+  flex: 0 0 92px;
   position: sticky;
   top: 48px;
-  background: var(--atl-parch);
-  border: 2px solid var(--atl-border);
+  background: linear-gradient(180deg, var(--got-iron) 0%, #10141a 100%);
+  border: 1px solid var(--got-steel);
+  border-top: 3px solid var(--got-gold-dk);
   box-shadow:
-    0 0 0 4px rgba(184,160,112,0.15),
-    2px 4px 0 rgba(184,160,112,0.3),
-    0 10px 30px rgba(0,0,0,0.3);
+    0 0 0 1px rgba(0,0,0,0.6),
+    0 10px 30px rgba(0,0,0,0.5);
   padding: 16px 8px 20px;
   text-align: center;
+}
+
+.campaigns-sidebar-group + .campaigns-sidebar-group {
+  margin-top: 18px;
 }
 
 .campaigns-sidebar-title {
@@ -92,10 +101,10 @@ body::before {
   font-size: 0.48rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--atl-ink-dim);
+  color: var(--got-ash);
   margin-bottom: 14px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--atl-border);
+  border-bottom: 1px solid var(--got-steel-dk);
 }
 
 .campaign-icon-link {
@@ -105,22 +114,23 @@ body::before {
   gap: 3px;
   padding: 14px 6px 10px;
   text-decoration: none;
-  background: #fff;
-  border: 1.5px solid var(--atl-border);
-  border-top: 3px solid var(--atl-land);
-  box-shadow: 1px 2px 0 rgba(184,160,112,0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--got-iron-lt);
+  border: 1px solid var(--got-steel);
+  border-top: 3px solid var(--got-gold-dk);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   margin-bottom: 8px;
 }
 .campaign-icon-link:hover {
   transform: translateY(-3px);
-  box-shadow: 2px 5px 0 rgba(184,160,112,0.45), 0 8px 20px rgba(0,0,0,0.1);
+  border-color: var(--got-gold);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.55), 0 0 14px rgba(201,162,39,0.15);
 }
 
 .campaign-icon-glyph {
   display: block;
   font-size: 1.5rem;
-  color: var(--atl-gold);
+  color: var(--got-gold);
   line-height: 1;
   margin-bottom: 2px;
 }
@@ -129,7 +139,7 @@ body::before {
   font-family: 'Cinzel Decorative', serif;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--atl-ink);
+  color: var(--got-bone);
   line-height: 1;
 }
 .campaign-icon-status {
@@ -138,18 +148,18 @@ body::before {
   font-size: 0.42rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--atl-land);
+  color: var(--got-ice);
   margin-top: 2px;
 }
 
 .world-frame {
-  background: var(--atl-parch);
-  border: 3px solid var(--atl-border);
+  background: linear-gradient(180deg, var(--got-iron) 0%, #10141a 100%);
+  border: 1px solid var(--got-steel);
   box-shadow:
-    0 0 0 6px rgba(184,160,112,0.2),
-    0 0 0 8px var(--atl-border),
-    0 0 0 14px rgba(184,160,112,0.15),
-    0 20px 80px rgba(0,0,0,0.5);
+    0 0 0 1px rgba(0,0,0,0.6),
+    0 0 0 6px rgba(58,66,80,0.25),
+    0 0 0 7px var(--got-steel-dk),
+    0 30px 90px rgba(0,0,0,0.7);
   padding: 48px 52px 52px;
   position: relative;
   text-align: center;
@@ -158,12 +168,12 @@ body::before {
 /* 4 corner ornaments */
 .world-frame::before {
   content: ''; position: absolute; top: 10px; left: 10px;
-  width: 28px; height: 28px; border-color: var(--atl-gold);
+  width: 28px; height: 28px; border-color: var(--got-gold);
   border-style: solid; border-width: 2px 0 0 2px;
 }
 .world-frame::after {
   content: ''; position: absolute; top: 10px; right: 10px;
-  width: 28px; height: 28px; border-color: var(--atl-gold);
+  width: 28px; height: 28px; border-color: var(--got-gold);
   border-style: solid; border-width: 2px 2px 0 0;
 }
 .frame-corners-inner {
@@ -171,42 +181,48 @@ body::before {
 }
 .frame-corners-inner::before {
   content: ''; position: absolute; bottom: 10px; left: 10px;
-  width: 28px; height: 28px; border-color: var(--atl-gold);
+  width: 28px; height: 28px; border-color: var(--got-gold);
   border-style: solid; border-width: 0 0 2px 2px;
 }
 .frame-corners-inner::after {
   content: ''; position: absolute; bottom: 10px; right: 10px;
-  width: 28px; height: 28px; border-color: var(--atl-gold);
+  width: 28px; height: 28px; border-color: var(--got-gold);
   border-style: solid; border-width: 0 2px 2px 0;
 }
 
 /* Compass rose */
-.compass-rose { width: 64px; height: 64px; margin: 0 auto 20px; opacity: 0.75; }
+.compass-rose { width: 64px; height: 64px; margin: 0 auto 20px; opacity: 0.85; }
 
 .world-eyebrow {
   font-family: 'Cinzel', serif; font-size: 0.62rem;
-  letter-spacing: 0.5em; color: var(--atl-ink-dim); text-transform: uppercase; margin-bottom: 10px;
+  letter-spacing: 0.5em; color: var(--got-ash); text-transform: uppercase; margin-bottom: 10px;
 }
 .world-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(2.8rem, 9vw, 6rem); font-weight: 900;
-  color: var(--atl-ink); line-height: 1; letter-spacing: 0.06em;
-  text-shadow: 2px 3px 0 rgba(184,160,112,0.4);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.6rem, 8.5vw, 5.4rem); font-weight: 900;
+  line-height: 1; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, var(--got-gold-lt) 0%, var(--got-gold) 48%, var(--got-gold-dk) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.7));
 }
 .world-subtitle {
   font-family: 'Cinzel', serif; font-size: 0.72rem;
-  letter-spacing: 0.28em; color: var(--atl-gold);
+  letter-spacing: 0.28em; color: var(--got-ash);
   text-transform: uppercase; margin-top: 12px;
 }
 
 .world-divider { display: flex; align-items: center; gap: 16px; margin: 28px 0 22px; }
-.world-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--atl-border), transparent); }
-.world-divider-ornament { font-family: 'Cinzel', serif; color: var(--atl-gold); font-size: 1.1rem; }
+.world-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--got-gold-dk), transparent); }
+.world-divider-ornament { font-family: 'Cinzel', serif; color: var(--got-gold); font-size: 1.1rem; }
 
 .world-desc {
-  font-size: 1.05rem; color: var(--atl-ink-mid); font-style: italic;
+  font-size: 1.05rem; color: var(--got-bone); font-style: italic;
   line-height: 1.85; margin-bottom: 36px;
   max-width: 580px; margin-left: auto; margin-right: auto;
+  opacity: 0.85;
 }
 
 /* Map image */
@@ -215,30 +231,30 @@ body::before {
 }
 .world-map img {
   width: 100%; height: auto; display: block;
-  border: 2px solid var(--atl-border);
-  box-shadow: 4px 6px 0 rgba(184,160,112,0.3), 0 20px 60px rgba(0,0,0,0.4);
+  border: 1px solid var(--got-steel);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 20px 60px rgba(0,0,0,0.6);
   border-radius: 2px;
 }
 .world-map-caption {
   text-align: right; margin-top: 6px;
   font-family: 'Cinzel', serif; font-size: 0.55rem;
   letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--atl-ink-dim); font-style: italic;
+  color: var(--got-ash); font-style: italic;
 }
 
 /* Section labels */
 .nations-label {
   font-family: 'Cinzel', serif; font-size: 0.6rem;
   letter-spacing: 0.45em; text-transform: uppercase;
-  color: var(--atl-ink-dim); margin: 36px 0 18px;
+  color: var(--got-gold); margin: 36px 0 18px;
   display: flex; align-items: center; gap: 12px;
 }
 .nations-label::before, .nations-label::after {
-  content: ''; flex: 1; height: 1px; background: var(--atl-border); opacity: 0.5;
+  content: ''; flex: 1; height: 1px; background: var(--got-gold-dk); opacity: 0.5;
 }
 
 .unexplored-desc {
-  font-size: 0.92rem; color: var(--atl-ink-dim); font-style: italic;
+  font-size: 0.92rem; color: var(--got-ash); font-style: italic;
   margin-bottom: 20px; max-width: 520px; margin-left: auto; margin-right: auto;
 }
 
@@ -252,53 +268,55 @@ body::before {
   grid-template-columns: 1fr;
 }
 
-/* Nation card â€” clickable */
+/* Nation card — clickable */
 a.nation-card {
   text-decoration: none;
 }
 .nation-card {
-  background: #fff;
-  border: 1.5px solid var(--atl-border);
+  background: linear-gradient(180deg, var(--got-iron-lt) 0%, #161b22 100%);
+  border: 1px solid var(--got-steel);
   padding: 28px 24px 40px;
   position: relative; overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   text-align: left;
-  box-shadow: 2px 3px 0 rgba(184,160,112,0.35);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
   display: block;
 }
-.nation-card[data-continent="south"] { border-top: 4px solid var(--atl-red); }
-.nation-card[data-continent="north"] { border-top: 4px solid #d21111; }
-.nation-card[data-continent="center"] { border-top: 4px solid #2a8a9a; }
-.nation-card[data-continent="new"]   { border-top: 4px solid var(--atl-land); }
+.nation-card[data-continent="south"]  { border-top: 3px solid var(--got-blood); }
+.nation-card[data-continent="north"]  { border-top: 3px solid var(--got-ice); }
+.nation-card[data-continent="center"] { border-top: 3px solid var(--got-gold); }
+.nation-card[data-continent="new"]    { border-top: 3px solid var(--got-green); }
 .nation-card[data-continent="unknown"] {
-  border-top: 4px dashed #9a9078;
-  background: var(--atl-parch-dk);
+  border-top: 3px dashed var(--got-steel);
+  background: var(--got-steel-dk);
   filter: saturate(0.6);
 }
 
 a.nation-card:hover .nation-card,
 .nation-card:not(.locked):hover {
-  transform: translateY(-4px) rotate(-0.3deg);
-  box-shadow: 4px 8px 0 rgba(184,160,112,0.45), 0 16px 40px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  border-color: var(--got-gold-dk);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 18px rgba(201,162,39,0.12);
 }
 
-.nation-card.locked { opacity: 0.5; pointer-events: none; }
+.nation-card.locked { opacity: 0.45; pointer-events: none; }
 
 .nation-tag {
   font-family: 'Cinzel', serif; font-size: 0.55rem;
   letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--atl-ink-dim); margin-bottom: 8px;
+  color: var(--got-ash); margin-bottom: 8px;
 }
 .nation-name {
-  font-family: 'Cinzel Decorative', serif; font-size: 1.2rem;
-  font-weight: 700; color: var(--atl-ink); margin-bottom: 6px; line-height: 1.2;
+  font-family: 'Cinzel', serif; font-size: 1.2rem;
+  font-weight: 700; color: var(--got-bone); margin-bottom: 6px; line-height: 1.2;
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
-.nation-epithet { font-size: 0.88rem; color: var(--atl-gold); font-style: italic; margin-bottom: 12px; }
-.nation-desc { font-size: 0.88rem; color: var(--atl-ink-mid); line-height: 1.65; }
+.nation-epithet { font-size: 0.88rem; color: var(--got-gold); font-style: italic; margin-bottom: 12px; }
+.nation-desc { font-size: 0.88rem; color: var(--got-ash); line-height: 1.65; }
 
 .nation-arrow {
   position: absolute; bottom: 14px; right: 18px;
-  color: var(--atl-gold); opacity: 0;
+  color: var(--got-gold); opacity: 0;
   transition: opacity 0.25s, transform 0.25s;
   font-size: 1.1rem;
 }
@@ -307,18 +325,18 @@ a.nation-card:hover .nation-card,
 .coming-soon {
   display: inline-block; font-family: 'Cinzel', serif;
   font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase;
-  border: 1px solid var(--atl-border); color: var(--atl-ink-dim);
+  border: 1px solid var(--got-steel); color: var(--got-ash);
   padding: 3px 9px; margin-top: 10px;
 }
 
 /* Footer bar */
 .world-footer-bar {
   width: 100%; padding: 16px 0; margin-top: 40px;
-  background: rgba(0,0,0,0.25);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(201,162,39,0.15);
   font-family: 'Cinzel', serif; font-size: 0.55rem;
   letter-spacing: 0.3em; text-transform: uppercase;
-  color: rgba(255,255,255,0.25); text-align: center;
+  color: rgba(213,207,192,0.30); text-align: center;
   position: relative; z-index: 2;
 }
 
@@ -327,11 +345,25 @@ a.nation-card:hover .nation-card,
   .campaigns-sidebar {
     flex: unset; width: 100%; max-width: 980px;
     position: static;
-    display: flex; flex-direction: row; align-items: center;
-    padding: 12px 16px; gap: 16px;
+    display: flex; flex-direction: row; align-items: stretch;
+    flex-wrap: wrap;
+    padding: 14px 14px 10px; gap: 14px;
   }
-  .campaigns-sidebar-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; border-right: 1px solid var(--atl-border); padding-right: 14px; white-space: nowrap; }
-  .campaign-icon-link { flex-direction: row; gap: 8px; padding: 10px 14px; margin-bottom: 0; }
+  .campaigns-sidebar-group {
+    flex: 1 1 140px;
+    display: flex; flex-direction: column;
+  }
+  .campaigns-sidebar-group + .campaigns-sidebar-group { margin-top: 0; }
+  .campaigns-sidebar-title {
+    margin-bottom: 8px; padding-bottom: 6px;
+    white-space: nowrap;
+  }
+  .campaign-icon-link {
+    flex-direction: row; justify-content: center;
+    gap: 10px; padding: 10px 12px; margin-bottom: 0;
+    flex: 1;
+  }
+  .campaign-icon-status { margin-top: 0; }
 }
 
 @media (max-width: 640px) {

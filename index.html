@@ -12,10 +12,11 @@
 /* ── LEAFLET MAP ── */
 #centuria-map {
   width: 100%;
-  height: 650px;
-  background: #b8a070;
-  border: 2px solid var(--atl-border, #b8a070);
-  box-shadow: 4px 6px 0 rgba(184,160,112,0.3), 0 20px 60px rgba(0,0,0,0.4);
+  /* Height follows the image ratio (1672 × 941) so the map always fits exactly */
+  aspect-ratio: 1672 / 941;
+  background: #262b31; /* matches the map's slate sea */
+  border: 1px solid var(--got-steel, #3c434e);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 20px 60px rgba(0,0,0,0.6);
   border-radius: 2px;
   cursor: grab;
 }
@@ -24,22 +25,23 @@
 /* Hide Leaflet default attribution */
 .leaflet-control-attribution { display: none !important; }
 .leaflet-control-zoom a {
-  background: #1e1a0e !important;
-  color: #b8882a !important;
-  border-color: #b8a070 !important;
+  background: #181d23 !important;
+  color: #c2984a !important;
+  border-color: #3c434e !important;
   font-family: 'Cinzel', serif !important;
 }
-.leaflet-control-zoom a:hover { background: #2a2418 !important; }
+.leaflet-control-zoom a:hover { background: #20262d !important; }
 
 /* Custom popup */
 .leaflet-popup-content-wrapper {
-  background: #1e1a0e;
-  border: 1px solid #b8a070;
+  background: #181d23;
+  border: 1px solid #3c434e;
+  border-top: 2px solid #8a6a2a;
   border-radius: 0;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.8);
   padding: 0;
 }
-.leaflet-popup-tip { background: #1e1a0e; }
+.leaflet-popup-tip { background: #181d23; }
 .leaflet-popup-content { margin: 0; min-width: 200px; }
 .map-popup {
   padding: 16px 20px 12px;
@@ -48,29 +50,30 @@
 .map-popup-tag {
   font-family: 'Cinzel', serif; font-size: 0.52rem;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: #7a6e54; margin-bottom: 6px;
+  color: #8a8f98; margin-bottom: 6px;
 }
 .map-popup-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.05rem; font-weight: 700; color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem; font-weight: 700; color: #d8d0bd;
+  text-transform: uppercase; letter-spacing: 0.05em;
   line-height: 1.2; margin-bottom: 4px;
 }
 .map-popup-epithet {
-  font-size: 0.85rem; color: #b8882a;
+  font-size: 0.85rem; color: #c2984a;
   font-style: italic; margin-bottom: 12px;
 }
 .map-popup-link {
   display: block; text-align: center;
   font-family: 'Cinzel', serif; font-size: 0.58rem;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: #b8882a; border: 1px solid #b8a070;
+  color: #c2984a; border: 1px solid #8a6a2a;
   padding: 7px 14px; text-decoration: none;
   transition: background 0.2s, color 0.2s;
   margin-top: 4px;
 }
-.map-popup-link:hover { background: #b8882a; color: #fff; }
+.map-popup-link:hover { background: #c2984a; color: #101318; }
 .map-popup-link.locked {
-  color: #4a3f28; border-color: #3a3020;
+  color: #4a505a; border-color: #282e37;
   pointer-events: none; cursor: default;
 }
 
@@ -79,13 +82,13 @@
   width: 28px; height: 28px;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
-  border: 2px solid #1e1a0e;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  border: 2px solid #101318;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
   transition: transform 0.2s;
 }
-.map-pin.active-nation  { background: #b8882a; }
-.map-pin.locked-nation  { background: #4a3f28; }
-.map-pin.explore-nation { background: #1a6060; }
+.map-pin.active-nation  { background: #c2984a; }
+.map-pin.locked-nation  { background: #3c434e; }
+.map-pin.explore-nation { background: #55643f; }
 </style>
 
 </head>
@@ -102,18 +105,22 @@
 
   <!-- Sidebar Campagne -->
   <aside class="campaigns-sidebar">
-    <div class="campaigns-sidebar-title">Campagne</div>
-    <a class="campaign-icon-link" href="campaign/first_campaign/first_campaign.html" title="Campagna I — La Prima Avventura" data-active="true">
-      <span class="campaign-icon-glyph">⚔</span>
-      <span class="campaign-icon-label">1</span>
-      <span class="campaign-icon-status">In corso</span>
-    </a>
-    <div class="campaigns-sidebar-title" style="margin-top:16px;">One-Shot</div>
-    <a class="campaign-icon-link" href="campagne/campagna1.html" title="One-Shot — In arrivo">
-      <span class="campaign-icon-glyph">✦</span>
-      <span class="campaign-icon-label" style="font-size:0.7rem; letter-spacing:0.04em;">OS</span>
-      <span class="campaign-icon-status">In arrivo</span>
-    </a>
+    <div class="campaigns-sidebar-group">
+      <div class="campaigns-sidebar-title">Campagne</div>
+      <a class="campaign-icon-link" href="campaign/first_campaign/first_campaign.html" title="Campagna I — La Prima Avventura" data-active="true">
+        <span class="campaign-icon-glyph">⚔</span>
+        <span class="campaign-icon-label">1</span>
+        <span class="campaign-icon-status">In corso</span>
+      </a>
+    </div>
+    <div class="campaigns-sidebar-group">
+      <div class="campaigns-sidebar-title">One-Shot</div>
+      <a class="campaign-icon-link" href="campagne/campagna1.html" title="One-Shot — In arrivo">
+        <span class="campaign-icon-glyph">✦</span>
+        <span class="campaign-icon-label" style="font-size:0.7rem; letter-spacing:0.04em;">OS</span>
+        <span class="campaign-icon-status">In arrivo</span>
+      </a>
+    </div>
   </aside>
 
   <div class="world-panel">
@@ -122,18 +129,18 @@
 
       <!-- Compass rose -->
       <svg class="compass-rose" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="30" stroke="#b8a070" stroke-width="1"/>
-        <circle cx="32" cy="32" r="4" fill="#b8882a"/>
-        <path d="M32 4 L35 28 L32 24 L29 28 Z" fill="#1e1a0e"/>
-        <path d="M32 60 L35 36 L32 40 L29 36 Z" fill="#7a6e54"/>
-        <path d="M60 32 L36 35 L40 32 L36 29 Z" fill="#7a6e54"/>
-        <path d="M4 32 L28 35 L24 32 L28 29 Z" fill="#7a6e54"/>
-        <path d="M52 12 L35 29" stroke="#b8a070" stroke-width="0.8" opacity="0.5"/>
-        <path d="M12 12 L29 29" stroke="#b8a070" stroke-width="0.8" opacity="0.5"/>
-        <path d="M52 52 L35 35" stroke="#b8a070" stroke-width="0.8" opacity="0.5"/>
-        <path d="M12 52 L29 35" stroke="#b8a070" stroke-width="0.8" opacity="0.5"/>
-        <text x="32" y="14" text-anchor="middle" font-family="Cinzel, serif" font-size="6" fill="#1e1a0e" font-weight="700">N</text>
-        <circle cx="32" cy="32" r="22" stroke="#b8a070" stroke-width="0.5" stroke-dasharray="2 4"/>
+        <circle cx="32" cy="32" r="30" stroke="#8a6a2a" stroke-width="1"/>
+        <circle cx="32" cy="32" r="4" fill="#c2984a"/>
+        <path d="M32 4 L35 28 L32 24 L29 28 Z" fill="#c2984a"/>
+        <path d="M32 60 L35 36 L32 40 L29 36 Z" fill="#3c434e"/>
+        <path d="M60 32 L36 35 L40 32 L36 29 Z" fill="#3c434e"/>
+        <path d="M4 32 L28 35 L24 32 L28 29 Z" fill="#3c434e"/>
+        <path d="M52 12 L35 29" stroke="#8a6a2a" stroke-width="0.8" opacity="0.5"/>
+        <path d="M12 12 L29 29" stroke="#8a6a2a" stroke-width="0.8" opacity="0.5"/>
+        <path d="M52 52 L35 35" stroke="#8a6a2a" stroke-width="0.8" opacity="0.5"/>
+        <path d="M12 52 L29 35" stroke="#8a6a2a" stroke-width="0.8" opacity="0.5"/>
+        <text x="32" y="14" text-anchor="middle" font-family="Cinzel, serif" font-size="6" fill="#c2984a" font-weight="700">N</text>
+        <circle cx="32" cy="32" r="22" stroke="#8a6a2a" stroke-width="0.5" stroke-dasharray="2 4"/>
       </svg>
 
       <p class="world-eyebrow">Il Mondo di</p>
@@ -244,13 +251,13 @@
 /* ══════════════════════════════════════════
    MAPPA INTERATTIVA — Leaflet + immagine custom
    Le coordinate [y, x] sono in pixel sull'immagine
-   (origine in alto a sinistra).
-   Immagine originale: 1270 × 952 px (Centuria_plain.png)
+   (origine in basso a sinistra, y cresce verso l'alto).
+   Immagine originale: 1672 × 941 px (Centuria.png)
    Regola i valori sotto per spostare i pin.
 ══════════════════════════════════════════ */
 
-const IMG_W = 1270;
-const IMG_H = 952;
+const IMG_W = 1672;
+const IMG_H = 941;
 
 // Leaflet CRS.Simple usa [y, x] come [lat, lng]
 const bounds = [[0, 0], [IMG_H, IMG_W]];
@@ -264,7 +271,7 @@ const map = L.map('centuria-map', {
 });
 
 // Carica l'immagine come layer base
-L.imageOverlay('resources/Centuria_plain.png', bounds).addTo(map);
+L.imageOverlay('resources/Centuria.png', bounds).addTo(map);
 map.fitBounds(bounds);
 
 // ── Icona pin custom ──
@@ -304,7 +311,7 @@ const NATIONS = [
     epithet: "L'Impero del Sangue Persistente",
     tag: 'Vecchio Continente · Sud-Ovest',
     url: 'nations/kassendyr.html',
-    pos: [300, 700],   // ← regola questi valori
+    pos: [293, 768],   // ← regola questi valori
     locked: false,
     type: 'active-nation',
   },
@@ -313,7 +320,7 @@ const NATIONS = [
     epithet: 'Commercio, Circolo e Conoscenza',
     tag: 'Vecchio Continente · Centro',
     url: 'nations/aurelion.html',
-    pos: [600, 850],
+    pos: [536, 1102],
     locked: false,
     type: 'active-nation',
   },
@@ -322,7 +329,7 @@ const NATIONS = [
     epithet: 'La Repubblica delle Pianure',
     tag: 'Vecchio Continente · Nord',
     url: 'nations/velikor.html',
-    pos: [830, 850],
+    pos: [740, 1144],
     locked: false,
     type: 'active-nation',
   },
@@ -331,7 +338,7 @@ const NATIONS = [
     epithet: 'Il Regno della Cura e della Conoscenza',
     tag: 'Vecchio Continente · Confini Meridionali',
     url: 'nations/valdherba.html',
-    pos: [400, 1100],
+    pos: [293, 1457],
     locked: false,
     type: 'active-nation',
   },
@@ -340,7 +347,7 @@ const NATIONS = [
     epithet: 'La Terra della Fiamma Nera',
     tag: 'Vecchio Continente · Sud',
     url: '',
-    pos: [200, 900],
+    pos: [123, 1047],
     locked: true,
     type: 'locked-nation',
   },
@@ -349,7 +356,7 @@ const NATIONS = [
     epithet: 'Il Confine del Mondo Conosciuto',
     tag: 'Arcipelago · Nord-Est',
     url: '',
-    pos: [850, 1200],
+    pos: [774, 1524],
     locked: true,
     type: 'locked-nation',
   },
@@ -358,7 +365,7 @@ const NATIONS = [
     epithet: 'Diario delle Scoperte',
     tag: 'Nuovo Continente · In Esplorazione',
     url: 'terre-ignote.html',
-    pos: [620, 450],
+    pos: [425, 301],
     locked: false,
     type: 'explore-nation',
   },
