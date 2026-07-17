@@ -65,6 +65,12 @@ const SESSIONS = [
     title: "La Festa in Maschera",
     date: "",
     summary: "Esplorate il mercato di Sitryll: visitate il Sogno dell'Avventuriero, emporio di Lydia Soutart, e Da Tabalion e le sue meraviglie. Anne vi rivela l'identità della Dragonide Rossa: è Luwara Firefist, il vero capo della gilda, ultimamente ritirata dagli affari pubblici. La gilda è stata fondata dai Razorclaw — Anna, Bardok, Luwara, Cecil Madok ed Elaia Windspeaker — poco dopo l'insediamento nelle Terre Ignote, per aiutare cittadini e popolo. Dopo qualche giorno ricevete una lettera: un invito a una festa in maschera del nobile Mobius Teodonius, cacciato dalla Lega di Aurelion per infamia. La festa è affollata e bizzarra — Mobius non nasconde i propri gusti, e la serata è appena cominciata."
+  },
+  {
+    num: 11,
+    title: "I Segreti della Magione",
+    date: "",
+    summary: "La festa in maschera prosegue e la magione di Mobius rivela le sue stanze: al piano terra gioco d'azzardo, sala da pranzo, sala del fumo, stanza da ballo e stanza del sonno; al primo piano un albero gigante dalle foglie verdi ma mai fiorito, i rami carichi di sacchetti appesi. I sacchetti donano visioni: uno di voi si vede re del Kassendyr, il proprio obiettivo compiuto — ma Zavash lo ammonisce: non è ancora la sua ora. Elaris, avvicinata da un inserviente, scopre il lato oscuro di Mobius: scomparse di persone, famiglie che non le ricordano, schiavitù e affari illegali. Solo i «Preferiti», i valletti più fidati, accedono alle aree interdette del palazzo — e Nemeia ne ha abbordato uno. Mentre Eutirox parla con Mobius, che sembra molto interessato al gruppo, una stanza nascosta rivela un rituale: incappucciati che scuoiano un animale, sangue sui muri a formare parole incomprensibili e la statua di un demone scheletrico."
   }
 ];
 
