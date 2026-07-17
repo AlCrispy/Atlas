@@ -19,14 +19,17 @@ Centuria is a static HTML/CSS/JavaScript website for a tabletop RPG campaign set
 
 - **index.html** — Main landing page featuring an interactive Leaflet.js map of the world, ocean labels, and cards for known nations. Uses inline SVG-based map pins for interactive markers.
 - **terre-ignote.html** — "Unknown Lands" diary documenting exploration of a newly discovered continent.
-- **nations/{nation}.html** — Individual nation pages (kassendyr, velikor, aurelion) with tabbed navigation (`switchTab()` function from js/nation-tabs.js).
-- **characters/{character}/{character}.html** — Character detail pages.
+- **nations/{nation}.html** — Individual nation pages (kassendyr, velikor, aurelion, valdherba) with tabbed navigation (`switchTab()` function from js/nation-tabs.js).
+- **campaign/first_campaign/first_campaign.html** — Campaign page (see "Campaign Structure" below).
+- **campaign/first_campaign/characters/{character}/{character}.html** — Character detail pages (magnus, nemeia, elaris, eutirox).
+- **locations/{location}.html** — Location detail pages (sitryll, porto-nero, locanda-cardo, etc.), styled by css/location-detail.css.
 
 ### Styling
 
 - **css/index.css** — Main page styles including map styling, nation cards, ocean labels, and Leaflet customization.
-- **css/nations-{nation}.css** — Nation-specific stylesheet for each nation page (kassendyr, velikor, aurelion). Each nation has its own color palette and visual hierarchy.
-- **css/terre-ignote-base.css** & **css/terre-ignote-components.css** — Separated stylesheets for the exploration continent page.
+- **css/nations-{nation}.css** — Nation-specific stylesheet for each nation page (kassendyr, velikor, aurelion, valdherba). Each nation has its own color palette and visual hierarchy.
+- **css/terre-ignote-base.css**, **css/terre-ignote-components.css** & **css/terre-ignote-locations.css** — Separated stylesheets for the exploration continent page.
+- **css/location-detail.css** — Shared stylesheet for the location detail pages in locations/.
 
 ### Interactivity
 
@@ -114,13 +117,13 @@ Simply edit the HTML files directly—no build step is needed. Content sections 
 - **Relative Paths**: Use relative paths for all internal links (e.g., `../css/`, `../resources/`) so the site works both locally and on GitHub Pages.
 - **GitHub Pages Deployment**: Push changes to the `main` branch; the site auto-publishes from the root directory.
 
-## Campagne Structure
+## Campaign Structure
 
 **Campaign Pages:**
-- **campagne/campagna1.html** — Main campaign page with header tabs in the topbar (similar to nations like kassendyr.html):
-  - **Diario tab**: Timeline and event grid with subcategories (storia, avventure, npc, locazioni), with secondary Timeline/Eventi toggles below the header
-  - **Personaggi tab**: Character roster with links to individual character pages (Magnus available, others "In arrivo")
-  - Contains all 6 sessions and 23 discovery cards migrated from terre-ignote.html
+- **campaign/first_campaign/first_campaign.html** — Main campaign page with header tabs in the topbar (similar to nations like kassendyr.html):
+  - **Diario tab**: Event grid and timeline with subcategories (citta, misteri, fazioni, punti), with secondary Timeline/Eventi toggles below the header
+  - **Personaggi tab**: Character roster with links to individual character pages in campaign/first_campaign/characters/
+  - Event/session counters in the header are computed by js/campagne.js at load — never hardcode them
 
 **Campaign Styling:**
 - **css/campagne-base.css** & **css/campagne-components.css** — Identical color scheme to terre-ignote.html:
@@ -130,18 +133,24 @@ Simply edit the HTML files directly—no build step is needed. Content sections 
   - Category colors: Blue (storia), Purple (avventure), Brown (npc), Green (locazioni)
 
 **Campaign JavaScript:**
-- **js/campagne.js** — Handles session management (6 sessions), category filtering, timeline generation for the diario view
-- **switchMainView()** (inline in campagna1.html) — Toggles between diario and personaggi views
-- Categories mapped from terre-ignote: fazioni→npc, misteri→avventure, citta/punti→locazioni
+- **js/campagne.js** — Holds the `SESSIONS` array (one entry per game session) and handles category filtering, session filtering, and timeline generation for the diario view
+- **switchMainView()** (inline in first_campaign.html) — Toggles between diario and personaggi views
+
+### Adding a New Session
+
+When the user provides session notes, do both steps:
+
+1. **Add the session** to the `SESSIONS` array in `js/campagne.js`: `num` (next number), `title`, `date` (usually empty), and a `summary` written in Italian, second person plural ("voi"), matching the narrative tone of the existing entries.
+2. **Extract discovery cards** from the notes into `campaign/first_campaign/first_campaign.html` (see below) — one card per notable event, place, character, or mystery.
 
 ### Adding Campaign Events
 
-Edit `campagne/campagna1.html` (in the diario section):
+Edit `campaign/first_campaign/first_campaign.html` (in the diario section, before the closing `</div>` of the card grid):
 1. Copy an existing `<div class="discovery-card">` block
-2. Set `data-cat` to one of: `storia`, `avventure`, `npc`, `locazioni`
+2. Set `data-cat` to one of: `citta`, `misteri`, `fazioni`, `punti` (labels: Città & Insediamenti, Misteri & Anomalie, Fazioni & Personaggi, Punti di Interesse)
 3. Set `data-sess` to the session number (must match a session in `js/campagne.js`)
-4. Update the category label, session number, title, and description
-5. The page rebuilds automatically on reload
+4. Update the category label, session number, title, and description; an optional `<div class="card-quote">` holds a quote
+5. The page rebuilds automatically on reload — counters and timeline are generated by js/campagne.js
 
 To add a new session, update the `SESSIONS` array in `js/campagne.js` with `num`, `title`, and `summary`.
 
