@@ -8,7 +8,8 @@ Sito web statico per la campagna GDR **Centuria**. Permette di esplorare nazioni
 
 ```text
 centuria/
-|- index.html                  # Home con mappa, nazioni conosciute e Terre Ignote
+|- index.html                  # Hub di selezione ambientazioni (entry point del sito)
+|- centuria.html               # Home Centuria con mappa, nazioni conosciute e Terre Ignote
 |- terre-ignote.html           # Diario del nuovo continente in esplorazione
 |- README.md
 |- LICENSE
@@ -92,7 +93,7 @@ centuria/
 
 1. Crea un file in `nations/` (es. `nations/nuova-nazione.html`), usando `kassendyr.html` o `velikor.html` come base.
 2. Crea un CSS personalizzato in `css/nations-<nome-nazione>.css`.
-3. Aggiungi la card in `index.html` nella sezione **Nazioni Conosciute**.
+3. Aggiungi la card in `centuria.html` nella sezione **Nazioni Conosciute**.
 4. Se disponibile, usa un link `<a class="nation-card" href="nations/nuova-nazione.html">`; altrimenti, usa `<div class="nation-card locked">`.
 5. Inserisci eventuali immagini in `resources/<nome-nazione>/`.
 

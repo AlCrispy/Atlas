@@ -17,7 +17,8 @@ Centuria is a static HTML/CSS/JavaScript website for a tabletop RPG campaign set
 
 ### Core Pages
 
-- **index.html** — Main landing page featuring an interactive Leaflet.js map of the world, ocean labels, and cards for known nations. Uses inline SVG-based map pins for interactive markers.
+- **index.html** — Setting-selector hub (styled by css/hub.css). The site's entry point on GitHub Pages; links to `centuria.html` and shows a locked "coming soon" card for future settings.
+- **centuria.html** — Centuria's own landing page featuring an interactive Leaflet.js map of the world, ocean labels, and cards for known nations. Uses inline SVG-based map pins for interactive markers.
 - **terre-ignote.html** — "Unknown Lands" diary documenting exploration of a newly discovered continent.
 - **nations/{nation}.html** — Individual nation pages (kassendyr, velikor, aurelion, valdherba) with tabbed navigation (`switchTab()` function from js/nation-tabs.js).
 - **campaign/first_campaign/first_campaign.html** — Campaign page (see "Campaign Structure" below).
@@ -26,7 +27,8 @@ Centuria is a static HTML/CSS/JavaScript website for a tabletop RPG campaign set
 
 ### Styling
 
-- **css/index.css** — Main page styles including map styling, nation cards, ocean labels, and Leaflet customization.
+- **css/hub.css** — Setting-selector hub page styles (index.html).
+- **css/index.css** — Centuria landing page styles (centuria.html) including map styling, nation cards, ocean labels, and Leaflet customization.
 - **css/nations-{nation}.css** — Nation-specific stylesheet for each nation page (kassendyr, velikor, aurelion, valdherba). Each nation has its own color palette and visual hierarchy.
 - **css/terre-ignote-base.css**, **css/terre-ignote-components.css** & **css/terre-ignote-locations.css** — Separated stylesheets for the exploration continent page.
 - **css/location-detail.css** — Shared stylesheet for the location detail pages in locations/.
@@ -53,14 +55,14 @@ Centuria is a static HTML/CSS/JavaScript website for a tabletop RPG campaign set
 
 2. **Create the stylesheet**: Copy an existing `css/nations-{nation}.css` to `css/nations-{newname}.css` and adjust colors/styling as needed. Each nation has its own color scheme.
 
-3. **Add to index.html**: 
+3. **Add to centuria.html**: 
    - Create a `.nation-card` in the "Nazioni Conosciute" section.
    - If the nation is available, link it: `<a class="nation-card" href="nations/{newname}.html">`
    - If not yet available, use `<div class="nation-card locked">` to show it as coming soon.
 
 4. **Add images**: Place nation images in `resources/{newname}/` (maps, portraits, landmarks).
 
-5. **Add map marker** (optional): If adding to the Leaflet map on index.html, create a marker with the nation's coordinates and popup content.
+5. **Add map marker** (optional): If adding to the Leaflet map on centuria.html, create a marker with the nation's coordinates and popup content.
 
 ### Testing the Site Locally
 
