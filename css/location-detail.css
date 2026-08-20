@@ -1,5 +1,38 @@
 /* Location detail pages */
 
+/* ── TAB NAVIGATION ── */
+.tabs-nav {
+  display: flex; flex: 1; justify-content: center;
+  flex-wrap: wrap; padding: 0 8px;
+}
+.tab-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); padding: 16px 16px;
+  transition: color 0.2s; position: relative;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold); transform: scaleX(0); transform-origin: center;
+  transition: transform 0.3s;
+}
+.tab-btn:hover { color: var(--gold-lt); }
+.tab-btn.active { color: var(--gold-lt); }
+.tab-btn.active::after { transform: scaleX(1); }
+
+.tab-panel { display: none; animation: fadeIn 0.45s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .tab-btn { padding: 14px 10px; font-size: 0.55rem; }
+}
+
 footer {
   text-align: center;
   padding: 48px 20px;

@@ -7,12 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/terre-ignote-base.css">
 <link rel="stylesheet" href="../css/location-detail.css">
+<script src="../js/nation-tabs.js" defer></script>
 </head>
 <body>
 
 <div class="topbar">
   <a class="back-btn" href="../terre-ignote.html">← Terre Ignote</a>
-  <span class="topbar-title">Sitryll</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('gilda', this)">Gilda dei Cacciatori</button>
+    <button class="tab-btn" onclick="switchTab('consacratori', this)">I Consacratori</button>
+    <button class="tab-btn" onclick="switchTab('sapienti', this)">I Sapienti</button>
+    <button class="tab-btn" onclick="switchTab('personaggi', this)">Personaggi & Segreti</button>
+  </nav>
 </div>
 
 <div class="page-header">
@@ -21,6 +28,7 @@
 </div>
 
 <div class="location-content">
+  <div id="tab-overview" class="tab-panel active">
   <section class="content-block">
     <h2>Descrizione</h2>
     <p>Capitale delle Terre ignote: metropoli dove cercate tetto sicuro e prime commissioni. Qui la politica, il commercio e le organizzazioni di potere si compenetrano in una danza complessa e non sempre trasparente.</p>
@@ -35,7 +43,9 @@
       <li><strong>Zona Ecclesiastica:</strong> Templi e sedi dei Consacratori.</li>
     </ul>
   </section>
+  </div>
 
+  <div id="tab-gilda" class="tab-panel">
   <section class="content-block">
     <h2>La Gilda dei Cacciatori</h2>
     <p>L'istituzione più visibile per chi arriva a Sitryll in cerca di lavoro. Gestisce incarichi, missioni e mediazione tra cittadini e avventurieri.</p>
@@ -47,7 +57,9 @@
     <h3>I Razorclaw — le origini</h3>
     <p>La gilda è nata da un gruppo di avventurieri chiamati i <strong>Razorclaw</strong>, fondata poco dopo l'insediamento nelle Terre Ignote con lo scopo di aiutare i cittadini e il popolo del nuovo continente. I membri fondatori: <strong>Anna, Bardok, Luwara Firefist, Cecil Madok, Elaia Windspeaker</strong>.</p>
   </section>
+  </div>
 
+  <div id="tab-consacratori" class="tab-panel">
   <section class="content-block">
     <h2>I Consacratori</h2>
     <p>Ordine di ecclesiastici e templari con sede nella Zona Ecclesiastica. Operano in missioni di indagine e purificazione — spesso in luoghi dove altri non osano andare.</p>
@@ -69,7 +81,9 @@
       <li>I loro incarichi nascondono misteri più profondi: cosa cercavano davvero nella prima spedizione?</li>
     </ul>
   </section>
+  </div>
 
+  <div id="tab-sapienti" class="tab-panel">
   <section class="content-block">
     <h2>I Sapienti</h2>
     <p>Organizzazione arcana con sede nella loro torre, uno dei punti di riferimento visibili dello skyline di Sitryll. Le loro motivazioni rimangono opache a chi è esterno all'ordine.</p>
@@ -83,7 +97,9 @@
       <li><strong>Ombre</strong> — la rete di intelligence. Agenti infiltrati, identità non dichiarate.</li>
     </ul>
   </section>
+  </div>
 
+  <div id="tab-personaggi" class="tab-panel">
   <section class="content-block">
     <h2>Personaggi Notevoli</h2>
     <ul>
@@ -98,6 +114,7 @@
     <p>La città prende il nome da Sitryll l'Esploratore, che per primo pose lo sguardo su queste terre. Ma cosa ha veramente scoperto? E cosa rimane nascosto sotto le pietre della sua chiesa?</p>
     <p>Il concilio non gode della fiducia di tutti. Le voci per le strade dopo l'assedio lo confermano.</p>
   </section>
+  </div>
 </div>
 
 <footer>
