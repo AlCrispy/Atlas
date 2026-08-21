@@ -22,7 +22,10 @@ const container = document.getElementById('solar-system');
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-camera.position.set(0, 160, 300);
+const DEFAULT_CAMERA_OFFSET = new THREE.Vector3(0, 160, 300);
+const DEFAULT_CAMERA_DIRECTION = DEFAULT_CAMERA_OFFSET.clone().normalize();
+const DEFAULT_CAMERA_DISTANCE = DEFAULT_CAMERA_OFFSET.length();
+camera.position.copy(DEFAULT_CAMERA_OFFSET);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -143,9 +146,11 @@ const DWARF_BEACONS = [
 
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 
-function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName) {
+function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoomDistance) {
   beaconList.forEach((beacon) => {
     beacon.galaxy = galaxyName;
+    beacon.zoomTarget = parentGroup.position.clone();
+    beacon.zoomDistance = zoomDistance;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: beaconTexture,
       transparent: true,
@@ -161,11 +166,11 @@ function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName) {
 }
 
 const beaconMeshes = [];
-addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes, 'Aurvex');
-addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes, 'Meridian');
-addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes, 'Zhorn');
-addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes, 'Corvantis');
-addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes, 'Pyxis');
+addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes, 'Aurvex', 70);
+addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes, 'Meridian', 65);
+addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes, 'Zhorn', 60);
+addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes, 'Corvantis', 55);
+addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes, 'Pyxis', 40);
 
 // === Black hole ===
 function buildBlackHole() {
@@ -246,6 +251,8 @@ blackHoleHitSprite.userData.beacon = {
   eyebrow: 'Fenomeno Cosmico',
   galaxy: 'Fenomeno Cosmico',
   position: [0, 0, 0],
+  zoomTarget: new THREE.Vector3(0, 0, 0),
+  zoomDistance: 32,
 };
 beaconMeshes.push(blackHoleHitSprite);
 
@@ -272,6 +279,24 @@ function hideBeaconCard() {
 
 beaconCardClose.addEventListener('click', hideBeaconCard);
 
+// === Camera fly-to ===
+// Smoothly moves the camera/controls target toward a point, keeping the
+// same elevation angle as the default overview so shots feel consistent.
+let cameraAnim = null;
+
+function flyCameraTo(targetPosition, distance, duration = 900) {
+  const toPosition = targetPosition.clone().add(DEFAULT_CAMERA_DIRECTION.clone().multiplyScalar(distance));
+  cameraAnim = {
+    fromPosition: camera.position.clone(),
+    toPosition,
+    fromTarget: controls.target.clone(),
+    toTarget: targetPosition.clone(),
+    start: performance.now(),
+    duration,
+  };
+  controls.enabled = false;
+}
+
 // === Selection (shared by 3D clicks and the system list panel) ===
 // Selecting a beacon keeps it enlarged (distinct from the transient hover
 // grow) and highlights its matching entry in the list, in both directions.
@@ -296,6 +321,7 @@ function selectBeacon(mesh) {
   selectedListItem = item;
 
   showBeaconCard(mesh.userData.beacon);
+  flyCameraTo(mesh.userData.beacon.zoomTarget, mesh.userData.beacon.zoomDistance);
 }
 
 function deselectBeacon() {
@@ -308,6 +334,7 @@ function deselectBeacon() {
     selectedListItem.classList.remove('is-active');
     selectedListItem = null;
   }
+  flyCameraTo(new THREE.Vector3(0, 0, 0), DEFAULT_CAMERA_DISTANCE);
 }
 
 // === System list panel ===
@@ -422,6 +449,17 @@ function animate() {
   }
 
   blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
+
+  if (cameraAnim) {
+    const t = Math.min((performance.now() - cameraAnim.start) / cameraAnim.duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    camera.position.lerpVectors(cameraAnim.fromPosition, cameraAnim.toPosition, eased);
+    controls.target.lerpVectors(cameraAnim.fromTarget, cameraAnim.toTarget, eased);
+    if (t >= 1) {
+      cameraAnim = null;
+      controls.enabled = true;
+    }
+  }
 
   controls.update();
   renderer.render(scene, camera);
