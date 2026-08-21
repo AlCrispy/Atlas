@@ -50,7 +50,10 @@ function colorToRgba(hex, alpha) {
   return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
 }
 
-function makeBodySprite(color) {
+// Stars glow (they emit light — a sprite reads correctly); planets and
+// moons are solid lit spheres so they read as physical bodies rather than
+// balls of light, shaded by the light rig below.
+function makeStarSprite(color) {
   const texture = makeGlowTexture(colorToRgba(color, 1), colorToRgba(color, 0));
   return new THREE.Sprite(new THREE.SpriteMaterial({
     map: texture,
@@ -60,13 +63,29 @@ function makeBodySprite(color) {
   }));
 }
 
+const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+
+function makeBodyMesh(color) {
+  const material = new THREE.MeshStandardMaterial({ color, roughness: 0.75, metalness: 0.05 });
+  return new THREE.Mesh(sphereGeometry, material);
+}
+
+// Soft fill so the unlit side of a planet isn't pure black, plus one
+// directional "sunlight" for a visible lit/shadow terminator. Directional
+// and hemisphere lights have no distance falloff, so intensity stays
+// consistent for every planet regardless of orbit radius.
+scene.add(new THREE.HemisphereLight(0xffffff, 0x0a0e18, 0.9));
+const sunLight = new THREE.DirectionalLight(0xfff2d6, 1.3);
+sunLight.position.set(40, 60, 30);
+scene.add(sunLight);
+
 const bodies = [];
 const listItemsBySlug = new Map();
 
-function registerBody(sprite, size, data) {
-  sprite.scale.set(size, size, 1);
-  sprite.userData.baseScale = size;
-  sprite.userData.beacon = {
+function registerBody(object, size, data) {
+  object.scale.set(size, size, size);
+  object.userData.baseScale = size;
+  object.userData.beacon = {
     name: data.name,
     slug: data.slug,
     eyebrow: data.eyebrow,
@@ -74,14 +93,14 @@ function registerBody(sprite, size, data) {
     zoomTarget: new THREE.Vector3(0, 0, 0),
     zoomDistance: data.zoomDistance,
   };
-  bodies.push(sprite);
+  bodies.push(object);
 }
 
 // === Stars ===
 // A single star stays fixed at the origin; a binary pair orbits their
 // common center (see the animation loop below).
 const starObjs = system.stars.map((star) => {
-  const sprite = makeBodySprite(star.color);
+  const sprite = makeStarSprite(star.color);
   registerBody(sprite, star.size, star);
   scene.add(sprite);
   return { sprite, data: star };
@@ -103,7 +122,7 @@ const planetOrbits = system.planets.map((planet) => {
   const ring = buildOrbitRing({ radiusX: planet.orbitRadius, radiusZ: semiMinor, color: planet.color });
   pivot.add(ring);
 
-  const sprite = makeBodySprite(planet.color);
+  const sprite = makeBodyMesh(planet.color);
   registerBody(sprite, planet.size, {
     ...planet,
     exploreHref: `planets/${planet.slug}.html`,
@@ -114,7 +133,7 @@ const planetOrbits = system.planets.map((planet) => {
   pivot.add(moonAnchor);
 
   const moonOrbits = planet.moons.map((moon) => {
-    const moonSprite = makeBodySprite(moon.color);
+    const moonSprite = makeBodyMesh(moon.color);
     registerBody(moonSprite, moon.size, moon);
     moonAnchor.add(moonSprite);
     return { sprite: moonSprite, data: moon };
