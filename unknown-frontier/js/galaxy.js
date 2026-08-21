@@ -179,6 +179,9 @@ const BEACONS = [
   { name: 'Punto sconosciuto', position: [40, 1, -5] },
 ];
 
+const BEACON_SCALE = 2.5;
+const BEACON_HOVER_SCALE = 3.2;
+
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 const beaconMeshes = BEACONS.map((beacon) => {
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -187,7 +190,7 @@ const beaconMeshes = BEACONS.map((beacon) => {
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   }));
-  sprite.scale.set(2.5, 2.5, 1);
+  sprite.scale.set(BEACON_SCALE, BEACON_SCALE, 1);
   sprite.position.set(...beacon.position);
   sprite.userData.beacon = beacon;
   galaxyGroup.add(sprite);
@@ -219,6 +222,31 @@ let pointerDownPosition = null;
 
 renderer.domElement.addEventListener('pointerdown', (event) => {
   pointerDownPosition = { x: event.clientX, y: event.clientY };
+});
+
+// Hover feedback: swap the cursor to pointer and grow the beacon's glow
+// when a beacon sprite sits under the pointer, so beacons read as clickable.
+let hoveredBeacon = null;
+
+renderer.domElement.addEventListener('pointermove', (event) => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects(beaconMeshes);
+  const hit = hits.length > 0 ? hits[0].object : null;
+
+  if (hit !== hoveredBeacon) {
+    if (hoveredBeacon) {
+      hoveredBeacon.scale.set(BEACON_SCALE, BEACON_SCALE, 1);
+    }
+    if (hit) {
+      hit.scale.set(BEACON_HOVER_SCALE, BEACON_HOVER_SCALE, 1);
+    }
+    hoveredBeacon = hit;
+    renderer.domElement.style.cursor = hit ? 'pointer' : '';
+  }
 });
 
 renderer.domElement.addEventListener('click', (event) => {
