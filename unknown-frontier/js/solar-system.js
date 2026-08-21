@@ -96,6 +96,7 @@ function registerBody(object, size, data) {
     name: data.name,
     slug: data.slug,
     eyebrow: data.eyebrow,
+    color: data.color,
     exploreHref: data.exploreHref,
     zoomTarget: new THREE.Vector3(0, 0, 0),
     zoomDistance: data.zoomDistance,
@@ -190,7 +191,6 @@ const interaction = createSceneInteraction({
   cardEl: document.getElementById('beacon-card'),
   getListItem: (slug) => listItemsBySlug.get(slug),
   homeOffset: HOME_OFFSET,
-  ringScale: 2.2,
   // Planets/moons are solid meshes now, not glow sprites — growing them on
   // hover/select reads as the body itself changing size rather than a UI
   // highlight, so leave scale untouched and rely on the pulsing ring alone.

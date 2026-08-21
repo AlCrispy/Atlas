@@ -147,6 +147,7 @@ function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoom
   beaconList.forEach((beacon) => {
     beacon.galaxy = galaxyName;
     beacon.eyebrow = 'Sistema Solare';
+    beacon.color = '#8a6ae8';
     beacon.exploreHref = `systems/${beacon.slug}.html`;
     beacon.zoomTarget = parentGroup.position.clone();
     beacon.zoomDistance = zoomDistance;
@@ -251,6 +252,7 @@ blackHoleHitSprite.userData.beacon = {
   slug: 'voro-nexus',
   eyebrow: 'Fenomeno Cosmico',
   galaxy: 'Fenomeno Cosmico',
+  color: '#b496ff',
   exploreHref: 'systems/voro-nexus.html',
   position: [0, 0, 0],
   zoomTarget: new THREE.Vector3(0, 0, 0),

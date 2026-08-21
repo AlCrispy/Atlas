@@ -25,7 +25,8 @@ export function createSceneInteraction(opts) {
     homeOffset,
     hoverMultiplier = 1.28,
     selectMultiplier = 1.52,
-    ringScale = 7,
+    ringSizeMultiplier = 2.8,
+    defaultRingColor = '#9df0fa',
     clickDragThreshold = 5,
   } = opts;
 
@@ -40,17 +41,18 @@ export function createSceneInteraction(opts) {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
 
-  const selectionRingTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(157,240,250,0)');
+  // Size and color are set per selection (see selectBody) so the ring
+  // always matches the selected body — proportional to its own base scale
+  // and tinted with its own color, rather than one fixed halo for everyone.
   const selectionRing = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: selectionRingTexture,
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
     opacity: 0,
   }));
-  selectionRing.scale.set(ringScale, ringScale, 1);
   scene.add(selectionRing);
   const ringWorldPos = new THREE.Vector3();
+  let ringBaseSize = 1;
 
   let hoveredBody = null;
   let selectedBody = null;
@@ -99,6 +101,11 @@ export function createSceneInteraction(opts) {
       item.scrollIntoView({ block: 'nearest' });
     }
     selectedListItem = item;
+    const ringColor = mesh.userData.beacon.color || defaultRingColor;
+    selectionRing.material.map = makeGlowTexture(ringColor, `${ringColor}00`);
+    selectionRing.material.needsUpdate = true;
+    ringBaseSize = mesh.userData.baseScale * ringSizeMultiplier;
+    selectionRing.scale.set(ringBaseSize, ringBaseSize, 1);
     selectionRing.material.opacity = 1;
 
     showCard(mesh.userData.beacon);
@@ -186,7 +193,7 @@ export function createSceneInteraction(opts) {
     if (selectedBody) {
       selectedBody.getWorldPosition(ringWorldPos);
       selectionRing.position.copy(ringWorldPos);
-      const pulse = ringScale + Math.sin(elapsed * 3) * (ringScale * 0.15);
+      const pulse = ringBaseSize + Math.sin(elapsed * 3) * (ringBaseSize * 0.15);
       selectionRing.scale.set(pulse, pulse, 1);
     }
 
