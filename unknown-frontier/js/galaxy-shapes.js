@@ -116,3 +116,50 @@ export function buildSpiralGalaxy(opts = {}) {
 
   return group;
 }
+
+export function buildEllipticalGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    particleCount = 2500,
+    radius = 35,
+    color = 0xe8dcc8,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const baseColor = new THREE.Color(color);
+  const dimColor = baseColor.clone().multiplyScalar(0.45);
+
+  for (let i = 0; i < particleCount; i++) {
+    const t = Math.pow(Math.random(), 1.5);
+    const r = t * radius;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+
+    positions[i * 3] = Math.sin(phi) * Math.cos(theta) * r * 1.3;
+    positions[i * 3 + 1] = Math.cos(phi) * r * 0.6;
+    positions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta) * r * 0.85;
+
+    const color3 = dimColor.clone().lerp(baseColor, 1 - t);
+    colors[i * 3] = color3.r;
+    colors[i * 3 + 1] = color3.g;
+    colors[i * 3 + 2] = color3.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+
+  group.add(new THREE.Points(geometry, material));
+  return group;
+}
