@@ -8,7 +8,7 @@ Centuria is a static HTML/CSS/JavaScript website for a tabletop RPG campaign set
 
 **Key characteristics:**
 - Completely static site (no build process, no server)
-- Hosted on GitHub Pages at [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
+- Hosted on GitHub Pages at [https://alcrispy.github.io/Atlas](https://alcrispy.github.io/Atlas)
 - No backend, no database, no package manager
 - External dependencies: Google Fonts, Leaflet.js (for interactive maps), CDNJS for CDN resources
 - All content changes are made by directly editing HTML files

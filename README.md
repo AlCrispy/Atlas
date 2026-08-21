@@ -113,7 +113,7 @@ centuria-repo/
 
 ## Hosting
 
-Il sito è pubblicato su GitHub Pages: [https://alcrispy.github.io/Centuria](https://alcrispy.github.io/Centuria)
+Il sito è pubblicato su GitHub Pages: [https://alcrispy.github.io/Atlas](https://alcrispy.github.io/Atlas)
 
 Progetto completamente statico: nessun backend, nessuna build, dipendenze esterne limitate a Google Fonts e Leaflet.js.
 
