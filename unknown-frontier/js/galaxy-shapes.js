@@ -164,6 +164,120 @@ export function buildEllipticalGalaxy(opts = {}) {
   return group;
 }
 
+export function buildLenticularGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    particleCount = 1800,
+    radius = 25,
+    color = 0x7d8bb0,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const baseColor = new THREE.Color(color);
+  const bulgeColor = baseColor.clone().lerp(new THREE.Color(0xffffff), 0.4);
+  const edgeColor = baseColor.clone().multiplyScalar(0.6);
+  const bulgeCount = Math.floor(particleCount * 0.3);
+
+  for (let i = 0; i < particleCount; i++) {
+    if (i < bulgeCount) {
+      // Dense central bulge, no arms
+      const t = Math.pow(Math.random(), 1.5);
+      const r = t * radius * 0.3;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      positions[i * 3] = Math.sin(phi) * Math.cos(theta) * r;
+      positions[i * 3 + 1] = Math.cos(phi) * r;
+      positions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta) * r;
+
+      colors[i * 3] = bulgeColor.r;
+      colors[i * 3 + 1] = bulgeColor.g;
+      colors[i * 3 + 2] = bulgeColor.b;
+    } else {
+      // Flat disc, uniform density per area, no spiral structure
+      const r = Math.sqrt(Math.random()) * radius;
+      const angle = Math.random() * Math.PI * 2;
+      const height = (Math.random() - 0.5) * radius * 0.06;
+
+      positions[i * 3] = Math.cos(angle) * r;
+      positions[i * 3 + 1] = height;
+      positions[i * 3 + 2] = Math.sin(angle) * r;
+
+      const diskColor = baseColor.clone().lerp(edgeColor, r / radius);
+      colors[i * 3] = diskColor.r;
+      colors[i * 3 + 1] = diskColor.g;
+      colors[i * 3 + 2] = diskColor.b;
+    }
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+
+  group.add(new THREE.Points(geometry, material));
+  return group;
+}
+
+export function buildDwarfGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    particleCount = 1200,
+    radius = 14,
+    color = 0x9df0fa,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const baseColor = new THREE.Color(color);
+  const dimColor = baseColor.clone().multiplyScalar(0.4);
+
+  for (let i = 0; i < particleCount; i++) {
+    // Tight spherical concentration - much more center-biased than the
+    // elliptical galaxy's falloff, and no axis squashing (true sphere).
+    const t = Math.pow(Math.random(), 2.5);
+    const r = t * radius;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+
+    positions[i * 3] = Math.sin(phi) * Math.cos(theta) * r;
+    positions[i * 3 + 1] = Math.cos(phi) * r;
+    positions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta) * r;
+
+    const color3 = dimColor.clone().lerp(baseColor, 1 - t);
+    colors[i * 3] = color3.r;
+    colors[i * 3 + 1] = color3.g;
+    colors[i * 3 + 2] = color3.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+  });
+
+  group.add(new THREE.Points(geometry, material));
+  return group;
+}
+
 export function buildIrregularGalaxy(opts = {}) {
   const {
     position = [0, 0, 0],

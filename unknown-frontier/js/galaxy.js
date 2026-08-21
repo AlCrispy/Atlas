@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy } from './galaxy-shapes.js';
+import { makeGlowTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy } from './galaxy-shapes.js';
 
 // === Tunables ===
 const STARFIELD_COUNT = 1500;
@@ -10,6 +10,8 @@ const SPIRAL_SPIN = 0.015;
 const ELLIPTICAL_SPIN = 0.006;
 const IRREGULAR_SPIN = 0.01;
 const BLACKHOLE_DISK_SPIN = 0.08;
+const LENTICULAR_SPIN = 0.008;
+const DWARF_SPIN = 0.02;
 
 const BEACON_SCALE = 2.5;
 const BEACON_HOVER_SCALE = 3.2;
@@ -19,7 +21,7 @@ const container = document.getElementById('solar-system');
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-camera.position.set(0, 140, 260);
+camera.position.set(0, 160, 300);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -30,7 +32,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.06;
 controls.minDistance = 20;
-controls.maxDistance = 500;
+controls.maxDistance = 620;
 
 // === Starfield ===
 function buildStarfield() {
@@ -80,6 +82,22 @@ const irregularGalaxy = buildIrregularGalaxy({
 });
 scene.add(irregularGalaxy);
 
+// Above/below the black hole, off the triangle's plane, with asymmetric
+// jitter so the pair doesn't read as a mirrored, mechanically-placed set.
+const lenticularGalaxy = buildLenticularGalaxy({
+  position: [18, 95, -12],
+  particleCount: 1800,
+  radius: 25,
+});
+scene.add(lenticularGalaxy);
+
+const dwarfGalaxy = buildDwarfGalaxy({
+  position: [-14, -90, 20],
+  particleCount: 1200,
+  radius: 14,
+});
+scene.add(dwarfGalaxy);
+
 // === Beacons ===
 const SPIRAL_BEACONS = [
   { name: 'Punto sconosciuto', position: [12, 1, -7] },
@@ -105,6 +123,22 @@ const IRREGULAR_BEACONS = [
   { name: 'Punto sconosciuto', position: [5, -3, -18] },
 ];
 
+const LENTICULAR_BEACONS = [
+  { name: 'Punto sconosciuto', position: [10, 1, -5] },
+  { name: 'Punto sconosciuto', position: [-14, 0, 7] },
+  { name: 'Punto sconosciuto', position: [16, 1, 10] },
+  { name: 'Punto sconosciuto', position: [-7, 0, -15] },
+  { name: 'Punto sconosciuto', position: [20, 1, -2] },
+];
+
+const DWARF_BEACONS = [
+  { name: 'Punto sconosciuto', position: [6, 1, 4] },
+  { name: 'Punto sconosciuto', position: [-8, 0, -5] },
+  { name: 'Punto sconosciuto', position: [4, -1, -9] },
+  { name: 'Punto sconosciuto', position: [-5, 1, 7] },
+  { name: 'Punto sconosciuto', position: [9, 0, -2] },
+];
+
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 
 function addBeaconSprites(beaconList, parentGroup, targetArray) {
@@ -127,6 +161,8 @@ const beaconMeshes = [];
 addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes);
 addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes);
 addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes);
+addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes);
+addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes);
 
 // === Black hole ===
 function buildBlackHole() {
@@ -290,6 +326,8 @@ function animate() {
   ellipticalGalaxy.rotation.y += delta * ELLIPTICAL_SPIN;
   irregularGalaxy.rotation.y += delta * IRREGULAR_SPIN;
   irregularGalaxy.rotation.z = Math.sin(elapsed * 0.15) * 0.05;
+  lenticularGalaxy.rotation.y += delta * LENTICULAR_SPIN;
+  dwarfGalaxy.rotation.y += delta * DWARF_SPIN;
 
   const spiralCoreGlow = spiralGalaxy.userData.coreGlow;
   if (spiralCoreGlow) {
