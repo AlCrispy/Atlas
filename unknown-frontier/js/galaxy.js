@@ -46,7 +46,50 @@ function buildStarfield() {
 }
 buildStarfield();
 
-// === Disc (Task 2) ===
+// === Disc ===
+function buildSpiralDisc() {
+  const count = DISC_PARTICLE_COUNT;
+  const positions = new Float32Array(count * 3);
+  const colors = new Float32Array(count * 3);
+  const coreColor = new THREE.Color(0x9df0fa);
+  const armColor = new THREE.Color(0x4fd8e8);
+  const armTightness = 0.55;
+
+  for (let i = 0; i < count; i++) {
+    const arm = i % ARM_COUNT;
+    const armAngleOffset = (arm / ARM_COUNT) * Math.PI * 2;
+    const t = Math.random();
+    const radius = t * DISC_RADIUS;
+    const spiralAngle = armAngleOffset + radius * armTightness + (Math.random() - 0.5) * 0.5;
+    const height = (Math.random() - 0.5) * 2 * (1 - t) * 3;
+
+    positions[i * 3] = Math.cos(spiralAngle) * radius;
+    positions[i * 3 + 1] = height;
+    positions[i * 3 + 2] = Math.sin(spiralAngle) * radius;
+
+    const color = coreColor.clone().lerp(armColor, t);
+    colors[i * 3] = color.r;
+    colors[i * 3 + 1] = color.g;
+    colors[i * 3 + 2] = color.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+
+  const disc = new THREE.Points(geometry, material);
+  scene.add(disc);
+  return disc;
+}
+const galaxyDisc = buildSpiralDisc();
 
 // === Core glow (Task 3) ===
 
@@ -60,6 +103,8 @@ const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();
+
+  galaxyDisc.rotation.y += delta * GALAXY_SPIN;
 
   controls.update();
   renderer.render(scene, camera);
