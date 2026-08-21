@@ -62,11 +62,6 @@ body::before {
   white-space: nowrap; text-decoration: none;
 }
 .back-btn:hover { color: var(--hz-cyan-lt); background: rgba(79,216,232,0.06); }
-.topbar-title {
-  flex: 1; text-align: center; padding-right: 80px;
-  font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
-  letter-spacing: 0.3em; text-transform: uppercase; color: var(--hz-ash);
-}
 
 .hz-hero {
   position: absolute; top: 0; left: 0; right: 0; z-index: 2;
