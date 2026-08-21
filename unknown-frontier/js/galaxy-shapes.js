@@ -163,3 +163,64 @@ export function buildEllipticalGalaxy(opts = {}) {
   group.add(new THREE.Points(geometry, material));
   return group;
 }
+
+export function buildIrregularGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    particleCount = 2000,
+    radius = 30,
+    colorA = 0x4fd8e8,
+    colorB = 0xe8846f,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const blobCount = 3;
+  const blobCenters = [];
+  for (let b = 0; b < blobCount; b++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.random() * radius * 0.5;
+    blobCenters.push([
+      Math.cos(angle) * dist,
+      (Math.random() - 0.5) * radius * 0.3,
+      Math.sin(angle) * dist,
+    ]);
+  }
+
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const tintA = new THREE.Color(colorA);
+  const tintB = new THREE.Color(colorB);
+  const blobRadius = radius * 0.45;
+
+  const gaussianJitter = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+  for (let i = 0; i < particleCount; i++) {
+    const blobIndex = i % blobCount;
+    const blob = blobCenters[blobIndex];
+
+    positions[i * 3] = blob[0] + gaussianJitter() * blobRadius;
+    positions[i * 3 + 1] = blob[1] + gaussianJitter() * blobRadius * 0.5;
+    positions[i * 3 + 2] = blob[2] + gaussianJitter() * blobRadius;
+
+    const tint = blobIndex % 2 === 0 ? tintA : tintB;
+    colors[i * 3] = tint.r;
+    colors[i * 3 + 1] = tint.g;
+    colors[i * 3 + 2] = tint.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.55,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+
+  group.add(new THREE.Points(geometry, material));
+  return group;
+}
