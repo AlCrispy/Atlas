@@ -300,6 +300,23 @@ function flyCameraTo(targetPosition, distance, duration = 900) {
 // === Selection (shared by 3D clicks and the system list panel) ===
 // Selecting a beacon keeps it enlarged (distinct from the transient hover
 // grow) and highlights its matching entry in the list, in both directions.
+// A bright ring sprite also tracks the selected beacon's world position
+// every frame (galaxies keep spinning) — this is what makes the selection
+// read clearly even against a dense, similarly-colored star field, and it
+// is the only visible selection feedback for the black hole (whose hit
+// target sprite is otherwise invisible by design).
+const selectionRingTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(157,240,250,0)');
+const selectionRing = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: selectionRingTexture,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  opacity: 0,
+}));
+selectionRing.scale.set(7, 7, 1);
+scene.add(selectionRing);
+const selectionRingWorldPos = new THREE.Vector3();
+
 let hoveredBeacon = null;
 let selectedBeacon = null;
 let selectedListItem = null;
@@ -319,6 +336,7 @@ function selectBeacon(mesh) {
     item.scrollIntoView({ block: 'nearest' });
   }
   selectedListItem = item;
+  selectionRing.material.opacity = 1;
 
   showBeaconCard(mesh.userData.beacon);
   flyCameraTo(mesh.userData.beacon.zoomTarget, mesh.userData.beacon.zoomDistance);
@@ -334,6 +352,7 @@ function deselectBeacon() {
     selectedListItem.classList.remove('is-active');
     selectedListItem = null;
   }
+  selectionRing.material.opacity = 0;
   flyCameraTo(new THREE.Vector3(0, 0, 0), DEFAULT_CAMERA_DISTANCE);
 }
 
@@ -449,6 +468,13 @@ function animate() {
   }
 
   blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
+
+  if (selectedBeacon) {
+    selectedBeacon.getWorldPosition(selectionRingWorldPos);
+    selectionRing.position.copy(selectionRingWorldPos);
+    const ringPulse = 7 + Math.sin(elapsed * 3) * 1;
+    selectionRing.scale.set(ringPulse, ringPulse, 1);
+  }
 
   if (cameraAnim) {
     const t = Math.min((performance.now() - cameraAnim.start) / cameraAnim.duration, 1);
