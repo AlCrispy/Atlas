@@ -79,6 +79,13 @@ const sunLight = new THREE.DirectionalLight(0xfff2d6, 1.3);
 sunLight.position.set(40, 60, 30);
 scene.add(sunLight);
 
+// A glow sprite's bright core reads much smaller than its nominal scale
+// (the texture fades out toward the edge), while a solid mesh sphere fills
+// its scale edge-to-edge — these compensate so stars still read as the
+// biggest body in the system despite planets switching to solid meshes.
+const STAR_RENDER_SCALE = 1.8;
+const PLANET_RENDER_SCALE = 0.55;
+
 const bodies = [];
 const listItemsBySlug = new Map();
 
@@ -101,7 +108,7 @@ function registerBody(object, size, data) {
 // common center (see the animation loop below).
 const starObjs = system.stars.map((star) => {
   const sprite = makeStarSprite(star.color);
-  registerBody(sprite, star.size, star);
+  registerBody(sprite, star.size * STAR_RENDER_SCALE, star);
   scene.add(sprite);
   return { sprite, data: star };
 });
@@ -123,7 +130,7 @@ const planetOrbits = system.planets.map((planet) => {
   pivot.add(ring);
 
   const sprite = makeBodyMesh(planet.color);
-  registerBody(sprite, planet.size, {
+  registerBody(sprite, planet.size * PLANET_RENDER_SCALE, {
     ...planet,
     exploreHref: `planets/${planet.slug}.html`,
   });
@@ -134,7 +141,7 @@ const planetOrbits = system.planets.map((planet) => {
 
   const moonOrbits = planet.moons.map((moon) => {
     const moonSprite = makeBodyMesh(moon.color);
-    registerBody(moonSprite, moon.size, moon);
+    registerBody(moonSprite, moon.size * PLANET_RENDER_SCALE, moon);
     moonAnchor.add(moonSprite);
     return { sprite: moonSprite, data: moon };
   });
