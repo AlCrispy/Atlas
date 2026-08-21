@@ -15,6 +15,7 @@ const DWARF_SPIN = 0.02;
 
 const BEACON_SCALE = 2.5;
 const BEACON_HOVER_SCALE = 3.2;
+const BEACON_SELECT_SCALE = 3.8;
 
 const container = document.getElementById('solar-system');
 
@@ -264,9 +265,67 @@ function showBeaconCard(beacon) {
 
 function hideBeaconCard() {
   beaconCard.classList.remove('is-visible');
+  deselectBeacon();
 }
 
 beaconCardClose.addEventListener('click', hideBeaconCard);
+
+// === Selection (shared by 3D clicks and the system list panel) ===
+// Selecting a beacon keeps it enlarged (distinct from the transient hover
+// grow) and highlights its matching entry in the list, in both directions.
+let hoveredBeacon = null;
+let selectedBeacon = null;
+let selectedListItem = null;
+
+function selectBeacon(mesh) {
+  if (selectedBeacon && selectedBeacon !== mesh) {
+    const prevScale = selectedBeacon === hoveredBeacon ? BEACON_HOVER_SCALE : BEACON_SCALE;
+    selectedBeacon.scale.set(prevScale, prevScale, 1);
+  }
+  selectedBeacon = mesh;
+  mesh.scale.set(BEACON_SELECT_SCALE, BEACON_SELECT_SCALE, 1);
+
+  if (selectedListItem) selectedListItem.classList.remove('is-active');
+  const item = listItemsBySlug.get(mesh.userData.beacon.slug) || null;
+  if (item) {
+    item.classList.add('is-active');
+    item.scrollIntoView({ block: 'nearest' });
+  }
+  selectedListItem = item;
+
+  showBeaconCard(mesh.userData.beacon);
+}
+
+function deselectBeacon() {
+  if (selectedBeacon) {
+    const restScale = selectedBeacon === hoveredBeacon ? BEACON_HOVER_SCALE : BEACON_SCALE;
+    selectedBeacon.scale.set(restScale, restScale, 1);
+    selectedBeacon = null;
+  }
+  if (selectedListItem) {
+    selectedListItem.classList.remove('is-active');
+    selectedListItem = null;
+  }
+}
+
+// === System list panel ===
+// Built from the same beaconMeshes used for raycasting, so names/slugs
+// never drift out of sync between the 3D scene and the list.
+const systemListItems = document.querySelector('.system-list-items');
+const listItemsBySlug = new Map();
+
+beaconMeshes.forEach((mesh) => {
+  const { beacon } = mesh.userData;
+  const li = document.createElement('li');
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'system-list-item';
+  button.textContent = beacon.name;
+  button.addEventListener('click', () => selectBeacon(mesh));
+  li.appendChild(button);
+  systemListItems.appendChild(li);
+  listItemsBySlug.set(beacon.slug, button);
+});
 
 // A click that follows a camera drag (OrbitControls) should not open the
 // beacon card: track the pointer-down position and only treat the click
@@ -280,8 +339,8 @@ renderer.domElement.addEventListener('pointerdown', (event) => {
 
 // Hover feedback: swap the cursor to pointer and grow the beacon's glow
 // when a beacon sprite sits under the pointer, so beacons read as clickable.
-let hoveredBeacon = null;
-
+// The selected beacon (see selectBeacon above) stays at its larger scale
+// regardless of hover state.
 renderer.domElement.addEventListener('pointermove', (event) => {
   const rect = renderer.domElement.getBoundingClientRect();
   pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -292,10 +351,10 @@ renderer.domElement.addEventListener('pointermove', (event) => {
   const hit = hits.length > 0 ? hits[0].object : null;
 
   if (hit !== hoveredBeacon) {
-    if (hoveredBeacon) {
+    if (hoveredBeacon && hoveredBeacon !== selectedBeacon) {
       hoveredBeacon.scale.set(BEACON_SCALE, BEACON_SCALE, 1);
     }
-    if (hit) {
+    if (hit && hit !== selectedBeacon) {
       hit.scale.set(BEACON_HOVER_SCALE, BEACON_HOVER_SCALE, 1);
     }
     hoveredBeacon = hit;
@@ -320,7 +379,7 @@ renderer.domElement.addEventListener('click', (event) => {
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects(beaconMeshes);
   if (hits.length > 0) {
-    showBeaconCard(hits[0].object.userData.beacon);
+    selectBeacon(hits[0].object);
   }
 });
 
