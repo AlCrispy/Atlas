@@ -143,8 +143,9 @@ const DWARF_BEACONS = [
 
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 
-function addBeaconSprites(beaconList, parentGroup, targetArray) {
+function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName) {
   beaconList.forEach((beacon) => {
+    beacon.galaxy = galaxyName;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: beaconTexture,
       transparent: true,
@@ -160,11 +161,11 @@ function addBeaconSprites(beaconList, parentGroup, targetArray) {
 }
 
 const beaconMeshes = [];
-addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes);
-addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes);
-addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes);
-addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes);
-addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes);
+addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes, 'Aurvex');
+addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes, 'Meridian');
+addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes, 'Zhorn');
+addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes, 'Corvantis');
+addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes, 'Pyxis');
 
 // === Black hole ===
 function buildBlackHole() {
@@ -243,6 +244,7 @@ blackHoleHitSprite.userData.beacon = {
   name: 'Voro Nexus',
   slug: 'voro-nexus',
   eyebrow: 'Fenomeno Cosmico',
+  galaxy: 'Fenomeno Cosmico',
   position: [0, 0, 0],
 };
 beaconMeshes.push(blackHoleHitSprite);
@@ -309,22 +311,37 @@ function deselectBeacon() {
 }
 
 // === System list panel ===
-// Built from the same beaconMeshes used for raycasting, so names/slugs
-// never drift out of sync between the 3D scene and the list.
+// Built from the same beaconMeshes used for raycasting, grouped by galaxy
+// in scene order, so names/slugs/grouping never drift out of sync with
+// the 3D scene.
 const systemListItems = document.querySelector('.system-list-items');
 const listItemsBySlug = new Map();
 
+const galaxyGroups = new Map();
 beaconMeshes.forEach((mesh) => {
-  const { beacon } = mesh.userData;
-  const li = document.createElement('li');
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'system-list-item';
-  button.textContent = beacon.name;
-  button.addEventListener('click', () => selectBeacon(mesh));
-  li.appendChild(button);
-  systemListItems.appendChild(li);
-  listItemsBySlug.set(beacon.slug, button);
+  const galaxyName = mesh.userData.beacon.galaxy;
+  if (!galaxyGroups.has(galaxyName)) galaxyGroups.set(galaxyName, []);
+  galaxyGroups.get(galaxyName).push(mesh);
+});
+
+galaxyGroups.forEach((meshes, galaxyName) => {
+  const heading = document.createElement('li');
+  heading.className = 'system-list-group';
+  heading.textContent = galaxyName;
+  systemListItems.appendChild(heading);
+
+  meshes.forEach((mesh) => {
+    const { beacon } = mesh.userData;
+    const li = document.createElement('li');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'system-list-item';
+    button.textContent = beacon.name;
+    button.addEventListener('click', () => selectBeacon(mesh));
+    li.appendChild(button);
+    systemListItems.appendChild(li);
+    listItemsBySlug.set(beacon.slug, button);
+  });
 });
 
 // A click that follows a camera drag (OrbitControls) should not open the
