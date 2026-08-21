@@ -13,6 +13,13 @@ const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
 
+// Group holding everything that should rotate together with the galaxy
+// (disc, nebula wisps, beacons). Starfield and coreGlow stay outside it:
+// starfield is a static backdrop and coreGlow sits at the true center,
+// so rotating it would be a no-op anyway.
+const galaxyGroup = new THREE.Group();
+scene.add(galaxyGroup);
+
 const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
 camera.position.set(0, 45, 95);
 
@@ -86,7 +93,7 @@ function buildSpiralDisc() {
   });
 
   const disc = new THREE.Points(geometry, material);
-  scene.add(disc);
+  galaxyGroup.add(disc);
   return disc;
 }
 const galaxyDisc = buildSpiralDisc();
@@ -158,18 +165,18 @@ function buildNebulaWisps() {
   });
 
   const wisps = new THREE.Points(geometry, material);
-  scene.add(wisps);
+  galaxyGroup.add(wisps);
   return wisps;
 }
 const nebulaWisps = buildNebulaWisps();
 
 // === Beacons ===
 const BEACONS = [
-  { name: '???', position: [18, 2, -10] },
-  { name: '???', position: [-25, -1, 14] },
-  { name: '???', position: [32, 3, 20] },
-  { name: '???', position: [-14, -2, -30] },
-  { name: '???', position: [40, 1, -5] },
+  { name: 'Punto sconosciuto', position: [18, 2, -10] },
+  { name: 'Punto sconosciuto', position: [-25, -1, 14] },
+  { name: 'Punto sconosciuto', position: [32, 3, 20] },
+  { name: 'Punto sconosciuto', position: [-14, -2, -30] },
+  { name: 'Punto sconosciuto', position: [40, 1, -5] },
 ];
 
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
@@ -183,7 +190,7 @@ const beaconMeshes = BEACONS.map((beacon) => {
   sprite.scale.set(2.5, 2.5, 1);
   sprite.position.set(...beacon.position);
   sprite.userData.beacon = beacon;
-  scene.add(sprite);
+  galaxyGroup.add(sprite);
   return sprite;
 });
 
@@ -204,7 +211,26 @@ function hideBeaconCard() {
 
 beaconCardClose.addEventListener('click', hideBeaconCard);
 
+// A click that follows a camera drag (OrbitControls) should not open the
+// beacon card: track the pointer-down position and only treat the click
+// as a real beacon click if the pointer barely moved before release.
+const CLICK_DRAG_THRESHOLD = 5;
+let pointerDownPosition = null;
+
+renderer.domElement.addEventListener('pointerdown', (event) => {
+  pointerDownPosition = { x: event.clientX, y: event.clientY };
+});
+
 renderer.domElement.addEventListener('click', (event) => {
+  if (pointerDownPosition) {
+    const dx = event.clientX - pointerDownPosition.x;
+    const dy = event.clientY - pointerDownPosition.y;
+    const dragDistance = Math.hypot(dx, dy);
+    if (dragDistance >= CLICK_DRAG_THRESHOLD) {
+      return;
+    }
+  }
+
   const rect = renderer.domElement.getBoundingClientRect();
   pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
   pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -224,7 +250,7 @@ function animate() {
   const delta = clock.getDelta();
   const elapsed = clock.getElapsedTime();
 
-  galaxyDisc.rotation.y += delta * GALAXY_SPIN;
+  galaxyGroup.rotation.y += delta * GALAXY_SPIN;
   const corePulse = 18 + Math.sin(elapsed * 0.5) * 2;
   coreGlow.scale.set(corePulse, corePulse, 1);
 
