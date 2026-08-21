@@ -128,7 +128,81 @@ addBeaconSprites(SPIRAL_BEACONS, spiralGalaxy, beaconMeshes);
 addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes);
 addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes);
 
-// === Black hole (Task 5) ===
+// === Black hole ===
+function buildBlackHole() {
+  const group = new THREE.Group();
+
+  const eventHorizon = new THREE.Mesh(
+    new THREE.SphereGeometry(4, 32, 32),
+    new THREE.MeshBasicMaterial({ color: 0x000000 })
+  );
+  group.add(eventHorizon);
+
+  const glowTexture = makeGlowTexture('rgba(180,150,255,0.5)', 'rgba(180,150,255,0)');
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTexture,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  }));
+  glow.scale.set(14, 14, 1);
+  group.add(glow);
+
+  const diskTexture = makeGlowTexture('rgba(255,200,140,1)', 'rgba(255,200,140,0)');
+  const diskParticleCount = 500;
+  const diskPositions = new Float32Array(diskParticleCount * 3);
+  const diskColors = new Float32Array(diskParticleCount * 3);
+  const innerColor = new THREE.Color(0xffe8c8);
+  const outerColor = new THREE.Color(0xff9a4f);
+
+  for (let i = 0; i < diskParticleCount; i++) {
+    const t = Math.random();
+    const r = 6 + t * 8;
+    const angle = Math.random() * Math.PI * 2;
+
+    diskPositions[i * 3] = Math.cos(angle) * r;
+    diskPositions[i * 3 + 1] = (Math.random() - 0.5) * 0.6;
+    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
+
+    const color = innerColor.clone().lerp(outerColor, t);
+    diskColors[i * 3] = color.r;
+    diskColors[i * 3 + 1] = color.g;
+    diskColors[i * 3 + 2] = color.b;
+  }
+
+  const diskGeometry = new THREE.BufferGeometry();
+  diskGeometry.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
+  diskGeometry.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
+  const diskMaterial = new THREE.PointsMaterial({
+    size: 1.2,
+    map: diskTexture,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const disk = new THREE.Points(diskGeometry, diskMaterial);
+  disk.rotation.x = 0.3;
+  group.add(disk);
+
+  const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTexture,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+  }));
+  hitSprite.scale.set(10, 10, 1);
+  group.add(hitSprite);
+
+  scene.add(group);
+
+  return { disk, hitSprite };
+}
+
+const { disk: blackHoleDisk, hitSprite: blackHoleHitSprite } = buildBlackHole();
+blackHoleHitSprite.userData.beacon = { name: 'Buco Nero', position: [0, 0, 0] };
+beaconMeshes.push(blackHoleHitSprite);
 
 // === Interaction ===
 const raycaster = new THREE.Raycaster();
@@ -223,7 +297,7 @@ function animate() {
     spiralCoreGlow.scale.set(corePulse, corePulse, 1);
   }
 
-  // === Black hole disk spin (Task 5) ===
+  blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
 
   controls.update();
   renderer.render(scene, camera);
