@@ -136,9 +136,23 @@ body::before {
   transform: translate(-50%, 0);
 }
 .beacon-card .placeholder-badge { margin-bottom: 14px; }
+.beacon-card .placeholder-eyebrow { margin-bottom: 6px; }
 .beacon-card-title {
   font-family: 'Orbitron', sans-serif; font-size: 1rem;
   color: var(--hz-bone); letter-spacing: 0.05em;
+}
+.beacon-card-link {
+  display: inline-block; margin-top: 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-cyan-lt); text-decoration: none;
+  border: 1px solid var(--hz-steel);
+  padding: 8px 18px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.beacon-card-link:hover {
+  color: var(--hz-void); background: var(--hz-cyan-lt);
+  border-color: var(--hz-cyan-lt);
 }
 .beacon-card-close {
   position: absolute; top: 10px; right: 12px;

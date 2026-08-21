@@ -1,0 +1,63 @@
+/* Solar system / cosmic phenomenon detail pages — shares tokens and base
+   classes (.topbar, .back-btn, .placeholder-*) with unknown-frontier.css. */
+
+.system-detail-body {
+  display: block;
+  height: auto;
+  min-height: 100vh;
+  overflow: auto;
+}
+
+.system-page {
+  position: relative; z-index: 2;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+  text-align: center;
+}
+
+.system-page .placeholder-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin: 10px 0 16px;
+}
+
+.system-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--hz-ash);
+  font-style: italic;
+  max-width: 480px;
+  margin: 20px auto 0;
+}
+
+.system-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.system-stat {
+  flex: 1 1 160px;
+  max-width: 200px;
+  background: var(--hz-panel-lt);
+  border: 1px solid var(--hz-steel);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.system-stat-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hz-cyan);
+}
+
+.system-stat-value {
+  font-size: 0.95rem;
+  color: var(--hz-bone);
+}

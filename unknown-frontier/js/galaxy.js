@@ -99,44 +99,45 @@ const dwarfGalaxy = buildDwarfGalaxy({
 scene.add(dwarfGalaxy);
 
 // === Beacons ===
+// Each beacon links to a placeholder page at unknown-frontier/systems/{slug}.html
 const SPIRAL_BEACONS = [
-  { name: 'Punto sconosciuto', position: [12, 1, -7] },
-  { name: 'Punto sconosciuto', position: [-17, -1, 9] },
-  { name: 'Punto sconosciuto', position: [21, 2, 13] },
-  { name: 'Punto sconosciuto', position: [-9, -1, -20] },
-  { name: 'Punto sconosciuto', position: [27, 1, -3] },
+  { name: 'Vessek', slug: 'vessek', position: [12, 1, -7] },
+  { name: 'Thalir-9', slug: 'thalir-9', position: [-17, -1, 9] },
+  { name: 'Kaion Rift', slug: 'kaion-rift', position: [21, 2, 13] },
+  { name: 'Drevane', slug: 'drevane', position: [-9, -1, -20] },
+  { name: 'Solmira', slug: 'solmira', position: [27, 1, -3] },
 ];
 
 const ELLIPTICAL_BEACONS = [
-  { name: 'Punto sconosciuto', position: [15, 3, 10] },
-  { name: 'Punto sconosciuto', position: [-20, -2, 8] },
-  { name: 'Punto sconosciuto', position: [8, 4, -22] },
-  { name: 'Punto sconosciuto', position: [-12, -3, -15] },
-  { name: 'Punto sconosciuto', position: [22, 1, -5] },
+  { name: 'Ozmun Prime', slug: 'ozmun-prime', position: [15, 3, 10] },
+  { name: 'Haldrin', slug: 'haldrin', position: [-20, -2, 8] },
+  { name: 'Cerevane', slug: 'cerevane', position: [8, 4, -22] },
+  { name: 'Tessaly', slug: 'tessaly', position: [-12, -3, -15] },
+  { name: 'Norvun', slug: 'norvun', position: [22, 1, -5] },
 ];
 
 const IRREGULAR_BEACONS = [
-  { name: 'Punto sconosciuto', position: [10, 2, 8] },
-  { name: 'Punto sconosciuto', position: [-15, -1, -10] },
-  { name: 'Punto sconosciuto', position: [18, -2, -5] },
-  { name: 'Punto sconosciuto', position: [-8, 3, 15] },
-  { name: 'Punto sconosciuto', position: [5, -3, -18] },
+  { name: 'Rakthos', slug: 'rakthos', position: [10, 2, 8] },
+  { name: 'Ybrenn', slug: 'ybrenn', position: [-15, -1, -10] },
+  { name: 'Quovar', slug: 'quovar', position: [18, -2, -5] },
+  { name: 'Skellith', slug: 'skellith', position: [-8, 3, 15] },
+  { name: 'Manoth', slug: 'manoth', position: [5, -3, -18] },
 ];
 
 const LENTICULAR_BEACONS = [
-  { name: 'Punto sconosciuto', position: [10, 1, -5] },
-  { name: 'Punto sconosciuto', position: [-14, 0, 7] },
-  { name: 'Punto sconosciuto', position: [16, 1, 10] },
-  { name: 'Punto sconosciuto', position: [-7, 0, -15] },
-  { name: 'Punto sconosciuto', position: [20, 1, -2] },
+  { name: 'Aldevik', slug: 'aldevik', position: [10, 1, -5] },
+  { name: 'Cormanth', slug: 'cormanth', position: [-14, 0, 7] },
+  { name: 'Estryn', slug: 'estryn', position: [16, 1, 10] },
+  { name: 'Vallor Deep', slug: 'vallor-deep', position: [-7, 0, -15] },
+  { name: 'Ninhara', slug: 'ninhara', position: [20, 1, -2] },
 ];
 
 const DWARF_BEACONS = [
-  { name: 'Punto sconosciuto', position: [6, 1, 4] },
-  { name: 'Punto sconosciuto', position: [-8, 0, -5] },
-  { name: 'Punto sconosciuto', position: [4, -1, -9] },
-  { name: 'Punto sconosciuto', position: [-5, 1, 7] },
-  { name: 'Punto sconosciuto', position: [9, 0, -2] },
+  { name: 'Yssel', slug: 'yssel', position: [6, 1, 4] },
+  { name: 'Braxton', slug: 'braxton', position: [-8, 0, -5] },
+  { name: 'Corvai', slug: 'corvai', position: [4, -1, -9] },
+  { name: 'Ithera', slug: 'ithera', position: [-5, 1, 7] },
+  { name: 'Zennor', slug: 'zennor', position: [9, 0, -2] },
 ];
 
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
@@ -237,18 +238,27 @@ function buildBlackHole() {
 }
 
 const { disk: blackHoleDisk, hitSprite: blackHoleHitSprite } = buildBlackHole();
-blackHoleHitSprite.userData.beacon = { name: 'Buco Nero', position: [0, 0, 0] };
+blackHoleHitSprite.userData.beacon = {
+  name: 'Voro Nexus',
+  slug: 'voro-nexus',
+  eyebrow: 'Fenomeno Cosmico',
+  position: [0, 0, 0],
+};
 beaconMeshes.push(blackHoleHitSprite);
 
 // === Interaction ===
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const beaconCard = document.getElementById('beacon-card');
+const beaconCardEyebrow = beaconCard.querySelector('.beacon-card-eyebrow');
 const beaconCardTitle = beaconCard.querySelector('.beacon-card-title');
+const beaconCardLink = beaconCard.querySelector('.beacon-card-link');
 const beaconCardClose = beaconCard.querySelector('.beacon-card-close');
 
 function showBeaconCard(beacon) {
+  beaconCardEyebrow.textContent = beacon.eyebrow || 'Sistema Solare';
   beaconCardTitle.textContent = beacon.name;
+  beaconCardLink.href = `systems/${beacon.slug}.html`;
   beaconCard.classList.add('is-visible');
 }
 
