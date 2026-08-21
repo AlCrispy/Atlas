@@ -86,11 +86,11 @@ export function createSceneInteraction(opts) {
     if (selectedBody && selectedBody !== mesh) {
       const prevBase = selectedBody.userData.baseScale;
       const prevScale = selectedBody === hoveredBody ? prevBase * hoverMultiplier : prevBase;
-      selectedBody.scale.set(prevScale, prevScale, 1);
+      selectedBody.scale.set(prevScale, prevScale, prevScale);
     }
     selectedBody = mesh;
     const selectScale = mesh.userData.baseScale * selectMultiplier;
-    mesh.scale.set(selectScale, selectScale, 1);
+    mesh.scale.set(selectScale, selectScale, selectScale);
 
     if (selectedListItem) selectedListItem.classList.remove('is-active');
     const item = getListItem(mesh.userData.beacon.slug) || null;
@@ -109,7 +109,7 @@ export function createSceneInteraction(opts) {
     if (selectedBody) {
       const base = selectedBody.userData.baseScale;
       const restScale = selectedBody === hoveredBody ? base * hoverMultiplier : base;
-      selectedBody.scale.set(restScale, restScale, 1);
+      selectedBody.scale.set(restScale, restScale, restScale);
       selectedBody = null;
     }
     if (selectedListItem) {
@@ -148,11 +148,11 @@ export function createSceneInteraction(opts) {
     if (hit !== hoveredBody) {
       if (hoveredBody && hoveredBody !== selectedBody) {
         const base = hoveredBody.userData.baseScale;
-        hoveredBody.scale.set(base, base, 1);
+        hoveredBody.scale.set(base, base, base);
       }
       if (hit && hit !== selectedBody) {
         const hoverScale = hit.userData.baseScale * hoverMultiplier;
-        hit.scale.set(hoverScale, hoverScale, 1);
+        hit.scale.set(hoverScale, hoverScale, hoverScale);
       }
       hoveredBody = hit;
       renderer.domElement.style.cursor = hit ? 'pointer' : '';
