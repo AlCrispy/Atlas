@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy } from './galaxy-shapes.js';
+import { createSceneInteraction } from './scene-interaction.js';
 
 // === Tunables ===
 const STARFIELD_COUNT = 1500;
@@ -14,18 +15,14 @@ const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
 
 const BEACON_SCALE = 2.5;
-const BEACON_HOVER_SCALE = 3.2;
-const BEACON_SELECT_SCALE = 3.8;
 
 const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-const DEFAULT_CAMERA_OFFSET = new THREE.Vector3(0, 160, 300);
-const DEFAULT_CAMERA_DIRECTION = DEFAULT_CAMERA_OFFSET.clone().normalize();
-const DEFAULT_CAMERA_DISTANCE = DEFAULT_CAMERA_OFFSET.length();
-camera.position.copy(DEFAULT_CAMERA_OFFSET);
+const HOME_OFFSET = new THREE.Vector3(0, 160, 300);
+camera.position.copy(HOME_OFFSET);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -149,6 +146,8 @@ const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0
 function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoomDistance) {
   beaconList.forEach((beacon) => {
     beacon.galaxy = galaxyName;
+    beacon.eyebrow = 'Sistema Solare';
+    beacon.exploreHref = `systems/${beacon.slug}.html`;
     beacon.zoomTarget = parentGroup.position.clone();
     beacon.zoomDistance = zoomDistance;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -160,6 +159,7 @@ function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoom
     sprite.scale.set(BEACON_SCALE, BEACON_SCALE, 1);
     sprite.position.set(...beacon.position);
     sprite.userData.beacon = beacon;
+    sprite.userData.baseScale = BEACON_SCALE;
     parentGroup.add(sprite);
     targetArray.push(sprite);
   });
@@ -237,6 +237,7 @@ function buildBlackHole() {
     depthWrite: false,
   }));
   hitSprite.scale.set(10, 10, 1);
+  hitSprite.userData.baseScale = 10;
   group.add(hitSprite);
 
   scene.add(group);
@@ -250,111 +251,12 @@ blackHoleHitSprite.userData.beacon = {
   slug: 'voro-nexus',
   eyebrow: 'Fenomeno Cosmico',
   galaxy: 'Fenomeno Cosmico',
+  exploreHref: 'systems/voro-nexus.html',
   position: [0, 0, 0],
   zoomTarget: new THREE.Vector3(0, 0, 0),
   zoomDistance: 32,
 };
 beaconMeshes.push(blackHoleHitSprite);
-
-// === Interaction ===
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
-const beaconCard = document.getElementById('beacon-card');
-const beaconCardEyebrow = beaconCard.querySelector('.beacon-card-eyebrow');
-const beaconCardTitle = beaconCard.querySelector('.beacon-card-title');
-const beaconCardLink = beaconCard.querySelector('.beacon-card-link');
-const beaconCardClose = beaconCard.querySelector('.beacon-card-close');
-
-function showBeaconCard(beacon) {
-  beaconCardEyebrow.textContent = beacon.eyebrow || 'Sistema Solare';
-  beaconCardTitle.textContent = beacon.name;
-  beaconCardLink.href = `systems/${beacon.slug}.html`;
-  beaconCard.classList.add('is-visible');
-}
-
-function hideBeaconCard() {
-  beaconCard.classList.remove('is-visible');
-  deselectBeacon();
-}
-
-beaconCardClose.addEventListener('click', hideBeaconCard);
-
-// === Camera fly-to ===
-// Smoothly moves the camera/controls target toward a point, keeping the
-// same elevation angle as the default overview so shots feel consistent.
-let cameraAnim = null;
-
-function flyCameraTo(targetPosition, distance, duration = 900) {
-  const toPosition = targetPosition.clone().add(DEFAULT_CAMERA_DIRECTION.clone().multiplyScalar(distance));
-  cameraAnim = {
-    fromPosition: camera.position.clone(),
-    toPosition,
-    fromTarget: controls.target.clone(),
-    toTarget: targetPosition.clone(),
-    start: performance.now(),
-    duration,
-  };
-  controls.enabled = false;
-}
-
-// === Selection (shared by 3D clicks and the system list panel) ===
-// Selecting a beacon keeps it enlarged (distinct from the transient hover
-// grow) and highlights its matching entry in the list, in both directions.
-// A bright ring sprite also tracks the selected beacon's world position
-// every frame (galaxies keep spinning) — this is what makes the selection
-// read clearly even against a dense, similarly-colored star field, and it
-// is the only visible selection feedback for the black hole (whose hit
-// target sprite is otherwise invisible by design).
-const selectionRingTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(157,240,250,0)');
-const selectionRing = new THREE.Sprite(new THREE.SpriteMaterial({
-  map: selectionRingTexture,
-  transparent: true,
-  blending: THREE.AdditiveBlending,
-  depthWrite: false,
-  opacity: 0,
-}));
-selectionRing.scale.set(7, 7, 1);
-scene.add(selectionRing);
-const selectionRingWorldPos = new THREE.Vector3();
-
-let hoveredBeacon = null;
-let selectedBeacon = null;
-let selectedListItem = null;
-
-function selectBeacon(mesh) {
-  if (selectedBeacon && selectedBeacon !== mesh) {
-    const prevScale = selectedBeacon === hoveredBeacon ? BEACON_HOVER_SCALE : BEACON_SCALE;
-    selectedBeacon.scale.set(prevScale, prevScale, 1);
-  }
-  selectedBeacon = mesh;
-  mesh.scale.set(BEACON_SELECT_SCALE, BEACON_SELECT_SCALE, 1);
-
-  if (selectedListItem) selectedListItem.classList.remove('is-active');
-  const item = listItemsBySlug.get(mesh.userData.beacon.slug) || null;
-  if (item) {
-    item.classList.add('is-active');
-    item.scrollIntoView({ block: 'nearest' });
-  }
-  selectedListItem = item;
-  selectionRing.material.opacity = 1;
-
-  showBeaconCard(mesh.userData.beacon);
-  flyCameraTo(mesh.userData.beacon.zoomTarget, mesh.userData.beacon.zoomDistance);
-}
-
-function deselectBeacon() {
-  if (selectedBeacon) {
-    const restScale = selectedBeacon === hoveredBeacon ? BEACON_HOVER_SCALE : BEACON_SCALE;
-    selectedBeacon.scale.set(restScale, restScale, 1);
-    selectedBeacon = null;
-  }
-  if (selectedListItem) {
-    selectedListItem.classList.remove('is-active');
-    selectedListItem = null;
-  }
-  selectionRing.material.opacity = 0;
-  flyCameraTo(new THREE.Vector3(0, 0, 0), DEFAULT_CAMERA_DISTANCE);
-}
 
 // === System list panel ===
 // Built from the same beaconMeshes used for raycasting, grouped by galaxy
@@ -383,67 +285,23 @@ galaxyGroups.forEach((meshes, galaxyName) => {
     button.type = 'button';
     button.className = 'system-list-item';
     button.textContent = beacon.name;
-    button.addEventListener('click', () => selectBeacon(mesh));
+    button.addEventListener('click', () => interaction.selectBody(mesh));
     li.appendChild(button);
     systemListItems.appendChild(li);
     listItemsBySlug.set(beacon.slug, button);
   });
 });
 
-// A click that follows a camera drag (OrbitControls) should not open the
-// beacon card: track the pointer-down position and only treat the click
-// as a real beacon click if the pointer barely moved before release.
-const CLICK_DRAG_THRESHOLD = 5;
-let pointerDownPosition = null;
-
-renderer.domElement.addEventListener('pointerdown', (event) => {
-  pointerDownPosition = { x: event.clientX, y: event.clientY };
-});
-
-// Hover feedback: swap the cursor to pointer and grow the beacon's glow
-// when a beacon sprite sits under the pointer, so beacons read as clickable.
-// The selected beacon (see selectBeacon above) stays at its larger scale
-// regardless of hover state.
-renderer.domElement.addEventListener('pointermove', (event) => {
-  const rect = renderer.domElement.getBoundingClientRect();
-  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-  raycaster.setFromCamera(pointer, camera);
-  const hits = raycaster.intersectObjects(beaconMeshes);
-  const hit = hits.length > 0 ? hits[0].object : null;
-
-  if (hit !== hoveredBeacon) {
-    if (hoveredBeacon && hoveredBeacon !== selectedBeacon) {
-      hoveredBeacon.scale.set(BEACON_SCALE, BEACON_SCALE, 1);
-    }
-    if (hit && hit !== selectedBeacon) {
-      hit.scale.set(BEACON_HOVER_SCALE, BEACON_HOVER_SCALE, 1);
-    }
-    hoveredBeacon = hit;
-    renderer.domElement.style.cursor = hit ? 'pointer' : '';
-  }
-});
-
-renderer.domElement.addEventListener('click', (event) => {
-  if (pointerDownPosition) {
-    const dx = event.clientX - pointerDownPosition.x;
-    const dy = event.clientY - pointerDownPosition.y;
-    const dragDistance = Math.hypot(dx, dy);
-    if (dragDistance >= CLICK_DRAG_THRESHOLD) {
-      return;
-    }
-  }
-
-  const rect = renderer.domElement.getBoundingClientRect();
-  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-  raycaster.setFromCamera(pointer, camera);
-  const hits = raycaster.intersectObjects(beaconMeshes);
-  if (hits.length > 0) {
-    selectBeacon(hits[0].object);
-  }
+// === Interaction ===
+const interaction = createSceneInteraction({
+  scene,
+  camera,
+  controls,
+  renderer,
+  bodies: beaconMeshes,
+  cardEl: document.getElementById('beacon-card'),
+  getListItem: (slug) => listItemsBySlug.get(slug),
+  homeOffset: HOME_OFFSET,
 });
 
 // === Animation loop ===
@@ -469,23 +327,7 @@ function animate() {
 
   blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
 
-  if (selectedBeacon) {
-    selectedBeacon.getWorldPosition(selectionRingWorldPos);
-    selectionRing.position.copy(selectionRingWorldPos);
-    const ringPulse = 7 + Math.sin(elapsed * 3) * 1;
-    selectionRing.scale.set(ringPulse, ringPulse, 1);
-  }
-
-  if (cameraAnim) {
-    const t = Math.min((performance.now() - cameraAnim.start) / cameraAnim.duration, 1);
-    const eased = 1 - Math.pow(1 - t, 3);
-    camera.position.lerpVectors(cameraAnim.fromPosition, cameraAnim.toPosition, eased);
-    controls.target.lerpVectors(cameraAnim.fromTarget, cameraAnim.toTarget, eased);
-    if (t >= 1) {
-      cameraAnim = null;
-      controls.enabled = true;
-    }
-  }
+  interaction.update(elapsed);
 
   controls.update();
   renderer.render(scene, camera);

@@ -6,35 +6,38 @@
 <title>Braxton — Unknown Frontier</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/unknown-frontier.css">
-<link rel="stylesheet" href="../css/system-detail.css">
 </head>
-<body class="system-detail-body">
+<body data-system-slug="braxton">
 
 <div class="topbar">
   <a class="back-btn" href="../unknown-frontier.html">← <span>Unknown Frontier</span></a>
+  <span class="topbar-title">Braxton</span>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Sistema Solare</p>
-  <h1 class="placeholder-title">Braxton</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo sistema stellare non è ancora stato esplorato. Dati orbitali, composizione planetaria ed eventuali presenze restano sconosciuti.</p>
+<div id="solar-system" class="solar-system-canvas">
+  <p class="hz-hint">Trascina per ruotare · Scroll per zoom · Click su un corpo per info</p>
+</div>
+<div id="system-list" class="system-list">
+  <p class="system-list-title">Corpi Rilevati</p>
+  <ul class="system-list-items"></ul>
+</div>
+<div id="beacon-card" class="beacon-card">
+  <button class="beacon-card-close" aria-label="Chiudi">&times;</button>
+  <p class="placeholder-badge">In Costruzione</p>
+  <p class="placeholder-eyebrow beacon-card-eyebrow">Pianeta</p>
+  <h3 class="beacon-card-title">Corpo sconosciuto</h3>
+  <a class="beacon-card-link" href="#">Esplora →</a>
+</div>
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Da definire</span>
-    </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Corpi rilevati</span>
-      <span class="system-stat-value">Da esplorare</span>
-    </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
-    </div>
-  </div>
-</main>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../js/solar-system.js"></script>
 
 </body>
 </html>
