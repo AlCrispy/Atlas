@@ -163,7 +163,58 @@ function buildNebulaWisps() {
 }
 const nebulaWisps = buildNebulaWisps();
 
-// === Beacons (Task 5) ===
+// === Beacons ===
+const BEACONS = [
+  { name: '???', position: [18, 2, -10] },
+  { name: '???', position: [-25, -1, 14] },
+  { name: '???', position: [32, 3, 20] },
+  { name: '???', position: [-14, -2, -30] },
+  { name: '???', position: [40, 1, -5] },
+];
+
+const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
+const beaconMeshes = BEACONS.map((beacon) => {
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: beaconTexture,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  }));
+  sprite.scale.set(2.5, 2.5, 1);
+  sprite.position.set(...beacon.position);
+  sprite.userData.beacon = beacon;
+  scene.add(sprite);
+  return sprite;
+});
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+const beaconCard = document.getElementById('beacon-card');
+const beaconCardTitle = beaconCard.querySelector('.beacon-card-title');
+const beaconCardClose = beaconCard.querySelector('.beacon-card-close');
+
+function showBeaconCard(beacon) {
+  beaconCardTitle.textContent = beacon.name;
+  beaconCard.classList.add('is-visible');
+}
+
+function hideBeaconCard() {
+  beaconCard.classList.remove('is-visible');
+}
+
+beaconCardClose.addEventListener('click', hideBeaconCard);
+
+renderer.domElement.addEventListener('click', (event) => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects(beaconMeshes);
+  if (hits.length > 0) {
+    showBeaconCard(hits[0].object.userData.beacon);
+  }
+});
 
 // === Animation loop ===
 const clock = new THREE.Clock();

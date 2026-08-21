@@ -113,3 +113,35 @@ body::before {
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--hz-ash); padding: 16px 24px 48px;
 }
+
+.beacon-card {
+  position: fixed; z-index: 400;
+  bottom: 32px; left: 50%;
+  transform: translate(-50%, 20px);
+  width: min(320px, calc(100vw - 48px));
+  background: var(--hz-panel-lt);
+  border: 1px solid var(--hz-steel);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  padding: 24px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.beacon-card.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.beacon-card .placeholder-badge { margin-bottom: 14px; }
+.beacon-card-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1rem;
+  color: var(--hz-bone); letter-spacing: 0.05em;
+}
+.beacon-card-close {
+  position: absolute; top: 10px; right: 12px;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; line-height: 1; color: var(--hz-ash);
+  transition: color 0.2s;
+}
+.beacon-card-close:hover { color: var(--hz-cyan-lt); }
