@@ -91,7 +91,30 @@ function buildSpiralDisc() {
 }
 const galaxyDisc = buildSpiralDisc();
 
-// === Core glow (Task 3) ===
+// === Glow texture helper ===
+function makeGlowTexture(innerColor, outerColor, size = 128) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gradient.addColorStop(0, innerColor);
+  gradient.addColorStop(1, outerColor);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+  return new THREE.CanvasTexture(canvas);
+}
+
+// === Core glow ===
+const coreGlowTexture = makeGlowTexture('rgba(157,240,250,0.9)', 'rgba(157,240,250,0)');
+const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: coreGlowTexture,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+}));
+coreGlow.scale.set(18, 18, 1);
+scene.add(coreGlow);
 
 // === Nebula wisps (Task 4) ===
 
@@ -103,8 +126,11 @@ const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   const delta = clock.getDelta();
+  const elapsed = clock.getElapsedTime();
 
   galaxyDisc.rotation.y += delta * GALAXY_SPIN;
+  const corePulse = 18 + Math.sin(elapsed * 0.5) * 2;
+  coreGlow.scale.set(corePulse, corePulse, 1);
 
   controls.update();
   renderer.render(scene, camera);
