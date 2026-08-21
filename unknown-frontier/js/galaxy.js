@@ -116,7 +116,52 @@ const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({
 coreGlow.scale.set(18, 18, 1);
 scene.add(coreGlow);
 
-// === Nebula wisps (Task 4) ===
+// === Nebula wisps ===
+const nebulaTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
+
+function buildNebulaWisps() {
+  const count = NEBULA_PARTICLE_COUNT;
+  const positions = new Float32Array(count * 3);
+  const colors = new Float32Array(count * 3);
+  const nebulaColor = new THREE.Color(0x8a6ae8);
+  const armTightness = 0.55;
+
+  for (let i = 0; i < count; i++) {
+    const arm = i % ARM_COUNT;
+    const armAngleOffset = (arm / ARM_COUNT) * Math.PI * 2;
+    const t = Math.random();
+    const radius = t * DISC_RADIUS * 0.9;
+    const spiralAngle = armAngleOffset + radius * armTightness + (Math.random() - 0.5) * 0.9;
+    const height = (Math.random() - 0.5) * 4;
+
+    positions[i * 3] = Math.cos(spiralAngle) * radius;
+    positions[i * 3 + 1] = height;
+    positions[i * 3 + 2] = Math.sin(spiralAngle) * radius;
+
+    colors[i * 3] = nebulaColor.r;
+    colors[i * 3 + 1] = nebulaColor.g;
+    colors[i * 3 + 2] = nebulaColor.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 6,
+    map: nebulaTexture,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.12,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+
+  const wisps = new THREE.Points(geometry, material);
+  scene.add(wisps);
+  return wisps;
+}
+const nebulaWisps = buildNebulaWisps();
 
 // === Beacons (Task 5) ===
 
