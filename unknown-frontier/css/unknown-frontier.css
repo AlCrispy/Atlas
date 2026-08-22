@@ -239,8 +239,18 @@ body::before {
   color: var(--hz-bone); background: var(--hz-panel);
   border: 1px solid var(--hz-steel);
   padding: 6px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hz-steel) var(--hz-panel);
 }
 .compare-select:focus { outline: 1px solid var(--hz-cyan); }
+.compare-select::-webkit-scrollbar { width: 8px; }
+.compare-select::-webkit-scrollbar-track { background: var(--hz-panel); }
+.compare-select::-webkit-scrollbar-thumb {
+  background: var(--hz-steel);
+  border: 2px solid var(--hz-panel);
+  border-radius: 4px;
+}
+.compare-select::-webkit-scrollbar-thumb:hover { background: var(--hz-cyan); }
 
 .compare-distance {
   font-family: 'Orbitron', sans-serif; font-size: 0.72rem;
