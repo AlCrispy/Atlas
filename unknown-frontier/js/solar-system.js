@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture } from './glow-texture.js';
+import { makePlanetTexture } from './planet-texture.js';
 import { buildOrbitRing } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 import { SOLAR_SYSTEMS } from './solar-system-data.js';
@@ -63,11 +64,31 @@ function makeStarSprite(color) {
   }));
 }
 
-const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 
-function makeBodyMesh(color) {
-  const material = new THREE.MeshStandardMaterial({ color, roughness: 0.75, metalness: 0.05 });
-  return new THREE.Mesh(sphereGeometry, material);
+// A textured body reads as a physical object instead of a flat-shaded
+// ball; the procedural map also gives each body its own surface identity
+// beyond a single hex color. `spinSpeed` drives axial rotation in the
+// animate loop below — real bodies turn, a static sphere doesn't sell scale.
+function makeBodyMesh(color, slug, size) {
+  const texture = makePlanetTexture(color, slug, size);
+  const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0.05 });
+  const mesh = new THREE.Mesh(sphereGeometry, material);
+  mesh.userData.spinSpeed = (Math.random() - 0.5) * 0.3;
+  return mesh;
+}
+
+// A faint outer shell, larger than the body itself, gives bigger planets a
+// soft atmospheric fringe (à la Earth's blue limb from orbit) without a
+// custom fresnel shader — just a low-opacity tinted sphere.
+function maybeAddAtmosphere(mesh, color, size) {
+  if (size < 2) return;
+  const atmosphere = new THREE.Mesh(
+    sphereGeometry,
+    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.14, side: THREE.BackSide }),
+  );
+  atmosphere.scale.setScalar(1.2);
+  mesh.add(atmosphere);
 }
 
 // Soft fill so the unlit side of a planet isn't pure black, plus one
@@ -130,7 +151,8 @@ const planetOrbits = system.planets.map((planet) => {
   const ring = buildOrbitRing({ radiusX: planet.orbitRadius, radiusZ: semiMinor, color: planet.color });
   pivot.add(ring);
 
-  const sprite = makeBodyMesh(planet.color);
+  const sprite = makeBodyMesh(planet.color, planet.slug, planet.size);
+  maybeAddAtmosphere(sprite, planet.color, planet.size);
   registerBody(sprite, planet.size * PLANET_RENDER_SCALE, {
     ...planet,
     exploreHref: `planets/${planet.slug}.html`,
@@ -141,7 +163,7 @@ const planetOrbits = system.planets.map((planet) => {
   pivot.add(moonAnchor);
 
   const moonOrbits = planet.moons.map((moon) => {
-    const moonSprite = makeBodyMesh(moon.color);
+    const moonSprite = makeBodyMesh(moon.color, moon.slug, moon.size);
     registerBody(moonSprite, moon.size * PLANET_RENDER_SCALE, moon);
     moonAnchor.add(moonSprite);
     return { sprite: moonSprite, data: moon };
@@ -215,11 +237,13 @@ function animate() {
   planetOrbits.forEach(({ sprite, moonAnchor, data, semiMinor, moonOrbits }) => {
     const angle = elapsed * data.speed + data.phase;
     sprite.position.set(Math.cos(angle) * data.orbitRadius, 0, Math.sin(angle) * semiMinor);
+    sprite.rotation.y = elapsed * sprite.userData.spinSpeed;
     moonAnchor.position.copy(sprite.position);
 
     moonOrbits.forEach(({ sprite: moonSprite, data: moonData }) => {
       const moonAngle = elapsed * moonData.speed + moonData.phase;
       moonSprite.position.set(Math.cos(moonAngle) * moonData.orbitRadius, 0, Math.sin(moonAngle) * moonData.orbitRadius);
+      moonSprite.rotation.y = elapsed * moonSprite.userData.spinSpeed;
     });
   });
 
