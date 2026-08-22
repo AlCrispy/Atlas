@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { makeLabelTexture } from './label-texture.js';
+import { createLensSystem } from './gravitational-lens.js';
 import { createSceneInteraction } from './scene-interaction.js';
 
 // === Tunables ===
@@ -305,6 +306,23 @@ blackHoleHitSprite.userData.beacon = {
 };
 beaconMeshes.push(blackHoleHitSprite);
 
+// === Gravitational lenses ===
+// Reusable factory (createLensSystem) so more instances can be added later
+// with a single buildLens() call each. One shared offscreen render target
+// backs every lens, so the capture cost doesn't grow per-instance.
+const lensSystem = createLensSystem({ scene, camera, renderer });
+
+const gravitationalLens = lensSystem.buildLens({
+  position: [-60, 60, -70],
+  radius: 7,
+  name: 'Lente di Skarn',
+  slug: 'lente-skarn',
+  color: '#8a6ae8',
+  distortionStrength: 0.4,
+  exploreHref: 'systems/lente-skarn.html',
+});
+beaconMeshes.push(gravitationalLens);
+
 // === Galaxy labels ===
 // World-space name tags floating above each galaxy — added directly to
 // `scene`, not as a child of the rotating galaxy group, so they stay put
@@ -502,6 +520,8 @@ function animate() {
   interaction.update(elapsed);
 
   controls.update();
+  lensSystem.update();
+  lensSystem.renderPass();
   renderer.render(scene, camera);
 }
 animate();
@@ -510,4 +530,7 @@ window.addEventListener('resize', () => {
   camera.aspect = container.clientWidth / container.clientHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(container.clientWidth, container.clientHeight);
+  const bufferSize = new THREE.Vector2();
+  renderer.getDrawingBufferSize(bufferSize);
+  lensSystem.setSize(bufferSize.x, bufferSize.y);
 });
