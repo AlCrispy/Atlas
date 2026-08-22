@@ -24,6 +24,24 @@
   </button>
   <ul class="system-list-items"></ul>
 </div>
+<div id="compare-panel" class="compare-panel is-collapsed">
+  <button type="button" class="compare-panel-title" aria-expanded="false">
+    <span>Confronta Distanze</span>
+    <span class="compare-panel-caret" aria-hidden="true">▾</span>
+  </button>
+  <div class="compare-panel-body">
+    <label class="compare-slot">
+      <span class="compare-slot-label">Stella A</span>
+      <select class="compare-select" data-slot="a"><option value="">—</option></select>
+    </label>
+    <label class="compare-slot">
+      <span class="compare-slot-label">Stella B</span>
+      <select class="compare-select" data-slot="b"><option value="">—</option></select>
+    </label>
+    <p class="compare-distance">Seleziona due stelle</p>
+    <button type="button" class="compare-clear">Azzera</button>
+  </div>
+</div>
 <div id="beacon-card" class="beacon-card">
   <button class="beacon-card-close" aria-label="Chiudi">&times;</button>
   <p class="placeholder-badge">In Costruzione</p>

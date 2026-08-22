@@ -18,6 +18,11 @@ const PECULIAR_SPIN = 0.02;
 
 const BEACON_SCALE = 2.5;
 
+// Linear scene-unit -> light-year conversion for the distance-compare panel.
+// Calibrated so the closest same-galaxy star pair in the scene (~6.78
+// scene units, two Dwarf-galaxy systems) reads as ~10 light-years.
+const DISTANCE_SCALE_LY_PER_UNIT = 1.474;
+
 const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
@@ -305,6 +310,9 @@ beaconMeshes.push(blackHoleHitSprite);
 // the 3D scene.
 const systemListItems = document.querySelector('.system-list-items');
 const listItemsBySlug = new Map();
+const slugToMesh = new Map();
+const compareSelectA = document.querySelector('.compare-select[data-slot="a"]');
+const compareSelectB = document.querySelector('.compare-select[data-slot="b"]');
 
 const galaxyGroups = new Map();
 beaconMeshes.forEach((mesh) => {
@@ -319,8 +327,15 @@ galaxyGroups.forEach((meshes, galaxyName) => {
   heading.textContent = galaxyName;
   systemListItems.appendChild(heading);
 
+  const optgroupA = document.createElement('optgroup');
+  optgroupA.label = galaxyName;
+  const optgroupB = document.createElement('optgroup');
+  optgroupB.label = galaxyName;
+
   meshes.forEach((mesh) => {
     const { beacon } = mesh.userData;
+    slugToMesh.set(beacon.slug, mesh);
+
     const li = document.createElement('li');
     const button = document.createElement('button');
     button.type = 'button';
@@ -330,7 +345,13 @@ galaxyGroups.forEach((meshes, galaxyName) => {
     li.appendChild(button);
     systemListItems.appendChild(li);
     listItemsBySlug.set(beacon.slug, button);
+
+    optgroupA.appendChild(new Option(beacon.name, beacon.slug));
+    optgroupB.appendChild(new Option(beacon.name, beacon.slug));
   });
+
+  compareSelectA.appendChild(optgroupA);
+  compareSelectB.appendChild(optgroupB);
 });
 
 // === System list collapse toggle ===
@@ -339,6 +360,71 @@ const systemListTitle = document.querySelector('.system-list-title');
 systemListTitle.addEventListener('click', () => {
   const collapsed = systemListPanel.classList.toggle('is-collapsed');
   systemListTitle.setAttribute('aria-expanded', String(!collapsed));
+});
+
+// === Distance-compare panel ===
+// Tracks the last two systems selected (3D click or list click) as a
+// rolling pair — each new selection becomes Star A and bumps the previous
+// Star A down to Star B — plus lets the dropdowns override either slot
+// directly. Distance is world-space (accounts for each system's galaxy
+// offset) run through DISTANCE_SCALE_LY_PER_UNIT.
+const comparePanel = document.getElementById('compare-panel');
+const comparePanelTitle = document.querySelector('.compare-panel-title');
+const compareDistanceEl = document.querySelector('.compare-distance');
+const compareClearBtn = document.querySelector('.compare-clear');
+
+const compareSlots = { a: null, b: null };
+const compareWorldPosA = new THREE.Vector3();
+const compareWorldPosB = new THREE.Vector3();
+
+function updateCompareDistance() {
+  if (!compareSlots.a || !compareSlots.b) {
+    compareDistanceEl.textContent = 'Seleziona due stelle per calcolare la distanza.';
+    return;
+  }
+  if (compareSlots.a === compareSlots.b) {
+    compareDistanceEl.textContent = 'Stessa stella selezionata.';
+    return;
+  }
+  compareSlots.a.getWorldPosition(compareWorldPosA);
+  compareSlots.b.getWorldPosition(compareWorldPosB);
+  const sceneDistance = compareWorldPosA.distanceTo(compareWorldPosB);
+  const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT);
+  compareDistanceEl.textContent = `≈ ${lightYears.toLocaleString('it-IT')} anni luce`;
+}
+
+function syncCompareSelects() {
+  compareSelectA.value = compareSlots.a ? compareSlots.a.userData.beacon.slug : '';
+  compareSelectB.value = compareSlots.b ? compareSlots.b.userData.beacon.slug : '';
+}
+
+function handleSceneSelect(mesh) {
+  if (compareSlots.a === mesh) return;
+  compareSlots.b = compareSlots.a;
+  compareSlots.a = mesh;
+  syncCompareSelects();
+  updateCompareDistance();
+}
+
+compareSelectA.addEventListener('change', () => {
+  compareSlots.a = compareSelectA.value ? slugToMesh.get(compareSelectA.value) : null;
+  updateCompareDistance();
+});
+compareSelectB.addEventListener('change', () => {
+  compareSlots.b = compareSelectB.value ? slugToMesh.get(compareSelectB.value) : null;
+  updateCompareDistance();
+});
+
+compareClearBtn.addEventListener('click', () => {
+  compareSlots.a = null;
+  compareSlots.b = null;
+  syncCompareSelects();
+  updateCompareDistance();
+});
+
+comparePanelTitle.addEventListener('click', () => {
+  const collapsed = comparePanel.classList.toggle('is-collapsed');
+  comparePanelTitle.setAttribute('aria-expanded', String(!collapsed));
 });
 
 // === Interaction ===
@@ -351,6 +437,7 @@ const interaction = createSceneInteraction({
   cardEl: document.getElementById('beacon-card'),
   getListItem: (slug) => listItemsBySlug.get(slug),
   homeOffset: HOME_OFFSET,
+  onSelect: handleSceneSelect,
 });
 
 // === Animation loop ===

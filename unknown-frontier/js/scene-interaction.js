@@ -38,6 +38,11 @@ export function createSceneInteraction(opts) {
     // selecting a body highlights it in place instead of reframing the
     // camera around it — the whole system stays in view.
     zoomOnSelect = true,
+    // Fired with the selected mesh whenever selectBody runs, regardless of
+    // whether the click came from the 3D scene or the list panel — lets a
+    // caller (e.g. the distance-compare panel) observe every selection
+    // without duplicating click-routing logic.
+    onSelect = null,
   } = opts;
 
   const cardEyebrowEl = cardEl.querySelector('.beacon-card-eyebrow');
@@ -125,6 +130,8 @@ export function createSceneInteraction(opts) {
     } else {
       flyTo(new THREE.Vector3(0, 0, 0), homeDistance);
     }
+
+    if (onSelect) onSelect(mesh);
   }
 
   function deselect() {
