@@ -268,6 +268,161 @@ export function buildDwarfGalaxy(opts = {}) {
   return group;
 }
 
+export function buildRingGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    ringParticleCount = 2200,
+    nucleusParticleCount = 300,
+    radius = 20,
+    ringColor = 0x4fd8e8,
+    nucleusColor = 0xfff2c8,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const totalCount = ringParticleCount + nucleusParticleCount;
+  const positions = new Float32Array(totalCount * 3);
+  const colors = new Float32Array(totalCount * 3);
+  const ringColorObj = new THREE.Color(ringColor);
+  const nucleusColorObj = new THREE.Color(nucleusColor);
+  const ringInner = radius * 0.62;
+
+  // Bright star-forming ring, offset outward from a mostly-hollowed core —
+  // the collisional-ring look (a companion punched through the disc).
+  for (let i = 0; i < ringParticleCount; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const r = ringInner + Math.random() * (radius - ringInner);
+    const height = (Math.random() - 0.5) * 1.4;
+
+    positions[i * 3] = Math.cos(angle) * r;
+    positions[i * 3 + 1] = height;
+    positions[i * 3 + 2] = Math.sin(angle) * r;
+
+    const t = (r - ringInner) / (radius - ringInner);
+    const color = ringColorObj.clone().lerp(nucleusColorObj, (1 - t) * 0.3);
+    colors[i * 3] = color.r;
+    colors[i * 3 + 1] = color.g;
+    colors[i * 3 + 2] = color.b;
+  }
+
+  // Sparse remnant nucleus left behind at the center
+  for (let i = 0; i < nucleusParticleCount; i++) {
+    const idx = ringParticleCount + i;
+    const t = Math.pow(Math.random(), 1.5);
+    const r = t * radius * 0.12;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+
+    positions[idx * 3] = Math.sin(phi) * Math.cos(theta) * r;
+    positions[idx * 3 + 1] = Math.cos(phi) * r;
+    positions[idx * 3 + 2] = Math.sin(phi) * Math.sin(theta) * r;
+
+    colors[idx * 3] = nucleusColorObj.r;
+    colors[idx * 3 + 1] = nucleusColorObj.g;
+    colors[idx * 3 + 2] = nucleusColorObj.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+  group.add(new THREE.Points(geometry, material));
+
+  const nucleusGlowTexture = makeGlowTexture('rgba(255,242,200,0.7)', 'rgba(255,242,200,0)');
+  const nucleusGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: nucleusGlowTexture,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  }));
+  nucleusGlow.scale.set(radius * 0.3, radius * 0.3, 1);
+  group.add(nucleusGlow);
+
+  return group;
+}
+
+export function buildPeculiarGalaxy(opts = {}) {
+  const {
+    position = [0, 0, 0],
+    coreParticleCount = 1400,
+    tailParticleCount = 900,
+    radius = 22,
+    coreColor = 0xe8846f,
+    tailColor = 0x8a6ae8,
+  } = opts;
+
+  const group = new THREE.Group();
+  group.position.set(...position);
+
+  const totalCount = coreParticleCount + tailParticleCount;
+  const positions = new Float32Array(totalCount * 3);
+  const colors = new Float32Array(totalCount * 3);
+  const coreColorObj = new THREE.Color(coreColor);
+  const tailColorObj = new THREE.Color(tailColor);
+
+  // Warped, off-center core — two overlapping density peaks instead of one
+  // clean center, reading as a pair mid-merger rather than a settled galaxy.
+  const coreCenters = [
+    [radius * 0.12, 0, radius * 0.05],
+    [-radius * 0.18, radius * 0.06, -radius * 0.08],
+  ];
+  for (let i = 0; i < coreParticleCount; i++) {
+    const center = coreCenters[i % coreCenters.length];
+    const t = Math.pow(Math.random(), 1.6);
+    const r = t * radius * 0.35;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+
+    positions[i * 3] = center[0] + Math.sin(phi) * Math.cos(theta) * r;
+    positions[i * 3 + 1] = center[1] + Math.cos(phi) * r * 0.6;
+    positions[i * 3 + 2] = center[2] + Math.sin(phi) * Math.sin(theta) * r;
+
+    const color = coreColorObj.clone().lerp(tailColorObj, Math.random() * 0.2);
+    colors[i * 3] = color.r;
+    colors[i * 3 + 1] = color.g;
+    colors[i * 3 + 2] = color.b;
+  }
+
+  // Two tidal tails swept out in opposite directions from the core
+  for (let i = 0; i < tailParticleCount; i++) {
+    const idx = coreParticleCount + i;
+    const tail = i % 2 === 0 ? 1 : -1;
+    const t = Math.random();
+    const sweep = t * Math.PI * 0.9 * tail;
+    const r = radius * 0.3 + t * radius * 0.85;
+    const spread = (1 - t) * radius * 0.08 + radius * 0.05;
+
+    positions[idx * 3] = Math.cos(sweep) * r + (Math.random() - 0.5) * spread;
+    positions[idx * 3 + 1] = tail * t * radius * 0.25 + (Math.random() - 0.5) * spread;
+    positions[idx * 3 + 2] = Math.sin(sweep) * r + (Math.random() - 0.5) * spread;
+
+    const color = tailColorObj.clone().lerp(coreColorObj, 1 - t);
+    colors[idx * 3] = color.r;
+    colors[idx * 3 + 1] = color.g;
+    colors[idx * 3 + 2] = color.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    depthWrite: false,
+  });
+  group.add(new THREE.Points(geometry, material));
+  return group;
+}
+
 export function buildIrregularGalaxy(opts = {}) {
   const {
     position = [0, 0, 0],

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novandra — Unknown Frontier</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/unknown-frontier.css">
+</head>
+<body data-system-slug="novandra">
+
+<div class="topbar">
+  <a class="back-btn" href="../unknown-frontier.html">← <span>Unknown Frontier</span></a>
+  <span class="topbar-title">Novandra</span>
+</div>
+
+<div id="solar-system" class="solar-system-canvas">
+  <p class="hz-hint">Trascina per ruotare · Scroll per zoom · Click su un corpo per info</p>
+</div>
+<div id="system-list" class="system-list">
+  <button type="button" class="system-list-title" aria-expanded="true">
+    <span>Corpi Rilevati</span>
+    <span class="system-list-caret" aria-hidden="true">▾</span>
+  </button>
+  <ul class="system-list-items"></ul>
+</div>
+<div id="beacon-card" class="beacon-card">
+  <button class="beacon-card-close" aria-label="Chiudi">&times;</button>
+  <p class="placeholder-badge">In Costruzione</p>
+  <p class="placeholder-eyebrow beacon-card-eyebrow">Pianeta</p>
+  <h3 class="beacon-card-title">Corpo sconosciuto</h3>
+  <a class="beacon-card-link" href="#">Esplora →</a>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../js/solar-system.js"></script>
+
+</body>
+</html>

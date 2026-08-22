@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy } from './galaxy-shapes.js';
+import { makeGlowTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 
 // === Tunables ===
@@ -13,6 +13,8 @@ const IRREGULAR_SPIN = 0.01;
 const BLACKHOLE_DISK_SPIN = 0.08;
 const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
+const RING_SPIN = 0.012;
+const PECULIAR_SPIN = 0.02;
 
 const BEACON_SCALE = 2.5;
 
@@ -99,6 +101,25 @@ const dwarfGalaxy = buildDwarfGalaxy({
 });
 scene.add(dwarfGalaxy);
 
+// The triangle trio sits in-plane (y=0) far out, and the lenticular/dwarf
+// pair sits far above/below near the y-axis — leaving the mid-range shell
+// immediately around the black hole empty. These two fill that gap.
+const ringGalaxy = buildRingGalaxy({
+  position: [40, 30, -35],
+  ringParticleCount: 2200,
+  nucleusParticleCount: 300,
+  radius: 20,
+});
+scene.add(ringGalaxy);
+
+const peculiarGalaxy = buildPeculiarGalaxy({
+  position: [-35, -28, 32],
+  coreParticleCount: 1400,
+  tailParticleCount: 900,
+  radius: 22,
+});
+scene.add(peculiarGalaxy);
+
 // === Beacons ===
 // Each beacon links to a placeholder page at unknown-frontier/systems/{slug}.html
 const SPIRAL_BEACONS = [
@@ -141,6 +162,22 @@ const DWARF_BEACONS = [
   { name: 'Zennor', slug: 'zennor', position: [9, 0, -2] },
 ];
 
+const RING_BEACONS = [
+  { name: 'Kessaria', slug: 'kessaria', position: [14, 1, 10] },
+  { name: 'Novandra', slug: 'novandra', position: [-16, 2, 8] },
+  { name: 'Brythe', slug: 'brythe', position: [10, -1, -17] },
+  { name: 'Selkirion', slug: 'selkirion', position: [-9, 1, 16] },
+  { name: 'Talvenor', slug: 'talvenor', position: [18, -2, -6] },
+];
+
+const PECULIAR_BEACONS = [
+  { name: 'Ashkar', slug: 'ashkar', position: [8, 3, 6] },
+  { name: 'Ruinvale', slug: 'ruinvale', position: [-14, -4, -9] },
+  { name: 'Kethra', slug: 'kethra', position: [18, 5, -12] },
+  { name: 'Ombrix', slug: 'ombrix', position: [-6, -6, 14] },
+  { name: 'Faelund', slug: 'faelund', position: [22, 2, 5] },
+];
+
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 
 function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoomDistance) {
@@ -172,6 +209,8 @@ addBeaconSprites(ELLIPTICAL_BEACONS, ellipticalGalaxy, beaconMeshes, 'Meridian',
 addBeaconSprites(IRREGULAR_BEACONS, irregularGalaxy, beaconMeshes, 'Zhorn', 60);
 addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes, 'Corvantis', 55);
 addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes, 'Pyxis', 40);
+addBeaconSprites(RING_BEACONS, ringGalaxy, beaconMeshes, 'Cygnix', 50);
+addBeaconSprites(PECULIAR_BEACONS, peculiarGalaxy, beaconMeshes, 'Vandrel', 52);
 
 // === Black hole ===
 function buildBlackHole() {
@@ -328,6 +367,9 @@ function animate() {
   irregularGalaxy.rotation.z = Math.sin(elapsed * 0.15) * 0.05;
   lenticularGalaxy.rotation.y += delta * LENTICULAR_SPIN;
   dwarfGalaxy.rotation.y += delta * DWARF_SPIN;
+  ringGalaxy.rotation.y += delta * RING_SPIN;
+  peculiarGalaxy.rotation.y += delta * PECULIAR_SPIN;
+  peculiarGalaxy.rotation.z = Math.sin(elapsed * 0.12) * 0.06;
 
   const spiralCoreGlow = spiralGalaxy.userData.coreGlow;
   if (spiralCoreGlow) {
