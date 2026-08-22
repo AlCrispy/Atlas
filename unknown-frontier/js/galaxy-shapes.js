@@ -1,7 +1,11 @@
 import * as THREE from 'three';
-import { makeGlowTexture } from './glow-texture.js';
+import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 
-export { makeGlowTexture };
+export { makeGlowTexture, makeDotTexture };
+
+// Shared across every galaxy's particle systems below — one canvas texture
+// is plenty since it's just a round alpha mask, not per-galaxy content.
+const dotTexture = makeDotTexture();
 
 export function buildSpiralGalaxy(opts = {}) {
   const {
@@ -48,6 +52,7 @@ export function buildSpiralGalaxy(opts = {}) {
   discGeometry.setAttribute('color', new THREE.BufferAttribute(discColors, 3));
   const discMaterial = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,
@@ -144,6 +149,7 @@ export function buildEllipticalGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,
@@ -209,6 +215,7 @@ export function buildLenticularGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,
@@ -258,6 +265,7 @@ export function buildDwarfGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.9,
@@ -328,6 +336,7 @@ export function buildRingGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,
@@ -414,6 +423,7 @@ export function buildPeculiarGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.5,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,
@@ -474,6 +484,7 @@ export function buildIrregularGalaxy(opts = {}) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const material = new THREE.PointsMaterial({
     size: 0.55,
+    map: dotTexture,
     vertexColors: true,
     transparent: true,
     opacity: 0.85,

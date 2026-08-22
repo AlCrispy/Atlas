@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture } from './glow-texture.js';
+import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 import { makePlanetTexture } from './planet-texture.js';
 import { buildOrbitRing } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -41,7 +41,7 @@ function buildStarfield() {
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5, transparent: true, opacity: 0.6 });
+  const material = new THREE.PointsMaterial({ color: 0xffffff, map: makeDotTexture(), size: 0.5, transparent: true, opacity: 0.6 });
   scene.add(new THREE.Points(geometry, material));
 }
 buildStarfield();
