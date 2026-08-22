@@ -306,22 +306,21 @@ blackHoleHitSprite.userData.beacon = {
 };
 beaconMeshes.push(blackHoleHitSprite);
 
-// === Gravitational lenses ===
-// Reusable factory (createLensSystem) so more instances can be added later
-// with a single buildLens() call each. One shared offscreen render target
-// backs every lens, so the capture cost doesn't grow per-instance.
+// === Gravitational lens ===
+// Real lensing belongs to the black hole itself, not a separate floating
+// object: a shell sitting just outside the event horizon (radius 4) and
+// inside the accretion disk's inner edge (radius 6), bending the disk and
+// starfield behind it. Purely visual — not pushed to beaconMeshes, since
+// clicking the black hole is already handled by blackHoleHitSprite above;
+// createLensSystem stays a reusable factory for future standalone lenses
+// elsewhere (one shared offscreen render target, cost fixed per-instance).
 const lensSystem = createLensSystem({ scene, camera, renderer });
 
-const gravitationalLens = lensSystem.buildLens({
-  position: [-60, 60, -70],
-  radius: 7,
-  name: 'Lente di Skarn',
-  slug: 'lente-skarn',
-  color: '#8a6ae8',
-  distortionStrength: 0.4,
-  exploreHref: 'systems/lente-skarn.html',
+lensSystem.buildLens({
+  position: [0, 0, 0],
+  radius: 5,
+  distortionStrength: 0.5,
 });
-beaconMeshes.push(gravitationalLens);
 
 // === Galaxy labels ===
 // World-space name tags floating above each galaxy — added directly to
