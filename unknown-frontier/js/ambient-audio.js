@@ -19,11 +19,21 @@ function init() {
 
   const savedPosition = parseFloat(localStorage.getItem(POSITION_KEY));
   if (Number.isFinite(savedPosition) && savedPosition > 0) {
-    audio.addEventListener('loadedmetadata', () => {
+    function restorePosition() {
       audio.currentTime = Number.isFinite(audio.duration) && audio.duration > 0
         ? savedPosition % audio.duration
         : savedPosition;
-    }, { once: true });
+    }
+    // preload="auto" means metadata can finish loading before this script
+    // runs (DOMContentLoaded isn't guaranteed to be first) — in that case
+    // 'loadedmetadata' already fired and a listener added now would never
+    // run, silently dropping the restore. readyState >= 1 (HAVE_METADATA)
+    // means it's safe to set currentTime immediately instead of waiting.
+    if (audio.readyState >= 1) {
+      restorePosition();
+    } else {
+      audio.addEventListener('loadedmetadata', restorePosition, { once: true });
+    }
   }
 
   function savePosition() {
