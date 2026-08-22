@@ -40,6 +40,27 @@ export function makeNebulaBlobTexture(color, size = 160) {
   return new THREE.CanvasTexture(canvas);
 }
 
+// A thin glowing ring (stroked circle with radial falloff), for target-lock
+// style markers that need to sit around a point and always face the camera
+// — used as a Sprite map rather than in-scene geometry, so no per-frame
+// billboarding math is needed.
+export function makeRingTexture(color, size = 128) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const center = size / 2;
+  const radius = size * 0.36;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = size * 0.05;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = size * 0.12;
+  ctx.beginPath();
+  ctx.arc(center, center, radius, 0, Math.PI * 2);
+  ctx.stroke();
+  return new THREE.CanvasTexture(canvas);
+}
+
 // A round alpha mask for THREE.Points — without a map, GL points render as
 // squares. Solid through most of the radius (unlike the wide glow falloff
 // above) so particles read as crisp dots rather than hazy blobs.

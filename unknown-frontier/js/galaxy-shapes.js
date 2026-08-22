@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture } from './glow-texture.js';
+import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture } from './glow-texture.js';
 
-export { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture };
+export { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture };
 
 // Shared across every galaxy's particle systems below — one canvas texture
 // is plenty since it's just a round alpha mask, not per-galaxy content.

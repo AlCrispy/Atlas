@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
+import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { makeLabelTexture } from './label-texture.js';
 import { createLensSystem } from './gravitational-lens.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -638,15 +638,41 @@ compareLine.visible = false;
 compareLine.renderOrder = 999;
 scene.add(compareLine);
 
+// Ring markers around each selected star, connected by the beam above.
+// Sprites rather than in-scene torus geometry so they billboard to the
+// camera for free and stay a clean circle from every angle.
+const compareRingTexture = makeRingTexture('#4fd8e8');
+function makeCompareRing() {
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: compareRingTexture,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  sprite.scale.set(5, 5, 1);
+  sprite.visible = false;
+  sprite.renderOrder = 999;
+  scene.add(sprite);
+  return sprite;
+}
+const compareRingA = makeCompareRing();
+const compareRingB = makeCompareRing();
+
 function updateCompareDistance() {
   if (!compareSlots.a || !compareSlots.b) {
     compareDistanceEl.textContent = 'Seleziona due stelle per calcolare la distanza.';
     compareLine.visible = false;
+    compareRingA.visible = false;
+    compareRingB.visible = false;
     return;
   }
   if (compareSlots.a === compareSlots.b) {
     compareDistanceEl.textContent = 'Stessa stella selezionata.';
     compareLine.visible = false;
+    compareRingA.visible = false;
+    compareRingB.visible = false;
     return;
   }
   compareSlots.a.getWorldPosition(compareWorldPosA);
@@ -660,6 +686,10 @@ function updateCompareDistance() {
   `;
   compareLineGeometry.setFromPoints([compareWorldPosA, compareWorldPosB]);
   compareLine.visible = true;
+  compareRingA.position.copy(compareWorldPosA);
+  compareRingB.position.copy(compareWorldPosB);
+  compareRingA.visible = true;
+  compareRingB.visible = true;
 }
 
 function syncCompareSelects() {
@@ -757,7 +787,15 @@ function animate() {
     compareSlots.a.getWorldPosition(compareWorldPosA);
     compareSlots.b.getWorldPosition(compareWorldPosB);
     compareLineGeometry.setFromPoints([compareWorldPosA, compareWorldPosB]);
-    compareLineMaterial.opacity = 0.45 + Math.sin(elapsed * 2.2) * 0.35;
+    const pulse = 0.45 + Math.sin(elapsed * 2.2) * 0.35;
+    compareLineMaterial.opacity = pulse;
+    compareRingA.position.copy(compareWorldPosA);
+    compareRingB.position.copy(compareWorldPosB);
+    compareRingA.material.opacity = pulse;
+    compareRingB.material.opacity = pulse;
+    const ringScale = 5 + Math.sin(elapsed * 2.2) * 0.6;
+    compareRingA.scale.set(ringScale, ringScale, 1);
+    compareRingB.scale.set(ringScale, ringScale, 1);
   }
 
   interaction.update(elapsed);
