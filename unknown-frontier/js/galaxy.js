@@ -64,6 +64,60 @@ function buildStarfield() {
 }
 buildStarfield();
 
+// === Deep background decoration ===
+// The plain dot starfield alone reads as too uniform for how varied real
+// space looks — scatter a handful of small, non-interactive nebula haze
+// sprites and miniature spiral clusters further out (no beacons, not part
+// of `bodies`/raycasting, purely decorative) so the deep background has
+// texture beyond points.
+function randomSpherePoint(minRadius, maxRadius) {
+  const r = minRadius + Math.random() * (maxRadius - minRadius);
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.acos(2 * Math.random() - 1);
+  return [
+    r * Math.sin(phi) * Math.cos(theta),
+    r * Math.sin(phi) * Math.sin(theta),
+    r * Math.cos(phi),
+  ];
+}
+
+const NEBULA_HAZE_COLORS = ['#8a6ae8', '#4fd8e8', '#e86ab0', '#e8a04f', '#6ae88a'];
+
+function buildNebulaHaze(count) {
+  for (let i = 0; i < count; i++) {
+    const color = NEBULA_HAZE_COLORS[Math.floor(Math.random() * NEBULA_HAZE_COLORS.length)];
+    const texture = makeGlowTexture(color, `${color}00`);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      opacity: 0.14 + Math.random() * 0.1,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }));
+    const size = 14 + Math.random() * 22;
+    sprite.scale.set(size, size, 1);
+    sprite.position.set(...randomSpherePoint(300, 550));
+    scene.add(sprite);
+  }
+}
+buildNebulaHaze(9);
+
+const backgroundGalaxies = [];
+function buildMiniSpirals(count) {
+  for (let i = 0; i < count; i++) {
+    const mini = buildSpiralGalaxy({
+      position: randomSpherePoint(320, 580),
+      discParticleCount: 180,
+      nebulaParticleCount: 40,
+      radius: 5 + Math.random() * 3,
+    });
+    mini.rotation.set(Math.random() * Math.PI, 0, Math.random() * Math.PI);
+    scene.add(mini);
+    backgroundGalaxies.push(mini);
+  }
+}
+buildMiniSpirals(4);
+
 // === Triangle layout ===
 function triangleVertex(index) {
   const angle = Math.PI / 2 + (index * 2 * Math.PI) / 3;
@@ -542,6 +596,7 @@ function animate() {
   ringGalaxy.rotation.y += delta * RING_SPIN;
   peculiarGalaxy.rotation.y += delta * PECULIAR_SPIN;
   milkyWayGalaxy.rotation.y += delta * MILKYWAY_SPIN;
+  backgroundGalaxies.forEach((mini) => { mini.rotation.y += delta * 0.01; });
   peculiarGalaxy.rotation.z = Math.sin(elapsed * 0.12) * 0.06;
 
   const spiralCoreGlow = spiralGalaxy.userData.coreGlow;
