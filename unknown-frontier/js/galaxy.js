@@ -616,13 +616,34 @@ const compareSlots = { a: null, b: null };
 const compareWorldPosA = new THREE.Vector3();
 const compareWorldPosB = new THREE.Vector3();
 
+// Glowing beam drawn between the two selected stars, world-space so it
+// tracks each galaxy's own rotation/offset. Opacity is pulsed per-frame
+// in animate() rather than via a shader, matching the pulse already used
+// for the spiral galaxy's core glow.
+const compareLineGeometry = new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(), new THREE.Vector3(),
+]);
+const compareLineMaterial = new THREE.LineBasicMaterial({
+  color: 0x4fd8e8,
+  transparent: true,
+  opacity: 0,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const compareLine = new THREE.Line(compareLineGeometry, compareLineMaterial);
+compareLine.visible = false;
+compareLine.renderOrder = 1;
+scene.add(compareLine);
+
 function updateCompareDistance() {
   if (!compareSlots.a || !compareSlots.b) {
     compareDistanceEl.textContent = 'Seleziona due stelle per calcolare la distanza.';
+    compareLine.visible = false;
     return;
   }
   if (compareSlots.a === compareSlots.b) {
     compareDistanceEl.textContent = 'Stessa stella selezionata.';
+    compareLine.visible = false;
     return;
   }
   compareSlots.a.getWorldPosition(compareWorldPosA);
@@ -634,6 +655,8 @@ function updateCompareDistance() {
     <span class="compare-distance-ly">≈ ${lightYears.toLocaleString('it-IT')} anni luce</span>
     <span class="compare-distance-pc">≈ ${parsecs.toLocaleString('it-IT')} parsec</span>
   `;
+  compareLineGeometry.setFromPoints([compareWorldPosA, compareWorldPosB]);
+  compareLine.visible = true;
 }
 
 function syncCompareSelects() {
@@ -724,6 +747,15 @@ function animate() {
   }
 
   blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
+
+  if (compareLine.visible) {
+    // Re-read endpoints each frame — the parent galaxies keep spinning,
+    // so a beam set once at selection time would drift off its stars.
+    compareSlots.a.getWorldPosition(compareWorldPosA);
+    compareSlots.b.getWorldPosition(compareWorldPosB);
+    compareLineGeometry.setFromPoints([compareWorldPosA, compareWorldPosB]);
+    compareLineMaterial.opacity = 0.45 + Math.sin(elapsed * 2.2) * 0.35;
+  }
 
   interaction.update(elapsed);
 
