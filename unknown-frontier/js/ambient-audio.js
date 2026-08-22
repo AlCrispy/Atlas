@@ -1,10 +1,12 @@
 // Shared background-music control for every Unknown Frontier page. Each
 // page has its own <audio id="ambient-audio"> (static multipage site, so
-// playback doesn't continue across navigation) but the mute choice and
-// volume persist via localStorage, so picking them once carries across
-// pages as you browse.
+// playback doesn't literally continue across navigation) — but mute,
+// volume, and playback position all persist via localStorage, so the
+// track picks back up where it left off instead of restarting on every
+// page load.
 const MUTED_KEY = 'uf-audio-muted';
 const VOLUME_KEY = 'uf-audio-volume';
+const POSITION_KEY = 'uf-audio-position';
 
 function init() {
   const audio = document.getElementById('ambient-audio');
@@ -14,6 +16,21 @@ function init() {
   const savedVolume = parseFloat(localStorage.getItem(VOLUME_KEY));
   audio.volume = Number.isFinite(savedVolume) ? savedVolume : 0.35;
   const userMuted = localStorage.getItem(MUTED_KEY) === 'true';
+
+  const savedPosition = parseFloat(localStorage.getItem(POSITION_KEY));
+  if (Number.isFinite(savedPosition) && savedPosition > 0) {
+    audio.addEventListener('loadedmetadata', () => {
+      audio.currentTime = Number.isFinite(audio.duration) && audio.duration > 0
+        ? savedPosition % audio.duration
+        : savedPosition;
+    }, { once: true });
+  }
+
+  function savePosition() {
+    if (Number.isFinite(audio.currentTime)) localStorage.setItem(POSITION_KEY, String(audio.currentTime));
+  }
+  setInterval(() => { if (!audio.paused) savePosition(); }, 1000);
+  window.addEventListener('pagehide', savePosition);
 
   // The button itself only opens/closes this popover — the actual
   // play/pause and volume controls live inside it.
