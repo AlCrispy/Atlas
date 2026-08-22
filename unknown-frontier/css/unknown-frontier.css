@@ -331,7 +331,10 @@ body::before {
   font-family: 'Orbitron', sans-serif; font-size: 0.72rem;
   letter-spacing: 0.05em; color: var(--hz-cyan-lt);
   padding-top: 4px; border-top: 1px solid var(--hz-steel-dk);
+  display: flex; flex-direction: column; gap: 2px;
 }
+
+.compare-distance-pc { font-size: 0.62rem; opacity: 0.7; }
 
 .compare-clear {
   align-self: flex-start;

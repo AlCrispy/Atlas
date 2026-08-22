@@ -630,7 +630,10 @@ function updateCompareDistance() {
   const sceneDistance = compareWorldPosA.distanceTo(compareWorldPosB);
   const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT * DISTANCE_MULTIPLIER);
   const parsecs = Math.round((lightYears / LY_PER_PARSEC) * 10) / 10;
-  compareDistanceEl.textContent = `≈ ${lightYears.toLocaleString('it-IT')} anni luce (≈ ${parsecs.toLocaleString('it-IT')} parsec)`;
+  compareDistanceEl.innerHTML = `
+    <span class="compare-distance-ly">≈ ${lightYears.toLocaleString('it-IT')} anni luce</span>
+    <span class="compare-distance-pc">≈ ${parsecs.toLocaleString('it-IT')} parsec</span>
+  `;
 }
 
 function syncCompareSelects() {
