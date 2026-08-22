@@ -71,12 +71,16 @@ function triangleVertex(index) {
 }
 
 // === Galaxies ===
+// Each disc gets a fixed x/z tilt (on top of the continuous y-axis spin
+// applied in animate()) so they read as discs viewed from different
+// angles in space, rather than every galaxy lying flat on the same plane.
 const spiralGalaxy = buildSpiralGalaxy({
   position: triangleVertex(0),
   discParticleCount: 3000,
   nebulaParticleCount: 800,
   radius: 40,
 });
+spiralGalaxy.rotation.set(0.35, 0, 0.15);
 scene.add(spiralGalaxy);
 
 const ellipticalGalaxy = buildEllipticalGalaxy({
@@ -84,6 +88,7 @@ const ellipticalGalaxy = buildEllipticalGalaxy({
   particleCount: 2500,
   radius: 35,
 });
+ellipticalGalaxy.rotation.set(-0.4, 0, 0.3);
 scene.add(ellipticalGalaxy);
 
 const irregularGalaxy = buildIrregularGalaxy({
@@ -91,6 +96,7 @@ const irregularGalaxy = buildIrregularGalaxy({
   particleCount: 2000,
   radius: 30,
 });
+irregularGalaxy.rotation.set(0.5, 0, -0.25);
 scene.add(irregularGalaxy);
 
 // Above/below the black hole, off the triangle's plane, with asymmetric
@@ -100,6 +106,7 @@ const lenticularGalaxy = buildLenticularGalaxy({
   particleCount: 1800,
   radius: 25,
 });
+lenticularGalaxy.rotation.set(-0.3, 0, 0.4);
 scene.add(lenticularGalaxy);
 
 const dwarfGalaxy = buildDwarfGalaxy({
@@ -107,6 +114,7 @@ const dwarfGalaxy = buildDwarfGalaxy({
   particleCount: 1200,
   radius: 14,
 });
+dwarfGalaxy.rotation.set(0.55, 0, 0.2);
 scene.add(dwarfGalaxy);
 
 // The triangle trio sits in-plane (y=0) far out, and the lenticular/dwarf
@@ -118,6 +126,7 @@ const ringGalaxy = buildRingGalaxy({
   nucleusParticleCount: 300,
   radius: 20,
 });
+ringGalaxy.rotation.set(-0.45, 0, -0.3);
 scene.add(ringGalaxy);
 
 const peculiarGalaxy = buildPeculiarGalaxy({
@@ -126,20 +135,23 @@ const peculiarGalaxy = buildPeculiarGalaxy({
   tailParticleCount: 900,
   radius: 22,
 });
+peculiarGalaxy.rotation.set(0.25, 0, 0.45);
 scene.add(peculiarGalaxy);
 
-// Our own galaxy — a real barred spiral (Hubble type ~SBbc), placed well
-// clear of every other group (position picked so its distance to each
-// existing anchor exceeds ~130 units, comfortably outside their radii).
+// Our own galaxy — a real barred spiral (Hubble type ~SBbc). Placed on the
+// far side of the whole cluster, well clear of Aurvex in particular (also
+// a plain spiral — distance to it is ~376 units here, vs. ~225+ to every
+// other galaxy/black-hole anchor) so the two don't read as a matched pair.
 // Reuses buildSpiralGalaxy's arm/nebula/core technique; distinguished by
 // name/position/size rather than a bespoke bar shape, to keep this a
 // straightforward addition rather than new rendering machinery.
 const milkyWayGalaxy = buildSpiralGalaxy({
-  position: [130, 40, 110],
+  position: [0, -10, -260],
   discParticleCount: 3400,
   nebulaParticleCount: 900,
   radius: 45,
 });
+milkyWayGalaxy.rotation.set(-0.35, 0, 0.25);
 scene.add(milkyWayGalaxy);
 
 // === Beacons ===
