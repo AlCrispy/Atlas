@@ -46,9 +46,15 @@ controls.minDistance = 20;
 controls.maxDistance = 620;
 
 // === Starfield ===
+// Per-point randomized size (0.5x-1.5x of the base size) — PointsMaterial
+// only supports one uniform size for the whole geometry, so a small custom
+// ShaderMaterial with a per-vertex size attribute is used instead.
+const STARFIELD_BASE_SIZE = 0.6;
+
 function buildStarfield() {
   const count = STARFIELD_COUNT;
   const positions = new Float32Array(count * 3);
+  const sizes = new Float32Array(count);
   for (let i = 0; i < count; i++) {
     const r = 250 + Math.random() * 250;
     const theta = Math.random() * Math.PI * 2;
@@ -56,10 +62,36 @@ function buildStarfield() {
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     positions[i * 3 + 2] = r * Math.cos(phi);
+    sizes[i] = STARFIELD_BASE_SIZE * (0.5 + Math.random());
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const material = new THREE.PointsMaterial({ color: 0xffffff, map: makeDotTexture(), size: 0.6, transparent: true, opacity: 0.7 });
+  geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: makeDotTexture() },
+      uScale: { value: 400.0 },
+    },
+    vertexShader: `
+      attribute float aSize;
+      uniform float uScale;
+      void main() {
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = aSize * (uScale / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform sampler2D map;
+      void main() {
+        vec4 texColor = texture2D(map, gl_PointCoord);
+        gl_FragColor = vec4(vec3(1.0), texColor.a * 0.7);
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+  });
   scene.add(new THREE.Points(geometry, material));
 }
 buildStarfield();
@@ -97,7 +129,7 @@ function buildNebulaHaze(count) {
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     }));
-    const size = 20 + Math.random() * 30;
+    const size = 28 * (0.5 + Math.random());
     sprite.scale.set(size, size, 1);
     sprite.position.set(...randomSpherePoint(300, 550));
     scene.add(sprite);
@@ -129,6 +161,7 @@ function buildMiniSpirals(count) {
       ...palette,
     });
     mini.rotation.set(Math.random() * Math.PI, 0, Math.random() * Math.PI);
+    mini.scale.setScalar(0.5 + Math.random());
     scene.add(mini);
     backgroundGalaxies.push(mini);
   }
