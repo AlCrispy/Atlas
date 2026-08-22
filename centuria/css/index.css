@@ -17,6 +17,30 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 300;
+  background: rgba(16,19,24,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--got-steel);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.7);
+  display: flex; align-items: center;
+}
+.back-btn {
+  background: none; border: none; border-right: 1px solid var(--got-steel);
+  cursor: pointer; font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--got-ash); padding: 18px 24px;
+  transition: color 0.2s, background 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; text-decoration: none;
+}
+.back-btn:hover { color: var(--got-gold); background: rgba(194,152,74,0.05); }
+.topbar-title {
+  flex: 1; text-align: center; padding-right: 80px;
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--got-ash);
+}
+
 body {
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 18px;
@@ -81,7 +105,7 @@ body::before {
 .campaigns-sidebar {
   flex: 0 0 92px;
   position: sticky;
-  top: 48px;
+  top: 57px;
   background: linear-gradient(180deg, var(--got-iron) 0%, #10141a 100%);
   border: 1px solid var(--got-steel);
   border-top: 3px solid var(--got-gold-dk);
