@@ -226,6 +226,9 @@ const interaction = createSceneInteraction({
   // highlight, so leave scale untouched and rely on the pulsing ring alone.
   hoverMultiplier: 1,
   selectMultiplier: 1,
+  // Selecting a body highlights it in place; the camera stays on the
+  // whole-system home framing instead of flying in to focus on it.
+  zoomOnSelect: false,
 });
 
 // === Animation loop ===

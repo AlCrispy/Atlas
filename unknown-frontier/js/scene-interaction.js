@@ -28,6 +28,11 @@ export function createSceneInteraction(opts) {
     ringSizeMultiplier = 2.8,
     defaultRingColor = '#9df0fa',
     clickDragThreshold = 5,
+    // The galaxy overview flies the camera in on the selected system's own
+    // zoomTarget/zoomDistance. A solar system view sets this false so
+    // selecting a body highlights it in place instead of reframing the
+    // camera around it — the whole system stays in view.
+    zoomOnSelect = true,
   } = opts;
 
   const cardEyebrowEl = cardEl.querySelector('.beacon-card-eyebrow');
@@ -109,7 +114,11 @@ export function createSceneInteraction(opts) {
     selectionRing.material.opacity = 1;
 
     showCard(mesh.userData.beacon);
-    flyTo(mesh.userData.beacon.zoomTarget, mesh.userData.beacon.zoomDistance);
+    if (zoomOnSelect) {
+      flyTo(mesh.userData.beacon.zoomTarget, mesh.userData.beacon.zoomDistance);
+    } else {
+      flyTo(new THREE.Vector3(0, 0, 0), homeDistance);
+    }
   }
 
   function deselect() {
