@@ -26,6 +26,9 @@ const BEACON_SCALE = 2.5;
 // scene units, two Dwarf-galaxy systems) reads as ~10 light-years.
 const DISTANCE_SCALE_LY_PER_UNIT = 1.474;
 
+// Extra multiplier applied to every reported distance — keeps totals off round numbers.
+const DISTANCE_MULTIPLIER = 137;
+
 const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
@@ -589,7 +592,7 @@ function updateCompareDistance() {
   compareSlots.a.getWorldPosition(compareWorldPosA);
   compareSlots.b.getWorldPosition(compareWorldPosB);
   const sceneDistance = compareWorldPosA.distanceTo(compareWorldPosB);
-  const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT);
+  const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT * DISTANCE_MULTIPLIER);
   compareDistanceEl.textContent = `≈ ${lightYears.toLocaleString('it-IT')} anni luce`;
 }
 
