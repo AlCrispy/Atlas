@@ -263,10 +263,10 @@ body::before {
 }
 
 .beacon-card {
-  position: fixed; z-index: 400;
-  bottom: 32px; left: 50%;
-  transform: translate(-50%, 20px);
-  width: min(320px, calc(100vw - 48px));
+  position: absolute; z-index: 400;
+  top: 50%; right: 16px;
+  transform: translateY(-50%) translateX(20px);
+  width: min(260px, 46vw);
   background: var(--hz-panel-lt);
   border: 1px solid var(--hz-steel);
   box-shadow: 0 8px 40px rgba(0,0,0,0.6);
@@ -279,7 +279,7 @@ body::before {
 .beacon-card.is-visible {
   opacity: 1;
   pointer-events: auto;
-  transform: translate(-50%, 0);
+  transform: translateY(-50%) translateX(0);
 }
 .beacon-card .placeholder-badge { margin-bottom: 14px; }
 .beacon-card .placeholder-eyebrow { margin-bottom: 6px; }
