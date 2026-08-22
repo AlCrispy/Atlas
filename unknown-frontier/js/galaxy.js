@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
+import { makeLabelTexture } from './label-texture.js';
 import { createSceneInteraction } from './scene-interaction.js';
 
 // === Tunables ===
@@ -303,6 +304,38 @@ blackHoleHitSprite.userData.beacon = {
   zoomDistance: 32,
 };
 beaconMeshes.push(blackHoleHitSprite);
+
+// === Galaxy labels ===
+// World-space name tags floating above each galaxy — added directly to
+// `scene`, not as a child of the rotating galaxy group, so they stay put
+// instead of orbiting as the galaxy spins. Built after document.fonts is
+// ready so the canvas text bakes in Orbitron rather than a fallback font.
+const GALAXY_LABEL_COLOR = '#8a6ae8';
+const GALAXY_LABEL_HEIGHT = 7;
+
+const GALAXY_LABELS = [
+  { name: 'Aurvex', position: spiralGalaxy.position, radius: 40 },
+  { name: 'Meridian', position: ellipticalGalaxy.position, radius: 35 },
+  { name: 'Zhorn', position: irregularGalaxy.position, radius: 30 },
+  { name: 'Corvantis', position: lenticularGalaxy.position, radius: 25 },
+  { name: 'Pyxis', position: dwarfGalaxy.position, radius: 14 },
+  { name: 'Cygnix', position: ringGalaxy.position, radius: 20 },
+  { name: 'Vandrel', position: peculiarGalaxy.position, radius: 22 },
+];
+
+document.fonts.ready.then(() => {
+  GALAXY_LABELS.forEach(({ name, position, radius }) => {
+    const { texture, aspect } = makeLabelTexture(name, GALAXY_LABEL_COLOR);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      depthWrite: false,
+    }));
+    sprite.scale.set(GALAXY_LABEL_HEIGHT * aspect, GALAXY_LABEL_HEIGHT, 1);
+    sprite.position.set(position.x, position.y + radius * 0.75, position.z);
+    scene.add(sprite);
+  });
+});
 
 // === System list panel ===
 // Built from the same beaconMeshes used for raycasting, grouped by galaxy
