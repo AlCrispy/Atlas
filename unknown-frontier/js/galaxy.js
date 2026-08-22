@@ -29,6 +29,9 @@ const DISTANCE_SCALE_LY_PER_UNIT = 1.474;
 // Extra multiplier applied to every reported distance — keeps totals off round numbers.
 const DISTANCE_MULTIPLIER = 137;
 
+// IAU-defined light-year -> parsec conversion, for the compare panel's secondary reading.
+const LY_PER_PARSEC = 3.26156;
+
 const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
@@ -507,6 +510,39 @@ document.fonts.ready.then(() => {
   });
 });
 
+// === System labels ===
+// Much smaller name tags for individual beacons, so each star can be told
+// apart when comparing distances. Added as a sibling of the beacon sprite
+// inside the same rotating galaxy group (tracks the spin the same way),
+// but hidden until the camera is close to that galaxy — the overview stays
+// clean and only zoomed-in views need the stars identified.
+const SYSTEM_LABEL_COLOR = '#c9c2f5';
+const SYSTEM_LABEL_HEIGHT = 1.6;
+const SYSTEM_LABEL_OFFSET = 1.4;
+const SYSTEM_LABEL_REVEAL_FACTOR = 1.2;
+
+const systemLabelSprites = [];
+
+document.fonts.ready.then(() => {
+  beaconMeshes.forEach((mesh) => {
+    const beacon = mesh.userData.beacon;
+    // The black hole isn't part of a galaxy group and is already uniquely
+    // labeled via its card — skip it here.
+    if (beacon.galaxy === 'Fenomeno Cosmico') return;
+    const { texture, aspect } = makeLabelTexture(beacon.name, SYSTEM_LABEL_COLOR, { fontSize: 26 });
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      depthWrite: false,
+    }));
+    sprite.scale.set(SYSTEM_LABEL_HEIGHT * aspect, SYSTEM_LABEL_HEIGHT, 1);
+    sprite.position.set(beacon.position[0], beacon.position[1] + SYSTEM_LABEL_OFFSET, beacon.position[2]);
+    sprite.visible = false;
+    mesh.parent.add(sprite);
+    systemLabelSprites.push({ sprite, group: mesh.parent, revealDistance: beacon.zoomDistance * SYSTEM_LABEL_REVEAL_FACTOR });
+  });
+});
+
 // === System list panel ===
 // Built from the same beaconMeshes used for raycasting, grouped by galaxy
 // in scene order, so names/slugs/grouping never drift out of sync with
@@ -593,7 +629,8 @@ function updateCompareDistance() {
   compareSlots.b.getWorldPosition(compareWorldPosB);
   const sceneDistance = compareWorldPosA.distanceTo(compareWorldPosB);
   const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT * DISTANCE_MULTIPLIER);
-  compareDistanceEl.textContent = `≈ ${lightYears.toLocaleString('it-IT')} anni luce`;
+  const parsecs = Math.round((lightYears / LY_PER_PARSEC) * 10) / 10;
+  compareDistanceEl.textContent = `≈ ${lightYears.toLocaleString('it-IT')} anni luce (≈ ${parsecs.toLocaleString('it-IT')} parsec)`;
 }
 
 function syncCompareSelects() {
@@ -671,6 +708,9 @@ function animate() {
   backgroundGalaxies.forEach((mini) => {
     mini.rotation.y += delta * 0.01;
     mini.visible = mini.position.distanceTo(camera.position) > 120;
+  });
+  systemLabelSprites.forEach(({ sprite, group, revealDistance }) => {
+    sprite.visible = camera.position.distanceTo(group.position) < revealDistance;
   });
   peculiarGalaxy.rotation.z = Math.sin(elapsed * 0.12) * 0.06;
 
