@@ -56,7 +56,7 @@ function buildStarfield() {
   const positions = new Float32Array(count * 3);
   const sizes = new Float32Array(count);
   for (let i = 0; i < count; i++) {
-    const r = 250 + Math.random() * 250;
+    const r = 350 + Math.random() * 250;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
@@ -131,7 +131,7 @@ function buildNebulaHaze(count) {
     }));
     const size = 28 * (0.5 + Math.random());
     sprite.scale.set(size, size, 1);
-    sprite.position.set(...randomSpherePoint(300, 550));
+    sprite.position.set(...randomSpherePoint(400, 650));
     scene.add(sprite);
   }
 }
@@ -153,7 +153,7 @@ function buildMiniSpirals(count) {
   for (let i = 0; i < count; i++) {
     const palette = MINI_SPIRAL_PALETTES[Math.floor(Math.random() * MINI_SPIRAL_PALETTES.length)];
     const mini = buildSpiralGalaxy({
-      position: randomSpherePoint(320, 620),
+      position: randomSpherePoint(420, 720),
       discParticleCount: 180,
       nebulaParticleCount: 40,
       radius: 5 + Math.random() * 3,
