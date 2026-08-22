@@ -76,17 +76,24 @@ function buildStarfield() {
     vertexShader: `
       attribute float aSize;
       uniform float uScale;
+      varying float vDist;
       void main() {
         vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        vDist = -mvPosition.z;
         gl_PointSize = aSize * (uScale / -mvPosition.z);
         gl_Position = projectionMatrix * mvPosition;
       }
     `,
     fragmentShader: `
       uniform sampler2D map;
+      varying float vDist;
       void main() {
         vec4 texColor = texture2D(map, gl_PointCoord);
-        gl_FragColor = vec4(vec3(1.0), texColor.a * 0.7);
+        // Fade out any point the camera has drifted close to, instead of
+        // letting it loom large in the foreground — fully gone by 90
+        // units, back to normal past 170.
+        float nearFade = smoothstep(90.0, 170.0, vDist);
+        gl_FragColor = vec4(vec3(1.0), texColor.a * 0.7 * nearFade);
       }
     `,
     transparent: true,
@@ -115,6 +122,7 @@ function randomSpherePoint(minRadius, maxRadius) {
 
 const NEBULA_HAZE_COLORS = ['#8a6ae8', '#4fd8e8', '#e86ab0', '#e8a04f', '#6ae88a'];
 
+const nebulaSprites = [];
 function buildNebulaHaze(count) {
   for (let i = 0; i < count; i++) {
     const color = NEBULA_HAZE_COLORS[Math.floor(Math.random() * NEBULA_HAZE_COLORS.length)];
@@ -122,17 +130,20 @@ function buildNebulaHaze(count) {
     // every call, so each sprite gets its own amorphous cloud shape
     // instead of a uniform circle.
     const texture = makeNebulaBlobTexture(color);
+    const baseOpacity = 0.16 + Math.random() * 0.12;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: texture,
       transparent: true,
-      opacity: 0.16 + Math.random() * 0.12,
+      opacity: baseOpacity,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     }));
+    sprite.userData.baseOpacity = baseOpacity;
     const size = 28 * (0.5 + Math.random());
     sprite.scale.set(size, size, 1);
     sprite.position.set(...randomSpherePoint(400, 650));
     scene.add(sprite);
+    nebulaSprites.push(sprite);
   }
 }
 buildNebulaHaze(9);
@@ -646,7 +657,18 @@ function animate() {
   ringGalaxy.rotation.y += delta * RING_SPIN;
   peculiarGalaxy.rotation.y += delta * PECULIAR_SPIN;
   milkyWayGalaxy.rotation.y += delta * MILKYWAY_SPIN;
-  backgroundGalaxies.forEach((mini) => { mini.rotation.y += delta * 0.01; });
+  // Fade/hide decorative background objects the camera has wandered close
+  // to, so they never loom in the foreground — same idea as the
+  // starfield's per-pixel near-fade, done per-object here since these
+  // aren't part of that single Points geometry.
+  nebulaSprites.forEach((sprite) => {
+    const dist = sprite.position.distanceTo(camera.position);
+    sprite.material.opacity = sprite.userData.baseOpacity * THREE.MathUtils.smoothstep(dist, 100, 220);
+  });
+  backgroundGalaxies.forEach((mini) => {
+    mini.rotation.y += delta * 0.01;
+    mini.visible = mini.position.distanceTo(camera.position) > 120;
+  });
   peculiarGalaxy.rotation.z = Math.sin(elapsed * 0.12) * 0.06;
 
   const spiralCoreGlow = spiralGalaxy.userData.coreGlow;
