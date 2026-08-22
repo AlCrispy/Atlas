@@ -140,13 +140,13 @@ scene.add(peculiarGalaxy);
 
 // Our own galaxy — a real barred spiral (Hubble type ~SBbc). Placed on the
 // far side of the whole cluster, well clear of Aurvex in particular (also
-// a plain spiral — distance to it is ~376 units here, vs. ~225+ to every
+// a plain spiral — distance to it is ~296 units here, vs. ~155+ to every
 // other galaxy/black-hole anchor) so the two don't read as a matched pair.
 // Reuses buildSpiralGalaxy's arm/nebula/core technique; distinguished by
 // name/position/size rather than a bespoke bar shape, to keep this a
 // straightforward addition rather than new rendering machinery.
 const milkyWayGalaxy = buildSpiralGalaxy({
-  position: [0, -10, -260],
+  position: [0, -10, -180],
   discParticleCount: 3400,
   nebulaParticleCount: 900,
   radius: 45,
