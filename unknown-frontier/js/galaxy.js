@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, makeDotTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
+import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { makeLabelTexture } from './label-texture.js';
 import { createLensSystem } from './gravitational-lens.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -86,15 +86,18 @@ const NEBULA_HAZE_COLORS = ['#8a6ae8', '#4fd8e8', '#e86ab0', '#e8a04f', '#6ae88a
 function buildNebulaHaze(count) {
   for (let i = 0; i < count; i++) {
     const color = NEBULA_HAZE_COLORS[Math.floor(Math.random() * NEBULA_HAZE_COLORS.length)];
-    const texture = makeGlowTexture(color, `${color}00`);
+    // makeNebulaBlobTexture generates a fresh, irregular blob layout on
+    // every call, so each sprite gets its own amorphous cloud shape
+    // instead of a uniform circle.
+    const texture = makeNebulaBlobTexture(color);
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: texture,
       transparent: true,
-      opacity: 0.14 + Math.random() * 0.1,
+      opacity: 0.16 + Math.random() * 0.12,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     }));
-    const size = 14 + Math.random() * 22;
+    const size = 20 + Math.random() * 30;
     sprite.scale.set(size, size, 1);
     sprite.position.set(...randomSpherePoint(300, 550));
     scene.add(sprite);
@@ -102,21 +105,35 @@ function buildNebulaHaze(count) {
 }
 buildNebulaHaze(9);
 
+// Varied core/arm/nebula color triples so the mini spirals don't all read
+// as the same galaxy recolored — picked randomly per instance.
+const MINI_SPIRAL_PALETTES = [
+  { coreColor: 0x9df0fa, armColor: 0x4fd8e8, nebulaColor: 0x8a6ae8 },
+  { coreColor: 0xffe8c8, armColor: 0xff9a4f, nebulaColor: 0xe85050 },
+  { coreColor: 0xffb8e8, armColor: 0xb46ae8, nebulaColor: 0x6a4ae8 },
+  { coreColor: 0xc8ffb8, armColor: 0x4fe8a0, nebulaColor: 0x2f9c78 },
+  { coreColor: 0xffe0a0, armColor: 0xe8c84f, nebulaColor: 0xb47a2a },
+  { coreColor: 0xa0c8ff, armColor: 0x5070e8, nebulaColor: 0x8a6ae8 },
+];
+
 const backgroundGalaxies = [];
 function buildMiniSpirals(count) {
   for (let i = 0; i < count; i++) {
+    const palette = MINI_SPIRAL_PALETTES[Math.floor(Math.random() * MINI_SPIRAL_PALETTES.length)];
     const mini = buildSpiralGalaxy({
-      position: randomSpherePoint(320, 580),
+      position: randomSpherePoint(320, 620),
       discParticleCount: 180,
       nebulaParticleCount: 40,
       radius: 5 + Math.random() * 3,
+      armCount: 2 + Math.floor(Math.random() * 3),
+      ...palette,
     });
     mini.rotation.set(Math.random() * Math.PI, 0, Math.random() * Math.PI);
     scene.add(mini);
     backgroundGalaxies.push(mini);
   }
 }
-buildMiniSpirals(4);
+buildMiniSpirals(9);
 
 // === Triangle layout ===
 function triangleVertex(index) {
