@@ -122,11 +122,24 @@ body::before {
 
 .system-list-title {
   flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
   font-family: 'Orbitron', sans-serif; font-size: 0.58rem;
   letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--hz-cyan); padding: 12px 14px 10px;
+  color: var(--hz-cyan); background: none; border: none;
+  padding: 12px 14px 10px;
   border-bottom: 1px solid var(--hz-steel-dk);
+  cursor: pointer;
 }
+.system-list-title:hover { color: var(--hz-cyan-lt); }
+
+.system-list-caret {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+.system-list.is-collapsed .system-list-caret { transform: rotate(-90deg); }
+.system-list.is-collapsed .system-list-title { border-bottom: none; }
+.system-list.is-collapsed .system-list-items { display: none; }
 
 .system-list-items {
   list-style: none;
