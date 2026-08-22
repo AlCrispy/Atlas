@@ -4978,5 +4978,565 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 68.3
       }
     ]
+  },
+  "sistema-solare": {
+    "slug": "sistema-solare",
+    "name": "Sistema Solare",
+    "galaxy": "Via Lattea",
+    "stars": [
+      {
+        "name": "Sole",
+        "slug": "sole",
+        "color": "#fff2c8",
+        "size": 4.1,
+        "orbitRadius": 0,
+        "speed": 0,
+        "eyebrow": "Stella",
+        "zoomDistance": 14
+      }
+    ],
+    "planets": [
+      {
+        "name": "Mercurio",
+        "slug": "mercurio",
+        "color": "#9c9490",
+        "size": 0.9,
+        "orbitRadius": 5.2,
+        "eccentricity": 0.206,
+        "inclination": 0.122,
+        "speed": 0.285,
+        "phase": 0.3,
+        "eyebrow": "Pianeta",
+        "moons": [],
+        "zoomDistance": 17.8
+      },
+      {
+        "name": "Venere",
+        "slug": "venere",
+        "color": "#e8d2a0",
+        "size": 1.6,
+        "orbitRadius": 7.8,
+        "eccentricity": 0.02,
+        "inclination": -0.059,
+        "speed": 0.233,
+        "phase": 1.2,
+        "eyebrow": "Pianeta",
+        "moons": [],
+        "zoomDistance": 22.3
+      },
+      {
+        "name": "Terra",
+        "slug": "terra",
+        "color": "#3a72b0",
+        "size": 1.7,
+        "orbitRadius": 10.5,
+        "eccentricity": 0.03,
+        "inclination": 0.01,
+        "speed": 0.201,
+        "phase": 2.8,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Luna",
+            "slug": "luna",
+            "color": "#d6dcf2",
+            "size": 0.5,
+            "orbitRadius": 2.2,
+            "speed": 1.6,
+            "phase": 0.5,
+            "eyebrow": "Satellite",
+            "zoomDistance": 24.8
+          }
+        ],
+        "zoomDistance": 26.8
+      },
+      {
+        "name": "Marte",
+        "slug": "marte",
+        "color": "#b7502a",
+        "size": 1.2,
+        "orbitRadius": 14.2,
+        "eccentricity": 0.093,
+        "inclination": -0.032,
+        "speed": 0.172,
+        "phase": 4,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Fobos",
+            "slug": "fobos",
+            "color": "#8c8378",
+            "size": 0.25,
+            "orbitRadius": 1.6,
+            "speed": 3,
+            "phase": 1,
+            "eyebrow": "Satellite",
+            "zoomDistance": 31.1
+          },
+          {
+            "name": "Deimos",
+            "slug": "deimos",
+            "color": "#9c948a",
+            "size": 0.2,
+            "orbitRadius": 2.3,
+            "speed": 2.2,
+            "phase": 3.5,
+            "eyebrow": "Satellite",
+            "zoomDistance": 30.1
+          }
+        ],
+        "zoomDistance": 33.1
+      },
+      {
+        "name": "Giove",
+        "slug": "giove",
+        "color": "#d8a060",
+        "size": 3.6,
+        "orbitRadius": 21,
+        "eccentricity": 0.048,
+        "inclination": 0.023,
+        "speed": 0.142,
+        "phase": 0.9,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Io",
+            "slug": "io",
+            "color": "#e8d060",
+            "size": 0.55,
+            "orbitRadius": 3.4,
+            "speed": 2,
+            "phase": 0.2,
+            "eyebrow": "Satellite",
+            "zoomDistance": 42.7
+          },
+          {
+            "name": "Europa",
+            "slug": "europa",
+            "color": "#e8dcc8",
+            "size": 0.5,
+            "orbitRadius": 4.2,
+            "speed": 1.6,
+            "phase": 2.4,
+            "eyebrow": "Satellite",
+            "zoomDistance": 41.7
+          },
+          {
+            "name": "Ganimede",
+            "slug": "ganimede",
+            "color": "#a89880",
+            "size": 0.6,
+            "orbitRadius": 5.2,
+            "speed": 1.2,
+            "phase": 4.6,
+            "eyebrow": "Satellite",
+            "zoomDistance": 40.7
+          }
+        ],
+        "zoomDistance": 44.7
+      },
+      {
+        "name": "Saturno",
+        "slug": "saturno",
+        "color": "#e0c896",
+        "size": 3.2,
+        "orbitRadius": 28,
+        "eccentricity": 0.056,
+        "inclination": -0.044,
+        "speed": 0.123,
+        "phase": 3.3,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Titano",
+            "slug": "titano",
+            "color": "#e8a850",
+            "size": 0.62,
+            "orbitRadius": 5.6,
+            "speed": 1.1,
+            "phase": 1.4,
+            "eyebrow": "Satellite",
+            "zoomDistance": 54.6
+          },
+          {
+            "name": "Rea",
+            "slug": "rea",
+            "color": "#d6dcf2",
+            "size": 0.42,
+            "orbitRadius": 4.4,
+            "speed": 1.5,
+            "phase": 3.8,
+            "eyebrow": "Satellite",
+            "zoomDistance": 53.6
+          },
+          {
+            "name": "Giapeto",
+            "slug": "giapeto",
+            "color": "#c8b89c",
+            "size": 0.44,
+            "orbitRadius": 6.8,
+            "speed": 0.8,
+            "phase": 5.9,
+            "eyebrow": "Satellite",
+            "zoomDistance": 52.6
+          }
+        ],
+        "zoomDistance": 56.6
+      },
+      {
+        "name": "Urano",
+        "slug": "urano",
+        "color": "#9fd8d8",
+        "size": 2.4,
+        "orbitRadius": 35,
+        "eccentricity": 0.047,
+        "inclination": 0.013,
+        "speed": 0.11,
+        "phase": 5.5,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Titania",
+            "slug": "titania",
+            "color": "#b8c8d8",
+            "size": 0.46,
+            "orbitRadius": 4,
+            "speed": 1.3,
+            "phase": 0.9,
+            "eyebrow": "Satellite",
+            "zoomDistance": 66.5
+          },
+          {
+            "name": "Oberon",
+            "slug": "oberon",
+            "color": "#a8b8c8",
+            "size": 0.45,
+            "orbitRadius": 5,
+            "speed": 1.05,
+            "phase": 2.6,
+            "eyebrow": "Satellite",
+            "zoomDistance": 65.5
+          },
+          {
+            "name": "Miranda",
+            "slug": "miranda",
+            "color": "#c8d0d8",
+            "size": 0.3,
+            "orbitRadius": 2.6,
+            "speed": 2.1,
+            "phase": 4.4,
+            "eyebrow": "Satellite",
+            "zoomDistance": 64.5
+          }
+        ],
+        "zoomDistance": 68.5
+      },
+      {
+        "name": "Nettuno",
+        "slug": "nettuno",
+        "color": "#3a5fcc",
+        "size": 2.3,
+        "orbitRadius": 42,
+        "eccentricity": 0.02,
+        "inclination": -0.031,
+        "speed": 0.1,
+        "phase": 2,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Tritone",
+            "slug": "tritone",
+            "color": "#c8d8e8",
+            "size": 0.5,
+            "orbitRadius": 3.6,
+            "speed": 1.7,
+            "phase": 1.9,
+            "eyebrow": "Satellite",
+            "zoomDistance": 78.4
+          }
+        ],
+        "zoomDistance": 80.4
+      }
+    ]
+  },
+  "ferrandis": {
+    "slug": "ferrandis",
+    "name": "Ferrandis",
+    "galaxy": "Via Lattea",
+    "stars": [
+      {
+        "name": "Ferrandis",
+        "slug": "ferrandis",
+        "color": "#ffd6a8",
+        "size": 3.6,
+        "orbitRadius": 0,
+        "speed": 0,
+        "eyebrow": "Stella",
+        "zoomDistance": 14
+      }
+    ],
+    "planets": [
+      {
+        "name": "Ferrandis I",
+        "slug": "ferrandis-i",
+        "color": "hsl(215, 55%, 68%)",
+        "size": 1.444,
+        "orbitRadius": 14.57770014856942,
+        "eccentricity": 0.167,
+        "inclination": 0.0628,
+        "speed": 0.1702,
+        "phase": 6.132,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Ferrandis I-a",
+            "slug": "ferrandis-i-a",
+            "color": "#d6dcf2",
+            "size": 0.339,
+            "orbitRadius": 1.78,
+            "speed": 1.133,
+            "phase": 3.976,
+            "eyebrow": "Satellite",
+            "zoomDistance": 31.8
+          }
+        ],
+        "zoomDistance": 33.8
+      },
+      {
+        "name": "Ferrandis II",
+        "slug": "ferrandis-ii",
+        "color": "hsl(281, 59%, 65%)",
+        "size": 2.401,
+        "orbitRadius": 24.09777412726544,
+        "eccentricity": 0.288,
+        "inclination": 0.0249,
+        "speed": 0.1324,
+        "phase": 2.872,
+        "eyebrow": "Pianeta",
+        "moons": [],
+        "zoomDistance": 50
+      },
+      {
+        "name": "Ferrandis III",
+        "slug": "ferrandis-iii",
+        "color": "hsl(170, 53%, 65%)",
+        "size": 1.662,
+        "orbitRadius": 34.15253577684052,
+        "eccentricity": 0.29,
+        "inclination": 0.0051,
+        "speed": 0.1112,
+        "phase": 0.419,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Ferrandis III-a",
+            "slug": "ferrandis-iii-a",
+            "color": "#d6dcf2",
+            "size": 0.426,
+            "orbitRadius": 1.971,
+            "speed": 2.122,
+            "phase": 5.176,
+            "eyebrow": "Satellite",
+            "zoomDistance": 65.1
+          },
+          {
+            "name": "Ferrandis III-b",
+            "slug": "ferrandis-iii-b",
+            "color": "#d6dcf2",
+            "size": 0.49,
+            "orbitRadius": 2.943,
+            "speed": 1.098,
+            "phase": 3.172,
+            "eyebrow": "Satellite",
+            "zoomDistance": 64.1
+          }
+        ],
+        "zoomDistance": 67.1
+      },
+      {
+        "name": "Ferrandis IV",
+        "slug": "ferrandis-iv",
+        "color": "hsl(4, 59%, 62%)",
+        "size": 1.394,
+        "orbitRadius": 43.02516042953357,
+        "eccentricity": 0.138,
+        "inclination": -0.077,
+        "speed": 0.0991,
+        "phase": 4.193,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Ferrandis IV-a",
+            "slug": "ferrandis-iv-a",
+            "color": "#d6dcf2",
+            "size": 0.537,
+            "orbitRadius": 1.983,
+            "speed": 1.885,
+            "phase": 6.025,
+            "eyebrow": "Satellite",
+            "zoomDistance": 80.1
+          }
+        ],
+        "zoomDistance": 82.1
+      }
+    ]
+  },
+  "kylenne": {
+    "slug": "kylenne",
+    "name": "Kylenne",
+    "galaxy": "Via Lattea",
+    "stars": [
+      {
+        "name": "Kylenne",
+        "slug": "kylenne",
+        "color": "#9df0fa",
+        "size": 3.3,
+        "orbitRadius": 0,
+        "speed": 0,
+        "eyebrow": "Stella",
+        "zoomDistance": 14
+      }
+    ],
+    "planets": [
+      {
+        "name": "Kylenne I",
+        "slug": "kylenne-i",
+        "color": "hsl(17, 51%, 68%)",
+        "size": 2.403,
+        "orbitRadius": 20.115928146988153,
+        "eccentricity": 0.15,
+        "inclination": 0.1623,
+        "speed": 0.1449,
+        "phase": 5.418,
+        "eyebrow": "Pianeta",
+        "moons": [],
+        "zoomDistance": 43.2
+      },
+      {
+        "name": "Kylenne II",
+        "slug": "kylenne-ii",
+        "color": "hsl(49, 40%, 69%)",
+        "size": 2.555,
+        "orbitRadius": 27.04642606410198,
+        "eccentricity": 0.228,
+        "inclination": 0.0042,
+        "speed": 0.125,
+        "phase": 6.09,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Kylenne II-a",
+            "slug": "kylenne-ii-a",
+            "color": "#d6dcf2",
+            "size": 0.492,
+            "orbitRadius": 1.621,
+            "speed": 1.967,
+            "phase": 5.386,
+            "eyebrow": "Satellite",
+            "zoomDistance": 53
+          }
+        ],
+        "zoomDistance": 55
+      },
+      {
+        "name": "Kylenne III",
+        "slug": "kylenne-iii",
+        "color": "hsl(18, 42%, 70%)",
+        "size": 1.692,
+        "orbitRadius": 34.451629464980215,
+        "eccentricity": 0.227,
+        "inclination": -0.0213,
+        "speed": 0.1107,
+        "phase": 0.721,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Kylenne III-a",
+            "slug": "kylenne-iii-a",
+            "color": "#d6dcf2",
+            "size": 0.327,
+            "orbitRadius": 1.704,
+            "speed": 2.017,
+            "phase": 1.825,
+            "eyebrow": "Satellite",
+            "zoomDistance": 65.6
+          },
+          {
+            "name": "Kylenne III-b",
+            "slug": "kylenne-iii-b",
+            "color": "#d6dcf2",
+            "size": 0.461,
+            "orbitRadius": 2.849,
+            "speed": 1.291,
+            "phase": 5.248,
+            "eyebrow": "Satellite",
+            "zoomDistance": 64.6
+          },
+          {
+            "name": "Kylenne III-c",
+            "slug": "kylenne-iii-c",
+            "color": "#d6dcf2",
+            "size": 0.403,
+            "orbitRadius": 3.997,
+            "speed": 1.588,
+            "phase": 1.968,
+            "eyebrow": "Satellite",
+            "zoomDistance": 63.6
+          }
+        ],
+        "zoomDistance": 67.6
+      },
+      {
+        "name": "Kylenne IV",
+        "slug": "kylenne-iv",
+        "color": "hsl(73, 38%, 55%)",
+        "size": 1.835,
+        "orbitRadius": 45.35464299330488,
+        "eccentricity": 0.38,
+        "inclination": -0.1727,
+        "speed": 0.0965,
+        "phase": 1.134,
+        "eyebrow": "Pianeta",
+        "moons": [],
+        "zoomDistance": 86.1
+      },
+      {
+        "name": "Kylenne V",
+        "slug": "kylenne-v",
+        "color": "hsl(149, 42%, 73%)",
+        "size": 1.563,
+        "orbitRadius": 51.41604404640384,
+        "eccentricity": 0.324,
+        "inclination": 0.0246,
+        "speed": 0.0906,
+        "phase": 6.163,
+        "eyebrow": "Pianeta",
+        "moons": [
+          {
+            "name": "Kylenne V-a",
+            "slug": "kylenne-v-a",
+            "color": "#d6dcf2",
+            "size": 0.543,
+            "orbitRadius": 1.769,
+            "speed": 2.27,
+            "phase": 3.328,
+            "eyebrow": "Satellite",
+            "zoomDistance": 94.4
+          },
+          {
+            "name": "Kylenne V-b",
+            "slug": "kylenne-v-b",
+            "color": "#d6dcf2",
+            "size": 0.528,
+            "orbitRadius": 2.735,
+            "speed": 2.397,
+            "phase": 5.152,
+            "eyebrow": "Satellite",
+            "zoomDistance": 93.4
+          }
+        ],
+        "zoomDistance": 96.4
+      }
+    ]
   }
 };

@@ -17,6 +17,7 @@ const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
 const RING_SPIN = 0.012;
 const PECULIAR_SPIN = 0.02;
+const MILKYWAY_SPIN = 0.014;
 
 const BEACON_SCALE = 2.5;
 
@@ -127,6 +128,20 @@ const peculiarGalaxy = buildPeculiarGalaxy({
 });
 scene.add(peculiarGalaxy);
 
+// Our own galaxy — a real barred spiral (Hubble type ~SBbc), placed well
+// clear of every other group (position picked so its distance to each
+// existing anchor exceeds ~130 units, comfortably outside their radii).
+// Reuses buildSpiralGalaxy's arm/nebula/core technique; distinguished by
+// name/position/size rather than a bespoke bar shape, to keep this a
+// straightforward addition rather than new rendering machinery.
+const milkyWayGalaxy = buildSpiralGalaxy({
+  position: [130, 40, 110],
+  discParticleCount: 3400,
+  nebulaParticleCount: 900,
+  radius: 45,
+});
+scene.add(milkyWayGalaxy);
+
 // === Beacons ===
 // Each beacon links to a placeholder page at unknown-frontier/systems/{slug}.html
 const SPIRAL_BEACONS = [
@@ -185,6 +200,12 @@ const PECULIAR_BEACONS = [
   { name: 'Faelund', slug: 'faelund', position: [22, 2, 5] },
 ];
 
+const MILKYWAY_BEACONS = [
+  { name: 'Sistema Solare', slug: 'sistema-solare', position: [14, 1, 9] },
+  { name: 'Ferrandis', slug: 'ferrandis', position: [-18, -1, 11] },
+  { name: 'Kylenne', slug: 'kylenne', position: [10, 2, -19] },
+];
+
 const beaconTexture = makeGlowTexture('rgba(138,106,232,1)', 'rgba(138,106,232,0)');
 
 function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoomDistance) {
@@ -218,6 +239,7 @@ addBeaconSprites(LENTICULAR_BEACONS, lenticularGalaxy, beaconMeshes, 'Corvantis'
 addBeaconSprites(DWARF_BEACONS, dwarfGalaxy, beaconMeshes, 'Pyxis', 40);
 addBeaconSprites(RING_BEACONS, ringGalaxy, beaconMeshes, 'Cygnix', 50);
 addBeaconSprites(PECULIAR_BEACONS, peculiarGalaxy, beaconMeshes, 'Vandrel', 52);
+addBeaconSprites(MILKYWAY_BEACONS, milkyWayGalaxy, beaconMeshes, 'Via Lattea', 75);
 
 // === Black hole ===
 function buildBlackHole() {
@@ -338,6 +360,7 @@ const GALAXY_LABELS = [
   { name: 'Pyxis', position: dwarfGalaxy.position, radius: 14 },
   { name: 'Cygnix', position: ringGalaxy.position, radius: 20 },
   { name: 'Vandrel', position: peculiarGalaxy.position, radius: 22 },
+  { name: 'Via Lattea', position: milkyWayGalaxy.position, radius: 45 },
 ];
 
 document.fonts.ready.then(() => {
@@ -506,6 +529,7 @@ function animate() {
   dwarfGalaxy.rotation.y += delta * DWARF_SPIN;
   ringGalaxy.rotation.y += delta * RING_SPIN;
   peculiarGalaxy.rotation.y += delta * PECULIAR_SPIN;
+  milkyWayGalaxy.rotation.y += delta * MILKYWAY_SPIN;
   peculiarGalaxy.rotation.z = Math.sin(elapsed * 0.12) * 0.06;
 
   const spiralCoreGlow = spiralGalaxy.userData.coreGlow;
