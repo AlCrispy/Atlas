@@ -12,6 +12,8 @@
 <div class="topbar">
   <a class="back-btn" href="../index.html">← <span>Le Ambientazioni</span></a>
   <span class="topbar-title">Unknown Frontier</span>
+  <audio id="ambient-audio" src="music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
+  <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
 <div id="solar-system" class="solar-system-canvas">
@@ -61,6 +63,8 @@
 }
 </script>
 <script type="module" src="js/galaxy.js"></script>
+
+<script src="js/ambient-audio.js"></script>
 
 </body>
 </html>
