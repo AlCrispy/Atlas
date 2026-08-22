@@ -168,6 +168,13 @@ body::before {
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--hz-steel) transparent;
+  /* The column's own box (gaps between panels, unfilled height when
+     collapsed) shouldn't block dragging the 3D view underneath — only the
+     actual panels should catch pointer input. */
+  pointer-events: none;
+}
+.hud-column > * {
+  pointer-events: auto;
 }
 .hud-column::-webkit-scrollbar { width: 8px; }
 .hud-column::-webkit-scrollbar-track { background: transparent; }
