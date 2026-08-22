@@ -28,9 +28,10 @@ export function createSceneInteraction(opts) {
     ringSizeMultiplier = 2.8,
     defaultRingColor = '#9df0fa',
     // Moons use pale bone/grey tones for their own color, which makes a
-    // same-color selection ring nearly invisible against the scene — force
-    // a punchier yellow instead of reusing the body's own faint hue.
-    moonRingColor = '#ffd24a',
+    // same-color (or even a tinted) selection ring hard to pick out against
+    // the scene — force plain white and a bigger ring than other bodies get.
+    moonRingColor = '#ffffff',
+    moonRingSizeMultiplier = 4.5,
     clickDragThreshold = 5,
     // The galaxy overview flies the camera in on the selected system's own
     // zoomTarget/zoomDistance. A solar system view sets this false so
@@ -114,7 +115,7 @@ export function createSceneInteraction(opts) {
     const ringColor = isMoon ? moonRingColor : (mesh.userData.beacon.color || defaultRingColor);
     selectionRing.material.map = makeGlowTexture(ringColor, `${ringColor}00`);
     selectionRing.material.needsUpdate = true;
-    ringBaseSize = mesh.userData.baseScale * ringSizeMultiplier;
+    ringBaseSize = mesh.userData.baseScale * (isMoon ? moonRingSizeMultiplier : ringSizeMultiplier);
     selectionRing.scale.set(ringBaseSize, ringBaseSize, 1);
     selectionRing.material.opacity = 1;
 
