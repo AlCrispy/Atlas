@@ -203,6 +203,14 @@ planetOrbits.forEach(({ sprite, data, moonOrbits }) => {
   moonOrbits.forEach(({ sprite: moonSprite, data: moonData }) => addListItem(moonData, moonSprite, true));
 });
 
+// === System list collapse toggle ===
+const systemListPanel = document.getElementById('system-list');
+const systemListTitle = document.querySelector('.system-list-title');
+systemListTitle.addEventListener('click', () => {
+  const collapsed = systemListPanel.classList.toggle('is-collapsed');
+  systemListTitle.setAttribute('aria-expanded', String(!collapsed));
+});
+
 // === Interaction ===
 const interaction = createSceneInteraction({
   scene,
