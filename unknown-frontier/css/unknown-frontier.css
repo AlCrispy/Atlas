@@ -108,10 +108,28 @@ body::before {
   background: linear-gradient(to top, rgba(6,8,16,0.7), transparent);
 }
 
-.system-list {
+.hud-column {
   position: absolute; z-index: 250;
-  bottom: 16px; right: 16px;
+  top: 76px; right: 16px; bottom: 16px;
   width: min(260px, 46vw);
+  display: flex; flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hz-steel) transparent;
+}
+.hud-column::-webkit-scrollbar { width: 8px; }
+.hud-column::-webkit-scrollbar-track { background: transparent; }
+.hud-column::-webkit-scrollbar-thumb {
+  background: var(--hz-steel);
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.system-list {
+  flex-shrink: 0;
+  width: 100%;
   max-height: min(50vh, 380px);
   background: rgba(13,18,32,0.9); backdrop-filter: blur(10px);
   border: 1px solid var(--hz-steel);
@@ -188,9 +206,8 @@ body::before {
 }
 
 .compare-panel {
-  position: absolute; z-index: 250;
-  top: 76px; right: 16px;
-  width: min(260px, 46vw);
+  flex-shrink: 0;
+  width: 100%;
   background: rgba(13,18,32,0.9); backdrop-filter: blur(10px);
   border: 1px solid var(--hz-steel);
   box-shadow: 0 8px 30px rgba(0,0,0,0.5);
@@ -273,23 +290,18 @@ body::before {
 }
 
 .beacon-card {
-  position: absolute; z-index: 400;
-  top: 50%; right: 16px;
-  transform: translateY(-50%) translateX(20px);
-  width: min(260px, 46vw);
+  display: none;
+  flex-shrink: 0;
+  width: 100%;
   background: var(--hz-panel-lt);
   border: 1px solid var(--hz-steel);
   box-shadow: 0 8px 40px rgba(0,0,0,0.6);
   padding: 24px;
   text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  position: relative;
 }
 .beacon-card.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%) translateX(0);
+  display: block;
 }
 .beacon-card .placeholder-badge { margin-bottom: 14px; }
 .beacon-card .placeholder-eyebrow { margin-bottom: 6px; }
