@@ -629,10 +629,13 @@ const compareLineMaterial = new THREE.LineBasicMaterial({
   opacity: 0,
   blending: THREE.AdditiveBlending,
   depthWrite: false,
+  depthTest: false,
 });
 const compareLine = new THREE.Line(compareLineGeometry, compareLineMaterial);
 compareLine.visible = false;
-compareLine.renderOrder = 1;
+// Always drawn on top, after everything else — it's a measurement
+// overlay, not a physical object galaxies should occlude.
+compareLine.renderOrder = 999;
 scene.add(compareLine);
 
 function updateCompareDistance() {
