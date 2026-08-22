@@ -81,6 +81,44 @@ body::before {
 .audio-toggle.is-muted { color: var(--hz-ash); }
 .audio-toggle.is-muted::after { content: ' ✕'; font-size: 0.6em; vertical-align: super; }
 
+.audio-popover {
+  display: none;
+  position: absolute; z-index: 350;
+  top: 100%; right: 0;
+  min-width: 200px;
+  background: rgba(13,18,32,0.95); backdrop-filter: blur(10px);
+  border: 1px solid var(--hz-steel);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  padding: 14px 16px;
+  flex-direction: column;
+  gap: 12px;
+}
+.audio-popover.is-open { display: flex; }
+
+.audio-popover-mute {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-cyan-lt); background: none; cursor: pointer;
+  border: 1px solid var(--hz-steel);
+  padding: 8px 14px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.audio-popover-mute:hover {
+  color: var(--hz-void); background: var(--hz-cyan-lt);
+  border-color: var(--hz-cyan-lt);
+}
+
+.audio-popover-volume-row {
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-ash);
+}
+
+.audio-popover-volume {
+  width: 100%; accent-color: var(--hz-cyan);
+}
+
 .placeholder-eyebrow {
   font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
   letter-spacing: 0.35em; text-transform: uppercase;

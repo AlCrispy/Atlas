@@ -1,21 +1,41 @@
 // Shared background-music control for every Unknown Frontier page. Each
 // page has its own <audio id="ambient-audio"> (static multipage site, so
-// playback doesn't continue across navigation) but the mute choice
-// persists via localStorage, so picking "off" once keeps it off as you
-// browse between pages.
-const STORAGE_KEY = 'uf-audio-muted';
+// playback doesn't continue across navigation) but the mute choice and
+// volume persist via localStorage, so picking them once carries across
+// pages as you browse.
+const MUTED_KEY = 'uf-audio-muted';
+const VOLUME_KEY = 'uf-audio-volume';
 
 function init() {
   const audio = document.getElementById('ambient-audio');
   const toggle = document.getElementById('audio-toggle');
   if (!audio || !toggle) return;
 
-  audio.volume = 0.35;
-  const userMuted = localStorage.getItem(STORAGE_KEY) === 'true';
+  const savedVolume = parseFloat(localStorage.getItem(VOLUME_KEY));
+  audio.volume = Number.isFinite(savedVolume) ? savedVolume : 0.35;
+  const userMuted = localStorage.getItem(MUTED_KEY) === 'true';
+
+  // The button itself only opens/closes this popover — the actual
+  // play/pause and volume controls live inside it.
+  const popover = document.createElement('div');
+  popover.className = 'audio-popover';
+  popover.innerHTML = `
+    <button type="button" class="audio-popover-mute"></button>
+    <label class="audio-popover-volume-row">
+      <span>Volume</span>
+      <input type="range" class="audio-popover-volume" min="0" max="100" step="1">
+    </label>
+  `;
+  toggle.insertAdjacentElement('afterend', popover);
+
+  const muteBtn = popover.querySelector('.audio-popover-mute');
+  const volumeSlider = popover.querySelector('.audio-popover-volume');
+  volumeSlider.value = String(Math.round(audio.volume * 100));
 
   function setState(playing) {
     toggle.classList.toggle('is-muted', !playing);
     toggle.setAttribute('aria-pressed', String(!playing));
+    muteBtn.textContent = playing ? 'Disattiva musica' : 'Attiva musica';
   }
 
   function tryPlay() {
@@ -30,19 +50,35 @@ function init() {
     // page — retry once on the first click/tap/keypress, unless they've
     // explicitly muted in the meantime.
     document.addEventListener('pointerdown', function resumeOnGesture() {
-      if (audio.paused && localStorage.getItem(STORAGE_KEY) !== 'true') tryPlay();
+      if (audio.paused && localStorage.getItem(MUTED_KEY) !== 'true') tryPlay();
       document.removeEventListener('pointerdown', resumeOnGesture);
     }, { once: true });
   }
 
-  toggle.addEventListener('click', () => {
+  muteBtn.addEventListener('click', () => {
     if (audio.paused) {
-      localStorage.setItem(STORAGE_KEY, 'false');
+      localStorage.setItem(MUTED_KEY, 'false');
       tryPlay();
     } else {
       audio.pause();
-      localStorage.setItem(STORAGE_KEY, 'true');
+      localStorage.setItem(MUTED_KEY, 'true');
       setState(false);
+    }
+  });
+
+  volumeSlider.addEventListener('input', () => {
+    const volume = Number(volumeSlider.value) / 100;
+    audio.volume = volume;
+    localStorage.setItem(VOLUME_KEY, String(volume));
+  });
+
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    popover.classList.toggle('is-open');
+  });
+  document.addEventListener('click', (event) => {
+    if (!popover.contains(event.target) && event.target !== toggle) {
+      popover.classList.remove('is-open');
     }
   });
 }
