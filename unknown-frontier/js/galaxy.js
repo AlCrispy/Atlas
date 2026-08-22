@@ -49,7 +49,7 @@ controls.maxDistance = 620;
 // Per-point randomized size (0.5x-1.5x of the base size) — PointsMaterial
 // only supports one uniform size for the whole geometry, so a small custom
 // ShaderMaterial with a per-vertex size attribute is used instead.
-const STARFIELD_BASE_SIZE = 0.6;
+const STARFIELD_BASE_SIZE = 2.0;
 
 function buildStarfield() {
   const count = STARFIELD_COUNT;
@@ -71,7 +71,7 @@ function buildStarfield() {
   const material = new THREE.ShaderMaterial({
     uniforms: {
       map: { value: makeDotTexture() },
-      uScale: { value: 400.0 },
+      uScale: { value: 560.0 },
     },
     vertexShader: `
       attribute float aSize;
