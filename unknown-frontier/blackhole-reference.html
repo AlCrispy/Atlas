@@ -313,7 +313,7 @@ const blackHoleShader = Fn(() => {
   const innerR = uniforms.diskInnerRadius;
   const outerR = uniforms.diskOuterRadius;
 
-  Loop(50, () => {
+  Loop(80, () => {
     If(escaped.greaterThan(0.5).or(captured.greaterThan(0.5)).or(alpha.greaterThan(0.99)), () => {
       Break();
     });
