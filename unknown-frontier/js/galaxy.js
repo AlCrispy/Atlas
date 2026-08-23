@@ -26,9 +26,6 @@ const BEACON_SCALE = 2.5;
 // scene units, two Dwarf-galaxy systems) reads as ~10 light-years.
 const DISTANCE_SCALE_LY_PER_UNIT = 1.474;
 
-// Extra multiplier applied to every reported distance — keeps totals off round numbers.
-const DISTANCE_MULTIPLIER = 3;
-
 // IAU-defined light-year -> parsec conversion, for the compare panel's secondary reading.
 const LY_PER_PARSEC = 3.26156;
 
@@ -745,7 +742,7 @@ function updateCompareDistance() {
   compareSlots.a.getWorldPosition(compareWorldPosA);
   compareSlots.b.getWorldPosition(compareWorldPosB);
   const sceneDistance = compareWorldPosA.distanceTo(compareWorldPosB);
-  const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT * DISTANCE_MULTIPLIER);
+  const lightYears = Math.round(sceneDistance * DISTANCE_SCALE_LY_PER_UNIT);
   const parsecs = Math.round((lightYears / LY_PER_PARSEC) * 10) / 10;
   compareDistanceEl.innerHTML = `
     <span class="compare-distance-ly">≈ ${lightYears.toLocaleString('it-IT')} anni luce</span>
