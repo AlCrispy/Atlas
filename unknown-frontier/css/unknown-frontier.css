@@ -237,7 +237,29 @@ body::before {
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--hz-violet); padding: 12px 8px 4px;
 }
-.system-list-group:first-child { padding-top: 4px; }
+li.system-list-group:first-child { padding-top: 4px; }
+
+/* Collapsible galaxy-group heading on the overview page (galaxy.js) — an
+   interactive variant layered on top of the shared .system-list-group
+   text style above, which solar-system.js's plain Stelle/Pianeti
+   headings also use and must keep unaffected. */
+.system-list-group-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+  background: none; border: none; cursor: pointer;
+}
+.system-list-group-toggle:hover { color: var(--hz-cyan-lt); }
+.system-list-group-item:first-child .system-list-group-toggle { padding-top: 4px; }
+
+.system-list-group-caret {
+  font-size: 0.6rem;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.system-list-group-item.is-collapsed .system-list-group-caret { transform: rotate(-90deg); }
+.system-list-group-item.is-collapsed .system-list-subitems { display: none; }
+
+.system-list-subitems { list-style: none; margin: 0; padding: 0; }
 
 .system-list-item {
   display: block; width: 100%;

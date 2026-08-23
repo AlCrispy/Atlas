@@ -563,11 +563,30 @@ beaconMeshes.forEach((mesh) => {
   galaxyGroups.get(galaxyName).push(mesh);
 });
 
+// Each galaxy is its own collapsible group — a header button toggling a
+// nested <ul> — so the full ~40-system list stays navigable instead of one
+// long scroll.
 galaxyGroups.forEach((meshes, galaxyName) => {
-  const heading = document.createElement('li');
-  heading.className = 'system-list-group';
-  heading.textContent = galaxyName;
-  systemListItems.appendChild(heading);
+  const groupItem = document.createElement('li');
+  groupItem.className = 'system-list-group-item';
+
+  const heading = document.createElement('button');
+  heading.type = 'button';
+  heading.className = 'system-list-group system-list-group-toggle';
+  heading.setAttribute('aria-expanded', 'true');
+  heading.innerHTML = `<span class="system-list-group-label">${galaxyName}</span><span class="system-list-group-caret">▾</span>`;
+  groupItem.appendChild(heading);
+
+  const subitems = document.createElement('ul');
+  subitems.className = 'system-list-subitems';
+  groupItem.appendChild(subitems);
+
+  heading.addEventListener('click', () => {
+    const collapsed = groupItem.classList.toggle('is-collapsed');
+    heading.setAttribute('aria-expanded', String(!collapsed));
+  });
+
+  systemListItems.appendChild(groupItem);
 
   const optgroupA = document.createElement('optgroup');
   optgroupA.label = galaxyName;
@@ -585,7 +604,7 @@ galaxyGroups.forEach((meshes, galaxyName) => {
     button.textContent = beacon.name;
     button.addEventListener('click', () => interaction.selectBody(mesh));
     li.appendChild(button);
-    systemListItems.appendChild(li);
+    subitems.appendChild(li);
     listItemsBySlug.set(beacon.slug, button);
 
     optgroupA.appendChild(new Option(beacon.name, beacon.slug));
