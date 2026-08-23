@@ -174,18 +174,18 @@ function paintOcean(ctx, w, h, base, random) {
   ctx.fillStyle = shade(base, 0);
   ctx.fillRect(0, 0, w, h);
 
-  const landColors = ['#4a7c3f', '#3f6b36', '#7a5a3a', '#8f6a45'];
-  const continentCount = 5 + Math.floor(random() * 4);
+  const landColors = ['#4a7c3f', '#3f6b36', '#7a5a3a', '#8f6a45', '#5c9450', '#c9a35a'];
+  const continentCount = 8 + Math.floor(random() * 6);
   for (let i = 0; i < continentCount; i++) {
     const cx = random() * w;
     const cy = random() * h;
-    ctx.fillStyle = landColors[Math.floor(random() * landColors.length)];
-    ctx.globalAlpha = 0.75;
-    const blobCount = 3 + Math.floor(random() * 4);
+    ctx.globalAlpha = 0.8;
+    const blobCount = 4 + Math.floor(random() * 5);
     for (let b = 0; b < blobCount; b++) {
-      const x = cx + (random() - 0.5) * w * 0.12;
-      const y = cy + (random() - 0.5) * h * 0.12;
-      const r = 2 + random() * (w * 0.035);
+      const x = cx + (random() - 0.5) * w * 0.18;
+      const y = cy + (random() - 0.5) * h * 0.18;
+      const r = 2 + random() * (w * 0.045);
+      ctx.fillStyle = landColors[Math.floor(random() * landColors.length)];
       ctx.beginPath();
       ctx.ellipse(x, y, r, r * (0.6 + random() * 0.4), random() * Math.PI, 0, Math.PI * 2);
       ctx.fill();
