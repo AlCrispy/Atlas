@@ -568,12 +568,12 @@ beaconMeshes.forEach((mesh) => {
 // long scroll.
 galaxyGroups.forEach((meshes, galaxyName) => {
   const groupItem = document.createElement('li');
-  groupItem.className = 'system-list-group-item';
+  groupItem.className = 'system-list-group-item is-collapsed';
 
   const heading = document.createElement('button');
   heading.type = 'button';
   heading.className = 'system-list-group system-list-group-toggle';
-  heading.setAttribute('aria-expanded', 'true');
+  heading.setAttribute('aria-expanded', 'false');
   heading.innerHTML = `<span class="system-list-group-label">${galaxyName}</span><span class="system-list-group-caret">▾</span>`;
   groupItem.appendChild(heading);
 
