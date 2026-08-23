@@ -61,33 +61,6 @@ export function makeRingTexture(color, size = 128) {
   return new THREE.CanvasTexture(canvas);
 }
 
-// A thin glowing line — bright in the middle, tapering to transparent at
-// both ends and both edges — for streak/trail sprites, as opposed to the
-// round falloff of makeGlowTexture.
-export function makeStreakTexture(color, width = 128, height = 16) {
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-
-  const hGradient = ctx.createLinearGradient(0, 0, width, 0);
-  hGradient.addColorStop(0, `${color}00`);
-  hGradient.addColorStop(0.5, color);
-  hGradient.addColorStop(1, `${color}00`);
-  ctx.fillStyle = hGradient;
-  ctx.fillRect(0, 0, width, height);
-
-  ctx.globalCompositeOperation = 'destination-in';
-  const vGradient = ctx.createLinearGradient(0, 0, 0, height);
-  vGradient.addColorStop(0, 'rgba(255,255,255,0)');
-  vGradient.addColorStop(0.5, 'rgba(255,255,255,1)');
-  vGradient.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = vGradient;
-  ctx.fillRect(0, 0, width, height);
-
-  return new THREE.CanvasTexture(canvas);
-}
-
 // A round alpha mask for THREE.Points — without a map, GL points render as
 // squares. Solid through most of the radius (unlike the wide glow falloff
 // above) so particles read as crisp dots rather than hazy blobs.

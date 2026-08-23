@@ -20,7 +20,6 @@ const FRAGMENT_SHADER = `
   uniform float uLensScreenRadius;
   uniform float uStrength;
   uniform vec3 uRimColor;
-  uniform float uSqueezeX;
 
   void main() {
     vec2 uv = gl_FragCoord.xy / uResolution;
@@ -30,17 +29,11 @@ const FRAGMENT_SHADER = `
 
     float pull = uStrength * (1.0 - t) * (1.0 - t);
     vec2 dir = dist > 0.00001 ? delta / dist : vec2(0.0);
-    dir.x *= uSqueezeX;
     vec2 distortedUv = uv - dir * pull * uLensScreenRadius;
     vec3 color = texture2D(tDiffuse, clamp(distortedUv, vec2(0.0), vec2(1.0))).rgb;
 
-    // Two concentric bands with a dark gap between them, echoing the
-    // doubled photon-ring look of a real lensed accretion disk rather
-    // than a single soft rim.
-    float outerRim = smoothstep(0.55, 0.9, t) * (1.0 - smoothstep(0.9, 1.05, t));
-    float innerRim = smoothstep(0.25, 0.4, t) * (1.0 - smoothstep(0.4, 0.5, t));
-    float rim = outerRim + innerRim * 0.6;
-    color += uRimColor * rim * 2.4;
+    float rim = smoothstep(0.7, 0.97, t) * (1.0 - smoothstep(0.97, 1.05, t));
+    color += uRimColor * rim * 1.6;
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -66,7 +59,6 @@ export function createLensSystem({ scene, camera, renderer }) {
     slug,
     color = '#8a6ae8',
     distortionStrength = 0.35,
-    squeezeX = 1.0,
     eyebrow = 'Fenomeno Cosmico',
     galaxy = 'Fenomeno Cosmico',
     exploreHref,
@@ -84,7 +76,6 @@ export function createLensSystem({ scene, camera, renderer }) {
         uLensScreenRadius: { value: 0.1 },
         uStrength: { value: distortionStrength },
         uRimColor: { value: new THREE.Color(color) },
-        uSqueezeX: { value: squeezeX },
       },
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,
