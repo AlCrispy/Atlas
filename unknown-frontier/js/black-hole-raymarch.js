@@ -217,7 +217,11 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
   // inner radius; step size/count mirror the proven reference exactly).
   const config = {
     mass: 0.5,
-    diskInnerRadius: 5,
+    // Inner edge pulled closer to the horizon (was 5) so the colored band
+    // right next to the black center reads as thicker instead of leaving
+    // a bare gap; lower turbulence sharpness fills the ring in more
+    // solidly with smoother tonal gradation instead of thin streaky lines.
+    diskInnerRadius: 3.5,
     diskOuterRadius: 18,
     diskTemperature: 42,
     temperatureFalloff: 5.2,
@@ -225,12 +229,12 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     diskRotationSpeed: -6,
     turbulenceScale: 1.8,
     turbulenceStretch: 0.75,
-    turbulenceSharpness: 6.5,
+    turbulenceSharpness: 3.5,
     turbulenceCycleTime: 5,
     turbulenceLacunarity: 2.5,
     turbulencePersistence: 0.8,
-    diskEdgeSoftnessInner: 0.18,
-    diskEdgeSoftnessOuter: 0.5,
+    diskEdgeSoftnessInner: 0.25,
+    diskEdgeSoftnessOuter: 0.55,
     gravitationalLensing: 2.4,
     dopplerStrength: 1.0,
     stepSize: 1.0,
@@ -288,34 +292,6 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
   mesh.frustumCulled = false;
   mesh.userData.baseScale = 1;
   scene.add(mesh);
-
-  // Soft additive glow behind the ring so it reads as actually shining
-  // rather than flat-lit — no post-processing bloom pipeline in this
-  // scene, so this fakes it the same way the rest of the site's glow
-  // sprites do.
-  const glowCanvas = document.createElement('canvas');
-  glowCanvas.width = 128;
-  glowCanvas.height = 128;
-  const glowCtx = glowCanvas.getContext('2d');
-  const glowGradient = glowCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
-  glowGradient.addColorStop(0, 'rgba(255,225,170,0.9)');
-  glowGradient.addColorStop(0.45, 'rgba(255,200,130,0.35)');
-  glowGradient.addColorStop(1, 'rgba(255,200,130,0)');
-  glowCtx.fillStyle = glowGradient;
-  glowCtx.fillRect(0, 0, 128, 128);
-  const glowTexture = new THREE.CanvasTexture(glowCanvas);
-
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTexture,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  }));
-  glow.position.set(...position);
-  // Sized to hug the ring itself (disk outer edge) rather than spread
-  // into a big soft halo well past it, which read as another "aura".
-  glow.scale.set(config.diskOuterRadius * 1.5, config.diskOuterRadius * 1.5, 1);
-  scene.add(glow);
 
   const clock = new THREE.Clock();
 
