@@ -18,6 +18,12 @@ const RING_SPIN = 0.012;
 const PECULIAR_SPIN = 0.02;
 const MILKYWAY_SPIN = 0.014;
 
+// Same angular speed for every galaxy (not Kepler-varied) so the whole
+// configuration turns as one rigid pattern around the black hole — every
+// pairwise distance between galaxies/systems stays constant, which the
+// distance-compare panel relies on. Slow: a full revolution takes ~30 min.
+const GALAXY_ORBIT_SPEED = 0.0035;
+
 const BEACON_SCALE = 2.5;
 
 // Linear scene-unit -> light-year conversion for the distance-compare panel.
@@ -277,6 +283,37 @@ const milkyWayGalaxy = buildSpiralGalaxy({
 milkyWayGalaxy.rotation.set(-0.35, 0, 0.25);
 scene.add(milkyWayGalaxy);
 
+// === Galaxy orbits ===
+// Slow revolution around the black hole (Y axis) — radius and height fixed
+// per galaxy, only the angle advances, so each traces a circle at its own
+// elevation. Beacon sprites/system labels are children of these groups and
+// follow for free; the floating galaxy name-tags (deliberately not
+// children, see below) and beacon zoomTargets need their own updates.
+//
+// The starting angle is offset by real-world elapsed time (Date.now(),
+// not a per-session clock) instead of always starting from the original
+// layout position — no state to save/load, the orbit just always reflects
+// "where it would be by now," so reloading the page later continues the
+// journey instead of resetting it.
+const ORBIT_EPOCH_OFFSET = (Date.now() / 1000) * GALAXY_ORBIT_SPEED;
+
+const orbitingGalaxies = [
+  spiralGalaxy, ellipticalGalaxy, irregularGalaxy, lenticularGalaxy,
+  dwarfGalaxy, ringGalaxy, peculiarGalaxy, milkyWayGalaxy,
+].map((group) => ({
+  group,
+  radius: Math.hypot(group.position.x, group.position.z),
+  angle: Math.atan2(group.position.z, group.position.x) + ORBIT_EPOCH_OFFSET,
+}));
+
+function updateGalaxyOrbits(delta) {
+  orbitingGalaxies.forEach((orbit) => {
+    orbit.angle += delta * GALAXY_ORBIT_SPEED;
+    orbit.group.position.x = Math.cos(orbit.angle) * orbit.radius;
+    orbit.group.position.z = Math.sin(orbit.angle) * orbit.radius;
+  });
+}
+
 // === Beacons ===
 // Each beacon links to a placeholder page at unknown-frontier/systems/{slug}.html
 const SPIRAL_BEACONS = [
@@ -349,7 +386,10 @@ function addBeaconSprites(beaconList, parentGroup, targetArray, galaxyName, zoom
     beacon.eyebrow = 'Sistema Solare';
     beacon.color = '#8a6ae8';
     beacon.exploreHref = `systems/${beacon.slug}.html`;
-    beacon.zoomTarget = parentGroup.position.clone();
+    // Live reference, not a snapshot — parentGroup now orbits the black
+    // hole, so a frozen clone would go stale and fly the camera to where
+    // the galaxy used to be.
+    beacon.zoomTarget = parentGroup.position;
     beacon.zoomDistance = zoomDistance;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: beaconTexture,
@@ -396,9 +436,13 @@ beaconMeshes.push(blackHole.mesh);
 
 // === Galaxy labels ===
 // World-space name tags floating above each galaxy — added directly to
-// `scene`, not as a child of the rotating galaxy group, so they stay put
-// instead of orbiting as the galaxy spins. Built after document.fonts is
-// ready so the canvas text bakes in Orbitron rather than a fallback font.
+// `scene`, not as a child of the rotating galaxy group, so they don't
+// inherit the galaxy's own local spin (would make the text spin/skew).
+// They do need to track the galaxy's orbital position though, so their
+// position is refreshed every frame in animate() from `position` (a live
+// reference to the galaxy group's own THREE.Vector3, not a snapshot).
+// Built after document.fonts is ready so the canvas text bakes in
+// Orbitron rather than a fallback font.
 const GALAXY_LABEL_COLOR = '#8a6ae8';
 const GALAXY_LABEL_HEIGHT = 7;
 
@@ -414,7 +458,8 @@ const GALAXY_LABELS = [
 ];
 
 document.fonts.ready.then(() => {
-  GALAXY_LABELS.forEach(({ name, position, radius }) => {
+  GALAXY_LABELS.forEach((entry) => {
+    const { name, position, radius } = entry;
     const { texture, aspect } = makeLabelTexture(name, GALAXY_LABEL_COLOR);
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
       map: texture,
@@ -424,6 +469,7 @@ document.fonts.ready.then(() => {
     sprite.scale.set(GALAXY_LABEL_HEIGHT * aspect, GALAXY_LABEL_HEIGHT, 1);
     sprite.position.set(position.x, position.y + radius * 0.75, position.z);
     scene.add(sprite);
+    entry.sprite = sprite;
   });
 });
 
@@ -765,6 +811,10 @@ function animate() {
   ringGalaxy.rotation.y += delta * RING_SPIN;
   peculiarGalaxy.rotation.y += delta * PECULIAR_SPIN;
   milkyWayGalaxy.rotation.y += delta * MILKYWAY_SPIN;
+  updateGalaxyOrbits(delta);
+  GALAXY_LABELS.forEach(({ sprite, position, radius }) => {
+    if (sprite) sprite.position.set(position.x, position.y + radius * 0.75, position.z);
+  });
   // Fade/hide decorative background objects the camera has wandered close
   // to, so they never loom in the foreground — same idea as the
   // starfield's per-pixel near-fade, done per-object here since these
