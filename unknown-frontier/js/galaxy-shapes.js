@@ -7,6 +7,11 @@ export { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture
 // is plenty since it's just a round alpha mask, not per-galaxy content.
 const dotTexture = makeDotTexture();
 
+function colorToRgba(hex, alpha) {
+  const c = new THREE.Color(hex);
+  return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
+}
+
 export function buildSpiralGalaxy(opts = {}) {
   const {
     position = [0, 0, 0],
@@ -16,7 +21,11 @@ export function buildSpiralGalaxy(opts = {}) {
     armCount = 3,
     coreColor = 0x9df0fa,
     armColor = 0x4fd8e8,
+    // Single tint for every nebula wisp. Ignored when nebulaColors (a
+    // palette) is given instead — pass that when a galaxy's wisps should
+    // read as several distinct gas-cloud hues rather than one color.
     nebulaColor = 0x8a6ae8,
+    nebulaColors = null,
   } = opts;
 
   const group = new THREE.Group();
@@ -63,8 +72,8 @@ export function buildSpiralGalaxy(opts = {}) {
   // Nebula wisps
   const nebulaTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
   const nebulaPositions = new Float32Array(nebulaParticleCount * 3);
-  const nebulaColors = new Float32Array(nebulaParticleCount * 3);
-  const nebulaColorObj = new THREE.Color(nebulaColor);
+  const nebulaVertexColors = new Float32Array(nebulaParticleCount * 3);
+  const nebulaPalette = (nebulaColors && nebulaColors.length ? nebulaColors : [nebulaColor]).map((c) => new THREE.Color(c));
 
   for (let i = 0; i < nebulaParticleCount; i++) {
     const arm = i % armCount;
@@ -78,14 +87,18 @@ export function buildSpiralGalaxy(opts = {}) {
     nebulaPositions[i * 3 + 1] = height;
     nebulaPositions[i * 3 + 2] = Math.sin(spiralAngle) * r;
 
-    nebulaColors[i * 3] = nebulaColorObj.r;
-    nebulaColors[i * 3 + 1] = nebulaColorObj.g;
-    nebulaColors[i * 3 + 2] = nebulaColorObj.b;
+    // Each particle picks one palette color; since every particle renders
+    // as a large soft additive glow, overlapping neighbors of different
+    // hues blend into multicolor haze rather than reading as static.
+    const wispColor = nebulaPalette[i % nebulaPalette.length];
+    nebulaVertexColors[i * 3] = wispColor.r;
+    nebulaVertexColors[i * 3 + 1] = wispColor.g;
+    nebulaVertexColors[i * 3 + 2] = wispColor.b;
   }
 
   const nebulaGeometry = new THREE.BufferGeometry();
   nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPositions, 3));
-  nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
+  nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaVertexColors, 3));
   const nebulaMaterial = new THREE.PointsMaterial({
     size: 6,
     map: nebulaTexture,
@@ -98,7 +111,7 @@ export function buildSpiralGalaxy(opts = {}) {
   group.add(new THREE.Points(nebulaGeometry, nebulaMaterial));
 
   // Pulsing core glow (orchestrator animates this via group.userData.coreGlow)
-  const coreGlowTexture = makeGlowTexture('rgba(157,240,250,0.9)', 'rgba(157,240,250,0)');
+  const coreGlowTexture = makeGlowTexture(colorToRgba(coreColor, 0.9), colorToRgba(coreColor, 0));
   const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({
     map: coreGlowTexture,
     transparent: true,

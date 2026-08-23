@@ -271,6 +271,12 @@ const milkyWayGalaxy = buildSpiralGalaxy({
   discParticleCount: 3400,
   nebulaParticleCount: 900,
   radius: 45,
+  // Real Milky Way photos: a warm dust-reddened core, blue hot-star arms,
+  // and gas clouds spanning orange/purple/blue/green/teal — distinct from
+  // every other (single-tint) galaxy in the scene.
+  coreColor: 0xffcf99,
+  armColor: 0x6fa8ff,
+  nebulaColors: [0xff8a4f, 0xa855f7, 0x4a7fff, 0x5ee87a, 0x2dd4bf],
 });
 milkyWayGalaxy.rotation.set(-0.35, 0, 0.25);
 scene.add(milkyWayGalaxy);
