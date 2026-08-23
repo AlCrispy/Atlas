@@ -27,7 +27,7 @@ const BEACON_SCALE = 2.5;
 const DISTANCE_SCALE_LY_PER_UNIT = 1.474;
 
 // Extra multiplier applied to every reported distance — keeps totals off round numbers.
-const DISTANCE_MULTIPLIER = 137;
+const DISTANCE_MULTIPLIER = 3;
 
 // IAU-defined light-year -> parsec conversion, for the compare panel's secondary reading.
 const LY_PER_PARSEC = 3.26156;
