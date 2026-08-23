@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
+import { STAR_TYPES } from './star-types.js';
 import { makePlanetTexture } from './planet-texture.js';
 import { buildOrbitRing, buildPlanetRing } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -154,7 +155,11 @@ function registerBody(object, size, data) {
 // common center (see the animation loop below).
 const starObjs = system.stars.map((star) => {
   const sprite = makeStarSprite(star.color);
-  registerBody(sprite, star.size * STAR_RENDER_SCALE, star);
+  const typeInfo = STAR_TYPES[star.type];
+  registerBody(sprite, star.size * STAR_RENDER_SCALE, {
+    ...star,
+    eyebrow: typeInfo ? `${star.eyebrow} · ${typeInfo.label}` : star.eyebrow,
+  });
   scene.add(sprite);
   return { sprite, data: star };
 });

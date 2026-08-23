@@ -16,7 +16,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Vessek",
         "slug": "vessek",
-        "color": "#ffd6a8",
+        "color": "#f8f7ff",
+        "type": "F",
         "size": 3.853,
         "orbitRadius": 0,
         "speed": 0,
@@ -102,7 +103,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Thalir-9",
         "slug": "thalir-9",
-        "color": "#9df0fa",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.434,
         "orbitRadius": 0,
         "speed": 0,
@@ -273,7 +275,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Kaion Rift",
         "slug": "kaion-rift",
-        "color": "#c8e8ff",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.599,
         "orbitRadius": 0,
         "speed": 0,
@@ -395,7 +398,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Drevane",
         "slug": "drevane",
-        "color": "#e8dcc8",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.307,
         "orbitRadius": 0,
         "speed": 0,
@@ -555,7 +559,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Solmira",
         "slug": "solmira",
-        "color": "#fff2c8",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 3.662,
         "orbitRadius": 0,
         "speed": 0,
@@ -691,7 +696,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ozmun Prime",
         "slug": "ozmun-prime",
-        "color": "#ffd6a8",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.475,
         "orbitRadius": 0,
         "speed": 0,
@@ -870,7 +876,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Haldrin",
         "slug": "haldrin",
-        "color": "#ffd6a8",
+        "color": "#aabfff",
+        "type": "B",
         "size": 3.939,
         "orbitRadius": 0,
         "speed": 0,
@@ -1007,7 +1014,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Cerevane",
         "slug": "cerevane",
-        "color": "#e8dcc8",
+        "color": "#cad7ff",
+        "type": "A",
         "size": 3.927,
         "orbitRadius": 0,
         "speed": 0,
@@ -1130,7 +1138,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Tessaly",
         "slug": "tessaly",
-        "color": "#c8e8ff",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 3.636,
         "orbitRadius": 0,
         "speed": 0,
@@ -1275,7 +1284,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Norvun",
         "slug": "norvun",
-        "color": "#e8dcc8",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.339,
         "orbitRadius": 0,
         "speed": 0,
@@ -1397,7 +1407,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Rakthos A",
         "slug": "rakthos-a",
-        "color": "#c8e8ff",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.101,
         "orbitRadius": 4.304,
         "speed": 0.698,
@@ -1407,7 +1418,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Rakthos B",
         "slug": "rakthos-b",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.096,
         "orbitRadius": 4.434,
         "speed": 0.632,
@@ -1530,7 +1542,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ybrenn",
         "slug": "ybrenn",
-        "color": "#ffd6a8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.25,
         "orbitRadius": 0,
         "speed": 0,
@@ -1661,7 +1674,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Quovar",
         "slug": "quovar",
-        "color": "#fff2c8",
+        "color": "#f8f7ff",
+        "type": "F",
         "size": 3.781,
         "orbitRadius": 0,
         "speed": 0,
@@ -1794,7 +1808,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Skellith",
         "slug": "skellith",
-        "color": "#c8e8ff",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.489,
         "orbitRadius": 0,
         "speed": 0,
@@ -1903,7 +1918,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Manoth",
         "slug": "manoth",
-        "color": "#e8dcc8",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 3.755,
         "orbitRadius": 0,
         "speed": 0,
@@ -2036,7 +2052,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Aldevik",
         "slug": "aldevik",
-        "color": "#c8e8ff",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.265,
         "orbitRadius": 0,
         "speed": 0,
@@ -2166,7 +2183,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Cormanth",
         "slug": "cormanth",
-        "color": "#e8dcc8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.242,
         "orbitRadius": 0,
         "speed": 0,
@@ -2334,7 +2352,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Estryn",
         "slug": "estryn",
-        "color": "#c8e8ff",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 3.706,
         "orbitRadius": 0,
         "speed": 0,
@@ -2446,7 +2465,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Vallor Deep",
         "slug": "vallor-deep",
-        "color": "#9df0fa",
+        "color": "#f8f7ff",
+        "type": "F",
         "size": 3.788,
         "orbitRadius": 0,
         "speed": 0,
@@ -2520,7 +2540,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ninhara",
         "slug": "ninhara",
-        "color": "#fff2c8",
+        "color": "#cad7ff",
+        "type": "A",
         "size": 3.862,
         "orbitRadius": 0,
         "speed": 0,
@@ -2628,7 +2649,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Yssel",
         "slug": "yssel",
-        "color": "#9df0fa",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.474,
         "orbitRadius": 0,
         "speed": 0,
@@ -2800,7 +2822,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Braxton A",
         "slug": "braxton-a",
-        "color": "#ffd6a8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.722,
         "orbitRadius": 4.371,
         "speed": 0.598,
@@ -2810,7 +2833,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Braxton B",
         "slug": "braxton-b",
-        "color": "#e8dcc8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 1.862,
         "orbitRadius": 4.16,
         "speed": 0.647,
@@ -2944,7 +2968,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Corvai",
         "slug": "corvai",
-        "color": "#ffd6a8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.28,
         "orbitRadius": 0,
         "speed": 0,
@@ -3052,7 +3077,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ithera A",
         "slug": "ithera-a",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.781,
         "orbitRadius": 3.501,
         "speed": 0.603,
@@ -3062,7 +3088,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ithera B",
         "slug": "ithera-b",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 1.828,
         "orbitRadius": 4.448,
         "speed": 0.567,
@@ -3197,7 +3224,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Zennor",
         "slug": "zennor",
-        "color": "#fff2c8",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 3.631,
         "orbitRadius": 0,
         "speed": 0,
@@ -3376,7 +3404,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Kessaria",
         "slug": "kessaria",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.895,
         "orbitRadius": 0,
         "speed": 0,
@@ -3540,7 +3569,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Novandra",
         "slug": "novandra",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.013,
         "orbitRadius": 0,
         "speed": 0,
@@ -3689,7 +3719,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Brythe",
         "slug": "brythe",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.131,
         "orbitRadius": 0,
         "speed": 0,
@@ -3868,7 +3899,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Selkirion",
         "slug": "selkirion",
-        "color": "#fff2c8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 3.249,
         "orbitRadius": 0,
         "speed": 0,
@@ -3988,7 +4020,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Talvenor",
         "slug": "talvenor",
-        "color": "#fff2c8",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.367,
         "orbitRadius": 0,
         "speed": 0,
@@ -4193,7 +4226,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ashkar",
         "slug": "ashkar",
-        "color": "#ffd6a8",
+        "color": "#f8f7ff",
+        "type": "F",
         "size": 3.81,
         "orbitRadius": 0,
         "speed": 0,
@@ -4387,7 +4421,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ruinvale",
         "slug": "ruinvale",
-        "color": "#ffd6a8",
+        "color": "#cad7ff",
+        "type": "A",
         "size": 3.928,
         "orbitRadius": 0,
         "speed": 0,
@@ -4531,7 +4566,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Kethra",
         "slug": "kethra",
-        "color": "#ffd6a8",
+        "color": "#9bb0ff",
+        "type": "O",
         "size": 4.046,
         "orbitRadius": 0,
         "speed": 0,
@@ -4673,7 +4709,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ombrix",
         "slug": "ombrix",
-        "color": "#ffd6a8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.864,
         "orbitRadius": 0,
         "speed": 0,
@@ -4843,7 +4880,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Faelund",
         "slug": "faelund",
-        "color": "#ffd6a8",
+        "color": "#ffcc6f",
+        "type": "M",
         "size": 2.982,
         "orbitRadius": 0,
         "speed": 0,
@@ -5022,7 +5060,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Sole",
         "slug": "sole",
-        "color": "#fff2c8",
+        "color": "#fff4ea",
+        "type": "G",
         "size": 4.1,
         "orbitRadius": 0,
         "speed": 0,
@@ -5303,7 +5342,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Ferrandis",
         "slug": "ferrandis",
-        "color": "#ffd6a8",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.6,
         "orbitRadius": 0,
         "speed": 0,
@@ -5426,7 +5466,8 @@ export const SOLAR_SYSTEMS = {
       {
         "name": "Kylenne",
         "slug": "kylenne",
-        "color": "#9df0fa",
+        "color": "#ffd2a1",
+        "type": "K",
         "size": 3.3,
         "orbitRadius": 0,
         "speed": 0,
