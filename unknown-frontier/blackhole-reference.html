@@ -313,7 +313,7 @@ const blackHoleShader = Fn(() => {
   const innerR = uniforms.diskInnerRadius;
   const outerR = uniforms.diskOuterRadius;
 
-  Loop(32, () => {
+  Loop(50, () => {
     If(escaped.greaterThan(0.5).or(captured.greaterThan(0.5)).or(alpha.greaterThan(0.99)), () => {
       Break();
     });
@@ -325,7 +325,7 @@ const blackHoleShader = Fn(() => {
       Break();
     });
 
-    If(r.greaterThan(100.0), () => {
+    If(r.greaterThan(300.0), () => {
       escaped.assign(1.0);
       Break();
     });
@@ -398,7 +398,7 @@ controls.minDistance = 5;
 controls.maxDistance = 50;
 
 // Create black hole mesh
-const geometry = new THREE.SphereGeometry(100, 32, 32);
+const geometry = new THREE.SphereGeometry(150, 32, 32);
 geometry.scale(-1, 1, 1);
 const material = new THREE.MeshBasicNodeMaterial();
 material.colorNode = blackHoleShader;

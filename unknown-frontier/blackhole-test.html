@@ -33,7 +33,7 @@ function log(s) { statusEl.textContent += '\n' + s; console.log(s); }
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 30, 60);
+camera.position.set(0, 6, 45);
 
 const renderer = new THREE.WebGPURenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
