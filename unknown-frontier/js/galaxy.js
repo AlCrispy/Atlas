@@ -771,9 +771,15 @@ function syncCompareSelects() {
 }
 
 function handleSceneSelect(mesh) {
-  if (compareSlots.a === mesh) return;
-  compareSlots.b = compareSlots.a;
-  compareSlots.a = mesh;
+  if (compareSlots.a === mesh) {
+    // Re-clicking the last-selected star clears the comparison — a way to
+    // reset it from the map itself, without reaching for the panel button.
+    compareSlots.a = null;
+    compareSlots.b = null;
+  } else {
+    compareSlots.b = compareSlots.a;
+    compareSlots.a = mesh;
+  }
   syncCompareSelects();
   updateCompareDistance();
 }
