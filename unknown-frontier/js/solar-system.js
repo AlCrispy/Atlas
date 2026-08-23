@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 import { STAR_TYPES } from './star-types.js';
 import { makePlanetTexture } from './planet-texture.js';
-import { buildOrbitRing, buildPlanetRing } from './solar-system-shapes.js';
+import { buildOrbitRing, buildPlanetRing, buildDysonSphere } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 import { SOLAR_SYSTEMS } from './solar-system-data.js';
 
@@ -185,6 +185,21 @@ const starObjs = system.stars.map((star) => {
   return { sprite, data: star };
 });
 
+// === Dyson sphere ===
+// A single fictional megastructure, only around Sole in the real solar
+// system — kept well inside Mercurio's orbit (5.2) so it doesn't engulf
+// any planet. Sole is a lone (non-binary) star fixed at the origin, so a
+// static position is safe here.
+const DYSON_SPIN = 0.03;
+let dysonSphere = null;
+if (system.slug === 'sistema-solare') {
+  const sole = system.stars.find((star) => star.slug === 'sole');
+  if (sole) {
+    dysonSphere = buildDysonSphere({ radius: 4.2, color: sole.color });
+    scene.add(dysonSphere);
+  }
+}
+
 // === Planets & moons ===
 // Each planet gets its own pivot group tilted by its inclination, holding
 // both the orbit ring and the planet sprite so they always stay in sync.
@@ -315,6 +330,10 @@ function animate() {
       moonSprite.rotation.y = elapsed * moonSprite.userData.spinSpeed;
     });
   });
+
+  if (dysonSphere) {
+    dysonSphere.rotation.y = elapsed * DYSON_SPIN;
+  }
 
   interaction.update(elapsed);
 
