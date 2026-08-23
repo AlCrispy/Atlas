@@ -34,8 +34,8 @@ const FRAGMENT_SHADER = `
     vec2 distortedUv = uv - dir * pull * uLensScreenRadius;
     vec3 color = texture2D(tDiffuse, clamp(distortedUv, vec2(0.0), vec2(1.0))).rgb;
 
-    float rim = smoothstep(0.7, 0.97, t) * (1.0 - smoothstep(0.97, 1.05, t));
-    color += uRimColor * rim * 1.6;
+    float rim = smoothstep(0.55, 0.95, t) * (1.0 - smoothstep(0.95, 1.08, t));
+    color += uRimColor * rim * 2.2;
 
     gl_FragColor = vec4(color, 1.0);
   }

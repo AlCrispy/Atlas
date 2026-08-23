@@ -386,20 +386,20 @@ function buildBlackHole() {
   );
   group.add(eventHorizon);
 
-  // Two-layer halo: a wide, soft outer glow plus the original tighter one,
-  // so the light bleeding off the event horizon reads as more intense
-  // without just scaling up the existing sprite (which would wash out).
-  const outerGlowTexture = makeGlowTexture('rgba(180,150,255,0.25)', 'rgba(180,150,255,0)');
+  // Two-layer halo: a wide, soft outer glow plus a tighter inner one, kept
+  // dim and pale blue-white so light stays concentrated near the horizon
+  // (like a real accretion disk) instead of a diffuse colored bloom.
+  const outerGlowTexture = makeGlowTexture('rgba(220,235,255,0.15)', 'rgba(220,235,255,0)');
   const outerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
     map: outerGlowTexture,
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   }));
-  outerGlow.scale.set(30, 30, 1);
+  outerGlow.scale.set(22, 22, 1);
   group.add(outerGlow);
 
-  const glowTexture = makeGlowTexture('rgba(180,150,255,0.5)', 'rgba(180,150,255,0)');
+  const glowTexture = makeGlowTexture('rgba(220,235,255,0.35)', 'rgba(220,235,255,0)');
   const glow = new THREE.Sprite(new THREE.SpriteMaterial({
     map: glowTexture,
     transparent: true,
@@ -409,7 +409,7 @@ function buildBlackHole() {
   glow.scale.set(14, 14, 1);
   group.add(glow);
 
-  const diskTexture = makeGlowTexture('rgba(255,200,140,1)', 'rgba(255,200,140,0)');
+  const diskTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
   const diskParticleCount = 500;
   const diskInnerRadius = 4;
   const diskOuterRadius = 14;
@@ -424,37 +424,21 @@ function buildBlackHole() {
   const diskColors = new Float32Array(diskParticleCount * 3);
   const diskRadii = new Float32Array(diskParticleCount);
   const diskAngles = new Float32Array(diskParticleCount);
-  // Each particle orbits in its own plane, tilted by a random inclination
-  // (sampled via acos so planes are isotropic over the sphere, not bunched
-  // at the poles) and node — so infall arrives from every direction around
-  // the black hole instead of a single flat ring.
-  const diskInclinations = new Float32Array(diskParticleCount);
-  const diskNodes = new Float32Array(diskParticleCount);
-  const innerColor = new THREE.Color(0xffe8c8);
-  const outerColor = new THREE.Color(0xff9a4f);
+  const diskYOffsets = new Float32Array(diskParticleCount);
+  // Hot white-blue near the horizon fading to a warm dust brown further
+  // out, matching a Gargantua-style accretion disk rather than a fiery
+  // orange ring.
+  const innerColor = new THREE.Color(0xf3f8ff);
+  const outerColor = new THREE.Color(0x8f6f52);
   const scratchColor = new THREE.Color();
-
-  function randomOrbitalPlane(i) {
-    diskInclinations[i] = Math.acos(2 * Math.random() - 1);
-    diskNodes[i] = Math.random() * Math.PI * 2;
-  }
 
   function writeDiskParticle(i) {
     const r = diskRadii[i];
     const angle = diskAngles[i];
-    const incl = diskInclinations[i];
-    const node = diskNodes[i];
 
-    // Orbit in the local x/z plane, then tilt by inclination (around x)
-    // and swing by node (around y) to place that plane in 3D.
-    const localX = Math.cos(angle) * r;
-    const localZ = Math.sin(angle) * r;
-    const tiltedY = -localZ * Math.sin(incl);
-    const tiltedZ = localZ * Math.cos(incl);
-
-    diskPositions[i * 3] = localX * Math.cos(node) + tiltedZ * Math.sin(node);
-    diskPositions[i * 3 + 1] = tiltedY;
-    diskPositions[i * 3 + 2] = -localX * Math.sin(node) + tiltedZ * Math.cos(node);
+    diskPositions[i * 3] = Math.cos(angle) * r;
+    diskPositions[i * 3 + 1] = diskYOffsets[i];
+    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
 
     const t = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
     scratchColor.copy(innerColor).lerp(outerColor, t);
@@ -464,11 +448,11 @@ function buildBlackHole() {
   }
 
   for (let i = 0; i < diskParticleCount; i++) {
-    // Spread initial radii across the full band so the cloud looks whole
+    // Spread initial radii across the full band so the disk looks whole
     // right away instead of taking one infall cycle to fill in.
     diskRadii[i] = diskInnerRadius + Math.random() * (diskOuterRadius - diskInnerRadius);
     diskAngles[i] = Math.random() * Math.PI * 2;
-    randomOrbitalPlane(i);
+    diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
     writeDiskParticle(i);
   }
 
@@ -485,6 +469,7 @@ function buildBlackHole() {
     depthWrite: false,
   });
   const disk = new THREE.Points(diskGeometry, diskMaterial);
+  disk.rotation.x = 0.3;
   group.add(disk);
 
   function updateDisk(delta) {
@@ -496,7 +481,7 @@ function buildBlackHole() {
       if (diskRadii[i] <= diskInnerRadius) {
         diskRadii[i] = diskOuterRadius;
         diskAngles[i] = Math.random() * Math.PI * 2;
-        randomOrbitalPlane(i);
+        diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
       }
 
       writeDiskParticle(i);
@@ -552,6 +537,9 @@ lensSystem.buildLens({
   // Pulls the disk/starfield in harder along x than y, so the sides read as
   // squeezed toward the center like a candy wrapper twisted at both ends.
   squeezeX: 2.0,
+  // Pale blue-white to match the Gargantua-style disk light bent around
+  // the horizon, rather than a tinted rim.
+  color: '#eaf4ff',
 });
 
 // === Galaxy labels ===
