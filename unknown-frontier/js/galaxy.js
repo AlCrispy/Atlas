@@ -666,12 +666,39 @@ function makeCompareRing() {
 const compareRingA = makeCompareRing();
 const compareRingB = makeCompareRing();
 
+// Distance readout floating above the beam's midpoint — same visibility/
+// pulse gate as the line and rings. Text is regenerated only on selection
+// change (canvas texture bake isn't cheap); position/opacity track every
+// frame alongside the beam since it drifts as galaxies rotate.
+const COMPARE_LABEL_HEIGHT = 3.2;
+const COMPARE_LABEL_LIFT = 2.4;
+const compareDistanceSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+  transparent: true,
+  opacity: 0,
+  depthWrite: false,
+  depthTest: false,
+  blending: THREE.AdditiveBlending,
+}));
+compareDistanceSprite.visible = false;
+compareDistanceSprite.renderOrder = 999;
+scene.add(compareDistanceSprite);
+
+function setCompareDistanceLabel(text) {
+  const oldTexture = compareDistanceSprite.material.map;
+  const { texture, aspect } = makeLabelTexture(text, '#4fd8e8', { fontSize: 26 });
+  compareDistanceSprite.material.map = texture;
+  compareDistanceSprite.material.needsUpdate = true;
+  compareDistanceSprite.scale.set(COMPARE_LABEL_HEIGHT * aspect, COMPARE_LABEL_HEIGHT, 1);
+  if (oldTexture) oldTexture.dispose();
+}
+
 function updateCompareDistance() {
   if (!compareSlots.a || !compareSlots.b) {
     compareDistanceEl.textContent = 'Seleziona due stelle per calcolare la distanza.';
     compareLine.visible = false;
     compareRingA.visible = false;
     compareRingB.visible = false;
+    compareDistanceSprite.visible = false;
     return;
   }
   if (compareSlots.a === compareSlots.b) {
@@ -679,6 +706,7 @@ function updateCompareDistance() {
     compareLine.visible = false;
     compareRingA.visible = false;
     compareRingB.visible = false;
+    compareDistanceSprite.visible = false;
     return;
   }
   compareSlots.a.getWorldPosition(compareWorldPosA);
@@ -696,6 +724,8 @@ function updateCompareDistance() {
   compareRingB.position.copy(compareWorldPosB);
   compareRingA.visible = true;
   compareRingB.visible = true;
+  setCompareDistanceLabel(`≈ ${lightYears.toLocaleString('it-IT')} anni luce`);
+  compareDistanceSprite.visible = true;
 }
 
 function syncCompareSelects() {
@@ -802,6 +832,9 @@ function animate() {
     const ringScale = 5 + Math.sin(elapsed * 2.2) * 0.6;
     compareRingA.scale.set(ringScale, ringScale, 1);
     compareRingB.scale.set(ringScale, ringScale, 1);
+    compareDistanceSprite.position.lerpVectors(compareWorldPosA, compareWorldPosB, 0.5);
+    compareDistanceSprite.position.y += COMPARE_LABEL_LIFT;
+    compareDistanceSprite.material.opacity = pulse;
   }
 
   interaction.update(elapsed);
