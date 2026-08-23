@@ -36,6 +36,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1844,
         "speed": 0.1458,
         "phase": 1.671,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -63,6 +64,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0409,
         "speed": 0.1311,
         "phase": 3.513,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -89,6 +91,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0798,
         "speed": 0.1031,
         "phase": 2.054,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 68.1
@@ -123,6 +126,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1293,
         "speed": 0.2094,
         "phase": 3.632,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -160,6 +164,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.29,
         "speed": 0.2107,
         "phase": 0.272,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 21.6
@@ -174,6 +179,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0237,
         "speed": 0.1523,
         "phase": 1.024,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -200,6 +206,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2266,
         "speed": 0.1213,
         "phase": 5.826,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -227,6 +234,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1242,
         "speed": 0.083,
         "phase": 4.831,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -295,6 +303,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0883,
         "speed": 0.1596,
         "phase": 4.649,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -333,6 +342,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1766,
         "speed": 0.1427,
         "phase": 3.073,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 38.9
@@ -347,6 +357,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2135,
         "speed": 0.1026,
         "phase": 1.218,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 51.9
@@ -361,6 +372,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1791,
         "speed": 0.092,
         "phase": 3.275,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -418,6 +430,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0992,
         "speed": 0.2708,
         "phase": 3.075,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -445,6 +458,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0255,
         "speed": 0.2252,
         "phase": 5.464,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 20.9
@@ -459,6 +473,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0196,
         "speed": 0.1665,
         "phase": 1.629,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -485,6 +500,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0195,
         "speed": 0.1341,
         "phase": 5.789,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -522,6 +538,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.3035,
         "speed": 0.0831,
         "phase": 2.034,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -579,6 +596,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.271,
         "speed": 0.233,
         "phase": 4.115,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -627,6 +645,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0059,
         "speed": 0.1723,
         "phase": 4.501,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -653,6 +672,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.19,
         "speed": 0.1513,
         "phase": 2.955,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 30.1
@@ -667,6 +687,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1908,
         "speed": 0.1279,
         "phase": 2.439,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -682,6 +703,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.151,
         "speed": 0.0963,
         "phase": 5.391,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 68.6
@@ -716,6 +738,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.3016,
         "speed": 0.1741,
         "phase": 3.293,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -742,6 +765,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0776,
         "speed": 0.1207,
         "phase": 6.17,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -790,6 +814,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0739,
         "speed": 0.101,
         "phase": 3.364,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -828,6 +853,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.04,
         "speed": 0.0982,
         "phase": 6.047,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -896,6 +922,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2239,
         "speed": 0.2638,
         "phase": 5.243,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -922,6 +949,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2882,
         "speed": 0.2075,
         "phase": 1.886,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -959,6 +987,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0081,
         "speed": 0.1576,
         "phase": 2.967,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 28
@@ -973,6 +1002,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2311,
         "speed": 0.1199,
         "phase": 2.918,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -999,6 +1029,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0677,
         "speed": 0.0954,
         "phase": 4.405,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -1034,6 +1065,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1584,
         "speed": 0.1925,
         "phase": 4.533,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1061,6 +1093,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.3126,
         "speed": 0.1458,
         "phase": 3.937,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1098,6 +1131,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1265,
         "speed": 0.1011,
         "phase": 3.379,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1124,6 +1158,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2926,
         "speed": 0.074,
         "phase": 0.451,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 74.1
@@ -1158,6 +1193,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0077,
         "speed": 0.1662,
         "phase": 1.387,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1184,6 +1220,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1279,
         "speed": 0.1259,
         "phase": 2.208,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1233,6 +1270,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0814,
         "speed": 0.1199,
         "phase": 1.73,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 49.3
@@ -1247,6 +1285,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0284,
         "speed": 0.1016,
         "phase": 1.289,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1304,6 +1343,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.065,
         "speed": 0.205,
         "phase": 4.461,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 21.4
@@ -1318,6 +1358,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1346,
         "speed": 0.1402,
         "phase": 2.688,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1345,6 +1386,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2321,
         "speed": 0.1223,
         "phase": 4.47,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1393,6 +1435,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2963,
         "speed": 0.0801,
         "phase": 0.553,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 65.8
@@ -1439,6 +1482,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1386,
         "speed": 0.2061,
         "phase": 2.484,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1487,6 +1531,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0808,
         "speed": 0.1458,
         "phase": 0.62,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1514,6 +1559,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2048,
         "speed": 0.1283,
         "phase": 4.639,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 48.9
@@ -1528,6 +1574,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1624,
         "speed": 0.0804,
         "phase": 3.218,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 69.7
@@ -1562,6 +1609,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2426,
         "speed": 0.1681,
         "phase": 3.952,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1611,6 +1659,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1459,
         "speed": 0.1328,
         "phase": 4.746,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1648,6 +1697,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1012,
         "speed": 0.0864,
         "phase": 0.486,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1694,6 +1744,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0789,
         "speed": 0.2332,
         "phase": 4.356,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1732,6 +1783,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0031,
         "speed": 0.162,
         "phase": 2.153,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 28.1
@@ -1746,6 +1798,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2146,
         "speed": 0.1149,
         "phase": 5.419,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1794,6 +1847,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.214,
         "speed": 0.0906,
         "phase": 0.411,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 73
@@ -1828,6 +1882,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2574,
         "speed": 0.1369,
         "phase": 3.26,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1855,6 +1910,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0864,
         "speed": 0.1268,
         "phase": 0.035,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1892,6 +1948,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2351,
         "speed": 0.0809,
         "phase": 4.789,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -1938,6 +1995,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1507,
         "speed": 0.1877,
         "phase": 2.984,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -1987,6 +2045,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0391,
         "speed": 0.148,
         "phase": 0.968,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2024,6 +2083,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1352,
         "speed": 0.114,
         "phase": 0.806,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 42.7
@@ -2038,6 +2098,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.282,
         "speed": 0.0996,
         "phase": 2.264,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 71.6
@@ -2072,6 +2133,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1786,
         "speed": 0.1282,
         "phase": 0.538,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2121,6 +2183,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1778,
         "speed": 0.1252,
         "phase": 2.532,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 50.1
@@ -2135,6 +2198,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2402,
         "speed": 0.0777,
         "phase": 3.218,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2203,6 +2267,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.128,
         "speed": 0.186,
         "phase": 5.682,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2251,6 +2316,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1938,
         "speed": 0.1205,
         "phase": 2.874,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2277,6 +2343,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0337,
         "speed": 0.1008,
         "phase": 5.305,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2314,6 +2381,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2642,
         "speed": 0.0852,
         "phase": 3.563,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2372,6 +2440,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2891,
         "speed": 0.1928,
         "phase": 1.104,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2399,6 +2468,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.08,
         "speed": 0.1231,
         "phase": 1.727,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 33.8
@@ -2413,6 +2483,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.096,
         "speed": 0.1039,
         "phase": 0.732,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2439,6 +2510,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0277,
         "speed": 0.0974,
         "phase": 3.828,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2485,6 +2557,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2844,
         "speed": 0.1244,
         "phase": 1.432,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2512,6 +2585,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1587,
         "speed": 0.1017,
         "phase": 0.446,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 50
@@ -2526,6 +2600,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.3002,
         "speed": 0.0782,
         "phase": 2.801,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 68.3
@@ -2560,6 +2635,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0896,
         "speed": 0.1491,
         "phase": 0.146,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2586,6 +2662,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2117,
         "speed": 0.1132,
         "phase": 1.667,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2635,6 +2712,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1059,
         "speed": 0.0751,
         "phase": 4.837,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 72
@@ -2669,6 +2747,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0794,
         "speed": 0.2631,
         "phase": 4.184,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2695,6 +2774,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0392,
         "speed": 0.1707,
         "phase": 4.996,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2721,6 +2801,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2428,
         "speed": 0.1615,
         "phase": 4.186,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2758,6 +2839,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1404,
         "speed": 0.1239,
         "phase": 0.063,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2784,6 +2866,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.028,
         "speed": 0.0992,
         "phase": 4.596,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -2854,6 +2937,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0486,
         "speed": 0.166,
         "phase": 4.146,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2891,6 +2975,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2072,
         "speed": 0.1306,
         "phase": 4.233,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 34.8
@@ -2905,6 +2990,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2262,
         "speed": 0.1205,
         "phase": 2.427,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -2953,6 +3039,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1327,
         "speed": 0.0798,
         "phase": 2.496,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -2988,6 +3075,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1069,
         "speed": 0.1412,
         "phase": 0.768,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 29.1
@@ -3002,6 +3090,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1778,
         "speed": 0.1229,
         "phase": 5.244,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3051,6 +3140,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1841,
         "speed": 0.0939,
         "phase": 0.604,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3109,6 +3199,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0726,
         "speed": 0.1878,
         "phase": 3.444,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3135,6 +3226,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0988,
         "speed": 0.1404,
         "phase": 2.044,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 28.9
@@ -3149,6 +3241,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2215,
         "speed": 0.1108,
         "phase": 2.744,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3197,6 +3290,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1065,
         "speed": 0.0783,
         "phase": 5.623,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3244,6 +3338,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2749,
         "speed": 0.1985,
         "phase": 4.61,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3282,6 +3377,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.2885,
         "speed": 0.1223,
         "phase": 3.61,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3330,6 +3426,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.2063,
         "speed": 0.1227,
         "phase": 2.089,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3356,6 +3453,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0534,
         "speed": 0.0985,
         "phase": 2.666,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3424,6 +3522,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0837,
         "speed": 0.1473,
         "phase": 0.551,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3473,6 +3572,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0802,
         "speed": 0.1219,
         "phase": 2.361,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3521,6 +3621,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1314,
         "speed": 0.0974,
         "phase": 3.658,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3589,6 +3690,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0501,
         "speed": 0.1308,
         "phase": 0.912,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3615,6 +3717,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0015,
         "speed": 0.1302,
         "phase": 0.628,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3653,6 +3756,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1233,
         "speed": 0.0889,
         "phase": 1.88,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3679,6 +3783,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0534,
         "speed": 0.0723,
         "phase": 3.269,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 80.8
@@ -3693,6 +3798,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.157,
         "speed": 0.0612,
         "phase": 5.277,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3739,6 +3845,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0166,
         "speed": 0.1397,
         "phase": 1.273,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3787,6 +3894,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0439,
         "speed": 0.1048,
         "phase": 3.698,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3824,6 +3932,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1858,
         "speed": 0.0837,
         "phase": 3.088,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3851,6 +3960,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1817,
         "speed": 0.0687,
         "phase": 1.015,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3919,6 +4029,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.017,
         "speed": 0.1238,
         "phase": 1.634,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -3945,6 +4056,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0487,
         "speed": 0.1063,
         "phase": 1.529,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -3994,6 +4106,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0922,
         "speed": 0.0968,
         "phase": 2.178,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4040,6 +4153,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0505,
         "speed": 0.1485,
         "phase": 1.995,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -4089,6 +4203,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.168,
         "speed": 0.1133,
         "phase": 5.034,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4115,6 +4230,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0925,
         "speed": 0.0758,
         "phase": 0.557,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4152,6 +4268,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.078,
         "speed": 0.0786,
         "phase": 3.863,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4178,6 +4295,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1463,
         "speed": 0.0484,
         "phase": 4.845,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4246,6 +4364,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1448,
         "speed": 0.1282,
         "phase": 3.369,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4283,6 +4402,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1052,
         "speed": 0.1037,
         "phase": 6.088,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4309,6 +4429,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1842,
         "speed": 0.0725,
         "phase": 2.037,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4346,6 +4467,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0269,
         "speed": 0.0681,
         "phase": 5,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -4373,6 +4495,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0452,
         "speed": 0.0556,
         "phase": 4.143,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4441,6 +4564,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1113,
         "speed": 0.1519,
         "phase": 3.73,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 34.1
@@ -4455,6 +4579,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.071,
         "speed": 0.1171,
         "phase": 0.94,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4503,6 +4628,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0772,
         "speed": 0.0756,
         "phase": 5.553,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -4518,6 +4644,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0398,
         "speed": 0.0597,
         "phase": 3.338,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4586,6 +4713,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0778,
         "speed": 0.136,
         "phase": 4.091,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4623,6 +4751,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0258,
         "speed": 0.0928,
         "phase": 3.699,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -4661,6 +4790,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0483,
         "speed": 0.0809,
         "phase": 3.467,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4729,6 +4859,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0442,
         "speed": 0.1443,
         "phase": 4.452,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 34.1
@@ -4743,6 +4874,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0515,
         "speed": 0.1129,
         "phase": 4.692,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4791,6 +4923,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1368,
         "speed": 0.0951,
         "phase": 0.018,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 60.6
@@ -4805,6 +4938,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1565,
         "speed": 0.0685,
         "phase": 1.576,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -4854,6 +4988,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0436,
         "speed": 0.0569,
         "phase": 2.247,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4900,6 +5035,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0107,
         "speed": 0.1289,
         "phase": 4.813,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4937,6 +5073,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0537,
         "speed": 0.1145,
         "phase": 1.31,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -4985,6 +5122,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0962,
         "speed": 0.0842,
         "phase": 0.2,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -5023,6 +5161,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1641,
         "speed": 0.0808,
         "phase": 3.706,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5080,6 +5219,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.122,
         "speed": 0.285,
         "phase": 0.3,
+        "type": "roccioso",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 17.8
@@ -5094,6 +5234,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.059,
         "speed": 0.233,
         "phase": 1.2,
+        "type": "tossico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 22.3
@@ -5108,6 +5249,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.01,
         "speed": 0.201,
         "phase": 2.8,
+        "type": "oceanico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5134,6 +5276,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.032,
         "speed": 0.172,
         "phase": 4,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5171,6 +5314,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.023,
         "speed": 0.142,
         "phase": 0.9,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5219,6 +5363,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.044,
         "speed": 0.123,
         "phase": 3.3,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [
@@ -5268,6 +5413,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.013,
         "speed": 0.11,
         "phase": 5.5,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5316,6 +5462,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.031,
         "speed": 0.1,
         "phase": 2,
+        "type": "gh",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5362,6 +5509,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0628,
         "speed": 0.1702,
         "phase": 6.132,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5388,6 +5536,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0249,
         "speed": 0.1324,
         "phase": 2.872,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -5403,6 +5552,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0051,
         "speed": 0.1112,
         "phase": 0.419,
+        "type": "glaciale",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5440,6 +5590,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.077,
         "speed": 0.0991,
         "phase": 4.193,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5486,6 +5637,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.1623,
         "speed": 0.1449,
         "phase": 5.418,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "rings": true,
         "moons": [],
@@ -5501,6 +5653,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0042,
         "speed": 0.125,
         "phase": 6.09,
+        "type": "gg",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5527,6 +5680,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.0213,
         "speed": 0.1107,
         "phase": 0.721,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [
           {
@@ -5575,6 +5729,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": -0.1727,
         "speed": 0.0965,
         "phase": 1.134,
+        "type": "desertico",
         "eyebrow": "Pianeta",
         "moons": [],
         "zoomDistance": 86.1
@@ -5589,6 +5744,7 @@ export const SOLAR_SYSTEMS = {
         "inclination": 0.0246,
         "speed": 0.0906,
         "phase": 6.163,
+        "type": "giungla",
         "eyebrow": "Pianeta",
         "moons": [
           {

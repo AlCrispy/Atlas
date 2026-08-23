@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 import { STAR_TYPES } from './star-types.js';
+import { PLANET_TYPES } from './planet-types.js';
 import { makePlanetTexture } from './planet-texture.js';
 import { buildOrbitRing, buildPlanetRing, buildDysonSphere } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -218,8 +219,10 @@ const planetOrbits = system.planets.map((planet) => {
 
   const sprite = makeBodyMesh(planet.color, planet.slug, planet.size);
   maybeAddAtmosphere(sprite, planet.color, planet.size);
+  const planetTypeInfo = PLANET_TYPES[planet.type];
   registerBody(sprite, planet.size * PLANET_RENDER_SCALE, {
     ...planet,
+    eyebrow: planetTypeInfo ? `${planet.eyebrow} · ${planetTypeInfo.label}` : planet.eyebrow,
     exploreHref: `planets/${planet.slug}.html`,
   });
   pivot.add(sprite);
