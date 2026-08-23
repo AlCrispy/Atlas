@@ -191,7 +191,21 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     const worldFar4 = uniforms.viewMatrixInverse.mul(viewFar.div(viewFar.w));
 
     const rayDir = normalize(worldFar4.xyz.sub(worldNear4.xyz)).toVar('rayDir');
-    const rayPos = worldNear4.xyz.sub(uniforms.holeCenter).toVar('rayPos');
+    const cameraLocalPos = worldNear4.xyz.sub(uniforms.holeCenter);
+
+    // The camera can sit far outside the portal (up to ~600 units in this
+    // scene), so starting the march from the camera's own position would
+    // burn the whole step budget crossing empty space — or trip the
+    // escape-radius check below before a single step runs. Jump straight
+    // to where this view ray enters the portal sphere instead (analytic
+    // ray-sphere intersection, sphere centered at the local origin).
+    const portalRadiusF = float(config.portalRadius);
+    const bCoef = cameraLocalPos.dot(rayDir).mul(2.0);
+    const cCoef = cameraLocalPos.dot(cameraLocalPos).sub(portalRadiusF.mul(portalRadiusF));
+    const discriminant = bCoef.mul(bCoef).sub(cCoef.mul(4.0)).max(0.0);
+    const entryT = bCoef.negate().sub(sqrt(discriminant)).div(2.0).max(0.0);
+
+    const rayPos = cameraLocalPos.add(rayDir.mul(entryT)).toVar('rayPos');
     const prevPos = rayPos.toVar('prevPos');
 
     const color = vec3(0.0, 0.0, 0.0).toVar('color');
