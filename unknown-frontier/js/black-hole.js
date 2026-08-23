@@ -82,15 +82,16 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     turbulencePersistence: 0.8,
     diskEdgeSoftnessInner: 0.18,
     diskEdgeSoftnessOuter: 0.5,
-    gravitationalLensing: 4.5,
+    // 2.2 and 32 steps are the exact values confirmed rendering something
+    // (a bad-looking but present black hole, no scene-wide breakage) on
+    // the Chromium that's been failing. Nudged lensing up only slightly
+    // (2.2 -> 2.5) rather than risk repeating the 4.5 breakage; the
+    // bendStrength clamp above is the real safety net now.
+    gravitationalLensing: 2.5,
     dopplerStrength: 1.0,
-    stepSize: 0.4,
+    stepSize: 0.5,
     portalRadius: 20,
-    // Kept closer to the reference implementation's own 32 (which a real
-    // shipped demo proved compiles/runs broadly) rather than the 64 this
-    // was tuned to — a long fully-unrolled loop is a plausible source of
-    // driver-specific WGSL compile failures blanking the whole scene.
-    stepCount: 48,
+    stepCount: 32,
   };
 
   const uniforms = {
@@ -239,7 +240,13 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
       });
 
       const toCenter = rayPos.negate().div(r);
-      const bendStrength = rs.div(r.mul(r)).mul(uniforms.stepSize).mul(uniforms.gravitationalLensing);
+      // Clamped — close to the horizon, rs/r^2 grows sharply, and an
+      // unbounded per-step bend occasionally degenerates rayDir toward a
+      // near-zero vector right before normalize(), which produces NaN on
+      // some GPU/driver combos and appears to be able to take down the
+      // whole WebGPU context (not just this mesh) rather than just glitch
+      // this one pixel.
+      const bendStrength = rs.div(r.mul(r)).mul(uniforms.stepSize).mul(uniforms.gravitationalLensing).min(1.2);
       rayDir.addAssign(toCenter.mul(bendStrength));
       rayDir.assign(normalize(rayDir));
 
