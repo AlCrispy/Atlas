@@ -48,7 +48,7 @@ for (const systemSlug of Object.keys(SOLAR_SYSTEMS)) {
         systemSlug: system.slug,
         galaxy: system.galaxy,
         classificationKey: null,
-        classificationLabel: '—',
+        classificationLabel: 'Satellite',
         inhabited: !!moon.inhabited,
         inhabitedLabel: moon.inhabited ? 'Sì' : 'No',
         exploreHref: systemHref,
