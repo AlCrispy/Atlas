@@ -12,7 +12,6 @@ const TRIANGLE_RADIUS = TRIANGLE_SIDE / Math.sqrt(3);
 const SPIRAL_SPIN = 0.015;
 const ELLIPTICAL_SPIN = 0.006;
 const IRREGULAR_SPIN = 0.01;
-const BLACKHOLE_DISK_SPIN = 0.08;
 const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
 const RING_SPIN = 0.012;
@@ -412,24 +411,46 @@ function buildBlackHole() {
 
   const diskTexture = makeGlowTexture('rgba(255,200,140,1)', 'rgba(255,200,140,0)');
   const diskParticleCount = 500;
+  const diskInnerRadius = 4;
+  const diskOuterRadius = 14;
+  // Inverse-radius angular speed/infall so particles whirl and fall inward
+  // faster the closer they get, reading as a vortex rather than a rigid
+  // spinning disk. Recycled back to the outer edge once they cross the
+  // event horizon, so the disk never thins out.
+  const DISK_ANGULAR_CONSTANT = 0.9;
+  const DISK_INFALL_SPEED = 0.6;
+
   const diskPositions = new Float32Array(diskParticleCount * 3);
   const diskColors = new Float32Array(diskParticleCount * 3);
+  const diskRadii = new Float32Array(diskParticleCount);
+  const diskAngles = new Float32Array(diskParticleCount);
+  const diskYOffsets = new Float32Array(diskParticleCount);
   const innerColor = new THREE.Color(0xffe8c8);
   const outerColor = new THREE.Color(0xff9a4f);
+  const scratchColor = new THREE.Color();
 
-  for (let i = 0; i < diskParticleCount; i++) {
-    const t = Math.random();
-    const r = 6 + t * 8;
-    const angle = Math.random() * Math.PI * 2;
+  function writeDiskParticle(i) {
+    const r = diskRadii[i];
+    const angle = diskAngles[i];
 
     diskPositions[i * 3] = Math.cos(angle) * r;
-    diskPositions[i * 3 + 1] = (Math.random() - 0.5) * 0.6;
+    diskPositions[i * 3 + 1] = diskYOffsets[i];
     diskPositions[i * 3 + 2] = Math.sin(angle) * r;
 
-    const color = innerColor.clone().lerp(outerColor, t);
-    diskColors[i * 3] = color.r;
-    diskColors[i * 3 + 1] = color.g;
-    diskColors[i * 3 + 2] = color.b;
+    const t = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
+    scratchColor.copy(innerColor).lerp(outerColor, t);
+    diskColors[i * 3] = scratchColor.r;
+    diskColors[i * 3 + 1] = scratchColor.g;
+    diskColors[i * 3 + 2] = scratchColor.b;
+  }
+
+  for (let i = 0; i < diskParticleCount; i++) {
+    // Spread initial radii across the full band so the disk looks whole
+    // right away instead of taking one infall cycle to fill in.
+    diskRadii[i] = diskInnerRadius + Math.random() * (diskOuterRadius - diskInnerRadius);
+    diskAngles[i] = Math.random() * Math.PI * 2;
+    diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
+    writeDiskParticle(i);
   }
 
   const diskGeometry = new THREE.BufferGeometry();
@@ -448,6 +469,25 @@ function buildBlackHole() {
   disk.rotation.x = 0.3;
   group.add(disk);
 
+  function updateDisk(delta) {
+    for (let i = 0; i < diskParticleCount; i++) {
+      const r = diskRadii[i];
+      diskAngles[i] += (DISK_ANGULAR_CONSTANT / r) * delta;
+      diskRadii[i] = r - (DISK_INFALL_SPEED * (diskOuterRadius / r)) * delta;
+
+      if (diskRadii[i] <= diskInnerRadius) {
+        diskRadii[i] = diskOuterRadius;
+        diskAngles[i] = Math.random() * Math.PI * 2;
+        diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
+      }
+
+      writeDiskParticle(i);
+    }
+
+    diskGeometry.attributes.position.needsUpdate = true;
+    diskGeometry.attributes.color.needsUpdate = true;
+  }
+
   const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
     map: glowTexture,
     transparent: true,
@@ -460,10 +500,10 @@ function buildBlackHole() {
 
   scene.add(group);
 
-  return { disk, hitSprite };
+  return { disk, hitSprite, updateDisk };
 }
 
-const { disk: blackHoleDisk, hitSprite: blackHoleHitSprite } = buildBlackHole();
+const { hitSprite: blackHoleHitSprite, updateDisk: updateBlackHoleDisk } = buildBlackHole();
 blackHoleHitSprite.userData.beacon = {
   name: 'Voro Nexus',
   slug: 'voro-nexus',
@@ -890,7 +930,7 @@ function animate() {
     spiralCoreGlow.scale.set(corePulse, corePulse, 1);
   }
 
-  blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
+  updateBlackHoleDisk(delta);
 
   if (compareLine.visible) {
     // Re-read endpoints each frame — the parent galaxies keep spinning,
