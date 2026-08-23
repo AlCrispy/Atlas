@@ -1,18 +1,29 @@
 import * as THREE from 'three';
 import {
-  Fn, uniform, texture, screenUV,
-  vec3, vec4, float,
-  length, normalize, sin, cos, atan, sqrt, pow,
-  fract, clamp, smoothstep, mix, floor, sign,
+  Fn, uniform, screenUV,
+  vec2, vec3, vec4, float,
+  length, normalize, sin, cos, atan, asin, sqrt, pow,
+  fract, clamp, smoothstep, mix, floor, sign, step,
   Loop, Break, If,
 } from 'three/tsl';
 
 // Raymarched black hole (gravitational lensing + accretion disk), ported
 // from threejsroadmap.com/blog/raytracing-a-black-hole-with-webgpu to this
-// scene's real orbiting camera and real background (other galaxies,
-// starfield) instead of the demo's own full-screen procedural universe.
-// Runs on a finite "portal" sphere around the black hole rather than a
-// screen-filling shell, so the rest of the scene stays visible around it.
+// scene's real orbiting camera. Escaped rays render a small procedural
+// starfield (like the reference) rather than trying to show the real
+// scene bent behind it — an earlier version captured the scene to a
+// render target every frame and reprojected it, which reliably blanked
+// the whole page on at least one real WebGPU setup (Brave/Windows,
+// NVIDIA D3D12/Dawn) despite that GPU otherwise fully supporting WebGPU;
+// this drops that unproven technique in favor of what the proven demo
+// itself does. Runs on a finite "portal" sphere around the black hole
+// rather than a screen-filling shell, so the rest of the scene (other
+// galaxies, the real starfield) stays visible around it.
+
+const hash21 = Fn(([p]) => {
+  const n = sin(p.dot(vec2(127.1, 311.7))).mul(43758.5453);
+  return fract(n);
+});
 
 const hash31 = Fn(([p]) => {
   const n = sin(p.dot(vec3(127.1, 311.7, 74.7))).mul(43758.5453);
@@ -61,7 +72,23 @@ const blackbodyColor = Fn(([tempK]) => {
   return vec3(red, green, blue);
 });
 
-export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] }) {
+// Sparse procedural stars for escaped rays — a spherical-direction grid
+// so it has no seams, hashed per cell for placement/existence.
+const proceduralStars = Fn(([rayDir]) => {
+  const theta = atan(rayDir.z, rayDir.x);
+  const phi = asin(clamp(rayDir.y, float(-1.0), float(1.0)));
+  const scaledCoord = vec2(theta, phi).mul(35.0);
+  const cell = floor(scaledCoord);
+  const cellUv = fract(scaledCoord);
+  const cellHash = hash21(cell);
+  const starProb = step(0.94, cellHash);
+  const starPos = hash21(cell.add(17.0)).mul(0.6).add(0.2);
+  const distToStar = length(cellUv.sub(vec2(starPos, starPos)));
+  const intensity = smoothstep(0.1, 0.0, distToStar).mul(starProb);
+  return vec3(0.85, 0.9, 1.0).mul(intensity);
+});
+
+export function createBlackHole({ scene, camera, position = [0, 0, 0] }) {
   // Tuned to this scene's existing scale rather than the reference demo's:
   // the event horizon (mass * 2) lines up with the 4-unit sphere already
   // used here, and the disk leaves an ISCO-style gap before its inner edge
@@ -115,16 +142,9 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     stepSize: uniform(config.stepSize),
     time: uniform(0),
     holeCenter: uniform(new THREE.Vector3(...position)),
-    projMatrix: uniform(new THREE.Matrix4()),
     projMatrixInverse: uniform(new THREE.Matrix4()),
-    viewMatrix: uniform(new THREE.Matrix4()),
     viewMatrixInverse: uniform(new THREE.Matrix4()),
   };
-
-  // Offscreen capture of the real scene (portal hidden) for escaped rays to
-  // sample after bending — real gravitational lensing of the actual
-  // galaxies/starfield behind the hole, not a disconnected procedural sky.
-  const renderTarget = new THREE.RenderTarget(1, 1);
 
   const accretionDiskColor = Fn(([hitR, hitAngle, rayDir]) => {
     const innerR = uniforms.diskInnerRadius;
@@ -274,10 +294,7 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     });
 
     If(escaped.greaterThan(0.5).and(alpha.lessThan(0.99)), () => {
-      const worldHit = rayPos.add(uniforms.holeCenter).add(rayDir.mul(500.0));
-      const clip = uniforms.projMatrix.mul(uniforms.viewMatrix.mul(vec4(worldHit, 1.0)));
-      const sampleUv = clip.xy.div(clip.w).mul(0.5).add(0.5);
-      const bg = texture(renderTarget.texture, sampleUv).rgb;
+      const bg = proceduralStars(rayDir);
       color.addAssign(bg.mul(float(1.0).sub(alpha)));
     });
 
@@ -294,28 +311,11 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
   mesh.userData.baseScale = 1;
   scene.add(mesh);
 
-  const drawingBufferSize = new THREE.Vector2();
-
   function update() {
     uniforms.time.value = performance.now() / 1000;
-    uniforms.projMatrix.value.copy(camera.projectionMatrix);
     uniforms.projMatrixInverse.value.copy(camera.projectionMatrix).invert();
-    uniforms.viewMatrix.value.copy(camera.matrixWorldInverse);
     uniforms.viewMatrixInverse.value.copy(camera.matrixWorld);
   }
 
-  function renderPass() {
-    renderer.getDrawingBufferSize(drawingBufferSize);
-    if (renderTarget.width !== drawingBufferSize.x || renderTarget.height !== drawingBufferSize.y) {
-      renderTarget.setSize(Math.max(1, drawingBufferSize.x), Math.max(1, drawingBufferSize.y));
-    }
-    mesh.visible = false;
-    const previousTarget = renderer.getRenderTarget();
-    renderer.setRenderTarget(renderTarget);
-    renderer.render(scene, camera);
-    renderer.setRenderTarget(previousTarget);
-    mesh.visible = true;
-  }
-
-  return { mesh, update, renderPass };
+  return { mesh, update };
 }

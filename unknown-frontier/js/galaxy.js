@@ -366,7 +366,7 @@ addBeaconSprites(MILKYWAY_BEACONS, milkyWayGalaxy, beaconMeshes, 'Via Lattea', 7
 // Raymarched gravitational lensing + accretion disk (see black-hole.js) —
 // the mesh it returns is both the visual and the click/hover target, no
 // separate hit sprite needed.
-const blackHole = createBlackHole({ scene, camera, renderer, position: [0, 0, 0] });
+const blackHole = createBlackHole({ scene, camera, position: [0, 0, 0] });
 blackHole.mesh.userData.beacon = {
   name: 'Voro Nexus',
   slug: 'voro-nexus',
@@ -802,7 +802,6 @@ function animate() {
 
   controls.update();
   blackHole.update();
-  blackHole.renderPass();
   renderer.render(scene, camera);
 }
 
