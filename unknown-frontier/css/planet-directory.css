@@ -25,8 +25,9 @@
 
 .directory-search,
 .directory-select {
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 0.95rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
   color: var(--hz-bone);
   background: var(--hz-panel-lt);
   border: 1px solid var(--hz-steel);

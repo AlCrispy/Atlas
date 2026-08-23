@@ -24,6 +24,7 @@ rows.sort((a, b) => a.name.localeCompare(b.name, 'it'));
 
 const searchEl = document.getElementById('pd-search');
 const galaxyEl = document.getElementById('pd-galaxy');
+const systemEl = document.getElementById('pd-system');
 const typeEl = document.getElementById('pd-type');
 const inhabitedEl = document.getElementById('pd-inhabited');
 const bodyEl = document.getElementById('pd-rows');
@@ -41,6 +42,12 @@ function addOption(select, value, label) {
   .sort((a, b) => a.localeCompare(b, 'it'))
   .forEach((galaxy) => addOption(galaxyEl, galaxy, galaxy));
 
+const systemNames = new Map();
+rows.forEach((r) => { if (!systemNames.has(r.systemSlug)) systemNames.set(r.systemSlug, r.system); });
+[...systemNames.entries()]
+  .sort((a, b) => a[1].localeCompare(b[1], 'it'))
+  .forEach(([slug, name]) => addOption(systemEl, slug, name));
+
 const typeLabels = new Map();
 rows.forEach((r) => { if (!typeLabels.has(r.type)) typeLabels.set(r.type, r.typeLabel); });
 [...typeLabels.entries()]
@@ -51,6 +58,7 @@ function matches(row) {
   const query = searchEl.value.trim().toLowerCase();
   if (query && !row.name.toLowerCase().includes(query)) return false;
   if (galaxyEl.value && row.galaxy !== galaxyEl.value) return false;
+  if (systemEl.value && row.systemSlug !== systemEl.value) return false;
   if (typeEl.value && row.type !== typeEl.value) return false;
   if (inhabitedEl.value === 'yes' && !row.inhabited) return false;
   if (inhabitedEl.value === 'no' && row.inhabited) return false;
@@ -97,7 +105,7 @@ function render() {
   emptyEl.hidden = filtered.length !== 0;
 }
 
-[searchEl, galaxyEl, typeEl, inhabitedEl].forEach((el) => {
+[searchEl, galaxyEl, systemEl, typeEl, inhabitedEl].forEach((el) => {
   el.addEventListener('input', render);
 });
 
