@@ -1,0 +1,121 @@
+/* Searchable/filterable planet catalog page — shares tokens and base
+   classes (.topbar, .back-btn, .placeholder-*, .system-detail-body) with
+   unknown-frontier.css and system-detail.css. */
+
+.planet-directory {
+  position: relative; z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+  text-align: center;
+}
+
+.planet-directory .placeholder-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin: 10px 0 32px;
+}
+
+.directory-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.directory-search,
+.directory-select {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--hz-bone);
+  background: var(--hz-panel-lt);
+  border: 1px solid var(--hz-steel);
+  padding: 10px 14px;
+}
+
+.directory-search {
+  flex: 1 1 220px;
+  max-width: 320px;
+}
+
+.directory-search::placeholder { color: var(--hz-ash); }
+
+.directory-select {
+  flex: 0 1 auto;
+  cursor: pointer;
+}
+
+.directory-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hz-ash);
+  margin-bottom: 20px;
+}
+
+.directory-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--hz-steel);
+  background: var(--hz-panel-lt);
+}
+
+.directory-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.directory-table th,
+.directory-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hz-steel-dk);
+  white-space: nowrap;
+}
+
+.directory-table th {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hz-cyan);
+  background: var(--hz-panel);
+  position: sticky; top: 0;
+}
+
+.directory-table tbody tr:hover { background: rgba(79,216,232,0.05); }
+.directory-table tbody tr:last-child td { border-bottom: none; }
+
+.directory-link {
+  color: var(--hz-cyan-lt);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.directory-link:hover { color: var(--hz-bone); }
+
+.directory-link-muted { color: var(--hz-ash); }
+.directory-link-muted:hover { color: var(--hz-cyan-lt); }
+
+.directory-badge {
+  display: inline-block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--hz-ash);
+  border: 1px solid var(--hz-steel);
+  padding: 3px 10px;
+}
+
+.directory-badge.is-inhabited {
+  color: var(--hz-void);
+  background: var(--hz-cyan-lt);
+  border-color: var(--hz-cyan-lt);
+}
+
+.directory-empty {
+  color: var(--hz-ash);
+  font-style: italic;
+  padding: 40px 0;
+}

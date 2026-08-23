@@ -68,6 +68,12 @@ body::before {
   font-family: 'Orbitron', sans-serif; font-size: 0.68rem;
   letter-spacing: 0.25em; text-transform: uppercase; color: var(--hz-ash);
 }
+.topbar:has(.nav-link-right) .topbar-title { padding-right: 150px; }
+
+.nav-link-right {
+  border-right: none;
+  border-left: 1px solid var(--hz-steel);
+}
 
 .audio-toggle {
   margin-left: auto;
