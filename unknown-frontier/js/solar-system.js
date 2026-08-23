@@ -72,8 +72,8 @@ const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 // ball; the procedural map also gives each body its own surface identity
 // beyond a single hex color. `spinSpeed` drives axial rotation in the
 // animate loop below — real bodies turn, a static sphere doesn't sell scale.
-function makeBodyMesh(color, slug, size) {
-  const texture = makePlanetTexture(color, slug, size);
+function makeBodyMesh(color, slug, size, type) {
+  const texture = makePlanetTexture(color, slug, size, type);
   const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0.05 });
   const mesh = new THREE.Mesh(sphereGeometry, material);
   mesh.userData.spinSpeed = (Math.random() - 0.5) * 0.3;
@@ -217,7 +217,7 @@ const planetOrbits = system.planets.map((planet) => {
   const ring = buildOrbitRing({ radiusX: planet.orbitRadius, radiusZ: semiMinor, color: planet.color });
   pivot.add(ring);
 
-  const sprite = makeBodyMesh(planet.color, planet.slug, planet.size);
+  const sprite = makeBodyMesh(planet.color, planet.slug, planet.size, planet.type);
   maybeAddAtmosphere(sprite, planet.color, planet.size);
   const planetTypeInfo = PLANET_TYPES[planet.type];
   registerBody(sprite, planet.size * PLANET_RENDER_SCALE, {
