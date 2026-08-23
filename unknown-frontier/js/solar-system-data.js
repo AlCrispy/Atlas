@@ -36,6 +36,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1458,
         "phase": 1.671,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Vessek I-a",
@@ -198,6 +199,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1213,
         "phase": 5.826,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Thalir-9 IV-a",
@@ -291,6 +293,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1596,
         "phase": 4.649,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Kaion Rift I-a",
@@ -412,6 +415,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.2708,
         "phase": 3.075,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Drevane I-a",
@@ -659,6 +663,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1279,
         "phase": 2.439,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 46.5
       },
@@ -780,6 +785,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.101,
         "phase": 3.364,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ozmun Prime III-a",
@@ -987,6 +993,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0954,
         "phase": 4.405,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 71.4
       }
@@ -1020,6 +1027,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1925,
         "phase": 4.533,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Cerevane I-a",
@@ -1168,6 +1176,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1259,
         "phase": 2.208,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Tessaly II-a",
@@ -1300,6 +1309,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1402,
         "phase": 2.688,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Norvun II-a",
@@ -1466,6 +1476,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1458,
         "phase": 0.62,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Rakthos II-a",
@@ -1539,6 +1550,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1681,
         "phase": 3.952,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ybrenn I-a",
@@ -1669,6 +1681,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.2332,
         "phase": 4.356,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Quovar I-a",
@@ -1801,6 +1814,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1369,
         "phase": 3.26,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Skellith I-a",
@@ -1909,6 +1923,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1877,
         "phase": 2.984,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Manoth I-a",
@@ -2041,6 +2056,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1282,
         "phase": 0.538,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Aldevik I-a",
@@ -2281,6 +2297,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0852,
         "phase": 3.563,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Cormanth IV-a",
@@ -2337,6 +2354,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1928,
         "phase": 1.104,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Estryn I-a",
@@ -2448,6 +2466,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1244,
         "phase": 1.432,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Vallor Deep I-a",
@@ -2547,6 +2566,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1132,
         "phase": 1.667,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ninhara II-a",
@@ -2743,6 +2763,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0992,
         "phase": 4.596,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Yssel V-a",
@@ -2909,6 +2930,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0798,
         "phase": 2.496,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 71.4
       }
@@ -2956,6 +2978,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1229,
         "phase": 5.244,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Corvai II-a",
@@ -3148,6 +3171,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0783,
         "phase": 5.623,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ithera IV-a",
@@ -3193,6 +3217,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1985,
         "phase": 4.61,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Zennor I-a",
@@ -3371,6 +3396,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1473,
         "phase": 0.551,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Kessaria I-a",
@@ -3560,6 +3586,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1302,
         "phase": 0.628,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Novandra II-a",
@@ -3767,6 +3794,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0837,
         "phase": 3.088,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Brythe III-a",
@@ -3886,6 +3914,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1063,
         "phase": 1.529,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Selkirion II-a",
@@ -3979,6 +4008,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1485,
         "phase": 1.995,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Talvenor I-a",
@@ -4283,6 +4313,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0681,
         "phase": 5,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ashkar IV-a",
@@ -4438,6 +4469,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0756,
         "phase": 5.553,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 61
       },
@@ -4556,6 +4588,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0928,
         "phase": 3.699,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Kethra II-a",
@@ -4736,6 +4769,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0685,
         "phase": 1.576,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Ombrix IV-a",
@@ -4914,6 +4948,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.0842,
         "phase": 0.2,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Faelund III-a",
@@ -5146,6 +5181,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.123,
         "phase": 3.3,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Titano",
@@ -5313,6 +5349,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1324,
         "phase": 2.872,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 50
       },
@@ -5409,6 +5446,7 @@ export const SOLAR_SYSTEMS = {
         "speed": 0.1449,
         "phase": 5.418,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [],
         "zoomDistance": 43.2
       },

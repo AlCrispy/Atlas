@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 import { makePlanetTexture } from './planet-texture.js';
-import { buildOrbitRing } from './solar-system-shapes.js';
+import { buildOrbitRing, buildPlanetRing } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 import { SOLAR_SYSTEMS } from './solar-system-data.js';
 
@@ -107,6 +107,30 @@ scene.add(sunLight);
 const STAR_RENDER_SCALE = 1.8;
 const PLANET_RENDER_SCALE = 0.55;
 
+// How far a ring's inner edge sits from the planet's visual surface, and
+// (when there's no moon to stop at) how far the outer edge reaches — both
+// as multiples of the planet's rendered radius.
+const RING_INNER_GAP = 1.4;
+const RING_OUTER_REACH = 2.6;
+// Fraction of the nearest moon's orbit radius kept clear when a ring's
+// outer edge would otherwise run into it.
+const RING_MOON_CLEARANCE = 0.82;
+
+// Returns null (no ring drawn) if a planet's nearest moon orbits too close
+// to leave any room — collision avoidance by simply not rendering rather
+// than overlapping.
+function computeRingBounds(planet, visualRadius) {
+  const innerRadius = visualRadius * RING_INNER_GAP;
+  const nearestMoonRadius = planet.moons.length
+    ? Math.min(...planet.moons.map((moon) => moon.orbitRadius))
+    : null;
+  const outerRadius = nearestMoonRadius !== null
+    ? nearestMoonRadius * RING_MOON_CLEARANCE
+    : visualRadius * RING_OUTER_REACH;
+  if (outerRadius <= innerRadius * 1.15) return null;
+  return { innerRadius, outerRadius };
+}
+
 const bodies = [];
 const listItemsBySlug = new Map();
 
@@ -161,6 +185,14 @@ const planetOrbits = system.planets.map((planet) => {
 
   const moonAnchor = new THREE.Group();
   pivot.add(moonAnchor);
+
+  if (planet.rings) {
+    const bounds = computeRingBounds(planet, planet.size * PLANET_RENDER_SCALE);
+    if (bounds) {
+      const ringMesh = buildPlanetRing({ ...bounds, color: planet.ringColor || planet.color });
+      moonAnchor.add(ringMesh);
+    }
+  }
 
   const moonOrbits = planet.moons.map((moon) => {
     const moonSprite = makeBodyMesh(moon.color, moon.slug, moon.size);
