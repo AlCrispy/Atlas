@@ -166,6 +166,7 @@ function registerBody(object, size, data) {
     eyebrow: data.eyebrow,
     color: data.color,
     exploreHref: data.exploreHref,
+    note: data.note,
     zoomTarget: new THREE.Vector3(0, 0, 0),
     zoomDistance: data.zoomDistance,
   };
@@ -174,13 +175,17 @@ function registerBody(object, size, data) {
 
 // === Stars ===
 // A single star stays fixed at the origin; a binary pair orbits their
-// common center (see the animation loop below).
+// common center (see the animation loop below). Computed ahead of the
+// star loop (rather than alongside the Dyson sphere mesh below) so the
+// affected star's info card can mention the megastructure too.
+const dysonStarSlug = system.slug === 'sistema-solare' ? 'sole' : null;
 const starObjs = system.stars.map((star) => {
   const sprite = makeStarSprite(star.color);
   const typeInfo = STAR_TYPES[star.type];
   registerBody(sprite, star.size * STAR_RENDER_SCALE, {
     ...star,
     eyebrow: typeInfo ? `${star.eyebrow} · ${typeInfo.label}` : star.eyebrow,
+    note: star.slug === dysonStarSlug ? 'Circondata da una sfera di Dyson.' : undefined,
   });
   scene.add(sprite);
   return { sprite, data: star };
@@ -193,8 +198,8 @@ const starObjs = system.stars.map((star) => {
 // static position is safe here.
 const DYSON_SPIN = 0.03;
 let dysonSphere = null;
-if (system.slug === 'sistema-solare') {
-  const sole = system.stars.find((star) => star.slug === 'sole');
+if (dysonStarSlug) {
+  const sole = system.stars.find((star) => star.slug === dysonStarSlug);
   if (sole) {
     dysonSphere = buildDysonSphere({ radius: 4.2, color: sole.color });
     scene.add(dysonSphere);

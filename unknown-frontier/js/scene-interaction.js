@@ -47,6 +47,7 @@ export function createSceneInteraction(opts) {
 
   const cardEyebrowEl = cardEl.querySelector('.beacon-card-eyebrow');
   const cardTitleEl = cardEl.querySelector('.beacon-card-title');
+  const cardNoteEl = cardEl.querySelector('.beacon-card-note');
   const cardLinkEl = cardEl.querySelector('.beacon-card-link');
   const cardCloseEl = cardEl.querySelector('.beacon-card-close');
 
@@ -77,6 +78,10 @@ export function createSceneInteraction(opts) {
   function showCard(beacon) {
     cardEyebrowEl.textContent = beacon.eyebrow;
     cardTitleEl.textContent = beacon.name;
+    if (cardNoteEl) {
+      cardNoteEl.textContent = beacon.note || '';
+      cardNoteEl.style.display = beacon.note ? '' : 'none';
+    }
     if (beacon.exploreHref) {
       cardLinkEl.href = beacon.exploreHref;
       cardLinkEl.style.display = '';
