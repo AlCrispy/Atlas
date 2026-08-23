@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pianeti — Unknown Frontier</title>
+<title>Corpi Celesti — Unknown Frontier</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/unknown-frontier.css">
 <link rel="stylesheet" href="css/system-detail.css">
-<link rel="stylesheet" href="css/planet-directory.css">
+<link rel="stylesheet" href="css/celestial-directory.css">
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="unknown-frontier.html">← <span>Unknown Frontier</span></a>
-  <span class="topbar-title">Catalogo Pianeti</span>
+  <span class="topbar-title">Catalogo Corpi Celesti</span>
   <audio id="ambient-audio" src="music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="planet-directory">
+<main class="celestial-directory">
   <p class="placeholder-eyebrow">Catalogo</p>
-  <h1 class="placeholder-title">Pianeti Rilevati</h1>
+  <h1 class="placeholder-title">Corpi Celesti Rilevati</h1>
 
   <div class="directory-controls">
     <input type="search" id="pd-search" class="directory-search" placeholder="Cerca per nome…" autocomplete="off">
@@ -29,6 +29,9 @@
     </select>
     <select id="pd-system" class="directory-select">
       <option value="">Tutti i sistemi</option>
+    </select>
+    <select id="pd-kind" class="directory-select">
+      <option value="">Ogni corpo</option>
     </select>
     <select id="pd-type" class="directory-select">
       <option value="">Tutte le tipologie</option>
@@ -47,6 +50,7 @@
       <thead>
         <tr>
           <th>Nome</th>
+          <th>Tipo</th>
           <th>Sistema</th>
           <th>Galassia</th>
           <th>Tipologia</th>
@@ -56,10 +60,10 @@
       <tbody id="pd-rows"></tbody>
     </table>
   </div>
-  <p class="directory-empty" id="pd-empty" hidden>Nessun pianeta corrisponde ai filtri.</p>
+  <p class="directory-empty" id="pd-empty" hidden>Nessun corpo celeste corrisponde ai filtri.</p>
 </main>
 
-<script type="module" src="js/planet-directory.js"></script>
+<script type="module" src="js/celestial-directory.js"></script>
 
 <script src="js/ambient-audio.js"></script>
 

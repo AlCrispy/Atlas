@@ -2,7 +2,7 @@
    classes (.topbar, .back-btn, .placeholder-*, .system-detail-body) with
    unknown-frontier.css and system-detail.css. */
 
-.planet-directory {
+.celestial-directory {
   position: relative; z-index: 2;
   max-width: 1000px;
   margin: 0 auto;
@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.planet-directory .placeholder-title {
+.celestial-directory .placeholder-title {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   margin: 10px 0 32px;
 }

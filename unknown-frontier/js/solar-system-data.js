@@ -50,6 +50,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.759,
             "phase": 3.035,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 24
           }
         ],
@@ -78,6 +79,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.703,
             "phase": 0.588,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 36.7
           }
         ],
@@ -142,6 +144,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.138,
             "phase": 4.247,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.7
           },
           {
@@ -153,6 +156,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.19,
             "phase": 4.237,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.7
           }
         ],
@@ -197,6 +201,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.536,
             "phase": 1.036,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 27.2
           }
         ],
@@ -226,6 +231,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.233,
             "phase": 5.255,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38
           }
         ],
@@ -254,6 +260,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.993,
             "phase": 0.744,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 62.8
           },
           {
@@ -265,6 +272,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.692,
             "phase": 1.665,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 62.8
           },
           {
@@ -276,6 +284,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.821,
             "phase": 1.3,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 62.8
           }
         ],
@@ -325,6 +334,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.188,
             "phase": 1.246,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 23.2
           },
           {
@@ -336,6 +346,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.199,
             "phase": 1.627,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 23.2
           }
         ],
@@ -396,6 +407,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.414,
             "phase": 4.916,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 69
           },
           {
@@ -407,6 +419,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.707,
             "phase": 5.239,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 69
           }
         ],
@@ -456,6 +469,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.551,
             "phase": 4.419,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 13.9
           }
         ],
@@ -500,6 +514,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.751,
             "phase": 5.476,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 26.1
           }
         ],
@@ -528,6 +543,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.271,
             "phase": 2.667,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39.1
           },
           {
@@ -539,6 +555,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.942,
             "phase": 4.395,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39.1
           }
         ],
@@ -567,6 +584,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.415,
             "phase": 3.965,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61.1
           },
           {
@@ -578,6 +596,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.024,
             "phase": 4.934,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61.1
           }
         ],
@@ -626,6 +645,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.181,
             "phase": 2.175,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 15.7
           },
           {
@@ -637,6 +657,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.195,
             "phase": 6.274,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.7
           },
           {
@@ -648,6 +669,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.111,
             "phase": 1.484,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.7
           }
         ],
@@ -676,6 +698,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.28,
             "phase": 2.922,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20.2
           }
         ],
@@ -773,6 +796,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.136,
             "phase": 4.337,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 22.5
           }
         ],
@@ -801,6 +825,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.972,
             "phase": 3.253,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 32
           },
           {
@@ -812,6 +837,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.325,
             "phase": 3.557,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 32
           },
           {
@@ -823,6 +849,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.253,
             "phase": 1.579,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 32
           }
         ],
@@ -852,6 +879,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.187,
             "phase": 2.281,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.4
           },
           {
@@ -863,6 +891,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.07,
             "phase": 2.593,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.4
           }
         ],
@@ -891,6 +920,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.027,
             "phase": 4.967,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61
           },
           {
@@ -902,6 +932,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.594,
             "phase": 3.807,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61
           },
           {
@@ -913,6 +944,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.314,
             "phase": 2.281,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61
           }
         ],
@@ -961,6 +993,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.29,
             "phase": 0.045,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.7
           }
         ],
@@ -989,6 +1022,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.48,
             "phase": 3.589,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 19.4
           },
           {
@@ -1000,6 +1034,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.368,
             "phase": 6.067,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 19.4
           }
         ],
@@ -1044,6 +1079,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.589,
             "phase": 4.326,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.6
           }
         ],
@@ -1110,6 +1146,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.103,
             "phase": 1.027,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 21.5
           }
         ],
@@ -1138,6 +1175,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.522,
             "phase": 5.827,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 30.3
           },
           {
@@ -1149,6 +1187,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.18,
             "phase": 1.072,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 30.3
           }
         ],
@@ -1177,6 +1216,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.125,
             "phase": 5.71,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 44.6
           }
         ],
@@ -1241,6 +1281,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.372,
             "phase": 4.106,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 24.9
           }
         ],
@@ -1270,6 +1311,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.942,
             "phase": 1.789,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.3
           },
           {
@@ -1281,6 +1323,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.025,
             "phase": 1.987,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.3
           },
           {
@@ -1292,6 +1335,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.112,
             "phase": 5.613,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.3
           }
         ],
@@ -1336,6 +1380,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.211,
             "phase": 3.833,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 63.8
           },
           {
@@ -1347,6 +1392,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.934,
             "phase": 0.433,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 63.8
           }
         ],
@@ -1412,6 +1458,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.854,
             "phase": 3.837,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 25.7
           }
         ],
@@ -1440,6 +1487,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.293,
             "phase": 0.8,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 35.6
           },
           {
@@ -1451,6 +1499,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.471,
             "phase": 5.976,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 35.6
           },
           {
@@ -1462,6 +1511,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.372,
             "phase": 5.434,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 35.6
           }
         ],
@@ -1538,6 +1588,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.701,
             "phase": 5.424,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20.7
           },
           {
@@ -1549,6 +1600,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.57,
             "phase": 3.924,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20.7
           },
           {
@@ -1560,6 +1612,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.84,
             "phase": 1.257,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20.7
           }
         ],
@@ -1589,6 +1642,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.366,
             "phase": 0.647,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 32.1
           }
         ],
@@ -1670,6 +1724,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.332,
             "phase": 3.059,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 27.2
           },
           {
@@ -1681,6 +1736,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.024,
             "phase": 1.889,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 27.2
           },
           {
@@ -1692,6 +1748,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.507,
             "phase": 3.115,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 27.2
           }
         ],
@@ -1720,6 +1777,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.023,
             "phase": 5.275,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 37.6
           },
           {
@@ -1731,6 +1789,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.494,
             "phase": 1.999,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 37.6
           }
         ],
@@ -1759,6 +1818,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.756,
             "phase": 2.672,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 64.3
           }
         ],
@@ -1808,6 +1868,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.288,
             "phase": 2.167,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 17.6
           },
           {
@@ -1819,6 +1880,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.301,
             "phase": 1.799,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 17.6
           }
         ],
@@ -1863,6 +1925,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.131,
             "phase": 5.415,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39.7
           },
           {
@@ -1874,6 +1937,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.774,
             "phase": 3.911,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39.7
           },
           {
@@ -1885,6 +1949,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.705,
             "phase": 0.8,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 39.7
           }
         ],
@@ -1950,6 +2015,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.38,
             "phase": 4.035,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 27
           }
         ],
@@ -1978,6 +2044,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.4,
             "phase": 4.106,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 37.6
           },
           {
@@ -1989,6 +2056,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.562,
             "phase": 5.6,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 37.6
           }
         ],
@@ -2017,6 +2085,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.438,
             "phase": 2.252,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 61.4
           }
         ],
@@ -2066,6 +2135,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.433,
             "phase": 3.164,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 18.2
           },
           {
@@ -2077,6 +2147,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.012,
             "phase": 3.106,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 18.2
           },
           {
@@ -2088,6 +2159,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.956,
             "phase": 2.493,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 18.2
           }
         ],
@@ -2116,6 +2188,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.342,
             "phase": 3.704,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 25
           },
           {
@@ -2127,6 +2200,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.42,
             "phase": 3.034,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 25
           }
         ],
@@ -2208,6 +2282,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.446,
             "phase": 3.963,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 34.4
           },
           {
@@ -2219,6 +2294,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.914,
             "phase": 4.712,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 34.4
           },
           {
@@ -2230,6 +2306,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.364,
             "phase": 1.917,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 34.4
           }
         ],
@@ -2274,6 +2351,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.698,
             "phase": 3.204,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 67.7
           },
           {
@@ -2285,6 +2363,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.311,
             "phase": 5.531,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 67.7
           },
           {
@@ -2296,6 +2375,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.057,
             "phase": 1.681,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 67.7
           }
         ],
@@ -2344,6 +2424,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.03,
             "phase": 5.125,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 23.4
           },
           {
@@ -2355,6 +2436,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.183,
             "phase": 2.518,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 23.4
           },
           {
@@ -2366,6 +2448,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.938,
             "phase": 3.871,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 23.4
           }
         ],
@@ -2394,6 +2477,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.558,
             "phase": 1.97,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.7
           }
         ],
@@ -2422,6 +2506,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.108,
             "phase": 5.394,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 44
           },
           {
@@ -2433,6 +2518,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.879,
             "phase": 0.604,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 44
           }
         ],
@@ -2462,6 +2548,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.297,
             "phase": 2.731,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.9
           },
           {
@@ -2473,6 +2560,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.016,
             "phase": 3.697,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.9
           }
         ],
@@ -2522,6 +2610,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.754,
             "phase": 4.467,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20.2
           }
         ],
@@ -2566,6 +2655,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.057,
             "phase": 1.797,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 44
           }
         ],
@@ -2594,6 +2684,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.06,
             "phase": 3.538,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 59.3
           }
         ],
@@ -2643,6 +2734,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.16,
             "phase": 3.633,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 29.9
           }
         ],
@@ -2723,6 +2815,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.193,
             "phase": 2.762,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 30.5
           }
         ],
@@ -2752,6 +2845,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.725,
             "phase": 1.369,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 47.2
           },
           {
@@ -2763,6 +2857,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.93,
             "phase": 5.299,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 47.2
           },
           {
@@ -2774,6 +2869,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.535,
             "phase": 5.08,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 47.2
           }
         ],
@@ -2838,6 +2934,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.82,
             "phase": 0.775,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 15.2
           }
         ],
@@ -2866,6 +2963,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.843,
             "phase": 1.681,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 20
           }
         ],
@@ -2894,6 +2992,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.314,
             "phase": 5.833,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 30.1
           },
           {
@@ -2905,6 +3004,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.359,
             "phase": 2.624,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 30.1
           }
         ],
@@ -2933,6 +3033,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.161,
             "phase": 4.227,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 40.8
           }
         ],
@@ -2962,6 +3063,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.721,
             "phase": 4.09,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 66.4
           },
           {
@@ -2973,6 +3075,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.933,
             "phase": 2.788,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 66.4
           }
         ],
@@ -3033,6 +3136,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.573,
             "phase": 3.404,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 24.4
           },
           {
@@ -3044,6 +3148,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.31,
             "phase": 4.158,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 24.4
           }
         ],
@@ -3088,6 +3193,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.693,
             "phase": 4.216,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.2
           },
           {
@@ -3099,6 +3205,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.801,
             "phase": 5.926,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.2
           },
           {
@@ -3110,6 +3217,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.022,
             "phase": 6.185,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.2
           }
         ],
@@ -3192,6 +3300,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.602,
             "phase": 6.251,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.8
           },
           {
@@ -3203,6 +3312,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.269,
             "phase": 1.684,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.8
           },
           {
@@ -3214,6 +3324,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.272,
             "phase": 3.509,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.8
           }
         ],
@@ -3242,6 +3353,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.712,
             "phase": 1.123,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65
           }
         ],
@@ -3302,6 +3414,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.855,
             "phase": 2.046,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 17.3
           }
         ],
@@ -3346,6 +3459,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.379,
             "phase": 1.228,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.5
           },
           {
@@ -3357,6 +3471,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.077,
             "phase": 5.669,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.5
           },
           {
@@ -3368,6 +3483,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.996,
             "phase": 4.882,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.5
           }
         ],
@@ -3397,6 +3513,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.431,
             "phase": 0.832,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.7
           }
         ],
@@ -3446,6 +3563,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.004,
             "phase": 5.551,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 22.5
           },
           {
@@ -3457,6 +3575,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.142,
             "phase": 0.266,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 22.5
           }
         ],
@@ -3485,6 +3604,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.113,
             "phase": 1.109,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.4
           },
           {
@@ -3496,6 +3616,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.14,
             "phase": 4.189,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.4
           },
           {
@@ -3507,6 +3628,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.187,
             "phase": 4.492,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.4
           }
         ],
@@ -3535,6 +3657,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.603,
             "phase": 3.484,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 44.4
           }
         ],
@@ -3563,6 +3686,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.199,
             "phase": 3.429,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 68.3
           },
           {
@@ -3574,6 +3698,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.781,
             "phase": 1.961,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 68.3
           },
           {
@@ -3585,6 +3710,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.691,
             "phase": 2.467,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 68.3
           }
         ],
@@ -3634,6 +3760,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.874,
             "phase": 0.478,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 33.6
           },
           {
@@ -3645,6 +3772,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.575,
             "phase": 1.903,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39.6
           },
           {
@@ -3656,6 +3784,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.833,
             "phase": 3.257,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 47.9
           }
         ],
@@ -3684,6 +3813,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.586,
             "phase": 1.437,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 42.2
           },
           {
@@ -3695,6 +3825,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.329,
             "phase": 3.884,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 48
           },
           {
@@ -3706,6 +3837,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.75,
             "phase": 6.027,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 56.9
           }
         ],
@@ -3734,6 +3866,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.051,
             "phase": 5.983,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 60.1
           },
           {
@@ -3745,6 +3878,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.624,
             "phase": 2.981,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.3
           },
           {
@@ -3756,6 +3890,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.206,
             "phase": 1.817,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 73
           }
         ],
@@ -3804,6 +3939,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.148,
             "phase": 3.407,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 36.1
           }
         ],
@@ -3833,6 +3969,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.311,
             "phase": 4.275,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 48.8
           },
           {
@@ -3844,6 +3981,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.379,
             "phase": 1.005,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 57.1
           }
         ],
@@ -3872,6 +4010,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.235,
             "phase": 4.754,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 66
           }
         ],
@@ -3916,6 +4055,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.212,
             "phase": 6.13,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 147.9
           }
         ],
@@ -3964,6 +4104,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.222,
             "phase": 0.052,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 38.5
           },
           {
@@ -3975,6 +4116,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.303,
             "phase": 4.305,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 45.8
           },
           {
@@ -3986,6 +4128,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.115,
             "phase": 2.526,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 58.5
           }
         ],
@@ -4014,6 +4157,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.342,
             "phase": 3.278,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 52.8
           },
           {
@@ -4025,6 +4169,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.265,
             "phase": 5.19,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 58.4
           }
         ],
@@ -4054,6 +4199,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.053,
             "phase": 2.911,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 77.6
           }
         ],
@@ -4082,6 +4228,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.789,
             "phase": 4.459,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 105.1
           },
           {
@@ -4093,6 +4240,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.909,
             "phase": 0.423,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 110.5
           },
           {
@@ -4104,6 +4252,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.077,
             "phase": 3.769,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 118.9
           }
         ],
@@ -4152,6 +4301,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.496,
             "phase": 2.98,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 35.2
           }
         ],
@@ -4181,6 +4331,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.855,
             "phase": 5.749,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 49.7
           },
           {
@@ -4192,6 +4343,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.434,
             "phase": 5.998,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 59.7
           },
           {
@@ -4203,6 +4355,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.221,
             "phase": 4.199,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 75.3
           }
         ],
@@ -4231,6 +4384,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.85,
             "phase": 1.339,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61.3
           }
         ],
@@ -4280,6 +4434,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.77,
             "phase": 5.909,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 37.5
           },
           {
@@ -4291,6 +4446,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.231,
             "phase": 0.423,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 46.3
           },
           {
@@ -4302,6 +4458,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.397,
             "phase": 1.794,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 64.1
           }
         ],
@@ -4330,6 +4487,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.299,
             "phase": 5.119,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 49.3
           }
         ],
@@ -4358,6 +4516,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.911,
             "phase": 6.25,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 70
           },
           {
@@ -4369,6 +4528,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.208,
             "phase": 0.467,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 77.6
           }
         ],
@@ -4397,6 +4557,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.825,
             "phase": 2.604,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 98.4
           }
         ],
@@ -4425,6 +4586,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.852,
             "phase": 2.979,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 156.8
           },
           {
@@ -4436,6 +4598,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.087,
             "phase": 1.01,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 167.2
           },
           {
@@ -4447,6 +4610,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.517,
             "phase": 5.331,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 177.5
           }
         ],
@@ -4495,6 +4659,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.266,
             "phase": 1.076,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 35
           },
           {
@@ -4506,6 +4671,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.311,
             "phase": 2.45,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 40.9
           }
         ],
@@ -4534,6 +4700,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.122,
             "phase": 0.858,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 51.9
           }
         ],
@@ -4562,6 +4729,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.281,
             "phase": 2.044,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 83.9
           },
           {
@@ -4573,6 +4741,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.196,
             "phase": 3.176,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 92.9
           }
         ],
@@ -4602,6 +4771,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.686,
             "phase": 4.251,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 127.8
           }
         ],
@@ -4630,6 +4800,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.171,
             "phase": 3.57,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 205.4
           },
           {
@@ -4641,6 +4812,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.392,
             "phase": 5.769,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 215.3
           },
           {
@@ -4652,6 +4824,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.375,
             "phase": 0.174,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 225.9
           }
         ],
@@ -4716,6 +4889,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.171,
             "phase": 0.268,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 46.5
           },
           {
@@ -4727,6 +4901,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.135,
             "phase": 6.237,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 52.9
           },
           {
@@ -4738,6 +4913,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.649,
             "phase": 3.355,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 62.4
           }
         ],
@@ -4783,6 +4959,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.03,
             "phase": 4.286,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 111.5
           },
           {
@@ -4794,6 +4971,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.625,
             "phase": 1.704,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 115.5
           },
           {
@@ -4805,6 +4983,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.358,
             "phase": 5.692,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 122.5
           }
         ],
@@ -4853,6 +5032,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.614,
             "phase": 0.65,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 34.2
           },
           {
@@ -4864,6 +5044,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.24,
             "phase": 4.851,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 41.5
           }
         ],
@@ -4893,6 +5074,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.377,
             "phase": 5.851,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 50.5
           },
           {
@@ -4904,6 +5086,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.879,
             "phase": 0.245,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 56.4
           }
         ],
@@ -4932,6 +5115,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.317,
             "phase": 0.432,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 72
           },
           {
@@ -4943,6 +5127,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.496,
             "phase": 6.095,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 77.7
           },
           {
@@ -4954,6 +5139,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.525,
             "phase": 3.796,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 85.7
           }
         ],
@@ -5018,6 +5204,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.343,
             "phase": 1.743,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 52.5
           },
           {
@@ -5029,6 +5216,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.678,
             "phase": 1.428,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 57.1
           },
           {
@@ -5040,6 +5228,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.905,
             "phase": 2.065,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 69
           }
         ],
@@ -5085,6 +5274,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.946,
             "phase": 5.097,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 113
           },
           {
@@ -5096,6 +5286,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.766,
             "phase": 1.698,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 120.7
           },
           {
@@ -5107,6 +5298,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.902,
             "phase": 2.291,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 138.1
           }
         ],
@@ -5135,6 +5327,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.315,
             "phase": 5.059,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 174.8
           }
         ],
@@ -5183,6 +5376,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.162,
             "phase": 0.224,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 39
           },
           {
@@ -5194,6 +5388,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.968,
             "phase": 0.969,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 47.8
           }
         ],
@@ -5222,6 +5417,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.432,
             "phase": 4.562,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 46.5
           },
           {
@@ -5233,6 +5429,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.635,
             "phase": 2.087,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 50.7
           },
           {
@@ -5244,6 +5441,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.083,
             "phase": 6.07,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 61
           }
         ],
@@ -5273,6 +5471,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.651,
             "phase": 3.651,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 62.3
           },
           {
@@ -5284,6 +5483,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.524,
             "phase": 5.748,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 69.5
           }
         ],
@@ -5312,6 +5512,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.118,
             "phase": 6.213,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 81.4
           },
           {
@@ -5323,6 +5524,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.261,
             "phase": 4.151,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 85.1
           }
         ],
@@ -5403,6 +5605,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.6,
             "phase": 0.5,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 24.8
           }
         ],
@@ -5431,6 +5634,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 3,
             "phase": 1,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 31.1
           },
           {
@@ -5442,6 +5646,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.2,
             "phase": 3.5,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 30.1
           }
         ],
@@ -5470,6 +5675,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2,
             "phase": 0.2,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 42.7
           },
           {
@@ -5481,6 +5687,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.6,
             "phase": 2.4,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 41.7
           },
           {
@@ -5492,6 +5699,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.2,
             "phase": 4.6,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 40.7
           }
         ],
@@ -5521,6 +5729,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.1,
             "phase": 1.4,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 54.6
           },
           {
@@ -5532,6 +5741,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.5,
             "phase": 3.8,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 53.6
           },
           {
@@ -5543,6 +5753,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 0.8,
             "phase": 5.9,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 52.6
           }
         ],
@@ -5571,6 +5782,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.3,
             "phase": 0.9,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 66.5
           },
           {
@@ -5582,6 +5794,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.05,
             "phase": 2.6,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.5
           },
           {
@@ -5593,6 +5806,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.1,
             "phase": 4.4,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 64.5
           }
         ],
@@ -5621,6 +5835,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.7,
             "phase": 1.9,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 78.4
           }
         ],
@@ -5669,6 +5884,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.133,
             "phase": 3.976,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 31.8
           }
         ],
@@ -5714,6 +5930,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.122,
             "phase": 5.176,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.1
           },
           {
@@ -5725,6 +5942,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.098,
             "phase": 3.172,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 64.1
           }
         ],
@@ -5753,6 +5971,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.885,
             "phase": 6.025,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 80.1
           }
         ],
@@ -5818,6 +6037,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.967,
             "phase": 5.386,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 53
           }
         ],
@@ -5846,6 +6066,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.017,
             "phase": 1.825,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 65.6
           },
           {
@@ -5857,6 +6078,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.291,
             "phase": 5.248,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 64.6
           },
           {
@@ -5868,6 +6090,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 1.588,
             "phase": 1.968,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 63.6
           }
         ],
@@ -5912,6 +6135,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.27,
             "phase": 3.328,
             "eyebrow": "Satellite",
+            "inhabited": false,
             "zoomDistance": 94.4
           },
           {
@@ -5923,6 +6147,7 @@ export const SOLAR_SYSTEMS = {
             "speed": 2.397,
             "phase": 5.152,
             "eyebrow": "Satellite",
+            "inhabited": true,
             "zoomDistance": 93.4
           }
         ],
