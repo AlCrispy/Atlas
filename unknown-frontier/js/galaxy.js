@@ -432,9 +432,7 @@ function buildBlackHole() {
     depthWrite: false,
   });
   const disk = new THREE.Points(diskGeometry, diskMaterial);
-  // Tilted closer to edge-on so the disk itself reads as a squashed ellipse
-  // (matches the pinched photon-ring halo on the lens shell below it).
-  disk.rotation.x = 1.0;
+  disk.rotation.x = 0.3;
   group.add(disk);
 
   const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -480,8 +478,6 @@ lensSystem.buildLens({
   position: [0, 0, 0],
   radius: 5,
   distortionStrength: 0.5,
-  squash: 2.4,
-  hotColor: '#fff2e0',
 });
 
 // === Galaxy labels ===
