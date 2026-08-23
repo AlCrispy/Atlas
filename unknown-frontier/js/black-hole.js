@@ -89,14 +89,15 @@ const proceduralStars = Fn(([rayDir]) => {
 });
 
 export function createBlackHole({ scene, camera, position = [0, 0, 0] }) {
-  // Tuned to this scene's existing scale rather than the reference demo's:
-  // the event horizon (mass * 2) lines up with the 4-unit sphere already
-  // used here, and the disk leaves an ISCO-style gap before its inner edge
-  // instead of touching the horizon.
+  // Mass/disk ratio matched to the verified-working standalone reference
+  // (event horizon at roughly 1/5 the disk's inner radius) rather than the
+  // ~1:1.5 ratio tried earlier — too-similar a horizon and disk radius
+  // never let a ray plunge close enough to the singularity for the bend to
+  // get strong, which is what produced a thin sliver instead of a ring.
   const config = {
-    blackHoleMass: 2.0,
-    diskInnerRadius: 6,
-    diskOuterRadius: 16,
+    blackHoleMass: 0.5,
+    diskInnerRadius: 5,
+    diskOuterRadius: 18,
     diskTemperature: 42,
     temperatureFalloff: 5.2,
     diskBrightness: 4.5,
@@ -109,16 +110,17 @@ export function createBlackHole({ scene, camera, position = [0, 0, 0] }) {
     turbulencePersistence: 0.8,
     diskEdgeSoftnessInner: 0.18,
     diskEdgeSoftnessOuter: 0.5,
-    // 2.2 and 32 steps are the exact values confirmed rendering something
-    // (a bad-looking but present black hole, no scene-wide breakage) on
-    // the Chromium that's been failing. Nudged lensing up only slightly
-    // (2.2 -> 2.5) rather than risk repeating the 4.5 breakage; the
-    // bendStrength clamp above is the real safety net now.
-    gravitationalLensing: 2.5,
+    // 2.4 matches the verified-working reference's own value.
+    gravitationalLensing: 2.4,
     dopplerStrength: 1.0,
-    stepSize: 0.5,
-    portalRadius: 20,
-    stepCount: 32,
+    // stepSize/stepCount mirror the standalone reference test exactly
+    // (proven stable across its whole camera range at this object scale)
+    // rather than re-deriving new values — the ray-sphere entry jump below
+    // already skips the empty gap between a distant camera and the
+    // portal, so this budget is pure margin on top of what was proven.
+    stepSize: 1.0,
+    portalRadius: 24,
+    stepCount: 80,
   };
 
   const uniforms = {
