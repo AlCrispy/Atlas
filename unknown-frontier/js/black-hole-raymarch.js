@@ -27,7 +27,6 @@ const FRAGMENT_SHADER = `
   uniform float uMass;
   uniform float uDiskInnerRadius;
   uniform float uDiskOuterRadius;
-  uniform float uDiskTemperature;
   uniform float uTemperatureFalloff;
   uniform float uDiskBrightness;
   uniform float uDiskRotationSpeed;
@@ -82,12 +81,19 @@ const FRAGMENT_SHADER = `
     return value;
   }
 
-  vec3 blackbodyColor(float tempK) {
-    float t = clamp((tempK - 1000.0) / 9000.0, 0.0, 1.0);
-    float red = clamp(1.0 - (t - 0.8) * 2.0, 0.5, 1.0);
-    float green = smoothstep(0.0, 0.5, t) * (1.0 - max((t - 0.7) * 0.3, 0.0));
-    float blue = smoothstep(0.3, 1.0, t) * t;
-    return vec3(red, green, blue);
+  // Hand-picked fire palette instead of a physical blackbody curve — full
+  // control over how much of the disk reads as each color (red at the
+  // outer edge, orange dominating the middle, yellow/white only right at
+  // the hottest inner edge) and no blue tint at the center.
+  vec3 fireColor(float heat) {
+    vec3 red = vec3(0.72, 0.09, 0.02);
+    vec3 orange = vec3(1.0, 0.42, 0.05);
+    vec3 yellow = vec3(1.0, 0.8, 0.28);
+    vec3 white = vec3(1.0, 0.96, 0.88);
+    vec3 c = mix(red, orange, smoothstep(0.0, 0.18, heat));
+    c = mix(c, yellow, smoothstep(0.72, 0.9, heat));
+    c = mix(c, white, smoothstep(0.88, 1.0, heat));
+    return c;
   }
 
   vec4 accretionDiskColor(float hitR, float hitAngle, vec3 rayDir) {
@@ -95,11 +101,10 @@ const FRAGMENT_SHADER = `
     float outerR = uDiskOuterRadius;
     float normR = clamp((hitR - innerR) / (outerR - innerR), 0.0, 1.0);
 
-    float peakTempK = uDiskTemperature * 1000.0;
-    float outerTempK = 1500.0;
-    float tempFalloff = pow(innerR / hitR, uTemperatureFalloff);
-    float tempK = mix(outerTempK, peakTempK, tempFalloff);
-    vec3 diskColor = blackbodyColor(tempK);
+    // 1 at the inner edge (hottest), fading toward 0 at the outer edge —
+    // uTemperatureFalloff still controls how quickly it cools outward.
+    float heat = pow(1.0 - normR, uTemperatureFalloff);
+    vec3 diskColor = fireColor(heat);
 
     float rotationSign = sign(uDiskRotationSpeed);
     vec3 velocityDir = vec3(-sin(hitAngle) * rotationSign, 0.0, cos(hitAngle) * rotationSign);
@@ -223,11 +228,13 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     // solidly with smoother tonal gradation instead of thin streaky lines.
     diskInnerRadius: 3.5,
     diskOuterRadius: 18,
-    diskTemperature: 55,
-    temperatureFalloff: 4.0,
-    diskBrightness: 6.5,
-    diskRotationSpeed: -6,
-    turbulenceScale: 1.8,
+    // How quickly the fire palette cools from white/yellow at the inner
+    // edge to red at the outer edge — higher = hot color stays confined
+    // closer to the center, lower = it spreads further out.
+    temperatureFalloff: 7.0,
+    diskBrightness: 4.5,
+    diskRotationSpeed: -9,
+    turbulenceScale: 2.4,
     turbulenceStretch: 0.75,
     turbulenceSharpness: 1.8,
     turbulenceCycleTime: 5,
@@ -256,7 +263,6 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
       uMass: { value: config.mass },
       uDiskInnerRadius: { value: config.diskInnerRadius },
       uDiskOuterRadius: { value: config.diskOuterRadius },
-      uDiskTemperature: { value: config.diskTemperature },
       uTemperatureFalloff: { value: config.temperatureFalloff },
       uDiskBrightness: { value: config.diskBrightness },
       uDiskRotationSpeed: { value: config.diskRotationSpeed },
