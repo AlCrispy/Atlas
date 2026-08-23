@@ -34,8 +34,13 @@ const FRAGMENT_SHADER = `
     vec2 distortedUv = uv - dir * pull * uLensScreenRadius;
     vec3 color = texture2D(tDiffuse, clamp(distortedUv, vec2(0.0), vec2(1.0))).rgb;
 
-    float rim = smoothstep(0.55, 0.95, t) * (1.0 - smoothstep(0.95, 1.08, t));
-    color += uRimColor * rim * 2.2;
+    // Two concentric bands with a dark gap between them, echoing the
+    // doubled photon-ring look of a real lensed accretion disk rather
+    // than a single soft rim.
+    float outerRim = smoothstep(0.55, 0.9, t) * (1.0 - smoothstep(0.9, 1.05, t));
+    float innerRim = smoothstep(0.25, 0.4, t) * (1.0 - smoothstep(0.4, 0.5, t));
+    float rim = outerRim + innerRim * 0.6;
+    color += uRimColor * rim * 2.4;
 
     gl_FragColor = vec4(color, 1.0);
   }

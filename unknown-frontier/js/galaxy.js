@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
+import { makeGlowTexture, makeDotTexture, makeStreakTexture, makeNebulaBlobTexture, makeRingTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { makeLabelTexture } from './label-texture.js';
 import { createLensSystem } from './gravitational-lens.js';
 import { createSceneInteraction } from './scene-interaction.js';
@@ -376,6 +376,82 @@ addBeaconSprites(RING_BEACONS, ringGalaxy, beaconMeshes, 'Cygnix', 50);
 addBeaconSprites(PECULIAR_BEACONS, peculiarGalaxy, beaconMeshes, 'Vandrel', 52);
 addBeaconSprites(MILKYWAY_BEACONS, milkyWayGalaxy, beaconMeshes, 'Via Lattea', 75);
 
+// A tileable strip texture for the accretion disk: brightness fades from a
+// hot inner edge (v=0) to a dim outer edge (v=1), with a few integer-period
+// sine waves layered across the angle (u) so streak variation repeats
+// seamlessly when the texture is scrolled for flow, instead of one flat
+// gradient ring.
+function makeAccretionDiskTexture(innerColor, outerColor, width = 512, height = 64) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  const imageData = ctx.createImageData(width, height);
+  const frequencies = [3, 7, 11, 17];
+  const weights = [0.4, 0.25, 0.2, 0.15];
+  const phases = frequencies.map(() => Math.random() * Math.PI * 2);
+  const color = new THREE.Color();
+
+  for (let y = 0; y < height; y++) {
+    const v = y / (height - 1);
+    const radialFade = Math.pow(1 - v, 1.6);
+    color.copy(innerColor).lerp(outerColor, v);
+
+    for (let x = 0; x < width; x++) {
+      const angle = (x / width) * Math.PI * 2;
+      let streak = 0;
+      for (let f = 0; f < frequencies.length; f++) {
+        streak += weights[f] * (0.5 + 0.5 * Math.sin(angle * frequencies[f] + phases[f]));
+      }
+      const alpha = Math.min(1, radialFade * (0.6 + 0.4 * streak));
+
+      const idx = (y * width + x) * 4;
+      imageData.data[idx] = Math.round(color.r * 255);
+      imageData.data[idx + 1] = Math.round(color.g * 255);
+      imageData.data[idx + 2] = Math.round(color.b * 255);
+      imageData.data[idx + 3] = Math.round(alpha * 255);
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  return texture;
+}
+
+// A flat annulus built by hand (rather than THREE.RingGeometry) so its UVs
+// map cleanly to polar coordinates: u wraps once around the angle (for the
+// tileable streak texture above to scroll seamlessly), v runs 0 (inner
+// edge) to 1 (outer edge) for the radial fade.
+function buildAccretionDiskGeometry(innerRadius, outerRadius, segments = 128) {
+  const positions = [];
+  const uvs = [];
+  const indices = [];
+
+  for (let j = 0; j <= segments; j++) {
+    const angle = (j / segments) * Math.PI * 2;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    positions.push(cos * innerRadius, 0, sin * innerRadius, cos * outerRadius, 0, sin * outerRadius);
+    uvs.push(j / segments, 0, j / segments, 1);
+  }
+
+  for (let j = 0; j < segments; j++) {
+    const a = j * 2;
+    const b = a + 1;
+    const c = a + 2;
+    const d = a + 3;
+    indices.push(a, b, d, a, d, c);
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setIndex(indices);
+  return geometry;
+}
+
 // === Black hole ===
 function buildBlackHole() {
   const group = new THREE.Group();
@@ -386,113 +462,35 @@ function buildBlackHole() {
   );
   group.add(eventHorizon);
 
-  // Two-layer halo: a wide, soft outer glow plus a tighter inner one, kept
-  // dim and pale blue-white so light stays concentrated near the horizon
-  // (like a real accretion disk) instead of a diffuse colored bloom.
-  const outerGlowTexture = makeGlowTexture('rgba(220,235,255,0.15)', 'rgba(220,235,255,0)');
-  const outerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: outerGlowTexture,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  }));
-  outerGlow.scale.set(22, 22, 1);
-  group.add(outerGlow);
-
-  const glowTexture = makeGlowTexture('rgba(220,235,255,0.35)', 'rgba(220,235,255,0)');
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTexture,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  }));
-  glow.scale.set(14, 14, 1);
-  group.add(glow);
-
-  const diskTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
-  const diskParticleCount = 500;
   const diskInnerRadius = 4;
   const diskOuterRadius = 14;
-  // Inverse-radius angular speed/infall so particles whirl and fall inward
-  // faster the closer they get, reading as a vortex rather than a rigid
-  // spinning disk. Recycled back to the outer edge once they cross the
-  // event horizon, so the disk never thins out.
-  const DISK_ANGULAR_CONSTANT = 0.9;
-  const DISK_INFALL_SPEED = 0.6;
-
-  const diskPositions = new Float32Array(diskParticleCount * 3);
-  const diskColors = new Float32Array(diskParticleCount * 3);
-  const diskRadii = new Float32Array(diskParticleCount);
-  const diskAngles = new Float32Array(diskParticleCount);
-  const diskYOffsets = new Float32Array(diskParticleCount);
-  // Hot white-blue near the horizon fading to a warm dust brown further
-  // out, matching a Gargantua-style accretion disk rather than a fiery
-  // orange ring.
-  const innerColor = new THREE.Color(0xf3f8ff);
-  const outerColor = new THREE.Color(0x8f6f52);
-  const scratchColor = new THREE.Color();
-
-  function writeDiskParticle(i) {
-    const r = diskRadii[i];
-    const angle = diskAngles[i];
-
-    diskPositions[i * 3] = Math.cos(angle) * r;
-    diskPositions[i * 3 + 1] = diskYOffsets[i];
-    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
-
-    const t = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
-    scratchColor.copy(innerColor).lerp(outerColor, t);
-    diskColors[i * 3] = scratchColor.r;
-    diskColors[i * 3 + 1] = scratchColor.g;
-    diskColors[i * 3 + 2] = scratchColor.b;
-  }
-
-  for (let i = 0; i < diskParticleCount; i++) {
-    // Spread initial radii across the full band so the disk looks whole
-    // right away instead of taking one infall cycle to fill in.
-    diskRadii[i] = diskInnerRadius + Math.random() * (diskOuterRadius - diskInnerRadius);
-    diskAngles[i] = Math.random() * Math.PI * 2;
-    diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
-    writeDiskParticle(i);
-  }
-
-  const diskGeometry = new THREE.BufferGeometry();
-  diskGeometry.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
-  diskGeometry.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
-  const diskMaterial = new THREE.PointsMaterial({
-    size: 1.2,
+  // Continuous scrolling texture instead of a particle system: hot
+  // white-blue near the horizon fading to a warm dust brown further out,
+  // flowing around the ring via texture offset rather than per-particle
+  // motion — matches a Gargantua-style disk rather than a scattered field.
+  const DISK_FLOW_SPEED = 0.12;
+  const diskInnerColor = new THREE.Color(0xf3f8ff);
+  const diskOuterColor = new THREE.Color(0x8f6f52);
+  const diskTexture = makeAccretionDiskTexture(diskInnerColor, diskOuterColor);
+  const diskGeometry = buildAccretionDiskGeometry(diskInnerRadius, diskOuterRadius);
+  const diskMaterial = new THREE.MeshBasicMaterial({
     map: diskTexture,
-    vertexColors: true,
     transparent: true,
-    opacity: 0.9,
+    side: THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
-  const disk = new THREE.Points(diskGeometry, diskMaterial);
+  const disk = new THREE.Mesh(diskGeometry, diskMaterial);
   disk.rotation.x = 0.3;
   group.add(disk);
 
   function updateDisk(delta) {
-    for (let i = 0; i < diskParticleCount; i++) {
-      const r = diskRadii[i];
-      diskAngles[i] += (DISK_ANGULAR_CONSTANT / r) * delta;
-      diskRadii[i] = r - (DISK_INFALL_SPEED * (diskOuterRadius / r)) * delta;
-
-      if (diskRadii[i] <= diskInnerRadius) {
-        diskRadii[i] = diskOuterRadius;
-        diskAngles[i] = Math.random() * Math.PI * 2;
-        diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
-      }
-
-      writeDiskParticle(i);
-    }
-
-    diskGeometry.attributes.position.needsUpdate = true;
-    diskGeometry.attributes.color.needsUpdate = true;
+    diskTexture.offset.x += delta * DISK_FLOW_SPEED;
   }
 
+  const hitTexture = makeGlowTexture('rgba(255,255,255,1)', 'rgba(255,255,255,0)');
   const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTexture,
+    map: hitTexture,
     transparent: true,
     opacity: 0,
     depthWrite: false,
@@ -503,7 +501,7 @@ function buildBlackHole() {
 
   scene.add(group);
 
-  return { disk, hitSprite, updateDisk };
+  return { hitSprite, updateDisk };
 }
 
 const { hitSprite: blackHoleHitSprite, updateDisk: updateBlackHoleDisk } = buildBlackHole();
@@ -520,6 +518,75 @@ blackHoleHitSprite.userData.beacon = {
 };
 beaconMeshes.push(blackHoleHitSprite);
 
+// === Star-trail halo ===
+// Thin streak sprites on isotropic random orbits around the black hole,
+// oriented along their orbital tangent in screen space each frame — reads
+// as curved star trails swirling around the hole, echoing the reference
+// image, without adding another particle field.
+const STAR_STREAK_COUNT = 50;
+const STREAK_ANGULAR_CONSTANT = 0.5;
+
+function buildStarStreaks() {
+  const streakTexture = makeStreakTexture('#bcd6ff');
+  const streaks = [];
+
+  for (let i = 0; i < STAR_STREAK_COUNT; i++) {
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: streakTexture,
+      transparent: true,
+      opacity: 0.3 + Math.random() * 0.3,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }));
+    const length = 4 + Math.random() * 10;
+    sprite.scale.set(length, length * 0.06, 1);
+    scene.add(sprite);
+
+    streaks.push({
+      sprite,
+      radius: 24 + Math.random() * 90,
+      incl: Math.acos(2 * Math.random() - 1),
+      node: Math.random() * Math.PI * 2,
+      angle: Math.random() * Math.PI * 2,
+    });
+  }
+
+  const posA = new THREE.Vector3();
+  const posB = new THREE.Vector3();
+  const screenA = new THREE.Vector3();
+  const screenB = new THREE.Vector3();
+
+  function orbitPosition(target, radius, incl, node, angle) {
+    const localX = Math.cos(angle) * radius;
+    const localZ = Math.sin(angle) * radius;
+    const tiltedY = -localZ * Math.sin(incl);
+    const tiltedZ = localZ * Math.cos(incl);
+    target.set(
+      localX * Math.cos(node) + tiltedZ * Math.sin(node),
+      tiltedY,
+      -localX * Math.sin(node) + tiltedZ * Math.cos(node)
+    );
+  }
+
+  function update(delta) {
+    streaks.forEach((streak) => {
+      streak.angle += (STREAK_ANGULAR_CONSTANT / streak.radius) * delta;
+      orbitPosition(posA, streak.radius, streak.incl, streak.node, streak.angle);
+      orbitPosition(posB, streak.radius, streak.incl, streak.node, streak.angle + 0.02);
+
+      streak.sprite.position.copy(posA);
+
+      screenA.copy(posA).project(camera);
+      screenB.copy(posB).project(camera);
+      streak.sprite.material.rotation = Math.atan2(screenB.y - screenA.y, screenB.x - screenA.x);
+    });
+  }
+
+  return { update };
+}
+
+const starStreaks = buildStarStreaks();
+
 // === Gravitational lens ===
 // Real lensing belongs to the black hole itself, not a separate floating
 // object: a shell sitting just outside the event horizon (radius 4) and
@@ -534,9 +601,6 @@ lensSystem.buildLens({
   position: [0, 0, 0],
   radius: 5,
   distortionStrength: 0.5,
-  // Pulls the disk/starfield in harder along x than y, so the sides read as
-  // squeezed toward the center like a candy wrapper twisted at both ends.
-  squeezeX: 2.0,
   // Pale blue-white to match the Gargantua-style disk light bent around
   // the horizon, rather than a tinted rim.
   color: '#eaf4ff',
@@ -937,6 +1001,7 @@ function animate() {
   }
 
   updateBlackHoleDisk(delta);
+  starStreaks.update(delta);
 
   if (compareLine.visible) {
     // Re-read endpoints each frame — the parent galaxies keep spinning,
