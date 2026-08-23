@@ -75,6 +75,16 @@ export function createSceneInteraction(opts) {
   let selectedListItem = null;
   let cameraAnim = null;
 
+  // Keeps the camera locked onto the selected body after the fly-in
+  // animation ends, so a system doesn't drift out of view as its galaxy
+  // slowly orbits the black hole. followTargetActive is false for the
+  // first frame after any new fly-in (see flyTo) so that frame only
+  // records a baseline instead of applying a delta against a stale
+  // (possibly unrelated) previous body's position.
+  const followWorldPos = new THREE.Vector3();
+  const followDelta = new THREE.Vector3();
+  let followTargetActive = false;
+
   function showCard(beacon) {
     cardEyebrowEl.textContent = beacon.eyebrow;
     cardTitleEl.textContent = beacon.name;
@@ -101,6 +111,10 @@ export function createSceneInteraction(opts) {
       start: performance.now(),
       duration,
     };
+    // Invalidates any in-progress follow tracking from a previous
+    // selection — the next post-animation frame should record a fresh
+    // baseline rather than diff against a stale/unrelated position.
+    followTargetActive = false;
     controls.enabled = false;
   }
 
@@ -222,6 +236,18 @@ export function createSceneInteraction(opts) {
       selectionRing.position.copy(ringWorldPos);
       const pulse = ringBaseSize + Math.sin(elapsed * 3) * (ringBaseSize * 0.15);
       selectionRing.scale.set(pulse, pulse, 1);
+
+      if (zoomOnSelect && !cameraAnim) {
+        if (followTargetActive) {
+          followDelta.copy(ringWorldPos).sub(followWorldPos);
+          camera.position.add(followDelta);
+          controls.target.add(followDelta);
+        }
+        followWorldPos.copy(ringWorldPos);
+        followTargetActive = true;
+      }
+    } else {
+      followTargetActive = false;
     }
 
     if (cameraAnim) {
