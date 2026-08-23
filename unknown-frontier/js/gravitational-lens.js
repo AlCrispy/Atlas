@@ -20,6 +20,7 @@ const FRAGMENT_SHADER = `
   uniform float uLensScreenRadius;
   uniform float uStrength;
   uniform vec3 uRimColor;
+  uniform float uSqueezeX;
 
   void main() {
     vec2 uv = gl_FragCoord.xy / uResolution;
@@ -29,6 +30,7 @@ const FRAGMENT_SHADER = `
 
     float pull = uStrength * (1.0 - t) * (1.0 - t);
     vec2 dir = dist > 0.00001 ? delta / dist : vec2(0.0);
+    dir.x *= uSqueezeX;
     vec2 distortedUv = uv - dir * pull * uLensScreenRadius;
     vec3 color = texture2D(tDiffuse, clamp(distortedUv, vec2(0.0), vec2(1.0))).rgb;
 
@@ -59,6 +61,7 @@ export function createLensSystem({ scene, camera, renderer }) {
     slug,
     color = '#8a6ae8',
     distortionStrength = 0.35,
+    squeezeX = 1.0,
     eyebrow = 'Fenomeno Cosmico',
     galaxy = 'Fenomeno Cosmico',
     exploreHref,
@@ -76,6 +79,7 @@ export function createLensSystem({ scene, camera, renderer }) {
         uLensScreenRadius: { value: 0.1 },
         uStrength: { value: distortionStrength },
         uRimColor: { value: new THREE.Color(color) },
+        uSqueezeX: { value: squeezeX },
       },
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,

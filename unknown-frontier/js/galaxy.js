@@ -387,6 +387,19 @@ function buildBlackHole() {
   );
   group.add(eventHorizon);
 
+  // Two-layer halo: a wide, soft outer glow plus the original tighter one,
+  // so the light bleeding off the event horizon reads as more intense
+  // without just scaling up the existing sprite (which would wash out).
+  const outerGlowTexture = makeGlowTexture('rgba(180,150,255,0.25)', 'rgba(180,150,255,0)');
+  const outerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: outerGlowTexture,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  }));
+  outerGlow.scale.set(30, 30, 1);
+  group.add(outerGlow);
+
   const glowTexture = makeGlowTexture('rgba(180,150,255,0.5)', 'rgba(180,150,255,0)');
   const glow = new THREE.Sprite(new THREE.SpriteMaterial({
     map: glowTexture,
@@ -478,6 +491,9 @@ lensSystem.buildLens({
   position: [0, 0, 0],
   radius: 5,
   distortionStrength: 0.5,
+  // Pulls the disk/starfield in harder along x than y, so the sides read as
+  // squeezed toward the center like a candy wrapper twisted at both ends.
+  squeezeX: 2.0,
 });
 
 // === Galaxy labels ===
