@@ -82,10 +82,11 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     turbulencePersistence: 0.8,
     diskEdgeSoftnessInner: 0.18,
     diskEdgeSoftnessOuter: 0.5,
-    gravitationalLensing: 2.2,
+    gravitationalLensing: 4.5,
     dopplerStrength: 1.0,
-    stepSize: 0.6,
-    portalRadius: 26,
+    stepSize: 0.35,
+    portalRadius: 20,
+    stepCount: 64,
   };
 
   const uniforms = {
@@ -216,7 +217,7 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     const outerR = uniforms.diskOuterRadius;
     const escapeRadius = float(config.portalRadius).mul(3.0);
 
-    Loop(32, () => {
+    Loop(config.stepCount, () => {
       If(escaped.greaterThan(0.5).or(captured.greaterThan(0.5)).or(alpha.greaterThan(0.99)), () => {
         Break();
       });
