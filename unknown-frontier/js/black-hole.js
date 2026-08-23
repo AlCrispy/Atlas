@@ -84,9 +84,13 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     diskEdgeSoftnessOuter: 0.5,
     gravitationalLensing: 4.5,
     dopplerStrength: 1.0,
-    stepSize: 0.35,
+    stepSize: 0.4,
     portalRadius: 20,
-    stepCount: 64,
+    // Kept closer to the reference implementation's own 32 (which a real
+    // shipped demo proved compiles/runs broadly) rather than the 64 this
+    // was tuned to — a long fully-unrolled loop is a plausible source of
+    // driver-specific WGSL compile failures blanking the whole scene.
+    stepCount: 48,
   };
 
   const uniforms = {

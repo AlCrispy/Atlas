@@ -37,7 +37,11 @@ const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container
 const HOME_OFFSET = new THREE.Vector3(0, 160, 300);
 camera.position.copy(HOME_OFFSET);
 
-const renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true });
+// alpha:true (transparent canvas) dropped — the container has an opaque
+// dark background anyway, and it's a plausible source of cross-backend
+// WebGPU compatibility gaps (Chromium reportedly rendering the whole
+// scene blank, unrelated to the black hole shader itself).
+const renderer = new THREE.WebGPURenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
