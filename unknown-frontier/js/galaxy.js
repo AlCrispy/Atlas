@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import { attribute } from 'three/tsl';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture, buildSpiralGalaxy, buildEllipticalGalaxy, buildIrregularGalaxy, buildLenticularGalaxy, buildDwarfGalaxy, buildRingGalaxy, buildPeculiarGalaxy } from './galaxy-shapes.js';
 import { makeLabelTexture } from './label-texture.js';
-import { createLensSystem } from './gravitational-lens.js';
+import { createBlackHole } from './black-hole.js';
 import { createSceneInteraction } from './scene-interaction.js';
 
 // === Tunables ===
@@ -12,7 +13,6 @@ const TRIANGLE_RADIUS = TRIANGLE_SIDE / Math.sqrt(3);
 const SPIRAL_SPIN = 0.015;
 const ELLIPTICAL_SPIN = 0.006;
 const IRREGULAR_SPIN = 0.01;
-const BLACKHOLE_DISK_SPIN = 0.08;
 const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
 const RING_SPIN = 0.012;
@@ -37,7 +37,7 @@ const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container
 const HOME_OFFSET = new THREE.Vector3(0, 160, 300);
 camera.position.copy(HOME_OFFSET);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
@@ -50,8 +50,8 @@ controls.maxDistance = 620;
 
 // === Starfield ===
 // Per-point randomized size (0.5x-1.5x of the base size) — PointsMaterial
-// only supports one uniform size for the whole geometry, so a small custom
-// ShaderMaterial with a per-vertex size attribute is used instead.
+// only supports one uniform size for the whole geometry, so a per-vertex
+// `aSize` attribute drives point size via TSL's sizeNode instead.
 const STARFIELD_BASE_SIZE = 2.0;
 
 function buildStarfield() {
@@ -71,37 +71,18 @@ function buildStarfield() {
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
 
-  const material = new THREE.ShaderMaterial({
-    uniforms: {
-      map: { value: makeDotTexture() },
-      uScale: { value: 560.0 },
-    },
-    vertexShader: `
-      attribute float aSize;
-      uniform float uScale;
-      varying float vDist;
-      void main() {
-        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-        vDist = -mvPosition.z;
-        gl_PointSize = aSize * (uScale / -mvPosition.z);
-        gl_Position = projectionMatrix * mvPosition;
-      }
-    `,
-    fragmentShader: `
-      uniform sampler2D map;
-      varying float vDist;
-      void main() {
-        vec4 texColor = texture2D(map, gl_PointCoord);
-        // Fade out any point the camera has drifted close to, instead of
-        // letting it loom large in the foreground — fully gone by 90
-        // units, back to normal past 170.
-        float nearFade = smoothstep(90.0, 170.0, vDist);
-        gl_FragColor = vec4(vec3(1.0), texColor.a * 0.7 * nearFade);
-      }
-    `,
+  const material = new THREE.PointsNodeMaterial({
+    map: makeDotTexture(),
     transparent: true,
+    opacity: 0.7,
     depthWrite: false,
+    sizeAttenuation: true,
   });
+  // sizeAttenuation uses the same world-unit convention as every other
+  // PointsMaterial in this file (e.g. the 0.5-6 range used by galaxy discs
+  // and nebula wisps below), unlike the old custom shader's own pixel-size
+  // formula — aSize (1-3, from STARFIELD_BASE_SIZE) is used as-is.
+  material.sizeNode = attribute('aSize', 'float');
   scene.add(new THREE.Points(geometry, material));
 }
 buildStarfield();
@@ -378,80 +359,11 @@ addBeaconSprites(PECULIAR_BEACONS, peculiarGalaxy, beaconMeshes, 'Vandrel', 52);
 addBeaconSprites(MILKYWAY_BEACONS, milkyWayGalaxy, beaconMeshes, 'Via Lattea', 75);
 
 // === Black hole ===
-function buildBlackHole() {
-  const group = new THREE.Group();
-
-  const eventHorizon = new THREE.Mesh(
-    new THREE.SphereGeometry(4, 32, 32),
-    new THREE.MeshBasicMaterial({ color: 0x000000 })
-  );
-  group.add(eventHorizon);
-
-  const glowTexture = makeGlowTexture('rgba(180,150,255,0.5)', 'rgba(180,150,255,0)');
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTexture,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  }));
-  glow.scale.set(14, 14, 1);
-  group.add(glow);
-
-  const diskTexture = makeGlowTexture('rgba(255,200,140,1)', 'rgba(255,200,140,0)');
-  const diskParticleCount = 500;
-  const diskPositions = new Float32Array(diskParticleCount * 3);
-  const diskColors = new Float32Array(diskParticleCount * 3);
-  const innerColor = new THREE.Color(0xffe8c8);
-  const outerColor = new THREE.Color(0xff9a4f);
-
-  for (let i = 0; i < diskParticleCount; i++) {
-    const t = Math.random();
-    const r = 6 + t * 8;
-    const angle = Math.random() * Math.PI * 2;
-
-    diskPositions[i * 3] = Math.cos(angle) * r;
-    diskPositions[i * 3 + 1] = (Math.random() - 0.5) * 0.6;
-    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
-
-    const color = innerColor.clone().lerp(outerColor, t);
-    diskColors[i * 3] = color.r;
-    diskColors[i * 3 + 1] = color.g;
-    diskColors[i * 3 + 2] = color.b;
-  }
-
-  const diskGeometry = new THREE.BufferGeometry();
-  diskGeometry.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
-  diskGeometry.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
-  const diskMaterial = new THREE.PointsMaterial({
-    size: 1.2,
-    map: diskTexture,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.9,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  });
-  const disk = new THREE.Points(diskGeometry, diskMaterial);
-  disk.rotation.x = 0.3;
-  group.add(disk);
-
-  const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTexture,
-    transparent: true,
-    opacity: 0,
-    depthWrite: false,
-  }));
-  hitSprite.scale.set(10, 10, 1);
-  hitSprite.userData.baseScale = 10;
-  group.add(hitSprite);
-
-  scene.add(group);
-
-  return { disk, hitSprite };
-}
-
-const { disk: blackHoleDisk, hitSprite: blackHoleHitSprite } = buildBlackHole();
-blackHoleHitSprite.userData.beacon = {
+// Raymarched gravitational lensing + accretion disk (see black-hole.js) —
+// the mesh it returns is both the visual and the click/hover target, no
+// separate hit sprite needed.
+const blackHole = createBlackHole({ scene, camera, renderer, position: [0, 0, 0] });
+blackHole.mesh.userData.beacon = {
   name: 'Voro Nexus',
   slug: 'voro-nexus',
   eyebrow: 'Fenomeno Cosmico',
@@ -462,23 +374,7 @@ blackHoleHitSprite.userData.beacon = {
   zoomTarget: new THREE.Vector3(0, 0, 0),
   zoomDistance: 32,
 };
-beaconMeshes.push(blackHoleHitSprite);
-
-// === Gravitational lens ===
-// Real lensing belongs to the black hole itself, not a separate floating
-// object: a shell sitting just outside the event horizon (radius 4) and
-// inside the accretion disk's inner edge (radius 6), bending the disk and
-// starfield behind it. Purely visual — not pushed to beaconMeshes, since
-// clicking the black hole is already handled by blackHoleHitSprite above;
-// createLensSystem stays a reusable factory for future standalone lenses
-// elsewhere (one shared offscreen render target, cost fixed per-instance).
-const lensSystem = createLensSystem({ scene, camera, renderer });
-
-lensSystem.buildLens({
-  position: [0, 0, 0],
-  radius: 5,
-  distortionStrength: 0.5,
-});
+beaconMeshes.push(blackHole.mesh);
 
 // === Galaxy labels ===
 // World-space name tags floating above each galaxy — added directly to
@@ -874,8 +770,6 @@ function animate() {
     spiralCoreGlow.scale.set(corePulse, corePulse, 1);
   }
 
-  blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
-
   if (compareLine.visible) {
     // Re-read endpoints each frame — the parent galaxies keep spinning,
     // so a beam set once at selection time would drift off its stars.
@@ -903,17 +797,21 @@ function animate() {
   interaction.update(elapsed);
 
   controls.update();
-  lensSystem.update();
-  lensSystem.renderPass();
+  blackHole.update();
+  blackHole.renderPass();
   renderer.render(scene, camera);
 }
-animate();
+
+renderer.init().then(() => {
+  animate();
+}).catch((err) => {
+  console.error('WebGPU init failed:', err);
+  container.innerHTML = '<div style="color:#ccd4d0;padding:40px;text-align:center;font-family:sans-serif;">'
+    + '<h2>WebGPU non supportato</h2><p>Prova con Chrome, Edge o Firefox aggiornati.</p></div>';
+});
 
 window.addEventListener('resize', () => {
   camera.aspect = container.clientWidth / container.clientHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(container.clientWidth, container.clientHeight);
-  const bufferSize = new THREE.Vector2();
-  renderer.getDrawingBufferSize(bufferSize);
-  lensSystem.setSize(bufferSize.x, bufferSize.y);
 });
