@@ -46,6 +46,19 @@
   cursor: pointer;
 }
 
+.directory-reset {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-ash); background: none; cursor: pointer;
+  border: 1px solid var(--hz-steel);
+  padding: 10px 16px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.directory-reset:hover {
+  color: var(--hz-cyan-lt); border-color: var(--hz-cyan-lt);
+  background: rgba(79,216,232,0.06);
+}
+
 .directory-count {
   font-family: 'Orbitron', sans-serif;
   font-size: 0.58rem;

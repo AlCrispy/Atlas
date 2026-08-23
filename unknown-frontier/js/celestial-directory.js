@@ -64,6 +64,7 @@ const systemEl = document.getElementById('pd-system');
 const kindEl = document.getElementById('pd-kind');
 const typeEl = document.getElementById('pd-type');
 const inhabitedEl = document.getElementById('pd-inhabited');
+const resetEl = document.getElementById('pd-reset');
 const bodyEl = document.getElementById('pd-rows');
 const countEl = document.getElementById('pd-count');
 const emptyEl = document.getElementById('pd-empty');
@@ -200,6 +201,17 @@ searchEl.addEventListener('input', render);
     refreshFacetOptions();
     render();
   });
+});
+
+resetEl.addEventListener('click', () => {
+  searchEl.value = '';
+  galaxyEl.value = '';
+  systemEl.value = '';
+  kindEl.value = '';
+  typeEl.value = '';
+  inhabitedEl.value = '';
+  refreshFacetOptions();
+  render();
 });
 
 refreshFacetOptions();
