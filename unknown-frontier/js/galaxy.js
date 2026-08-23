@@ -692,6 +692,35 @@ function setCompareDistanceLabel(text) {
   if (oldTexture) oldTexture.dispose();
 }
 
+// Name tag hovering above each selected star, so both are identifiable on
+// the map regardless of the (zoom-gated) system labels above — same
+// visibility gate as the rings/beam.
+const COMPARE_NAME_HEIGHT = 2;
+const COMPARE_NAME_LIFT = 4.2;
+function makeCompareNameLabel() {
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  sprite.visible = false;
+  sprite.renderOrder = 999;
+  scene.add(sprite);
+  return sprite;
+}
+function setCompareNameLabel(sprite, name) {
+  const oldTexture = sprite.material.map;
+  const { texture, aspect } = makeLabelTexture(name, '#4fd8e8', { fontSize: 26 });
+  sprite.material.map = texture;
+  sprite.material.needsUpdate = true;
+  sprite.scale.set(COMPARE_NAME_HEIGHT * aspect, COMPARE_NAME_HEIGHT, 1);
+  if (oldTexture) oldTexture.dispose();
+}
+const compareNameLabelA = makeCompareNameLabel();
+const compareNameLabelB = makeCompareNameLabel();
+
 function updateCompareDistance() {
   if (!compareSlots.a || !compareSlots.b) {
     compareDistanceEl.textContent = 'Seleziona due stelle per calcolare la distanza.';
@@ -699,6 +728,8 @@ function updateCompareDistance() {
     compareRingA.visible = false;
     compareRingB.visible = false;
     compareDistanceSprite.visible = false;
+    compareNameLabelA.visible = false;
+    compareNameLabelB.visible = false;
     return;
   }
   if (compareSlots.a === compareSlots.b) {
@@ -707,6 +738,8 @@ function updateCompareDistance() {
     compareRingA.visible = false;
     compareRingB.visible = false;
     compareDistanceSprite.visible = false;
+    compareNameLabelA.visible = false;
+    compareNameLabelB.visible = false;
     return;
   }
   compareSlots.a.getWorldPosition(compareWorldPosA);
@@ -726,6 +759,10 @@ function updateCompareDistance() {
   compareRingB.visible = true;
   setCompareDistanceLabel(`≈ ${lightYears.toLocaleString('it-IT')} anni luce`);
   compareDistanceSprite.visible = true;
+  setCompareNameLabel(compareNameLabelA, compareSlots.a.userData.beacon.name);
+  setCompareNameLabel(compareNameLabelB, compareSlots.b.userData.beacon.name);
+  compareNameLabelA.visible = true;
+  compareNameLabelB.visible = true;
 }
 
 function syncCompareSelects() {
@@ -835,6 +872,10 @@ function animate() {
     compareDistanceSprite.position.lerpVectors(compareWorldPosA, compareWorldPosB, 0.5);
     compareDistanceSprite.position.y += COMPARE_LABEL_LIFT;
     compareDistanceSprite.material.opacity = pulse;
+    compareNameLabelA.position.set(compareWorldPosA.x, compareWorldPosA.y + COMPARE_NAME_LIFT, compareWorldPosA.z);
+    compareNameLabelB.position.set(compareWorldPosB.x, compareWorldPosB.y + COMPARE_NAME_LIFT, compareWorldPosB.z);
+    compareNameLabelA.material.opacity = pulse;
+    compareNameLabelB.material.opacity = pulse;
   }
 
   interaction.update(elapsed);
