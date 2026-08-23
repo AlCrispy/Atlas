@@ -27,7 +27,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Vessek I",
+        "name": "Branik",
         "slug": "vessek-i",
         "color": "#b7502a",
         "size": 1.795,
@@ -41,7 +41,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Vessek I-a",
+            "name": "Branik-a",
             "slug": "vessek-i-a",
             "color": "#e8dcc8",
             "size": 0.44,
@@ -55,7 +55,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 27.1
       },
       {
-        "name": "Vessek II",
+        "name": "Ivouruth",
         "slug": "vessek-ii",
         "color": "#e0c896",
         "size": 2.185,
@@ -68,7 +68,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Vessek II-a",
+            "name": "Ivouruth-a",
             "slug": "vessek-ii-a",
             "color": "#e8dcc8",
             "size": 0.423,
@@ -117,7 +117,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Thalir-9 I",
+        "name": "Wexioth",
         "slug": "thalir-9-i",
         "color": "#e8d2a0",
         "size": 1.831,
@@ -130,7 +130,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Thalir-9 I-a",
+            "name": "Wexioth-a",
             "slug": "thalir-9-i-a",
             "color": "#e8dcc8",
             "size": 0.463,
@@ -141,7 +141,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 15.7
           },
           {
-            "name": "Thalir-9 I-b",
+            "name": "Wexioth-b",
             "slug": "thalir-9-i-b",
             "color": "#d6dcf2",
             "size": 0.46,
@@ -155,7 +155,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 18.2
       },
       {
-        "name": "Thalir-9 II",
+        "name": "Fyriven",
         "slug": "thalir-9-ii",
         "color": "#7fd1d9",
         "size": 2.201,
@@ -170,7 +170,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 21.6
       },
       {
-        "name": "Thalir-9 III",
+        "name": "Calevam",
         "slug": "thalir-9-iii",
         "color": "#e8d2a0",
         "size": 1.808,
@@ -183,7 +183,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Thalir-9 III-a",
+            "name": "Calevam-a",
             "slug": "thalir-9-iii-a",
             "color": "#9df0fa",
             "size": 0.298,
@@ -197,7 +197,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 30.4
       },
       {
-        "name": "Thalir-9 IV",
+        "name": "Calisk Prime",
         "slug": "thalir-9-iv",
         "color": "#5f8f5a",
         "size": 1.758,
@@ -211,7 +211,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Thalir-9 IV-a",
+            "name": "Calisk Prime-a",
             "slug": "thalir-9-iv-a",
             "color": "#d6dcf2",
             "size": 0.395,
@@ -294,7 +294,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Kaion Rift I",
+        "name": "Thousk",
         "slug": "kaion-rift-i",
         "color": "#d9a066",
         "size": 2.195,
@@ -308,7 +308,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Kaion Rift I-a",
+            "name": "Thousk-a",
             "slug": "kaion-rift-i-a",
             "color": "#d6dcf2",
             "size": 0.513,
@@ -319,7 +319,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 23.2
           },
           {
-            "name": "Kaion Rift I-b",
+            "name": "Thousk-b",
             "slug": "kaion-rift-i-b",
             "color": "#9df0fa",
             "size": 0.354,
@@ -348,7 +348,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 38.9
       },
       {
-        "name": "Kaion Rift III",
+        "name": "Tororn",
         "slug": "kaion-rift-iii",
         "color": "#a8c98f",
         "size": 1.312,
@@ -363,7 +363,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 51.9
       },
       {
-        "name": "Kaion Rift IV",
+        "name": "Dunathund Major",
         "slug": "kaion-rift-iv",
         "color": "#a8c98f",
         "size": 1.806,
@@ -376,7 +376,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kaion Rift IV-a",
+            "name": "Dunathund Major-a",
             "slug": "kaion-rift-iv-a",
             "color": "#e8dcc8",
             "size": 0.453,
@@ -387,7 +387,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 69
           },
           {
-            "name": "Kaion Rift IV-b",
+            "name": "Dunathund Major-b",
             "slug": "kaion-rift-iv-b",
             "color": "#d6dcf2",
             "size": 0.446,
@@ -421,7 +421,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Drevane I",
+        "name": "Doriond Reach",
         "slug": "drevane-i",
         "color": "#7fd1d9",
         "size": 1.708,
@@ -435,7 +435,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Drevane I-a",
+            "name": "Doriond Reach-a",
             "slug": "drevane-i-a",
             "color": "#e8dcc8",
             "size": 0.285,
@@ -464,7 +464,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 20.9
       },
       {
-        "name": "Drevane III",
+        "name": "Gorethaess",
         "slug": "drevane-iii",
         "color": "#8c8378",
         "size": 1.629,
@@ -477,7 +477,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Drevane III-a",
+            "name": "Gorethaess-a",
             "slug": "drevane-iii-a",
             "color": "#b8c4e8",
             "size": 0.313,
@@ -491,7 +491,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 29.3
       },
       {
-        "name": "Drevane IV",
+        "name": "Revust",
         "slug": "drevane-iv",
         "color": "#7fd1d9",
         "size": 2.31,
@@ -504,7 +504,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Drevane IV-a",
+            "name": "Revust-a",
             "slug": "drevane-iv-a",
             "color": "#b8c4e8",
             "size": 0.288,
@@ -515,7 +515,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 39.1
           },
           {
-            "name": "Drevane IV-b",
+            "name": "Revust-b",
             "slug": "drevane-iv-b",
             "color": "#b8c4e8",
             "size": 0.353,
@@ -529,7 +529,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 43.2
       },
       {
-        "name": "Drevane V",
+        "name": "Holailis",
         "slug": "drevane-v",
         "color": "#a8c98f",
         "size": 1.83,
@@ -542,7 +542,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Drevane V-a",
+            "name": "Holailis-a",
             "slug": "drevane-v-a",
             "color": "#d6dcf2",
             "size": 0.46,
@@ -553,7 +553,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 61.1
           },
           {
-            "name": "Drevane V-b",
+            "name": "Holailis-b",
             "slug": "drevane-v-b",
             "color": "#9df0fa",
             "size": 0.404,
@@ -587,7 +587,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Solmira I",
+        "name": "Dunem",
         "slug": "solmira-i",
         "color": "#4d7ea8",
         "size": 1.318,
@@ -600,7 +600,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Solmira I-a",
+            "name": "Dunem-a",
             "slug": "solmira-i-a",
             "color": "#e8dcc8",
             "size": 0.475,
@@ -611,7 +611,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 15.7
           },
           {
-            "name": "Solmira I-b",
+            "name": "Dunem-b",
             "slug": "solmira-i-b",
             "color": "#d6dcf2",
             "size": 0.372,
@@ -622,7 +622,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 15.7
           },
           {
-            "name": "Solmira I-c",
+            "name": "Dunem-c",
             "slug": "solmira-i-c",
             "color": "#b8c4e8",
             "size": 0.318,
@@ -636,7 +636,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 18.2
       },
       {
-        "name": "Solmira II",
+        "name": "Wyraimir",
         "slug": "solmira-ii",
         "color": "#a85c3a",
         "size": 1.814,
@@ -649,7 +649,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Solmira II-a",
+            "name": "Wyraimir-a",
             "slug": "solmira-ii-a",
             "color": "#d6dcf2",
             "size": 0.327,
@@ -678,7 +678,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 30.1
       },
       {
-        "name": "Solmira IV",
+        "name": "Dunaem Drift",
         "slug": "solmira-iv",
         "color": "#b7502a",
         "size": 2.372,
@@ -694,7 +694,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 46.5
       },
       {
-        "name": "Solmira V",
+        "name": "Orim",
         "slug": "solmira-v",
         "color": "#5f8f5a",
         "size": 1.979,
@@ -729,7 +729,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ozmun Prime I",
+        "name": "Urend",
         "slug": "ozmun-prime-i",
         "color": "#8c8378",
         "size": 1.183,
@@ -742,7 +742,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ozmun Prime I-a",
+            "name": "Urend-a",
             "slug": "ozmun-prime-i-a",
             "color": "#d6dcf2",
             "size": 0.346,
@@ -756,7 +756,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 25.4
       },
       {
-        "name": "Ozmun Prime II",
+        "name": "Vriond Rift",
         "slug": "ozmun-prime-ii",
         "color": "#e0c896",
         "size": 1.172,
@@ -769,7 +769,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ozmun Prime II-a",
+            "name": "Vriond Rift-a",
             "slug": "ozmun-prime-ii-a",
             "color": "#d6dcf2",
             "size": 0.322,
@@ -780,7 +780,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 32
           },
           {
-            "name": "Ozmun Prime II-b",
+            "name": "Vriond Rift-b",
             "slug": "ozmun-prime-ii-b",
             "color": "#b8c4e8",
             "size": 0.359,
@@ -791,7 +791,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 32
           },
           {
-            "name": "Ozmun Prime II-c",
+            "name": "Vriond Rift-c",
             "slug": "ozmun-prime-ii-c",
             "color": "#d6dcf2",
             "size": 0.309,
@@ -844,7 +844,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 49.9
       },
       {
-        "name": "Ozmun Prime IV",
+        "name": "Noleirn Drift",
         "slug": "ozmun-prime-iv",
         "color": "#cbbfae",
         "size": 2.13,
@@ -857,7 +857,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ozmun Prime IV-a",
+            "name": "Noleirn Drift-a",
             "slug": "ozmun-prime-iv-a",
             "color": "#e8dcc8",
             "size": 0.303,
@@ -868,7 +868,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 61
           },
           {
-            "name": "Ozmun Prime IV-b",
+            "name": "Noleirn Drift-b",
             "slug": "ozmun-prime-iv-b",
             "color": "#d6dcf2",
             "size": 0.474,
@@ -879,7 +879,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 61
           },
           {
-            "name": "Ozmun Prime IV-c",
+            "name": "Noleirn Drift-c",
             "slug": "ozmun-prime-iv-c",
             "color": "#e8dcc8",
             "size": 0.363,
@@ -940,7 +940,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 18.2
       },
       {
-        "name": "Haldrin II",
+        "name": "Wexaric",
         "slug": "haldrin-ii",
         "color": "#9fb8c4",
         "size": 2.204,
@@ -953,7 +953,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Haldrin II-a",
+            "name": "Wexaric-a",
             "slug": "haldrin-ii-a",
             "color": "#d6dcf2",
             "size": 0.351,
@@ -964,7 +964,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 19.4
           },
           {
-            "name": "Haldrin II-b",
+            "name": "Wexaric-b",
             "slug": "haldrin-ii-b",
             "color": "#b8c4e8",
             "size": 0.488,
@@ -978,7 +978,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 22.1
       },
       {
-        "name": "Haldrin III",
+        "name": "Orara",
         "slug": "haldrin-iii",
         "color": "#a85c3a",
         "size": 1.672,
@@ -993,7 +993,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28
       },
       {
-        "name": "Haldrin IV",
+        "name": "Beloric",
         "slug": "haldrin-iv",
         "color": "#a8c98f",
         "size": 2.146,
@@ -1006,7 +1006,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Haldrin IV-a",
+            "name": "Beloric-a",
             "slug": "haldrin-iv-a",
             "color": "#e8dcc8",
             "size": 0.403,
@@ -1020,7 +1020,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 42.6
       },
       {
-        "name": "Haldrin V",
+        "name": "Mirand",
         "slug": "haldrin-v",
         "color": "#c9895a",
         "size": 2.585,
@@ -1056,7 +1056,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Cerevane I",
+        "name": "Zephiraioll",
         "slug": "cerevane-i",
         "color": "#8c8378",
         "size": 1.906,
@@ -1070,7 +1070,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Cerevane I-a",
+            "name": "Zephiraioll-a",
             "slug": "cerevane-i-a",
             "color": "#e8dcc8",
             "size": 0.349,
@@ -1122,7 +1122,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 33.8
       },
       {
-        "name": "Cerevane III",
+        "name": "Noraemoven",
         "slug": "cerevane-iii",
         "color": "#b7502a",
         "size": 1.97,
@@ -1135,7 +1135,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Cerevane III-a",
+            "name": "Noraemoven-a",
             "slug": "cerevane-iii-a",
             "color": "#b8c4e8",
             "size": 0.39,
@@ -1149,7 +1149,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 49
       },
       {
-        "name": "Cerevane IV",
+        "name": "Selairiceric",
         "slug": "cerevane-iv",
         "color": "#b7502a",
         "size": 2.149,
@@ -1211,7 +1211,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28
       },
       {
-        "name": "Tessaly II",
+        "name": "Othouven Major",
         "slug": "tessaly-ii",
         "color": "#a85c3a",
         "size": 2.071,
@@ -1225,7 +1225,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Tessaly II-a",
+            "name": "Othouven Major-a",
             "slug": "tessaly-ii-a",
             "color": "#9df0fa",
             "size": 0.401,
@@ -1236,7 +1236,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 33.3
           },
           {
-            "name": "Tessaly II-b",
+            "name": "Othouven Major-b",
             "slug": "tessaly-ii-b",
             "color": "#b8c4e8",
             "size": 0.439,
@@ -1247,7 +1247,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 33.3
           },
           {
-            "name": "Tessaly II-c",
+            "name": "Othouven Major-c",
             "slug": "tessaly-ii-c",
             "color": "#d6dcf2",
             "size": 0.319,
@@ -1261,7 +1261,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 36.9
       },
       {
-        "name": "Tessaly III",
+        "name": "Veleiv",
         "slug": "tessaly-iii",
         "color": "#7fd1d9",
         "size": 2.144,
@@ -1276,7 +1276,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 49.3
       },
       {
-        "name": "Tessaly IV",
+        "name": "Nolaidid Verge",
         "slug": "tessaly-iv",
         "color": "#7fd1d9",
         "size": 1.777,
@@ -1289,7 +1289,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Tessaly IV-a",
+            "name": "Nolaidid Verge-a",
             "slug": "tessaly-iv-a",
             "color": "#9df0fa",
             "size": 0.293,
@@ -1300,7 +1300,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 63.8
           },
           {
-            "name": "Tessaly IV-b",
+            "name": "Nolaidid Verge-b",
             "slug": "tessaly-iv-b",
             "color": "#b8c4e8",
             "size": 0.442,
@@ -1349,7 +1349,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 21.4
       },
       {
-        "name": "Norvun II",
+        "name": "Belaen",
         "slug": "norvun-ii",
         "color": "#cbbfae",
         "size": 1.887,
@@ -1363,7 +1363,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Norvun II-a",
+            "name": "Belaen-a",
             "slug": "norvun-ii-a",
             "color": "#b8c4e8",
             "size": 0.283,
@@ -1377,7 +1377,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28.9
       },
       {
-        "name": "Norvun III",
+        "name": "Syliolisouv Shard",
         "slug": "norvun-iii",
         "color": "#d9a066",
         "size": 2.102,
@@ -1390,7 +1390,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Norvun III-a",
+            "name": "Syliolisouv Shard-a",
             "slug": "norvun-iii-a",
             "color": "#d6dcf2",
             "size": 0.453,
@@ -1401,7 +1401,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 35.6
           },
           {
-            "name": "Norvun III-b",
+            "name": "Syliolisouv Shard-b",
             "slug": "norvun-iii-b",
             "color": "#b8c4e8",
             "size": 0.304,
@@ -1412,7 +1412,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 35.6
           },
           {
-            "name": "Norvun III-c",
+            "name": "Syliolisouv Shard-c",
             "slug": "norvun-iii-c",
             "color": "#b8c4e8",
             "size": 0.397,
@@ -1426,7 +1426,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 39.5
       },
       {
-        "name": "Norvun IV",
+        "name": "Cyneraoss Reach",
         "slug": "norvun-iv",
         "color": "#3f5fb0",
         "size": 2.044,
@@ -1473,7 +1473,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Rakthos I",
+        "name": "Tanelis Prime",
         "slug": "rakthos-i",
         "color": "#a85c3a",
         "size": 0.998,
@@ -1486,7 +1486,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Rakthos I-a",
+            "name": "Tanelis Prime-a",
             "slug": "rakthos-i-a",
             "color": "#d6dcf2",
             "size": 0.423,
@@ -1497,7 +1497,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 20.7
           },
           {
-            "name": "Rakthos I-b",
+            "name": "Tanelis Prime-b",
             "slug": "rakthos-i-b",
             "color": "#9df0fa",
             "size": 0.446,
@@ -1508,7 +1508,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 20.7
           },
           {
-            "name": "Rakthos I-c",
+            "name": "Tanelis Prime-c",
             "slug": "rakthos-i-c",
             "color": "#9df0fa",
             "size": 0.288,
@@ -1522,7 +1522,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 23.6
       },
       {
-        "name": "Rakthos II",
+        "name": "Wyraik",
         "slug": "rakthos-ii",
         "color": "#8c8378",
         "size": 2.051,
@@ -1536,7 +1536,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Rakthos II-a",
+            "name": "Wyraik-a",
             "slug": "rakthos-ii-a",
             "color": "#9df0fa",
             "size": 0.486,
@@ -1550,7 +1550,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 35.7
       },
       {
-        "name": "Rakthos III",
+        "name": "Joriom",
         "slug": "rakthos-iii",
         "color": "#d9a066",
         "size": 2.077,
@@ -1600,7 +1600,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ybrenn I",
+        "name": "Zarios Rift",
         "slug": "ybrenn-i",
         "color": "#e8d2a0",
         "size": 1.222,
@@ -1614,7 +1614,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Ybrenn I-a",
+            "name": "Zarios Rift-a",
             "slug": "ybrenn-i-a",
             "color": "#e8dcc8",
             "size": 0.479,
@@ -1625,7 +1625,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 27.2
           },
           {
-            "name": "Ybrenn I-b",
+            "name": "Zarios Rift-b",
             "slug": "ybrenn-i-b",
             "color": "#d6dcf2",
             "size": 0.434,
@@ -1636,7 +1636,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 27.2
           },
           {
-            "name": "Ybrenn I-c",
+            "name": "Zarios Rift-c",
             "slug": "ybrenn-i-c",
             "color": "#b8c4e8",
             "size": 0.336,
@@ -1650,7 +1650,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 30.5
       },
       {
-        "name": "Ybrenn II",
+        "name": "Dorid",
         "slug": "ybrenn-ii",
         "color": "#4d7ea8",
         "size": 1.698,
@@ -1663,7 +1663,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ybrenn II-a",
+            "name": "Dorid-a",
             "slug": "ybrenn-ii-a",
             "color": "#e8dcc8",
             "size": 0.419,
@@ -1674,7 +1674,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 37.6
           },
           {
-            "name": "Ybrenn II-b",
+            "name": "Dorid-b",
             "slug": "ybrenn-ii-b",
             "color": "#e8dcc8",
             "size": 0.356,
@@ -1688,7 +1688,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 41.6
       },
       {
-        "name": "Ybrenn III",
+        "name": "Olelisour",
         "slug": "ybrenn-iii",
         "color": "#3f5fb0",
         "size": 2.277,
@@ -1701,7 +1701,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ybrenn III-a",
+            "name": "Olelisour-a",
             "slug": "ybrenn-iii-a",
             "color": "#e8dcc8",
             "size": 0.5,
@@ -1735,7 +1735,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Quovar I",
+        "name": "Vendaem",
         "slug": "quovar-i",
         "color": "#d9a066",
         "size": 0.901,
@@ -1749,7 +1749,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Quovar I-a",
+            "name": "Vendaem-a",
             "slug": "quovar-i-a",
             "color": "#9df0fa",
             "size": 0.406,
@@ -1760,7 +1760,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 17.6
           },
           {
-            "name": "Quovar I-b",
+            "name": "Vendaem-b",
             "slug": "quovar-i-b",
             "color": "#9df0fa",
             "size": 0.326,
@@ -1789,7 +1789,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28.1
       },
       {
-        "name": "Quovar III",
+        "name": "Quoraix Halo",
         "slug": "quovar-iii",
         "color": "#3f5fb0",
         "size": 1.653,
@@ -1802,7 +1802,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Quovar III-a",
+            "name": "Quoraix Halo-a",
             "slug": "quovar-iii-a",
             "color": "#e8dcc8",
             "size": 0.493,
@@ -1813,7 +1813,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 39.7
           },
           {
-            "name": "Quovar III-b",
+            "name": "Quoraix Halo-b",
             "slug": "quovar-iii-b",
             "color": "#d6dcf2",
             "size": 0.298,
@@ -1824,7 +1824,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 39.7
           },
           {
-            "name": "Quovar III-c",
+            "name": "Quoraix Halo-c",
             "slug": "quovar-iii-c",
             "color": "#d6dcf2",
             "size": 0.303,
@@ -1838,7 +1838,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 43.8
       },
       {
-        "name": "Quovar IV",
+        "name": "Esorik",
         "slug": "quovar-iv",
         "color": "#e0c896",
         "size": 1.738,
@@ -1873,7 +1873,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Skellith I",
+        "name": "Goraroura",
         "slug": "skellith-i",
         "color": "#e0c896",
         "size": 1.028,
@@ -1887,7 +1887,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Skellith I-a",
+            "name": "Goraroura-a",
             "slug": "skellith-i-a",
             "color": "#9df0fa",
             "size": 0.497,
@@ -1901,7 +1901,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 30.2
       },
       {
-        "name": "Skellith II",
+        "name": "Praxidor",
         "slug": "skellith-ii",
         "color": "#c9895a",
         "size": 1.26,
@@ -1914,7 +1914,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Skellith II-a",
+            "name": "Praxidor-a",
             "slug": "skellith-ii-a",
             "color": "#e8dcc8",
             "size": 0.469,
@@ -1925,7 +1925,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 37.6
           },
           {
-            "name": "Skellith II-b",
+            "name": "Praxidor-b",
             "slug": "skellith-ii-b",
             "color": "#9df0fa",
             "size": 0.35,
@@ -1986,7 +1986,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Manoth I",
+        "name": "Revaix Cradle",
         "slug": "manoth-i",
         "color": "#4d7ea8",
         "size": 1.487,
@@ -2000,7 +2000,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Manoth I-a",
+            "name": "Revaix Cradle-a",
             "slug": "manoth-i-a",
             "color": "#9df0fa",
             "size": 0.36,
@@ -2011,7 +2011,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 18.2
           },
           {
-            "name": "Manoth I-b",
+            "name": "Revaix Cradle-b",
             "slug": "manoth-i-b",
             "color": "#d6dcf2",
             "size": 0.393,
@@ -2022,7 +2022,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 18.2
           },
           {
-            "name": "Manoth I-c",
+            "name": "Revaix Cradle-c",
             "slug": "manoth-i-c",
             "color": "#e8dcc8",
             "size": 0.462,
@@ -2074,7 +2074,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28.1
       },
       {
-        "name": "Manoth III",
+        "name": "Oliora",
         "slug": "manoth-iii",
         "color": "#b7502a",
         "size": 2.041,
@@ -2089,7 +2089,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 42.7
       },
       {
-        "name": "Manoth IV",
+        "name": "Wexioraaess",
         "slug": "manoth-iv",
         "color": "#cbbfae",
         "size": 1.363,
@@ -2124,7 +2124,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Aldevik I",
+        "name": "Cyneiven Crown",
         "slug": "aldevik-i",
         "color": "#d9a066",
         "size": 0.997,
@@ -2138,7 +2138,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Aldevik I-a",
+            "name": "Cyneiven Crown-a",
             "slug": "aldevik-i-a",
             "color": "#9df0fa",
             "size": 0.3,
@@ -2149,7 +2149,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 34.4
           },
           {
-            "name": "Aldevik I-b",
+            "name": "Cyneiven Crown-b",
             "slug": "aldevik-i-b",
             "color": "#e8dcc8",
             "size": 0.462,
@@ -2160,7 +2160,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 34.4
           },
           {
-            "name": "Aldevik I-c",
+            "name": "Cyneiven Crown-c",
             "slug": "aldevik-i-c",
             "color": "#9df0fa",
             "size": 0.351,
@@ -2174,7 +2174,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 38.1
       },
       {
-        "name": "Aldevik II",
+        "name": "Morandil",
         "slug": "aldevik-ii",
         "color": "#7fd1d9",
         "size": 1.577,
@@ -2189,7 +2189,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 50.1
       },
       {
-        "name": "Aldevik III",
+        "name": "Lyser",
         "slug": "aldevik-iii",
         "color": "#d9a066",
         "size": 2.588,
@@ -2202,7 +2202,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Aldevik III-a",
+            "name": "Lyser-a",
             "slug": "aldevik-iii-a",
             "color": "#b8c4e8",
             "size": 0.436,
@@ -2213,7 +2213,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 67.7
           },
           {
-            "name": "Aldevik III-b",
+            "name": "Lyser-b",
             "slug": "aldevik-iii-b",
             "color": "#e8dcc8",
             "size": 0.453,
@@ -2224,7 +2224,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 67.7
           },
           {
-            "name": "Aldevik III-c",
+            "name": "Lyser-c",
             "slug": "aldevik-iii-c",
             "color": "#e8dcc8",
             "size": 0.492,
@@ -2258,7 +2258,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Cormanth I",
+        "name": "Haroull",
         "slug": "cormanth-i",
         "color": "#e8d2a0",
         "size": 2.026,
@@ -2271,7 +2271,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Cormanth I-a",
+            "name": "Haroull-a",
             "slug": "cormanth-i-a",
             "color": "#d6dcf2",
             "size": 0.384,
@@ -2282,7 +2282,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 23.4
           },
           {
-            "name": "Cormanth I-b",
+            "name": "Haroull-b",
             "slug": "cormanth-i-b",
             "color": "#b8c4e8",
             "size": 0.372,
@@ -2293,7 +2293,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 23.4
           },
           {
-            "name": "Cormanth I-c",
+            "name": "Haroull-c",
             "slug": "cormanth-i-c",
             "color": "#d6dcf2",
             "size": 0.403,
@@ -2307,7 +2307,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 26.4
       },
       {
-        "name": "Cormanth II",
+        "name": "Mirad Drift",
         "slug": "cormanth-ii",
         "color": "#9fb8c4",
         "size": 2.293,
@@ -2320,7 +2320,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Cormanth II-a",
+            "name": "Mirad Drift-a",
             "slug": "cormanth-ii-a",
             "color": "#9df0fa",
             "size": 0.302,
@@ -2334,7 +2334,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 37.4
       },
       {
-        "name": "Cormanth III",
+        "name": "Steneir Anchor",
         "slug": "cormanth-iii",
         "color": "#3f5fb0",
         "size": 1.979,
@@ -2347,7 +2347,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Cormanth III-a",
+            "name": "Steneir Anchor-a",
             "slug": "cormanth-iii-a",
             "color": "#d6dcf2",
             "size": 0.382,
@@ -2358,7 +2358,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 44
           },
           {
-            "name": "Cormanth III-b",
+            "name": "Steneir Anchor-b",
             "slug": "cormanth-iii-b",
             "color": "#9df0fa",
             "size": 0.399,
@@ -2372,7 +2372,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 48.4
       },
       {
-        "name": "Cormanth IV",
+        "name": "Ashuk",
         "slug": "cormanth-iv",
         "color": "#e0c896",
         "size": 1.816,
@@ -2386,7 +2386,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Cormanth IV-a",
+            "name": "Ashuk-a",
             "slug": "cormanth-iv-a",
             "color": "#e8dcc8",
             "size": 0.492,
@@ -2397,7 +2397,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 65.9
           },
           {
-            "name": "Cormanth IV-b",
+            "name": "Ashuk-b",
             "slug": "cormanth-iv-b",
             "color": "#b8c4e8",
             "size": 0.471,
@@ -2431,7 +2431,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Estryn I",
+        "name": "Kelasiss",
         "slug": "estryn-i",
         "color": "#9fb8c4",
         "size": 2.108,
@@ -2445,7 +2445,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Estryn I-a",
+            "name": "Kelasiss-a",
             "slug": "estryn-i-a",
             "color": "#d6dcf2",
             "size": 0.287,
@@ -2459,7 +2459,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 23
       },
       {
-        "name": "Estryn II",
+        "name": "Olouraaik",
         "slug": "estryn-ii",
         "color": "#a8c98f",
         "size": 1.455,
@@ -2501,7 +2501,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 48.4
       },
       {
-        "name": "Estryn IV",
+        "name": "Holoul",
         "slug": "estryn-iv",
         "color": "#c9895a",
         "size": 2.338,
@@ -2514,7 +2514,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Estryn IV-a",
+            "name": "Holoul-a",
             "slug": "estryn-iv-a",
             "color": "#b8c4e8",
             "size": 0.332,
@@ -2548,7 +2548,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Vallor Deep I",
+        "name": "Quoreid",
         "slug": "vallor-deep-i",
         "color": "#9fb8c4",
         "size": 1.498,
@@ -2562,7 +2562,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Vallor Deep I-a",
+            "name": "Quoreid-a",
             "slug": "vallor-deep-i-a",
             "color": "#b8c4e8",
             "size": 0.384,
@@ -2576,7 +2576,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 33.4
       },
       {
-        "name": "Vallor Deep II",
+        "name": "Wyriodor",
         "slug": "vallor-deep-ii",
         "color": "#d9a066",
         "size": 1.711,
@@ -2591,7 +2591,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 50
       },
       {
-        "name": "Vallor Deep III",
+        "name": "Caleilis",
         "slug": "vallor-deep-iii",
         "color": "#9fb8c4",
         "size": 2.053,
@@ -2626,7 +2626,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ninhara I",
+        "name": "Wexust",
         "slug": "ninhara-i",
         "color": "#8c8378",
         "size": 2.033,
@@ -2639,7 +2639,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ninhara I-a",
+            "name": "Wexust-a",
             "slug": "ninhara-i-a",
             "color": "#e8dcc8",
             "size": 0.497,
@@ -2703,7 +2703,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 51.8
       },
       {
-        "name": "Ninhara III",
+        "name": "Gravern Expanse",
         "slug": "ninhara-iii",
         "color": "#c9895a",
         "size": 1.93,
@@ -2738,7 +2738,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Yssel I",
+        "name": "Yolara",
         "slug": "yssel-i",
         "color": "#e8d2a0",
         "size": 1.13,
@@ -2751,7 +2751,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Yssel I-a",
+            "name": "Yolara-a",
             "slug": "yssel-i-a",
             "color": "#b8c4e8",
             "size": 0.378,
@@ -2765,7 +2765,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 17.6
       },
       {
-        "name": "Yssel II",
+        "name": "Umistemir",
         "slug": "yssel-ii",
         "color": "#7fd1d9",
         "size": 1.92,
@@ -2778,7 +2778,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Yssel II-a",
+            "name": "Umistemir-a",
             "slug": "yssel-ii-a",
             "color": "#d6dcf2",
             "size": 0.475,
@@ -2792,7 +2792,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 22.8
       },
       {
-        "name": "Yssel III",
+        "name": "Wyrumir",
         "slug": "yssel-iii",
         "color": "#e8d2a0",
         "size": 1.484,
@@ -2805,7 +2805,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Yssel III-a",
+            "name": "Wyrumir-a",
             "slug": "yssel-iii-a",
             "color": "#e8dcc8",
             "size": 0.308,
@@ -2816,7 +2816,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 30.1
           },
           {
-            "name": "Yssel III-b",
+            "name": "Wyrumir-b",
             "slug": "yssel-iii-b",
             "color": "#9df0fa",
             "size": 0.455,
@@ -2857,7 +2857,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 45
       },
       {
-        "name": "Yssel V",
+        "name": "Vendioss",
         "slug": "yssel-v",
         "color": "#7fd1d9",
         "size": 2.587,
@@ -2871,7 +2871,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Yssel V-a",
+            "name": "Vendioss-a",
             "slug": "yssel-v-a",
             "color": "#e8dcc8",
             "size": 0.313,
@@ -2882,7 +2882,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 66.4
           },
           {
-            "name": "Yssel V-b",
+            "name": "Vendioss-b",
             "slug": "yssel-v-b",
             "color": "#9df0fa",
             "size": 0.364,
@@ -2928,7 +2928,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Braxton I",
+        "name": "Rasok",
         "slug": "braxton-i",
         "color": "#5f8f5a",
         "size": 1.721,
@@ -2941,7 +2941,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Braxton I-a",
+            "name": "Rasok-a",
             "slug": "braxton-i-a",
             "color": "#d6dcf2",
             "size": 0.445,
@@ -2952,7 +2952,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 24.4
           },
           {
-            "name": "Braxton I-b",
+            "name": "Rasok-b",
             "slug": "braxton-i-b",
             "color": "#d6dcf2",
             "size": 0.475,
@@ -2981,7 +2981,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 34.8
       },
       {
-        "name": "Braxton III",
+        "name": "Creaek",
         "slug": "braxton-iii",
         "color": "#e0c896",
         "size": 1.793,
@@ -2994,7 +2994,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Braxton III-a",
+            "name": "Creaek-a",
             "slug": "braxton-iii-a",
             "color": "#b8c4e8",
             "size": 0.499,
@@ -3005,7 +3005,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 45.2
           },
           {
-            "name": "Braxton III-b",
+            "name": "Creaek-b",
             "slug": "braxton-iii-b",
             "color": "#9df0fa",
             "size": 0.281,
@@ -3016,7 +3016,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 45.2
           },
           {
-            "name": "Braxton III-c",
+            "name": "Creaek-c",
             "slug": "braxton-iii-c",
             "color": "#e8dcc8",
             "size": 0.397,
@@ -3030,7 +3030,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 49.7
       },
       {
-        "name": "Braxton IV",
+        "name": "Khaell Crown",
         "slug": "braxton-iv",
         "color": "#3f5fb0",
         "size": 2.571,
@@ -3066,7 +3066,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Corvai I",
+        "name": "Fenost",
         "slug": "corvai-i",
         "color": "#3f5fb0",
         "size": 1.535,
@@ -3081,7 +3081,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 29.1
       },
       {
-        "name": "Corvai II",
+        "name": "Vraixior",
         "slug": "corvai-ii",
         "color": "#7fd1d9",
         "size": 1.258,
@@ -3095,7 +3095,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Corvai II-a",
+            "name": "Vraixior-a",
             "slug": "corvai-ii-a",
             "color": "#e8dcc8",
             "size": 0.444,
@@ -3106,7 +3106,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 38.8
           },
           {
-            "name": "Corvai II-b",
+            "name": "Vraixior-b",
             "slug": "corvai-ii-b",
             "color": "#e8dcc8",
             "size": 0.305,
@@ -3117,7 +3117,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 38.8
           },
           {
-            "name": "Corvai II-c",
+            "name": "Vraixior-c",
             "slug": "corvai-ii-c",
             "color": "#e8dcc8",
             "size": 0.324,
@@ -3131,7 +3131,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 42.8
       },
       {
-        "name": "Corvai III",
+        "name": "Fenaiv",
         "slug": "corvai-iii",
         "color": "#3f5fb0",
         "size": 1.746,
@@ -3144,7 +3144,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Corvai III-a",
+            "name": "Fenaiv-a",
             "slug": "corvai-iii-a",
             "color": "#d6dcf2",
             "size": 0.436,
@@ -3217,7 +3217,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 20
       },
       {
-        "name": "Ithera II",
+        "name": "Rasaesaeth",
         "slug": "ithera-ii",
         "color": "#5f8f5a",
         "size": 1.902,
@@ -3232,7 +3232,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 28.9
       },
       {
-        "name": "Ithera III",
+        "name": "Mireirn",
         "slug": "ithera-iii",
         "color": "#4d7ea8",
         "size": 2.012,
@@ -3245,7 +3245,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ithera III-a",
+            "name": "Mireirn-a",
             "slug": "ithera-iii-a",
             "color": "#e8dcc8",
             "size": 0.391,
@@ -3256,7 +3256,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 38.5
           },
           {
-            "name": "Ithera III-b",
+            "name": "Mireirn-b",
             "slug": "ithera-iii-b",
             "color": "#b8c4e8",
             "size": 0.471,
@@ -3267,7 +3267,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 38.5
           },
           {
-            "name": "Ithera III-c",
+            "name": "Mireirn-c",
             "slug": "ithera-iii-c",
             "color": "#b8c4e8",
             "size": 0.421,
@@ -3281,7 +3281,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 42.5
       },
       {
-        "name": "Ithera IV",
+        "name": "Tanuthioth",
         "slug": "ithera-iv",
         "color": "#7fd1d9",
         "size": 1.973,
@@ -3295,7 +3295,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Ithera IV-a",
+            "name": "Tanuthioth-a",
             "slug": "ithera-iv-a",
             "color": "#e8dcc8",
             "size": 0.475,
@@ -3368,7 +3368,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 25.5
       },
       {
-        "name": "Zennor II",
+        "name": "Gravur",
         "slug": "zennor-ii",
         "color": "#4d7ea8",
         "size": 1.305,
@@ -3381,7 +3381,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Zennor II-a",
+            "name": "Gravur-a",
             "slug": "zennor-ii-a",
             "color": "#e8dcc8",
             "size": 0.35,
@@ -3392,7 +3392,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 33.4
           },
           {
-            "name": "Zennor II-b",
+            "name": "Gravur-b",
             "slug": "zennor-ii-b",
             "color": "#e8dcc8",
             "size": 0.312,
@@ -3403,7 +3403,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 33.4
           },
           {
-            "name": "Zennor II-c",
+            "name": "Gravur-c",
             "slug": "zennor-ii-c",
             "color": "#e8dcc8",
             "size": 0.386,
@@ -3417,7 +3417,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 37.1
       },
       {
-        "name": "Zennor III",
+        "name": "Ithov",
         "slug": "zennor-iii",
         "color": "#5f8f5a",
         "size": 1.256,
@@ -3430,7 +3430,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Zennor III-a",
+            "name": "Ithov-a",
             "slug": "zennor-iii-a",
             "color": "#b8c4e8",
             "size": 0.288,
@@ -3444,7 +3444,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 48.8
       },
       {
-        "name": "Zennor IV",
+        "name": "Veliol",
         "slug": "zennor-iv",
         "color": "#a85c3a",
         "size": 2.469,
@@ -3457,7 +3457,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Zennor IV-a",
+            "name": "Veliol-a",
             "slug": "zennor-iv-a",
             "color": "#d6dcf2",
             "size": 0.327,
@@ -3468,7 +3468,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 68.3
           },
           {
-            "name": "Zennor IV-b",
+            "name": "Veliol-b",
             "slug": "zennor-iv-b",
             "color": "#9df0fa",
             "size": 0.5,
@@ -3479,7 +3479,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 68.3
           },
           {
-            "name": "Zennor IV-c",
+            "name": "Veliol-c",
             "slug": "zennor-iv-c",
             "color": "#9df0fa",
             "size": 0.505,
@@ -3563,7 +3563,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 31.1
       },
       {
-        "name": "Kessaria II",
+        "name": "Ivone Hollow",
         "slug": "kessaria-ii",
         "color": "#a85c3a",
         "size": 1.288,
@@ -3576,7 +3576,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kessaria II-a",
+            "name": "Ivone Hollow-a",
             "slug": "kessaria-ii-a",
             "color": "#c9c2b8",
             "size": 0.549,
@@ -3587,7 +3587,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 42.2
           },
           {
-            "name": "Kessaria II-b",
+            "name": "Ivone Hollow-b",
             "slug": "kessaria-ii-b",
             "color": "#e8dcc8",
             "size": 0.485,
@@ -3598,7 +3598,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 48
           },
           {
-            "name": "Kessaria II-c",
+            "name": "Ivone Hollow-c",
             "slug": "kessaria-ii-c",
             "color": "#c9c2b8",
             "size": 0.33,
@@ -3612,7 +3612,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 37.7
       },
       {
-        "name": "Kessaria III",
+        "name": "Fenath",
         "slug": "kessaria-iii",
         "color": "#4d7ea8",
         "size": 2.415,
@@ -3625,7 +3625,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kessaria III-a",
+            "name": "Fenath-a",
             "slug": "kessaria-iii-a",
             "color": "#c9c2b8",
             "size": 0.325,
@@ -3636,7 +3636,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 60.1
           },
           {
-            "name": "Kessaria III-b",
+            "name": "Fenath-b",
             "slug": "kessaria-iii-b",
             "color": "#c9c2b8",
             "size": 0.477,
@@ -3647,7 +3647,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 65.3
           },
           {
-            "name": "Kessaria III-c",
+            "name": "Fenath-c",
             "slug": "kessaria-iii-c",
             "color": "#d8d0c0",
             "size": 0.415,
@@ -3681,7 +3681,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Novandra I",
+        "name": "Zephione",
         "slug": "novandra-i",
         "color": "#9fb8c4",
         "size": 2.359,
@@ -3694,7 +3694,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Novandra I-a",
+            "name": "Zephione-a",
             "slug": "novandra-i-a",
             "color": "#e8dcc8",
             "size": 0.452,
@@ -3708,7 +3708,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 33.2
       },
       {
-        "name": "Novandra II",
+        "name": "Hexeim",
         "slug": "novandra-ii",
         "color": "#5f8f5a",
         "size": 1.479,
@@ -3722,7 +3722,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Novandra II-a",
+            "name": "Hexeim-a",
             "slug": "novandra-ii-a",
             "color": "#e8dcc8",
             "size": 0.355,
@@ -3733,7 +3733,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 48.8
           },
           {
-            "name": "Novandra II-b",
+            "name": "Hexeim-b",
             "slug": "novandra-ii-b",
             "color": "#e8dcc8",
             "size": 0.452,
@@ -3747,7 +3747,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 39.4
       },
       {
-        "name": "Novandra III",
+        "name": "Torilliven",
         "slug": "novandra-iii",
         "color": "#7fd1d9",
         "size": 1.508,
@@ -3760,7 +3760,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Novandra III-a",
+            "name": "Torilliven-a",
             "slug": "novandra-iii-a",
             "color": "#e8dcc8",
             "size": 0.52,
@@ -3774,7 +3774,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 55.4
       },
       {
-        "name": "Novandra IV",
+        "name": "Dunurn Rift",
         "slug": "novandra-iv",
         "color": "#cbbfae",
         "size": 1.817,
@@ -3836,7 +3836,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Brythe I",
+        "name": "Cynulleven",
         "slug": "brythe-i",
         "color": "#3f5fb0",
         "size": 2.006,
@@ -3849,7 +3849,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Brythe I-a",
+            "name": "Cynulleven-a",
             "slug": "brythe-i-a",
             "color": "#e8dcc8",
             "size": 0.44,
@@ -3860,7 +3860,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 38.5
           },
           {
-            "name": "Brythe I-b",
+            "name": "Cynulleven-b",
             "slug": "brythe-i-b",
             "color": "#e8dcc8",
             "size": 0.516,
@@ -3871,7 +3871,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 45.8
           },
           {
-            "name": "Brythe I-c",
+            "name": "Cynulleven-c",
             "slug": "brythe-i-c",
             "color": "#e8dcc8",
             "size": 0.343,
@@ -3885,7 +3885,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 35.2
       },
       {
-        "name": "Brythe II",
+        "name": "Quorouduth",
         "slug": "brythe-ii",
         "color": "#cbbfae",
         "size": 1.617,
@@ -3898,7 +3898,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Brythe II-a",
+            "name": "Quorouduth-a",
             "slug": "brythe-ii-a",
             "color": "#d8d0c0",
             "size": 0.46,
@@ -3909,7 +3909,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 52.8
           },
           {
-            "name": "Brythe II-b",
+            "name": "Quorouduth-b",
             "slug": "brythe-ii-b",
             "color": "#e8dcc8",
             "size": 0.515,
@@ -3923,7 +3923,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 45.8
       },
       {
-        "name": "Brythe III",
+        "name": "Yolomiraedor",
         "slug": "brythe-iii",
         "color": "#e0c896",
         "size": 1.276,
@@ -3937,7 +3937,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Brythe III-a",
+            "name": "Yolomiraedor-a",
             "slug": "brythe-iii-a",
             "color": "#c9c2b8",
             "size": 0.421,
@@ -3951,7 +3951,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 62.1
       },
       {
-        "name": "Brythe IV",
+        "name": "Holiodoraen",
         "slug": "brythe-iv",
         "color": "#d9a066",
         "size": 2.192,
@@ -3964,7 +3964,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Brythe IV-a",
+            "name": "Holiodoraen-a",
             "slug": "brythe-iv-a",
             "color": "#c9c2b8",
             "size": 0.43,
@@ -3975,7 +3975,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 105.1
           },
           {
-            "name": "Brythe IV-b",
+            "name": "Holiodoraen-b",
             "slug": "brythe-iv-b",
             "color": "#d8d0c0",
             "size": 0.476,
@@ -3986,7 +3986,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 110.5
           },
           {
-            "name": "Brythe IV-c",
+            "name": "Holiodoraen-c",
             "slug": "brythe-iv-c",
             "color": "#e8dcc8",
             "size": 0.362,
@@ -4020,7 +4020,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Selkirion I",
+        "name": "Noruv",
         "slug": "selkirion-i",
         "color": "#5f8f5a",
         "size": 1.653,
@@ -4033,7 +4033,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Selkirion I-a",
+            "name": "Noruv-a",
             "slug": "selkirion-i-a",
             "color": "#c9c2b8",
             "size": 0.428,
@@ -4047,7 +4047,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 33.2
       },
       {
-        "name": "Selkirion II",
+        "name": "Karaiven",
         "slug": "selkirion-ii",
         "color": "#9fb8c4",
         "size": 2.562,
@@ -4061,7 +4061,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Selkirion II-a",
+            "name": "Karaiven-a",
             "slug": "selkirion-ii-a",
             "color": "#e8dcc8",
             "size": 0.489,
@@ -4072,7 +4072,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 49.7
           },
           {
-            "name": "Selkirion II-b",
+            "name": "Karaiven-b",
             "slug": "selkirion-ii-b",
             "color": "#e8dcc8",
             "size": 0.434,
@@ -4083,7 +4083,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 59.7
           },
           {
-            "name": "Selkirion II-c",
+            "name": "Karaiven-c",
             "slug": "selkirion-ii-c",
             "color": "#c9c2b8",
             "size": 0.415,
@@ -4144,7 +4144,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Talvenor I",
+        "name": "Cynuvenath",
         "slug": "talvenor-i",
         "color": "#7fd1d9",
         "size": 1.3,
@@ -4158,7 +4158,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Talvenor I-a",
+            "name": "Cynuvenath-a",
             "slug": "talvenor-i-a",
             "color": "#c9c2b8",
             "size": 0.415,
@@ -4169,7 +4169,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 37.5
           },
           {
-            "name": "Talvenor I-b",
+            "name": "Cynuvenath-b",
             "slug": "talvenor-i-b",
             "color": "#e8dcc8",
             "size": 0.415,
@@ -4180,7 +4180,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 46.3
           },
           {
-            "name": "Talvenor I-c",
+            "name": "Cynuvenath-c",
             "slug": "talvenor-i-c",
             "color": "#e8dcc8",
             "size": 0.379,
@@ -4194,7 +4194,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 31.1
       },
       {
-        "name": "Talvenor II",
+        "name": "Peraist",
         "slug": "talvenor-ii",
         "color": "#d9a066",
         "size": 1.945,
@@ -4207,7 +4207,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Talvenor II-a",
+            "name": "Peraist-a",
             "slug": "talvenor-ii-a",
             "color": "#c9c2b8",
             "size": 0.371,
@@ -4221,7 +4221,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 41.2
       },
       {
-        "name": "Talvenor III",
+        "name": "Thissos",
         "slug": "talvenor-iii",
         "color": "#9fb8c4",
         "size": 1.434,
@@ -4234,7 +4234,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Talvenor III-a",
+            "name": "Thissos-a",
             "slug": "talvenor-iii-a",
             "color": "#d8d0c0",
             "size": 0.371,
@@ -4245,7 +4245,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 70
           },
           {
-            "name": "Talvenor III-b",
+            "name": "Thissos-b",
             "slug": "talvenor-iii-b",
             "color": "#d8d0c0",
             "size": 0.404,
@@ -4286,7 +4286,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 79.5
       },
       {
-        "name": "Talvenor V",
+        "name": "Nolornov Crown",
         "slug": "talvenor-v",
         "color": "#3f5fb0",
         "size": 1.929,
@@ -4299,7 +4299,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Talvenor V-a",
+            "name": "Nolornov Crown-a",
             "slug": "talvenor-v-a",
             "color": "#d8d0c0",
             "size": 0.485,
@@ -4310,7 +4310,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 156.8
           },
           {
-            "name": "Talvenor V-b",
+            "name": "Nolornov Crown-b",
             "slug": "talvenor-v-b",
             "color": "#d8d0c0",
             "size": 0.53,
@@ -4321,7 +4321,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 167.2
           },
           {
-            "name": "Talvenor V-c",
+            "name": "Nolornov Crown-c",
             "slug": "talvenor-v-c",
             "color": "#d8d0c0",
             "size": 0.503,
@@ -4355,7 +4355,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ashkar I",
+        "name": "Vrostara",
         "slug": "ashkar-i",
         "color": "#e8d2a0",
         "size": 2.308,
@@ -4368,7 +4368,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ashkar I-a",
+            "name": "Vrostara-a",
             "slug": "ashkar-i-a",
             "color": "#e8dcc8",
             "size": 0.418,
@@ -4379,7 +4379,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 35
           },
           {
-            "name": "Ashkar I-b",
+            "name": "Vrostara-b",
             "slug": "ashkar-i-b",
             "color": "#d8d0c0",
             "size": 0.513,
@@ -4393,7 +4393,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 36.1
       },
       {
-        "name": "Ashkar II",
+        "name": "Calosk Vale",
         "slug": "ashkar-ii",
         "color": "#9fb8c4",
         "size": 2.495,
@@ -4406,7 +4406,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ashkar II-a",
+            "name": "Calosk Vale-a",
             "slug": "ashkar-ii-a",
             "color": "#e8dcc8",
             "size": 0.54,
@@ -4420,7 +4420,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 48.3
       },
       {
-        "name": "Ashkar III",
+        "name": "Iloumiodor",
         "slug": "ashkar-iii",
         "color": "#a85c3a",
         "size": 2.276,
@@ -4433,7 +4433,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ashkar III-a",
+            "name": "Iloumiodor-a",
             "slug": "ashkar-iii-a",
             "color": "#e8dcc8",
             "size": 0.418,
@@ -4444,7 +4444,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 83.9
           },
           {
-            "name": "Ashkar III-b",
+            "name": "Iloumiodor-b",
             "slug": "ashkar-iii-b",
             "color": "#e8dcc8",
             "size": 0.468,
@@ -4458,7 +4458,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 69.1
       },
       {
-        "name": "Ashkar IV",
+        "name": "Umedor",
         "slug": "ashkar-iv",
         "color": "#e8d2a0",
         "size": 1.365,
@@ -4472,7 +4472,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Ashkar IV-a",
+            "name": "Umedor-a",
             "slug": "ashkar-iv-a",
             "color": "#d8d0c0",
             "size": 0.407,
@@ -4555,7 +4555,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ruinvale I",
+        "name": "Peres Minor",
         "slug": "ruinvale-i",
         "color": "#e8d2a0",
         "size": 1.955,
@@ -4619,7 +4619,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 41.4
       },
       {
-        "name": "Ruinvale III",
+        "name": "Gravoll",
         "slug": "ruinvale-iii",
         "color": "#5f8f5a",
         "size": 2.134,
@@ -4635,7 +4635,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 61
       },
       {
-        "name": "Ruinvale IV",
+        "name": "Vrein Deep",
         "slug": "ruinvale-iv",
         "color": "#e8d2a0",
         "size": 2.334,
@@ -4648,7 +4648,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ruinvale IV-a",
+            "name": "Vrein Deep-a",
             "slug": "ruinvale-iv-a",
             "color": "#c9c2b8",
             "size": 0.482,
@@ -4659,7 +4659,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 111.5
           },
           {
-            "name": "Ruinvale IV-b",
+            "name": "Vrein Deep-b",
             "slug": "ruinvale-iv-b",
             "color": "#c9c2b8",
             "size": 0.415,
@@ -4670,7 +4670,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 115.5
           },
           {
-            "name": "Ruinvale IV-c",
+            "name": "Vrein Deep-c",
             "slug": "ruinvale-iv-c",
             "color": "#d8d0c0",
             "size": 0.322,
@@ -4704,7 +4704,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Kethra I",
+        "name": "Khar",
         "slug": "kethra-i",
         "color": "#8c8378",
         "size": 1.601,
@@ -4717,7 +4717,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kethra I-a",
+            "name": "Khar-a",
             "slug": "kethra-i-a",
             "color": "#c9c2b8",
             "size": 0.394,
@@ -4728,7 +4728,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 34.2
           },
           {
-            "name": "Kethra I-b",
+            "name": "Khar-b",
             "slug": "kethra-i-b",
             "color": "#d8d0c0",
             "size": 0.412,
@@ -4781,7 +4781,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 42.8
       },
       {
-        "name": "Kethra III",
+        "name": "Quoraidor",
         "slug": "kethra-iii",
         "color": "#cbbfae",
         "size": 2.072,
@@ -4794,7 +4794,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kethra III-a",
+            "name": "Quoraidor-a",
             "slug": "kethra-iii-a",
             "color": "#d8d0c0",
             "size": 0.398,
@@ -4805,7 +4805,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 72
           },
           {
-            "name": "Kethra III-b",
+            "name": "Quoraidor-b",
             "slug": "kethra-iii-b",
             "color": "#d8d0c0",
             "size": 0.464,
@@ -4816,7 +4816,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 77.7
           },
           {
-            "name": "Kethra III-c",
+            "name": "Quoraidor-c",
             "slug": "kethra-iii-c",
             "color": "#c9c2b8",
             "size": 0.528,
@@ -4865,7 +4865,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 34.1
       },
       {
-        "name": "Ombrix II",
+        "name": "Vroum",
         "slug": "ombrix-ii",
         "color": "#a8c98f",
         "size": 2.003,
@@ -4878,7 +4878,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ombrix II-a",
+            "name": "Vroum-a",
             "slug": "ombrix-ii-a",
             "color": "#c9c2b8",
             "size": 0.437,
@@ -4889,7 +4889,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 52.5
           },
           {
-            "name": "Ombrix II-b",
+            "name": "Vroum-b",
             "slug": "ombrix-ii-b",
             "color": "#d8d0c0",
             "size": 0.508,
@@ -4900,7 +4900,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 57.1
           },
           {
-            "name": "Ombrix II-c",
+            "name": "Vroum-c",
             "slug": "ombrix-ii-c",
             "color": "#d8d0c0",
             "size": 0.512,
@@ -4914,7 +4914,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 45.8
       },
       {
-        "name": "Ombrix III",
+        "name": "Faliok",
         "slug": "ombrix-iii",
         "color": "#8c8378",
         "size": 1.85,
@@ -4929,7 +4929,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 60.6
       },
       {
-        "name": "Ombrix IV",
+        "name": "Quoroun",
         "slug": "ombrix-iv",
         "color": "#cbbfae",
         "size": 1.611,
@@ -4943,7 +4943,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Ombrix IV-a",
+            "name": "Quoroun-a",
             "slug": "ombrix-iv-a",
             "color": "#e8dcc8",
             "size": 0.438,
@@ -4954,7 +4954,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 113
           },
           {
-            "name": "Ombrix IV-b",
+            "name": "Quoroun-b",
             "slug": "ombrix-iv-b",
             "color": "#d8d0c0",
             "size": 0.488,
@@ -4965,7 +4965,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 120.7
           },
           {
-            "name": "Ombrix IV-c",
+            "name": "Quoroun-c",
             "slug": "ombrix-iv-c",
             "color": "#e8dcc8",
             "size": 0.401,
@@ -4979,7 +4979,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 86.2
       },
       {
-        "name": "Ombrix V",
+        "name": "Moroun",
         "slug": "ombrix-v",
         "color": "#a8c98f",
         "size": 1.305,
@@ -4992,7 +4992,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ombrix V-a",
+            "name": "Moroun-a",
             "slug": "ombrix-v-a",
             "color": "#c9c2b8",
             "size": 0.349,
@@ -5026,7 +5026,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Faelund I",
+        "name": "Juniomireik",
         "slug": "faelund-i",
         "color": "#c9895a",
         "size": 2.295,
@@ -5039,7 +5039,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Faelund I-a",
+            "name": "Juniomireik-a",
             "slug": "faelund-i-a",
             "color": "#d8d0c0",
             "size": 0.37,
@@ -5050,7 +5050,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 39
           },
           {
-            "name": "Faelund I-b",
+            "name": "Juniomireik-b",
             "slug": "faelund-i-b",
             "color": "#e8dcc8",
             "size": 0.311,
@@ -5113,7 +5113,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 41.5
       },
       {
-        "name": "Faelund III",
+        "name": "Haraern",
         "slug": "faelund-iii",
         "color": "#9fb8c4",
         "size": 1.923,
@@ -5127,7 +5127,7 @@ export const SOLAR_SYSTEMS = {
         "rings": true,
         "moons": [
           {
-            "name": "Faelund III-a",
+            "name": "Haraern-a",
             "slug": "faelund-iii-a",
             "color": "#e8dcc8",
             "size": 0.447,
@@ -5138,7 +5138,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 62.3
           },
           {
-            "name": "Faelund III-b",
+            "name": "Haraern-b",
             "slug": "faelund-iii-b",
             "color": "#e8dcc8",
             "size": 0.308,
@@ -5152,7 +5152,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 51.5
       },
       {
-        "name": "Faelund IV",
+        "name": "Cynond",
         "slug": "faelund-iv",
         "color": "#7fd1d9",
         "size": 2.031,
@@ -5165,7 +5165,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Faelund IV-a",
+            "name": "Cynond-a",
             "slug": "faelund-iv-a",
             "color": "#d8d0c0",
             "size": 0.531,
@@ -5176,7 +5176,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 81.4
           },
           {
-            "name": "Faelund IV-b",
+            "name": "Cynond-b",
             "slug": "faelund-iv-b",
             "color": "#c9c2b8",
             "size": 0.514,
@@ -5500,7 +5500,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Ferrandis I",
+        "name": "Zephouneist Crown",
         "slug": "ferrandis-i",
         "color": "hsl(215, 55%, 68%)",
         "size": 1.444,
@@ -5513,7 +5513,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ferrandis I-a",
+            "name": "Zephouneist Crown-a",
             "slug": "ferrandis-i-a",
             "color": "#d6dcf2",
             "size": 0.339,
@@ -5527,7 +5527,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 33.8
       },
       {
-        "name": "Ferrandis II",
+        "name": "Cynaes",
         "slug": "ferrandis-ii",
         "color": "hsl(281, 59%, 65%)",
         "size": 2.401,
@@ -5543,7 +5543,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 50
       },
       {
-        "name": "Ferrandis III",
+        "name": "Creeith Shard",
         "slug": "ferrandis-iii",
         "color": "hsl(170, 53%, 65%)",
         "size": 1.662,
@@ -5556,7 +5556,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Ferrandis III-a",
+            "name": "Creeith Shard-a",
             "slug": "ferrandis-iii-a",
             "color": "#d6dcf2",
             "size": 0.426,
@@ -5567,7 +5567,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 65.1
           },
           {
-            "name": "Ferrandis III-b",
+            "name": "Creeith Shard-b",
             "slug": "ferrandis-iii-b",
             "color": "#d6dcf2",
             "size": 0.49,
@@ -5628,7 +5628,7 @@ export const SOLAR_SYSTEMS = {
     ],
     "planets": [
       {
-        "name": "Kylenne I",
+        "name": "Uvuneith Expanse",
         "slug": "kylenne-i",
         "color": "hsl(17, 51%, 68%)",
         "size": 2.403,
@@ -5671,7 +5671,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 55
       },
       {
-        "name": "Kylenne III",
+        "name": "Umiodor",
         "slug": "kylenne-iii",
         "color": "hsl(18, 42%, 70%)",
         "size": 1.692,
@@ -5684,7 +5684,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kylenne III-a",
+            "name": "Umiodor-a",
             "slug": "kylenne-iii-a",
             "color": "#d6dcf2",
             "size": 0.327,
@@ -5695,7 +5695,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 65.6
           },
           {
-            "name": "Kylenne III-b",
+            "name": "Umiodor-b",
             "slug": "kylenne-iii-b",
             "color": "#d6dcf2",
             "size": 0.461,
@@ -5706,7 +5706,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 64.6
           },
           {
-            "name": "Kylenne III-c",
+            "name": "Umiodor-c",
             "slug": "kylenne-iii-c",
             "color": "#d6dcf2",
             "size": 0.403,
@@ -5720,7 +5720,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 67.6
       },
       {
-        "name": "Kylenne IV",
+        "name": "Mirelloull",
         "slug": "kylenne-iv",
         "color": "hsl(73, 38%, 55%)",
         "size": 1.835,
@@ -5735,7 +5735,7 @@ export const SOLAR_SYSTEMS = {
         "zoomDistance": 86.1
       },
       {
-        "name": "Kylenne V",
+        "name": "Eldousk",
         "slug": "kylenne-v",
         "color": "hsl(149, 42%, 73%)",
         "size": 1.563,
@@ -5748,7 +5748,7 @@ export const SOLAR_SYSTEMS = {
         "eyebrow": "Pianeta",
         "moons": [
           {
-            "name": "Kylenne V-a",
+            "name": "Eldousk-a",
             "slug": "kylenne-v-a",
             "color": "#d6dcf2",
             "size": 0.543,
@@ -5759,7 +5759,7 @@ export const SOLAR_SYSTEMS = {
             "zoomDistance": 94.4
           },
           {
-            "name": "Kylenne V-b",
+            "name": "Eldousk-b",
             "slug": "kylenne-v-b",
             "color": "#d6dcf2",
             "size": 0.528,
