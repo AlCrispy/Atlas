@@ -6,10 +6,12 @@ import * as THREE from 'three';
 // glsl-blackhole branch history), moved to plain WebGL for universal
 // compatibility instead of chasing per-GPU/driver WebGPU quirks.
 //
-// Escaped rays sample a captured render of the real scene (reprojected via
-// camera matrices), reusing the render-target-capture technique already
-// proven in gravitational-lens.js, so the lensing bends the actual
-// galaxies/starfield behind the hole rather than a fake sky.
+// Escaped rays are left transparent (material.transparent + depthWrite
+// false) rather than sampling a captured render of the scene — showing the
+// real galaxies/labels lensed behind the hole read as a distracting
+// "reflection" rather than the light-bending-around effect this is meant
+// to sell; transparent pixels just let whatever's actually there through
+// untouched, with no reflection at all.
 
 const VERTEX_SHADER = `
   void main() {
@@ -18,7 +20,6 @@ const VERTEX_SHADER = `
 `;
 
 const FRAGMENT_SHADER = `
-  uniform sampler2D tDiffuse;
   uniform vec2 uResolution;
   uniform vec3 uHoleCenter;
   uniform float uTime;
@@ -45,8 +46,6 @@ const FRAGMENT_SHADER = `
 
   uniform mat4 uProjMatrixInverse;
   uniform mat4 uViewMatrixInverse;
-  uniform mat4 uProjMatrix;
-  uniform mat4 uViewMatrix;
 
   float hash31(vec3 p) {
     return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
@@ -198,17 +197,11 @@ const FRAGMENT_SHADER = `
       }
     }
 
-    if (!captured) escaped = true;
-
-    if (escaped && alpha < 0.99) {
-      vec3 worldHit = rayPos + uHoleCenter + rayDir * 500.0;
-      vec4 clip = uProjMatrix * (uViewMatrix * vec4(worldHit, 1.0));
-      vec2 sampleUv = (clip.xy / clip.w) * 0.5 + 0.5;
-      vec3 bg = texture2D(tDiffuse, clamp(sampleUv, 0.0, 1.0)).rgb;
-      color += bg * (1.0 - alpha);
-    }
-
-    gl_FragColor = vec4(color, 1.0);
+    // Escaped, empty-space pixels (no disk hit) stay fully transparent —
+    // no reflection of the real scene, just the disk's own bent light.
+    // The event horizon itself still draws solid black.
+    float outAlpha = captured ? 1.0 : alpha;
+    gl_FragColor = vec4(color, outAlpha);
   }
 `;
 
@@ -235,19 +228,18 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     gravitationalLensing: 2.4,
     dopplerStrength: 1.0,
     stepSize: 1.0,
-    portalRadius: 24,
+    // Kept close to the disk's own outer edge (18) rather than a big
+    // margin — the sphere's interior only shows the disk plus whatever
+    // background got reprojected there, so a large radius just means a
+    // bigger visible "aura" of empty space around the ring.
+    portalRadius: 19,
   };
 
   const drawingBufferSize = new THREE.Vector2();
   renderer.getDrawingBufferSize(drawingBufferSize);
-  const renderTarget = new THREE.WebGLRenderTarget(
-    Math.max(1, drawingBufferSize.x),
-    Math.max(1, drawingBufferSize.y)
-  );
 
   const material = new THREE.ShaderMaterial({
     uniforms: {
-      tDiffuse: { value: renderTarget.texture },
       uResolution: { value: drawingBufferSize.clone() },
       uHoleCenter: { value: new THREE.Vector3(...position) },
       uTime: { value: 0 },
@@ -272,11 +264,11 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
       uPortalRadius: { value: config.portalRadius },
       uProjMatrixInverse: { value: new THREE.Matrix4() },
       uViewMatrixInverse: { value: new THREE.Matrix4() },
-      uProjMatrix: { value: new THREE.Matrix4() },
-      uViewMatrix: { value: new THREE.Matrix4() },
     },
     vertexShader: VERTEX_SHADER,
     fragmentShader: FRAGMENT_SHADER,
+    transparent: true,
+    depthWrite: false,
   });
 
   const geometry = new THREE.SphereGeometry(config.portalRadius, 48, 48);
@@ -293,23 +285,10 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     uniforms.uTime.value += clock.getDelta();
     uniforms.uProjMatrixInverse.value.copy(camera.projectionMatrixInverse);
     uniforms.uViewMatrixInverse.value.copy(camera.matrixWorld);
-    uniforms.uProjMatrix.value.copy(camera.projectionMatrix);
-    uniforms.uViewMatrix.value.copy(camera.matrixWorldInverse);
-  }
 
-  function renderPass() {
     renderer.getDrawingBufferSize(drawingBufferSize);
-    if (renderTarget.width !== drawingBufferSize.x || renderTarget.height !== drawingBufferSize.y) {
-      renderTarget.setSize(Math.max(1, drawingBufferSize.x), Math.max(1, drawingBufferSize.y));
-      material.uniforms.uResolution.value.copy(drawingBufferSize);
-    }
-    mesh.visible = false;
-    const previousTarget = renderer.getRenderTarget();
-    renderer.setRenderTarget(renderTarget);
-    renderer.render(scene, camera);
-    renderer.setRenderTarget(previousTarget);
-    mesh.visible = true;
+    uniforms.uResolution.value.copy(drawingBufferSize);
   }
 
-  return { mesh, update, renderPass };
+  return { mesh, update };
 }

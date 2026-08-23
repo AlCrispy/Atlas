@@ -816,7 +816,6 @@ function animate() {
 
   controls.update();
   blackHole.update();
-  blackHole.renderPass();
   renderer.render(scene, camera);
 }
 animate();
