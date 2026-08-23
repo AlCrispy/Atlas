@@ -223,8 +223,8 @@ export function createBlackHole({ scene, camera, renderer, position = [0, 0, 0] 
     // solidly with smoother tonal gradation instead of thin streaky lines.
     diskInnerRadius: 3.5,
     diskOuterRadius: 18,
-    diskTemperature: 42,
-    temperatureFalloff: 5.2,
+    diskTemperature: 75,
+    temperatureFalloff: 3.3,
     diskBrightness: 4.5,
     diskRotationSpeed: -6,
     turbulenceScale: 1.8,
