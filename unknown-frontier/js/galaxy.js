@@ -12,7 +12,6 @@ const TRIANGLE_RADIUS = TRIANGLE_SIDE / Math.sqrt(3);
 const SPIRAL_SPIN = 0.015;
 const ELLIPTICAL_SPIN = 0.006;
 const IRREGULAR_SPIN = 0.01;
-const BLACKHOLE_DISK_SPIN = 0.08;
 const LENTICULAR_SPIN = 0.008;
 const DWARF_SPIN = 0.02;
 const RING_SPIN = 0.012;
@@ -397,42 +396,66 @@ function buildBlackHole() {
   glow.scale.set(14, 14, 1);
   group.add(glow);
 
-  const diskTexture = makeGlowTexture('rgba(255,200,140,1)', 'rgba(255,200,140,0)');
-  const diskParticleCount = 500;
-  const diskPositions = new Float32Array(diskParticleCount * 3);
-  const diskColors = new Float32Array(diskParticleCount * 3);
-  const innerColor = new THREE.Color(0xffe8c8);
-  const outerColor = new THREE.Color(0xff9a4f);
+  // A single continuous shell instead of discrete particles: material
+  // streams around the hole with differential rotation (inner edge faster
+  // than outer, like a real Keplerian disk), so it reads as one flowing
+  // ring rather than a swarm of orbiting dots.
+  const diskInner = 6;
+  const diskOuter = 15;
+  const diskGeometry = new THREE.RingGeometry(diskInner, diskOuter, 160, 1);
+  const diskMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uInner: { value: diskInner },
+      uOuter: { value: diskOuter },
+      uInnerColor: { value: new THREE.Color(0xffe8c8) },
+      uOuterColor: { value: new THREE.Color(0xff9a4f) },
+    },
+    vertexShader: `
+      varying vec2 vPos;
+      void main() {
+        vPos = position.xy;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      varying vec2 vPos;
+      uniform float uTime;
+      uniform float uInner;
+      uniform float uOuter;
+      uniform vec3 uInnerColor;
+      uniform vec3 uOuterColor;
 
-  for (let i = 0; i < diskParticleCount; i++) {
-    const t = Math.random();
-    const r = 6 + t * 8;
-    const angle = Math.random() * Math.PI * 2;
+      void main() {
+        float r = length(vPos);
+        float t = clamp((r - uInner) / (uOuter - uInner), 0.0, 1.0);
+        float angle = atan(vPos.y, vPos.x);
 
-    diskPositions[i * 3] = Math.cos(angle) * r;
-    diskPositions[i * 3 + 1] = (Math.random() - 0.5) * 0.6;
-    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
+        // Faster near the horizon, slower further out — differential
+        // rotation is what makes it read as flowing plasma rather than a
+        // rigid ring tumbling as one piece.
+        float speed = mix(2.6, 0.5, t);
+        float flow = angle * 5.0 - uTime * speed;
+        float streaks = 0.5 + 0.5 * sin(flow);
+        streaks *= 0.55 + 0.45 * sin(flow * 2.3 + 1.3);
+        streaks = pow(streaks, 1.4);
 
-    const color = innerColor.clone().lerp(outerColor, t);
-    diskColors[i * 3] = color.r;
-    diskColors[i * 3 + 1] = color.g;
-    diskColors[i * 3 + 2] = color.b;
-  }
+        vec3 color = mix(uInnerColor, uOuterColor, t);
+        float edgeFade = smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.82, 1.0, t));
+        float alpha = edgeFade * mix(0.45, 1.0, streaks);
 
-  const diskGeometry = new THREE.BufferGeometry();
-  diskGeometry.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
-  diskGeometry.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
-  const diskMaterial = new THREE.PointsMaterial({
-    size: 1.2,
-    map: diskTexture,
-    vertexColors: true,
+        gl_FragColor = vec4(color * (0.7 + 0.7 * streaks), alpha);
+      }
+    `,
     transparent: true,
-    opacity: 0.9,
+    side: THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
-  const disk = new THREE.Points(diskGeometry, diskMaterial);
-  disk.rotation.x = 0.3;
+  const disk = new THREE.Mesh(diskGeometry, diskMaterial);
+  // RingGeometry starts flat in the XY plane; lay it down to XZ first
+  // (matching the old horizontal disk), then apply the same tilt as before.
+  disk.rotation.x = -Math.PI / 2 + 0.3;
   group.add(disk);
 
   const hitSprite = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -874,7 +897,7 @@ function animate() {
     spiralCoreGlow.scale.set(corePulse, corePulse, 1);
   }
 
-  blackHoleDisk.rotation.y += delta * BLACKHOLE_DISK_SPIN;
+  blackHoleDisk.material.uniforms.uTime.value = elapsed;
 
   if (compareLine.visible) {
     // Re-read endpoints each frame — the parent galaxies keep spinning,
