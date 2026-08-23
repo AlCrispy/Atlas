@@ -117,6 +117,27 @@ const RING_OUTER_REACH = 2.6;
 // outer edge would otherwise run into it.
 const RING_MOON_CLEARANCE = 0.82;
 
+// Deterministic pseudo-random float in [0, 1) seeded by a string, so a
+// planet's ring tilt is stable across reloads instead of reshuffling.
+function seededRandom(seed, salt) {
+  let hash = 0;
+  const str = `${seed}:${salt}`;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) | 0;
+  }
+  return ((hash >>> 0) % 10000) / 10000;
+}
+
+// Real rings sit on a planet's equator, not its orbital plane — Uranus's
+// are tilted ~98°. Each ringed planet gets its own fixed-but-varied skew
+// instead of every ring reading as the same flat disc.
+function ringTiltFor(slug) {
+  return {
+    tiltX: (seededRandom(slug, 'x') - 0.5) * 1.1,
+    tiltZ: (seededRandom(slug, 'z') - 0.5) * 0.9,
+  };
+}
+
 // Returns null (no ring drawn) if a planet's nearest moon orbits too close
 // to leave any room — collision avoidance by simply not rendering rather
 // than overlapping.
@@ -194,7 +215,7 @@ const planetOrbits = system.planets.map((planet) => {
   if (planet.rings) {
     const bounds = computeRingBounds(planet, planet.size * PLANET_RENDER_SCALE);
     if (bounds) {
-      const ringMesh = buildPlanetRing({ ...bounds, color: planet.ringColor || planet.color });
+      const ringMesh = buildPlanetRing({ ...bounds, ...ringTiltFor(planet.slug), color: planet.ringColor || planet.color });
       moonAnchor.add(ringMesh);
     }
   }

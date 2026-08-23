@@ -15,12 +15,15 @@ export function buildOrbitRing({ radiusX, radiusZ, color = 0x4fd8e8, segments = 
   return new THREE.LineLoop(geometry, material);
 }
 
-// A flat debris ring around a planet — two concentric bands with a thin
-// gap between them (a nod to Saturn's Cassini Division) rather than one
-// solid annulus, so it reads as particulate rather than a disc. Lies flat
-// in the XZ plane like buildOrbitRing above; the caller is responsible for
-// keeping innerRadius/outerRadius clear of the planet body and its moons.
-export function buildPlanetRing({ innerRadius, outerRadius, color = 0xe0c896, segments = 96 }) {
+// A debris ring around a planet — two concentric bands with a thin gap
+// between them (a nod to Saturn's Cassini Division) rather than one solid
+// annulus, so it reads as particulate rather than a disc. Base orientation
+// lies flat in the XZ plane like buildOrbitRing above; tiltX/tiltZ add an
+// axial-tilt-style skew on top (real planets' rings sit on the equator,
+// not the orbital plane — Uranus's are tilted ~98°) so rings don't all
+// read as the same flat disc. The caller is responsible for keeping
+// innerRadius/outerRadius clear of the planet body and its moons.
+export function buildPlanetRing({ innerRadius, outerRadius, color = 0xe0c896, segments = 96, tiltX = 0, tiltZ = 0 }) {
   const group = new THREE.Group();
   const span = outerRadius - innerRadius;
   const gap = span * 0.08;
@@ -33,7 +36,8 @@ export function buildPlanetRing({ innerRadius, outerRadius, color = 0xe0c896, se
       new THREE.RingGeometry(from, to, segments),
       new THREE.MeshStandardMaterial({ color, side: THREE.DoubleSide, transparent: true, opacity, roughness: 0.9, metalness: 0 }),
     );
-    mesh.rotation.x = -Math.PI / 2;
+    mesh.rotation.x = -Math.PI / 2 + tiltX;
+    mesh.rotation.z = tiltZ;
     group.add(mesh);
   });
   return group;
