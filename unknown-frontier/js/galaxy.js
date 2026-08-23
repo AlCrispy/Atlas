@@ -424,18 +424,37 @@ function buildBlackHole() {
   const diskColors = new Float32Array(diskParticleCount * 3);
   const diskRadii = new Float32Array(diskParticleCount);
   const diskAngles = new Float32Array(diskParticleCount);
-  const diskYOffsets = new Float32Array(diskParticleCount);
+  // Each particle orbits in its own plane, tilted by a random inclination
+  // (sampled via acos so planes are isotropic over the sphere, not bunched
+  // at the poles) and node — so infall arrives from every direction around
+  // the black hole instead of a single flat ring.
+  const diskInclinations = new Float32Array(diskParticleCount);
+  const diskNodes = new Float32Array(diskParticleCount);
   const innerColor = new THREE.Color(0xffe8c8);
   const outerColor = new THREE.Color(0xff9a4f);
   const scratchColor = new THREE.Color();
 
+  function randomOrbitalPlane(i) {
+    diskInclinations[i] = Math.acos(2 * Math.random() - 1);
+    diskNodes[i] = Math.random() * Math.PI * 2;
+  }
+
   function writeDiskParticle(i) {
     const r = diskRadii[i];
     const angle = diskAngles[i];
+    const incl = diskInclinations[i];
+    const node = diskNodes[i];
 
-    diskPositions[i * 3] = Math.cos(angle) * r;
-    diskPositions[i * 3 + 1] = diskYOffsets[i];
-    diskPositions[i * 3 + 2] = Math.sin(angle) * r;
+    // Orbit in the local x/z plane, then tilt by inclination (around x)
+    // and swing by node (around y) to place that plane in 3D.
+    const localX = Math.cos(angle) * r;
+    const localZ = Math.sin(angle) * r;
+    const tiltedY = -localZ * Math.sin(incl);
+    const tiltedZ = localZ * Math.cos(incl);
+
+    diskPositions[i * 3] = localX * Math.cos(node) + tiltedZ * Math.sin(node);
+    diskPositions[i * 3 + 1] = tiltedY;
+    diskPositions[i * 3 + 2] = -localX * Math.sin(node) + tiltedZ * Math.cos(node);
 
     const t = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
     scratchColor.copy(innerColor).lerp(outerColor, t);
@@ -445,11 +464,11 @@ function buildBlackHole() {
   }
 
   for (let i = 0; i < diskParticleCount; i++) {
-    // Spread initial radii across the full band so the disk looks whole
+    // Spread initial radii across the full band so the cloud looks whole
     // right away instead of taking one infall cycle to fill in.
     diskRadii[i] = diskInnerRadius + Math.random() * (diskOuterRadius - diskInnerRadius);
     diskAngles[i] = Math.random() * Math.PI * 2;
-    diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
+    randomOrbitalPlane(i);
     writeDiskParticle(i);
   }
 
@@ -466,7 +485,6 @@ function buildBlackHole() {
     depthWrite: false,
   });
   const disk = new THREE.Points(diskGeometry, diskMaterial);
-  disk.rotation.x = 0.3;
   group.add(disk);
 
   function updateDisk(delta) {
@@ -478,7 +496,7 @@ function buildBlackHole() {
       if (diskRadii[i] <= diskInnerRadius) {
         diskRadii[i] = diskOuterRadius;
         diskAngles[i] = Math.random() * Math.PI * 2;
-        diskYOffsets[i] = (Math.random() - 0.5) * 0.6;
+        randomOrbitalPlane(i);
       }
 
       writeDiskParticle(i);
