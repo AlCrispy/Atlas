@@ -93,6 +93,12 @@ const FRAGMENT_SHADER = `
     vec3 c = mix(red, orange, smoothstep(0.0, 0.18, heat));
     c = mix(c, yellow, smoothstep(0.72, 0.9, heat));
     c = mix(c, white, smoothstep(0.88, 1.0, heat));
+
+    // Desaturate slightly toward its own brightness — pulls the palette
+    // back from pure, saturated hues without flattening the light/dark
+    // shape of the gradient itself.
+    float luma = dot(c, vec3(0.299, 0.587, 0.114));
+    c = mix(c, vec3(luma), 0.3);
     return c;
   }
 
