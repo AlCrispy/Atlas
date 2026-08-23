@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 // Real shader-based gravitational lensing (not general-relativity-accurate
-// light bending — a stylized radial pinch distortion + Einstein-ring rim).
+// light bending — a stylized radial pinch distortion + a pinched, angle-
+// squashed photon-ring halo).
 // One shared offscreen render target captures the scene with every
 // registered lens hidden; each lens is a unit sphere whose fragment shader
 // samples that shared texture in screen space, so the render-target cost
@@ -20,20 +21,39 @@ const FRAGMENT_SHADER = `
   uniform float uLensScreenRadius;
   uniform float uStrength;
   uniform vec3 uRimColor;
+  uniform vec3 uHotColor;
+  uniform float uSquash;
 
   void main() {
+    float aspect = uResolution.x / uResolution.y;
     vec2 uv = gl_FragCoord.xy / uResolution;
     vec2 delta = uv - uLensScreenPos;
+    delta.x *= aspect;
+
+    // Space is bent isotropically, so the background-warping pull stays a
+    // plain radial falloff — physically the "correct" part of the effect.
     float dist = length(delta);
     float t = clamp(dist / uLensScreenRadius, 0.0, 1.0);
-
     float pull = uStrength * (1.0 - t) * (1.0 - t);
     vec2 dir = dist > 0.00001 ? delta / dist : vec2(0.0);
-    vec2 distortedUv = uv - dir * pull * uLensScreenRadius;
+    vec2 dirUv = vec2(dir.x / aspect, dir.y);
+    vec2 distortedUv = uv - dirUv * pull * uLensScreenRadius;
     vec3 color = texture2D(tDiffuse, clamp(distortedUv, vec2(0.0), vec2(1.0))).rgb;
 
-    float rim = smoothstep(0.7, 0.97, t) * (1.0 - smoothstep(0.97, 1.05, t));
-    color += uRimColor * rim * 1.6;
+    // The photon ring itself isn't circular: it's the far side of the
+    // accretion disk dragged around the horizon, so it bulges above/below
+    // and pinches in at the sides — an Interstellar-style "eye" shape
+    // rather than a plain Einstein ring. Squash the ring's own radius by
+    // angle (not the pull above) to get that silhouette while keeping the
+    // lensing warp itself physically radial.
+    float angle = atan(delta.y, delta.x);
+    float pinch = mix(1.0, uSquash, pow(abs(cos(angle)), 2.0));
+    float tRing = clamp((dist * pinch) / uLensScreenRadius, 0.0, 1.4);
+
+    float halo = smoothstep(0.5, 0.82, tRing) * (1.0 - smoothstep(0.95, 1.3, tRing));
+    float hotCore = smoothstep(0.68, 0.8, tRing) * (1.0 - smoothstep(0.8, 0.95, tRing));
+    vec3 glow = uRimColor * halo * 1.4 + uHotColor * hotCore * 1.8;
+    color += glow;
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -58,7 +78,9 @@ export function createLensSystem({ scene, camera, renderer }) {
     name,
     slug,
     color = '#8a6ae8',
+    hotColor = '#fff2e0',
     distortionStrength = 0.35,
+    squash = 1.8,
     eyebrow = 'Fenomeno Cosmico',
     galaxy = 'Fenomeno Cosmico',
     exploreHref,
@@ -76,6 +98,8 @@ export function createLensSystem({ scene, camera, renderer }) {
         uLensScreenRadius: { value: 0.1 },
         uStrength: { value: distortionStrength },
         uRimColor: { value: new THREE.Color(color) },
+        uHotColor: { value: new THREE.Color(hotColor) },
+        uSquash: { value: squash },
       },
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,
