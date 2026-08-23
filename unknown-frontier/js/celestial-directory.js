@@ -75,42 +75,79 @@ function addOption(select, value, label) {
   select.appendChild(opt);
 }
 
-[...new Set(rows.map((r) => r.galaxy))]
-  .sort((a, b) => a.localeCompare(b, 'it'))
-  .forEach((galaxy) => addOption(galaxyEl, galaxy, galaxy));
-
-const systemNames = new Map();
-rows.forEach((r) => { if (!systemNames.has(r.systemSlug)) systemNames.set(r.systemSlug, r.system); });
-[...systemNames.entries()]
-  .sort((a, b) => a[1].localeCompare(b[1], 'it'))
-  .forEach(([slug, name]) => addOption(systemEl, slug, name));
-
 // Fixed hierarchy order (star → planet → moon) rather than alphabetical.
 const KIND_ORDER = ['Stella', 'Pianeta', 'Satellite'];
-[...new Set(rows.map((r) => r.kind))]
-  .sort((a, b) => KIND_ORDER.indexOf(a) - KIND_ORDER.indexOf(b))
-  .forEach((kind) => addOption(kindEl, kind, kind));
 
-const typeLabels = new Map();
-rows.forEach((r) => {
-  if (r.classificationKey && !typeLabels.has(r.classificationKey)) {
-    typeLabels.set(r.classificationKey, r.classificationLabel);
+function matchesFacet(row, facet) {
+  switch (facet) {
+    case 'galaxy': return !galaxyEl.value || row.galaxy === galaxyEl.value;
+    case 'system': return !systemEl.value || row.systemSlug === systemEl.value;
+    case 'kind': return !kindEl.value || row.kind === kindEl.value;
+    case 'type': return !typeEl.value || row.classificationKey === typeEl.value;
+    case 'inhabited':
+      if (inhabitedEl.value === 'yes') return row.inhabited;
+      if (inhabitedEl.value === 'no') return !row.inhabited;
+      return true;
+    default: return true;
   }
-});
-[...typeLabels.entries()]
-  .sort((a, b) => a[1].localeCompare(b[1], 'it'))
-  .forEach(([value, label]) => addOption(typeEl, value, label));
+}
+
+const FACETS = ['galaxy', 'system', 'kind', 'type', 'inhabited'];
+
+// Rows matching every facet filter except the one whose own options we're
+// about to rebuild — so a select always offers everything still reachable
+// given the *other* active filters, without filtering out its own value.
+function rowsForFacetOptions(excludeFacet) {
+  return rows.filter((row) => FACETS.every((facet) => facet === excludeFacet || matchesFacet(row, facet)));
+}
+
+// Rebuilds one <select>'s options from `available` rows, keeping the
+// current selection if it's still a valid choice, resetting to "any"
+// otherwise (e.g. the previously picked system fell outside a newly
+// picked galaxy).
+function repopulateSelect(select, available, allLabel, getValue, getLabel, sortEntries) {
+  const previous = select.value;
+  const entries = new Map();
+  available.forEach((row) => {
+    const value = getValue(row);
+    if (value == null) return;
+    if (!entries.has(value)) entries.set(value, getLabel(row));
+  });
+
+  select.replaceChildren();
+  addOption(select, '', allLabel);
+  [...entries.entries()].sort(sortEntries).forEach(([value, label]) => addOption(select, value, label));
+
+  select.value = entries.has(previous) ? previous : '';
+}
+
+function refreshFacetOptions() {
+  repopulateSelect(
+    galaxyEl, rowsForFacetOptions('galaxy'), 'Tutte le galassie',
+    (r) => r.galaxy, (r) => r.galaxy,
+    (a, b) => a[1].localeCompare(b[1], 'it'),
+  );
+  repopulateSelect(
+    systemEl, rowsForFacetOptions('system'), 'Tutti i sistemi',
+    (r) => r.systemSlug, (r) => r.system,
+    (a, b) => a[1].localeCompare(b[1], 'it'),
+  );
+  repopulateSelect(
+    kindEl, rowsForFacetOptions('kind'), 'Ogni corpo',
+    (r) => r.kind, (r) => r.kind,
+    (a, b) => KIND_ORDER.indexOf(a[0]) - KIND_ORDER.indexOf(b[0]),
+  );
+  repopulateSelect(
+    typeEl, rowsForFacetOptions('type'), 'Tutte le tipologie',
+    (r) => r.classificationKey, (r) => r.classificationLabel,
+    (a, b) => a[1].localeCompare(b[1], 'it'),
+  );
+}
 
 function matches(row) {
   const query = searchEl.value.trim().toLowerCase();
   if (query && !row.name.toLowerCase().includes(query)) return false;
-  if (galaxyEl.value && row.galaxy !== galaxyEl.value) return false;
-  if (systemEl.value && row.systemSlug !== systemEl.value) return false;
-  if (kindEl.value && row.kind !== kindEl.value) return false;
-  if (typeEl.value && row.classificationKey !== typeEl.value) return false;
-  if (inhabitedEl.value === 'yes' && !row.inhabited) return false;
-  if (inhabitedEl.value === 'no' && row.inhabited) return false;
-  return true;
+  return FACETS.every((facet) => matchesFacet(row, facet));
 }
 
 function render() {
@@ -156,8 +193,14 @@ function render() {
   emptyEl.hidden = filtered.length !== 0;
 }
 
-[searchEl, galaxyEl, systemEl, kindEl, typeEl, inhabitedEl].forEach((el) => {
-  el.addEventListener('input', render);
+searchEl.addEventListener('input', render);
+
+[galaxyEl, systemEl, kindEl, typeEl, inhabitedEl].forEach((el) => {
+  el.addEventListener('change', () => {
+    refreshFacetOptions();
+    render();
+  });
 });
 
+refreshFacetOptions();
 render();
