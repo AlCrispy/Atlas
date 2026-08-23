@@ -394,7 +394,8 @@ li.system-list-group:first-child { padding-top: 4px; }
 }
 .beacon-card-note {
   margin-top: 10px;
-  font-family: 'EB Garamond', serif; font-size: 0.82rem; font-style: italic;
+  font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--hz-cyan-lt);
 }
 .beacon-card-link {

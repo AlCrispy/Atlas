@@ -185,7 +185,7 @@ const starObjs = system.stars.map((star) => {
   registerBody(sprite, star.size * STAR_RENDER_SCALE, {
     ...star,
     eyebrow: typeInfo ? `${star.eyebrow} · ${typeInfo.label}` : star.eyebrow,
-    note: star.slug === dysonStarSlug ? 'Circondata da una sfera di Dyson.' : undefined,
+    note: star.slug === dysonStarSlug ? 'Sfera di Dyson' : undefined,
   });
   scene.add(sprite);
   return { sprite, data: star };
