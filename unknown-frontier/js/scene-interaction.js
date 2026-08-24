@@ -137,7 +137,14 @@ export function createSceneInteraction(opts) {
     selectedListItem = item;
     const isMoon = mesh.userData.beacon.eyebrow === 'Satellite';
     const ringColor = isMoon ? moonRingColor : (mesh.userData.beacon.color || defaultRingColor);
-    selectionRing.material.map = makeGlowTexture(ringColor, `${ringColor}00`);
+    // Body colors in the data aren't always hex (a few are `hsl(...)`) — go
+    // through THREE.Color instead of string-concatenating an alpha suffix,
+    // which only produces a valid CSS color for hex input and silently
+    // throws (aborting the rest of this function, including showCard) for
+    // anything else.
+    const transparentRingColor = new THREE.Color(ringColor);
+    const transparentRingColorCss = `rgba(${Math.round(transparentRingColor.r * 255)}, ${Math.round(transparentRingColor.g * 255)}, ${Math.round(transparentRingColor.b * 255)}, 0)`;
+    selectionRing.material.map = makeGlowTexture(ringColor, transparentRingColorCss);
     selectionRing.material.needsUpdate = true;
     ringBaseSize = mesh.userData.baseScale * (isMoon ? moonRingSizeMultiplier : ringSizeMultiplier);
     selectionRing.scale.set(ringBaseSize, ringBaseSize, 1);
