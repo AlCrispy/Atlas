@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
 <link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
 <script type="importmap">
 {
   "imports": {
@@ -22,15 +23,21 @@
 
 <div class="topbar">
   <a class="back-btn" href="../sistema-solare.html">← <span>Sistema Solare</span></a>
+  <span class="topbar-planet-name">Giove</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Giove</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-header">
+    <p class="placeholder-eyebrow">Pianeta</p>
+    <h1 class="placeholder-title">Giove</h1>
+    <span class="placeholder-badge">In Costruzione</span>
+  </div>
 
   <div class="system-stats">
     <div class="system-stat">
@@ -46,29 +53,40 @@
       <span class="system-stat-value">Nessuna registrata</span>
     </div>
   </div>
-</main>
 
-<div class="planet-content">
-  <section class="content-block">
-    <h2>Visione Dettagliata</h2>
-    <p>Vista orbitale ravvicinata di Giove. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
-  </section>
+  <div class="planet-content">
 
-  <div class="globe-viewport"
-    data-texture="https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/jupitermap.jpg"
-    data-pois='[
-      {"name":"Grande Macchia Rossa","lat":-22,"lon":-60,"desc":"Tempesta anticiclonica gigante, attiva da almeno 350 anni, più larga della Terra."},
-      {"name":"Cintura Equatoriale","lat":0,"lon":0,"desc":"Una delle bande nuvolose più turbolente dell&#39;atmosfera gioviana."}
-    ]'>
-    <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
-    <div class="poi-card">
-      <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
-      <p class="poi-card-eyebrow">Punto di Interesse</p>
-      <h3 class="poi-card-title"></h3>
-      <p class="poi-card-desc"></p>
+  <div id="tab-panoramica" class="tab-panel active">
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Giove. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-texture="https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/jupitermap.jpg"
+      data-pois='[
+        {"name":"Grande Macchia Rossa","lat":-22,"lon":-60,"desc":"Tempesta anticiclonica gigante, attiva da almeno 350 anni, più larga della Terra."},
+        {"name":"Cintura Equatoriale","lat":0,"lon":0,"desc":"Una delle bande nuvolose più turbolente dell&#39;atmosfera gioviana."}
+      ]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
   </div>
-</div>
+
+  </div>
+</main>
 
 <script src="../../js/ambient-audio.js"></script>
 
