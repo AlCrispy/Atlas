@@ -279,6 +279,7 @@ const planetOrbits = system.planets.map((planet) => {
     ...planet,
     eyebrow: planetTypeInfo ? `${planet.eyebrow} · ${planetTypeInfo.label}` : planet.eyebrow,
     exploreHref: `planets/${planet.slug}.html`,
+    note: planet.inhabited ? 'Colonizzato' : 'Non colonizzato',
   });
   pivot.add(sprite);
 
