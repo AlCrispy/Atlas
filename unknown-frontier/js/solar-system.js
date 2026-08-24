@@ -68,15 +68,65 @@ function makeStarSprite(color) {
 
 const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 
+// Real photo textures for the Sol-system bodies that have one available —
+// same CDN sources as the "Visione Dettagliata" close-up globe (see
+// planet-globe.js and each real planet's detail page). Every other slug
+// (moons, every fictional-system planet) keeps the procedural
+// makePlanetTexture look below, since there's no real photo for a made-up
+// world.
+const REAL_PLANET_TEXTURES = {
+  mercurio: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/mercurymap.jpg',
+  venere: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/venusmap.jpg',
+  terra: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/earth_atmos_2048.jpg',
+  marte: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/marsmap1k.jpg',
+  giove: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/jupitermap.jpg',
+  saturno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/saturnmap.jpg',
+  urano: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusmap.jpg',
+  nettuno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/neptunemap.jpg',
+};
+const REAL_RING_TEXTURES = {
+  saturno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/saturnringcolor.jpg',
+  urano: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusringcolour.jpg',
+};
+
 // A textured body reads as a physical object instead of a flat-shaded
 // ball; the procedural map also gives each body its own surface identity
 // beyond a single hex color. `spinSpeed` drives axial rotation in the
 // animate loop below — real bodies turn, a static sphere doesn't sell scale.
 function makeBodyMesh(color, slug, size, type) {
-  const texture = makePlanetTexture(color, slug, size, type);
+  const realTextureUrl = REAL_PLANET_TEXTURES[slug];
+  let texture;
+  if (realTextureUrl) {
+    texture = new THREE.TextureLoader().load(realTextureUrl);
+    texture.colorSpace = THREE.SRGBColorSpace;
+  } else {
+    texture = makePlanetTexture(color, slug, size, type);
+  }
   const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0.05 });
   const mesh = new THREE.Mesh(sphereGeometry, material);
   mesh.userData.spinSpeed = (Math.random() - 0.5) * 0.3;
+  return mesh;
+}
+
+// Same "remap ring UV to radial distance" trick as planet-globe.js's ring
+// support, for the two real ringed planets with a real ring photo.
+function buildTexturedRing({ innerRadius, outerRadius, textureUrl, tiltX = 0, tiltZ = 0 }) {
+  const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 96, 1);
+  const pos = geometry.attributes.position;
+  const uv = geometry.attributes.uv;
+  const v3 = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) {
+    v3.fromBufferAttribute(pos, i);
+    uv.setXY(i, (v3.length() - innerRadius) / (outerRadius - innerRadius), 1);
+  }
+  const texture = new THREE.TextureLoader().load(textureUrl);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const mesh = new THREE.Mesh(
+    geometry,
+    new THREE.MeshStandardMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, roughness: 0.9, metalness: 0 }),
+  );
+  mesh.rotation.x = -Math.PI / 2 + tiltX;
+  mesh.rotation.z = tiltZ;
   return mesh;
 }
 
@@ -238,7 +288,10 @@ const planetOrbits = system.planets.map((planet) => {
   if (planet.rings) {
     const bounds = computeRingBounds(planet, planet.size * PLANET_RENDER_SCALE);
     if (bounds) {
-      const ringMesh = buildPlanetRing({ ...bounds, ...ringTiltFor(planet.slug), color: planet.ringColor || planet.color });
+      const realRingUrl = REAL_RING_TEXTURES[planet.slug];
+      const ringMesh = realRingUrl
+        ? buildTexturedRing({ ...bounds, textureUrl: realRingUrl, ...ringTiltFor(planet.slug) })
+        : buildPlanetRing({ ...bounds, ...ringTiltFor(planet.slug), color: planet.ringColor || planet.color });
       moonAnchor.add(ringMesh);
     }
   }
