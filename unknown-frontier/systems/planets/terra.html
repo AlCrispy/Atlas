@@ -9,6 +9,15 @@
 <link rel="stylesheet" href="../../css/system-detail.css">
 <link rel="stylesheet" href="../../css/planet-detail.css">
 <script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
@@ -17,13 +26,14 @@
   <span class="topbar-planet-name">Terra</span>
   <nav class="tabs-nav">
     <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
     <button class="tab-btn" onclick="switchTab('popoli', this)">Popoli & Fazioni</button>
     <button class="tab-btn" onclick="switchTab('storia', this)">Storia</button>
     <button class="tab-btn" onclick="switchTab('personaggi', this)">Personaggi Notevoli</button>
     <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi Notevoli</button>
     <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
   </nav>
-  <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
+  <audio id="ambient-audio" src="../../music/Terra.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
@@ -70,6 +80,29 @@
         <li><strong>Gravità:</strong> Standard di riferimento (1G) per ogni scala di misura coloniale.</li>
       </ul>
     </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Terra. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-texture="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/earth_atmos_2048.jpg"
+      data-pois='[
+        {"name":"Meridian Station","lat":35,"lon":-20,"desc":"Capitale amministrativa del Consorzio Terrestre, sede del Consiglio dei Delegati."},
+        {"name":"Cantieri Orbitali di Kepler Ring","lat":10,"lon":60,"desc":"Anello di stazioni in orbita bassa dove la Gilda dei Naviganti assembla gli scafi a salto."},
+        {"name":"Fonderie di Ashgate","lat":-25,"lon":140,"desc":"Complesso industriale dell&#39;Ordine degli Artefici, cuore della produzione di armi ed equipaggiamento tattico."}
+      ]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
   </div>
 
   <div id="tab-popoli" class="tab-panel">
