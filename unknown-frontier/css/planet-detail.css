@@ -2,6 +2,16 @@
    Shares tokens and base classes (.topbar, .back-btn, .placeholder-*, .system-stats)
    with unknown-frontier.css and system-detail.css. */
 
+.topbar-planet-name {
+  flex-shrink: 0;
+  font-family: 'Orbitron', sans-serif; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-cyan-lt); padding: 0 24px;
+  white-space: nowrap;
+  border-right: 1px solid var(--hz-steel);
+  display: flex; align-items: center;
+}
+
 /* ── TAB NAVIGATION ── */
 .tabs-nav {
   display: flex; flex: 1; justify-content: center;
