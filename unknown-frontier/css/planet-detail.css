@@ -1,0 +1,165 @@
+/* Inhabited-planet encyclopedia pages (tab nav + content-block sections + Mercato catalog).
+   Shares tokens and base classes (.topbar, .back-btn, .placeholder-*, .system-stats)
+   with unknown-frontier.css and system-detail.css. */
+
+/* ── TAB NAVIGATION ── */
+.tabs-nav {
+  display: flex; flex: 1; justify-content: center;
+  flex-wrap: wrap; padding: 0 8px;
+}
+.tab-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Orbitron', sans-serif; font-size: 0.58rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--hz-ash); padding: 18px 14px;
+  transition: color 0.2s; position: relative;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: var(--hz-cyan); transform: scaleX(0); transform-origin: center;
+  transition: transform 0.3s;
+}
+.tab-btn:hover { color: var(--hz-cyan-lt); }
+.tab-btn.active { color: var(--hz-cyan-lt); }
+.tab-btn.active::after { transform: scaleX(1); }
+
+.tab-panel { display: none; animation: planetTabFadeIn 0.45s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes planetTabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HEADER (above tab content, reuses .placeholder-* / .system-stats tokens) ── */
+.planet-header {
+  position: relative; z-index: 2;
+  max-width: 640px; margin: 0 auto;
+  padding: 48px 24px 0;
+  text-align: center;
+}
+
+/* ── CONTENT SECTIONS ── */
+.planet-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.content-block { margin-bottom: 48px; }
+
+.content-block h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--hz-cyan-lt);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--hz-steel);
+}
+
+.content-block h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--hz-bone);
+  margin: 24px 0 12px;
+}
+
+.content-block p {
+  font-size: 1rem; color: var(--hz-ash);
+  line-height: 1.8; margin-bottom: 14px;
+}
+.content-block p:last-child { margin-bottom: 0; }
+
+.content-block ul { list-style: none; padding: 0; margin: 0; }
+
+.content-block li {
+  font-size: 1rem; color: var(--hz-ash);
+  line-height: 1.8; margin-bottom: 12px;
+  padding-left: 20px; position: relative;
+}
+.content-block li::before {
+  content: '◆'; position: absolute; left: 0;
+  font-size: 0.7em; top: 0.4em;
+  color: var(--hz-cyan);
+}
+.content-block strong { color: var(--hz-bone); font-weight: 700; }
+
+/* ── MERCATO (product catalog, "volantino" style) ── */
+.market-filters {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 28px;
+}
+.market-filter-btn {
+  background: var(--hz-panel-lt); border: 1px solid var(--hz-steel);
+  cursor: pointer; font-family: 'Orbitron', sans-serif;
+  font-size: 0.56rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--hz-ash); padding: 9px 16px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.market-filter-btn:hover { color: var(--hz-cyan-lt); }
+.market-filter-btn.active {
+  color: var(--hz-void); background: var(--hz-cyan);
+  border-color: var(--hz-cyan);
+}
+
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: var(--hz-panel-lt); border: 1px solid var(--hz-steel);
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.product-card:hover { border-color: var(--hz-cyan); transform: translateY(-2px); }
+
+.product-card-image {
+  width: 100%; aspect-ratio: 4 / 3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4rem;
+  background: var(--hz-steel-dk);
+  border-bottom: 1px solid var(--hz-steel);
+}
+.product-card-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.product-card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.product-card-category {
+  font-family: 'Orbitron', sans-serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--hz-cyan);
+}
+
+.product-card-name {
+  font-family: 'Orbitron', sans-serif; font-size: 0.85rem;
+  font-weight: 700; color: var(--hz-bone);
+}
+
+.product-card-desc {
+  font-size: 0.85rem; color: var(--hz-ash);
+  line-height: 1.6; flex: 1;
+}
+
+.product-card-price {
+  font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.05em; color: var(--hz-cyan-lt);
+  margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .planet-content { padding: 32px 16px 60px; }
+  .content-block { margin-bottom: 36px; }
+  .content-block h2 { font-size: 1rem; }
+  .content-block p, .content-block li { font-size: 0.95rem; }
+  .tab-btn { padding: 14px 10px; font-size: 0.54rem; }
+}
+
+@media (max-width: 480px) {
+  .planet-content { padding: 24px 12px 48px; }
+  .market-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}

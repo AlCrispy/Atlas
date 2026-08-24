@@ -7,20 +7,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../sistema-solare.html">← <span>Sistema Solare</span></a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('popoli', this)">Popoli & Fazioni</button>
+    <button class="tab-btn" onclick="switchTab('storia', this)">Storia</button>
+    <button class="tab-btn" onclick="switchTab('personaggi', this)">Personaggi Notevoli</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi Notevoli</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Terra</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-header">
+    <p class="placeholder-eyebrow">Pianeta</p>
+    <h1 class="placeholder-title">Terra</h1>
+    <span class="placeholder-badge">Mondo Natale</span>
+  </div>
 
   <div class="system-stats">
     <div class="system-stat">
@@ -29,16 +40,191 @@
     </div>
     <div class="system-stat">
       <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+      <span class="system-stat-value">1 (Luna)</span>
     </div>
     <div class="system-stat">
       <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+      <span class="system-stat-value">3 registrate</span>
     </div>
+    <div class="system-stat">
+      <span class="system-stat-label">Popolazione</span>
+      <span class="system-stat-value">~9 miliardi</span>
+    </div>
+  </div>
+
+  <div class="planet-content">
+
+  <div id="tab-panoramica" class="tab-panel active">
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Terzo pianeta del Sistema Solare, mondo natale dell'umanità e punto di partenza di ogni rotta verso la Frontiera Ignota. Superficie coperta per oltre due terzi da oceani; poli ghiacciati, fasce equatoriali densamente urbanizzate.</p>
+      <p>Da qui sono partiti i primi scafi a salto e da qui, ancora oggi, transita la maggior parte del traffico coloniale diretto verso i sistemi esplorati.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Satellite:</strong> Luna, ancorata da installazioni orbitali e cantieri navali.</li>
+        <li><strong>Clima:</strong> Temperato-variabile, in lenta stabilizzazione dopo secoli di sfruttamento industriale.</li>
+        <li><strong>Gravità:</strong> Standard di riferimento (1G) per ogni scala di misura coloniale.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-popoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Consorzio Terrestre</h2>
+      <p>Governo unificato del pianeta, nato dal riassestamento politico che seguì il primo salto FTL. Coordina rotte coloniali, tratta con le corporazioni e mantiene la Flotta di Sorveglianza.</p>
+      <h3>Struttura</h3>
+      <ul>
+        <li><strong>Consiglio dei Delegati</strong> — organo legislativo, un seggio per ciascun blocco regionale terrestre.</li>
+        <li><strong>Direttorato Coloniale</strong> — gestisce concessioni ed espansione verso la Frontiera.</li>
+        <li><strong>Flotta di Sorveglianza</strong> — braccio armato, pattuglia le rotte di salto conosciute.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Gilda dei Naviganti</h2>
+      <p>Corporazione che detiene di fatto il monopolio sulla cantieristica orbitale e sulla certificazione delle rotte di salto. Non risponde al Consorzio, ma ne dipende per le concessioni di attracco.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ordine degli Artefici</h2>
+      <p>Gilda tecnica che riunisce ingegneri, armaioli e progettisti di equipaggiamento tattico. Gestisce le fonderie orbitali e i principali empori legali della Terra — inclusi quelli che riforniscono chi parte per la Frontiera.</p>
+    </section>
+  </div>
+
+  <div id="tab-storia" class="tab-panel">
+    <section class="content-block">
+      <h2>Cronologia</h2>
+      <ul>
+        <li><strong>Unificazione:</strong> nascita del Consorzio Terrestre dopo il collasso degli stati-nazione preesistenti.</li>
+        <li><strong>Primo Salto:</strong> primo attraversamento FTL riuscito, apertura della rotta verso il Sistema Solare esterno.</li>
+        <li><strong>Espansione Coloniale:</strong> fondazione dei primi avamposti oltre il Sistema Solare, avvio delle rotte verso i sistemi della Frontiera Ignota.</li>
+        <li><strong>Oggi:</strong> la Terra resta il centro amministrativo e industriale del Consorzio, ma il baricentro dell'esplorazione si è spostato verso i sistemi di frontiera.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-personaggi" class="tab-panel">
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Delegata Reyes Corvin:</strong> Presidente del Consiglio dei Delegati. Voce moderata tra Consorzio e Gilda dei Naviganti, sospettata da alcuni di favorire quest'ultima.</li>
+        <li><strong>Maestro Ilyan Vask:</strong> A capo dell'Ordine degli Artefici. Controlla l'accesso alle fonderie orbitali e, di fatto, buona parte dell'equipaggiamento che raggiunge la Frontiera.</li>
+        <li><strong>Ammiraglia Priya Okonkwo-Lin:</strong> Comanda la Flotta di Sorveglianza. Il suo rapporto con il Direttorato Coloniale è teso — pretende più autonomia operativa sulle rotte di salto.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Meridian Station:</strong> capitale amministrativa del Consorzio, sede del Consiglio dei Delegati.</li>
+        <li><strong>Cantieri Orbitali di Kepler Ring:</strong> anello di stazioni in orbita bassa dove la Gilda dei Naviganti assembla gli scafi a salto.</li>
+        <li><strong>Fonderie di Ashgate:</strong> complesso industriale dell'Ordine degli Artefici, cuore della produzione di armi ed equipaggiamento tattico.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Si dice che il primo scafo a salto non sia mai tornato dal suo viaggio inaugurale con l'equipaggio completo — il rapporto ufficiale del Direttorato Coloniale resta secretato.</p>
+    </section>
+  </div>
+
+  <div id="tab-mercato" class="tab-panel">
+    <section class="content-block">
+      <h2>Mercato di Ashgate</h2>
+      <p>Catalogo delle Fonderie di Ashgate, gestito dall'Ordine degli Artefici. Consegna disponibile presso i principali scali della Frontiera Ignota, prezzi in crediti.</p>
+    </section>
+
+    <div class="market-filters">
+      <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+      <button type="button" class="market-filter-btn" data-filter="armi">Armi</button>
+      <button type="button" class="market-filter-btn" data-filter="astronavi">Astronavi & Veicoli</button>
+      <button type="button" class="market-filter-btn" data-filter="equipaggiamento">Equipaggiamento Tattico</button>
+    </div>
+
+    <div class="market-grid">
+      <div class="product-card" data-category="armi">
+        <div class="product-card-image">⚡</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Armi</span>
+          <span class="product-card-name">Fucile a Plasma Ashgate Mk.III</span>
+          <p class="product-card-desc">Standard delle milizie coloniali. Cella ricaricabile, tre modalità di fuoco.</p>
+          <span class="product-card-price">2.400 crediti</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="armi">
+        <div class="product-card-image">🗡</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Armi</span>
+          <span class="product-card-name">Lama Monofilo Vask</span>
+          <p class="product-card-desc">Filo a taglio molecolare, telaio pieghevole. Silenziosa, letale a corto raggio.</p>
+          <span class="product-card-price">1.150 crediti</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="astronavi">
+        <div class="product-card-image">🛰</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Astronavi & Veicoli</span>
+          <span class="product-card-name">Navetta da Ricognizione "Corvin-7"</span>
+          <p class="product-card-desc">Scafo leggero per equipaggio ridotto, autonomia estesa per esplorazione di frontiera.</p>
+          <span class="product-card-price">184.000 crediti</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="astronavi">
+        <div class="product-card-image">🚀</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Astronavi & Veicoli</span>
+          <span class="product-card-name">Modulo di Salto Kepler Ring</span>
+          <p class="product-card-desc">Unità FTL certificata dalla Gilda dei Naviganti, installazione su scafi fino a classe media.</p>
+          <span class="product-card-price">96.500 crediti</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="equipaggiamento">
+        <div class="product-card-image">🛡</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Equipaggiamento Tattico</span>
+          <span class="product-card-name">Corpetto Tattico Ashgate</span>
+          <p class="product-card-desc">Piastre in composito leggero, sigillatura ambientale per atmosfere non catalogate.</p>
+          <span class="product-card-price">1.800 crediti</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="equipaggiamento">
+        <div class="product-card-image">📡</div>
+        <div class="product-card-body">
+          <span class="product-card-category">Equipaggiamento Tattico</span>
+          <span class="product-card-name">Ricetrasmettitore a Lungo Raggio</span>
+          <p class="product-card-desc">Aggancio ai ripetitori del Consorzio, funziona anche oltre le rotte di salto note.</p>
+          <span class="product-card-price">640 crediti</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   </div>
 </main>
 
 <script src="../../js/ambient-audio.js"></script>
+<script>
+document.querySelectorAll('.market-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.market-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.display = (filter === 'tutti' || card.dataset.category === filter) ? '' : 'none';
+    });
+  });
+});
+</script>
 
 </body>
 </html>
