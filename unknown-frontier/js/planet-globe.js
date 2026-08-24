@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-// Reusable close-up planet viewer for the "Visione Dettagliata" tab on
-// inhabited-planet pages. Texture URL and points of interest come from
-// data attributes on the `.globe-viewport` container (`data-texture`,
-// `data-pois` as JSON) so a new planet page needs zero JS changes here —
-// copy the markup, edit the data attributes.
+// Reusable close-up planet viewer — the "Visione Dettagliata" tab on
+// inhabited-planet pages, and the equivalent section on the real Sol-system
+// planet pages (Mercurio..Nettuno), which have no tabs at all. Texture URL,
+// points of interest, and optional ring all come from data attributes on
+// the `.globe-viewport` container (`data-texture`, `data-pois` as JSON,
+// `data-ring-texture`/`data-ring-inner`/`data-ring-outer`/`data-ring-tilt`)
+// so a new planet page needs zero JS changes here — copy the markup, edit
+// the data attributes.
 
 function latLonToVector3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -85,6 +88,31 @@ function initGlobe(container) {
   atmosphere.scale.setScalar(1.03);
   globe.add(atmosphere);
 
+  // Optional textured ring (Saturn, Uranus). RingGeometry's default UVs run
+  // oddly for a radial-gradient strip texture, so remap U to radial
+  // distance — the standard fix for texturing a flat ring.
+  if (container.dataset.ringTexture) {
+    const inner = parseFloat(container.dataset.ringInner || '1.3');
+    const outer = parseFloat(container.dataset.ringOuter || '2.2');
+    const tilt = parseFloat(container.dataset.ringTilt || '0') * (Math.PI / 180);
+    const ringGeometry = new THREE.RingGeometry(inner, outer, 96, 1);
+    const pos = ringGeometry.attributes.position;
+    const uv = ringGeometry.attributes.uv;
+    const v3 = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+      v3.fromBufferAttribute(pos, i);
+      uv.setXY(i, (v3.length() - inner) / (outer - inner), 1);
+    }
+    const ringTexture = new THREE.TextureLoader().load(container.dataset.ringTexture);
+    ringTexture.colorSpace = THREE.SRGBColorSpace;
+    const ring = new THREE.Mesh(
+      ringGeometry,
+      new THREE.MeshStandardMaterial({ map: ringTexture, side: THREE.DoubleSide, transparent: true, roughness: 0.9, metalness: 0 }),
+    );
+    ring.rotation.x = -Math.PI / 2 + tilt;
+    globe.add(ring);
+  }
+
   const markerTexture = makeMarkerTexture();
   const markers = pois.map((poi) => {
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: markerTexture, transparent: true, depthTest: false }));
@@ -131,13 +159,16 @@ function initGlobe(container) {
   animate();
 }
 
-// Lazy-init: a WebGL context is only spun up once its tab is actually
-// opened, not on page load (the globe sits behind five other tabs).
+// Lazy-init: on a tabbed inhabited-planet page, a WebGL context is only
+// spun up once its tab is actually opened. On a plain (uninhabited-planet)
+// page the viewport has no .tab-panel ancestor at all, so it just inits
+// immediately — there's no other tab to wait for.
 document.querySelectorAll('.globe-viewport').forEach((container) => {
   let started = false;
   function tryInit() {
     if (started) return;
-    if (container.closest('.tab-panel')?.classList.contains('active')) {
+    const panel = container.closest('.tab-panel');
+    if (!panel || panel.classList.contains('active')) {
       started = true;
       initGlobe(container);
     }

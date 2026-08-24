@@ -7,6 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
@@ -37,6 +47,28 @@
     </div>
   </div>
 </main>
+
+<div class="planet-content">
+  <section class="content-block">
+    <h2>Visione Dettagliata</h2>
+    <p>Vista orbitale ravvicinata di Venere. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+  </section>
+
+  <div class="globe-viewport"
+    data-texture="https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/venusmap.jpg"
+    data-pois='[
+      {"name":"Maxwell Montes","lat":65,"lon":3,"desc":"La catena montuosa più alta di Venere, oltre 11 km sopra la quota media del pianeta."},
+      {"name":"Pianura di Lakshmi","lat":68,"lon":-60,"desc":"Vasto altopiano vulcanico nell&#39;emisfero nord, tra i rilievi più estesi di Venere."}
+    ]'>
+    <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+    <div class="poi-card">
+      <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+      <p class="poi-card-eyebrow">Punto di Interesse</p>
+      <h3 class="poi-card-title"></h3>
+      <p class="poi-card-desc"></p>
+    </div>
+  </div>
+</div>
 
 <script src="../../js/ambient-audio.js"></script>
 
