@@ -49,6 +49,13 @@
   text-align: center;
 }
 
+/* When header/stats live inside the Panoramica tab-panel (not floating
+   above all tabs), .planet-content's own top padding already provides the
+   spacing, and the stats need a bottom margin instead of the tab-panel's
+   default section spacing. */
+.tab-panel > .planet-header { padding-top: 0; }
+.tab-panel > .system-stats { margin-bottom: 40px; }
+
 /* ── CONTENT SECTIONS ── */
 .planet-content {
   max-width: 860px;
