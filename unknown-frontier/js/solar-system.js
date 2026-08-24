@@ -69,24 +69,24 @@ function makeStarSprite(color) {
 const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 
 // Real photo textures for the Sol-system bodies that have one available —
-// same CDN sources as the "Visione Dettagliata" close-up globe (see
-// planet-globe.js and each real planet's detail page). Every other slug
-// (moons, every fictional-system planet) keeps the procedural
-// makePlanetTexture look below, since there's no real photo for a made-up
-// world.
+// downloaded into resources/planet-textures/ (see the folder's own note)
+// rather than hotlinked, so an upstream CDN/repo change can't break these.
+// Every other slug (moons, every fictional-system planet) keeps the
+// procedural makePlanetTexture look below, since there's no real photo for
+// a made-up world.
 const REAL_PLANET_TEXTURES = {
-  mercurio: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/mercurymap.jpg',
-  venere: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/venusmap.jpg',
-  terra: 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/earth_atmos_2048.jpg',
-  marte: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/marsmap1k.jpg',
-  giove: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/jupitermap.jpg',
-  saturno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/saturnmap.jpg',
-  urano: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusmap.jpg',
-  nettuno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/neptunemap.jpg',
+  mercurio: '../resources/planet-textures/mercurymap.jpg',
+  venere: '../resources/planet-textures/venusmap.jpg',
+  terra: '../resources/planet-textures/earth_atmos_2048.jpg',
+  marte: '../resources/planet-textures/marsmap1k.jpg',
+  giove: '../resources/planet-textures/jupitermap.jpg',
+  saturno: '../resources/planet-textures/saturnmap.jpg',
+  urano: '../resources/planet-textures/uranusmap.jpg',
+  nettuno: '../resources/planet-textures/neptunemap.jpg',
 };
 const REAL_RING_TEXTURES = {
-  saturno: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/saturnringcolor.jpg',
-  urano: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusringcolour.jpg',
+  saturno: '../resources/planet-textures/saturnringcolor.jpg',
+  urano: '../resources/planet-textures/uranusringcolour.jpg',
 };
 
 // A textured body reads as a physical object instead of a flat-shaded
