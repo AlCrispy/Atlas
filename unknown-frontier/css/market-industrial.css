@@ -18,7 +18,7 @@
 
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 60px);
+  flex: 1;
   background: var(--mk-void);
   overflow: hidden;
 }

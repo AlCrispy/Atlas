@@ -2,6 +2,17 @@
    Shares tokens and base classes (.topbar, .back-btn, .placeholder-*, .system-stats)
    with unknown-frontier.css and system-detail.css. */
 
+/* Lets <main>'s active content stretch to fill exactly the viewport height
+   left over below the topbar (--topbar's own height isn't hardcoded here -
+   flexbox distributes it), so #tab-mercato's full-bleed background reaches
+   the true bottom of the page instead of an estimated min-height. Scoped
+   to this file (not system-detail.css) so it only affects the 8 tabbed
+   planet pages, not the plain uninhabited stub pages. */
+.system-detail-body { display: flex; flex-direction: column; }
+.system-detail-body > main { flex: 1; display: flex; flex-direction: column; }
+.planet-content { flex: 1; }
+#tab-mercato.active { display: flex; flex-direction: column; flex: 1; }
+
 .topbar-planet-name {
   flex-shrink: 0;
   font-family: 'Orbitron', sans-serif; font-size: 0.62rem;
