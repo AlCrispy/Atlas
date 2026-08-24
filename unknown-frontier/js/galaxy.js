@@ -28,10 +28,11 @@ const BEACON_SCALE = 2.5;
 
 // Linear scene-unit -> light-year conversion for the distance-compare panel.
 // Calibrated to real galactic scale rather than scene readability: Sol-Kylenne
-// (~28.3 scene units, same Milky-Way-analog cluster) reads as ~28,000 light-years,
+// (~28.3 scene units, same Milky-Way-analog cluster) reads as ~21,500 light-years,
 // in line with real intra-galaxy distances (Sol-to-galactic-center is ~26,000 ly;
-// the Milky Way itself spans ~100,000 ly).
-const DISTANCE_SCALE_LY_PER_UNIT = 1000;
+// the Milky Way itself spans ~100,000 ly). Non-round factor deliberate, so
+// distance readouts don't look machine-generated.
+const DISTANCE_SCALE_LY_PER_UNIT = 760;
 
 // IAU-defined light-year -> parsec conversion, for the compare panel's secondary reading.
 const LY_PER_PARSEC = 3.26156;
