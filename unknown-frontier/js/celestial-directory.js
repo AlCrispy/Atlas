@@ -151,8 +151,29 @@ function matches(row) {
   return FACETS.every((facet) => matchesFacet(row, facet));
 }
 
+// Column sort — every sortable header (all but "Colonizzato") toggles
+// alphabetical asc/desc on click; default is the initial name-asc order.
+const sortHeaders = document.querySelectorAll('.directory-sortable');
+let sortKey = 'name';
+let sortDir = 1;
+
+function applySort(filtered) {
+  return [...filtered].sort((a, b) => sortDir * String(a[sortKey]).localeCompare(String(b[sortKey]), 'it'));
+}
+
+sortHeaders.forEach((th) => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    sortDir = sortKey === key ? -sortDir : 1;
+    sortKey = key;
+    sortHeaders.forEach((other) => other.classList.remove('is-sorted-asc', 'is-sorted-desc'));
+    th.classList.add(sortDir === 1 ? 'is-sorted-asc' : 'is-sorted-desc');
+    render();
+  });
+});
+
 function render() {
-  const filtered = rows.filter(matches);
+  const filtered = applySort(rows.filter(matches));
 
   bodyEl.replaceChildren(...filtered.map((row) => {
     const tr = document.createElement('tr');
@@ -214,5 +235,6 @@ resetEl.addEventListener('click', () => {
   render();
 });
 
+document.querySelector(`.directory-sortable[data-sort="${sortKey}"]`)?.classList.add('is-sorted-asc');
 refreshFacetOptions();
 render();

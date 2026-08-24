@@ -104,6 +104,22 @@
 .directory-table tbody tr:hover { background: rgba(79,216,232,0.05); }
 .directory-table tbody tr:last-child td { border-bottom: none; }
 
+.directory-sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.directory-sortable:hover { color: var(--hz-bone); }
+.directory-sortable::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  margin-left: 0.4em;
+  opacity: 0.35;
+}
+.directory-sortable.is-sorted-asc::after { content: '▲'; opacity: 1; }
+.directory-sortable.is-sorted-desc::after { content: '▼'; opacity: 1; }
+
 .directory-link {
   color: var(--hz-cyan-lt);
   text-decoration: none;
