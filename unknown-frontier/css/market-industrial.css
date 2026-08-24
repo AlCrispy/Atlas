@@ -1,7 +1,9 @@
-/* Mercato tab sub-theme: gunmetal/hazard-yellow industrial look, isolated
-   to `.market-industrial` so it doesn't bleed into the rest of a planet
-   page (which keeps the standard --hz-* sci-fi HUD palette). Reusable by
-   any future inhabited-planet page — same markup, same classes. */
+/* Mercato tab sub-theme: gunmetal/hazard-yellow industrial look. Unlike
+   every other tab (which stays inside `.planet-content`'s standard --hz-*
+   themed, max-width:860px column), `#tab-mercato` is a full-bleed sibling
+   of `.planet-content` (see planet-detail.css) so this covers the entire
+   page below the topbar — the topbar itself is untouched. Reusable by any
+   future inhabited-planet page — same markup, same classes. */
 
 .market-industrial {
   --mk-void: #0c0e0f;
@@ -15,8 +17,9 @@
   --mk-orange: #ff7a1a;
 
   position: relative;
+  width: 100%;
+  min-height: calc(100vh - 60px);
   background: var(--mk-void);
-  border: 1px solid var(--mk-steel);
   overflow: hidden;
 }
 
@@ -29,7 +32,8 @@
 
 .market-industrial-body {
   position: relative; z-index: 1;
-  padding: 30px 24px 26px;
+  max-width: 1100px; margin: 0 auto;
+  padding: 64px 32px 60px;
 }
 
 /* ── BLAST DOOR ── */

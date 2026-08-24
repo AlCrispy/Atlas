@@ -63,6 +63,11 @@
   padding: 48px 24px 80px;
 }
 
+/* #tab-mercato is a full-bleed sibling of .planet-content, not one of its
+   children (see market-industrial.css) — hide the now-empty wrapper while
+   Mercato is the active tab, so it doesn't leave a blank padded gap. */
+main:has(#tab-mercato.active) > .planet-content { display: none; }
+
 .content-block { margin-bottom: 48px; }
 
 .content-block h2 {
