@@ -67,16 +67,16 @@
 }
 
 .content-block p {
-  font-size: 1rem; color: var(--hz-ash);
-  line-height: 1.8; margin-bottom: 14px;
+  font-size: 1.08rem; color: var(--hz-ash);
+  line-height: 1.85; margin-bottom: 14px;
 }
 .content-block p:last-child { margin-bottom: 0; }
 
 .content-block ul { list-style: none; padding: 0; margin: 0; }
 
 .content-block li {
-  font-size: 1rem; color: var(--hz-ash);
-  line-height: 1.8; margin-bottom: 12px;
+  font-size: 1.08rem; color: var(--hz-ash);
+  line-height: 1.85; margin-bottom: 12px;
   padding-left: 20px; position: relative;
 }
 .content-block li::before {
