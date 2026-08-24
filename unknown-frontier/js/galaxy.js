@@ -21,8 +21,8 @@ const MILKYWAY_SPIN = 0.014;
 // Same angular speed for every galaxy (not Kepler-varied) so the whole
 // configuration turns as one rigid pattern around the black hole — every
 // pairwise distance between galaxies/systems stays constant, which the
-// distance-compare panel relies on. Slow: a full revolution takes ~30 min.
-const GALAXY_ORBIT_SPEED = 0.0035;
+// distance-compare panel relies on. A full revolution takes ~10 min.
+const GALAXY_ORBIT_SPEED = 0.0105;
 
 const BEACON_SCALE = 2.5;
 
