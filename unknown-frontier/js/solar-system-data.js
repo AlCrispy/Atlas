@@ -5772,6 +5772,7 @@ export const SOLAR_SYSTEMS = {
         "type": "gh",
         "inhabited": false,
         "eyebrow": "Pianeta",
+        "rings": true,
         "moons": [
           {
             "name": "Titania",
