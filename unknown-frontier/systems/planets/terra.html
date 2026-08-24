@@ -8,7 +8,9 @@
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
 <link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
 <script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
 <script type="importmap">
 {
   "imports": {
@@ -173,72 +175,89 @@
       <p>Catalogo delle Fonderie di Ashgate, gestito dall'Ordine degli Artefici. Consegna disponibile presso i principali scali della Frontiera Ignota, prezzi in crediti.</p>
     </section>
 
-    <div class="market-filters">
-      <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
-      <button type="button" class="market-filter-btn" data-filter="armi">Armi</button>
-      <button type="button" class="market-filter-btn" data-filter="astronavi">Astronavi & Veicoli</button>
-      <button type="button" class="market-filter-btn" data-filter="equipaggiamento">Equipaggiamento Tattico</button>
-    </div>
-
-    <div class="market-grid">
-      <div class="product-card" data-category="armi">
-        <div class="product-card-image">⚡</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Armi</span>
-          <span class="product-card-name">Fucile a Plasma Ashgate Mk.III</span>
-          <p class="product-card-desc">Standard delle milizie coloniali. Cella ricaricabile, tre modalità di fuoco.</p>
-          <span class="product-card-price">2.400 crediti</span>
+    <div class="market-industrial">
+      <div class="market-industrial-body">
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="armi">Armi</button>
+          <button type="button" class="market-filter-btn" data-filter="astronavi">Astronavi & Veicoli</button>
+          <button type="button" class="market-filter-btn" data-filter="equipaggiamento">Equipaggiamento Tattico</button>
         </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">⚡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi</span>
+                  <span class="product-card-name">Fucile a Plasma Ashgate Mk.III</span>
+                  <p class="product-card-desc">Standard delle milizie coloniali. Cella ricaricabile, tre modalità di fuoco.</p>
+                  <span class="product-card-price">2.400 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">🗡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi</span>
+                  <span class="product-card-name">Lama Monofilo Vask</span>
+                  <p class="product-card-desc">Filo a taglio molecolare, telaio pieghevole. Silenziosa, letale a corto raggio.</p>
+                  <span class="product-card-price">1.150 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="astronavi">
+                <div class="product-card-image">🛰</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Astronavi & Veicoli</span>
+                  <span class="product-card-name">Navetta da Ricognizione "Corvin-7"</span>
+                  <p class="product-card-desc">Scafo leggero per equipaggio ridotto, autonomia estesa per esplorazione di frontiera.</p>
+                  <span class="product-card-price">184.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="astronavi">
+                <div class="product-card-image">🚀</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Astronavi & Veicoli</span>
+                  <span class="product-card-name">Modulo di Salto Kepler Ring</span>
+                  <p class="product-card-desc">Unità FTL certificata dalla Gilda dei Naviganti, installazione su scafi fino a classe media.</p>
+                  <span class="product-card-price">96.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="equipaggiamento">
+                <div class="product-card-image">🛡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Equipaggiamento Tattico</span>
+                  <span class="product-card-name">Corpetto Tattico Ashgate</span>
+                  <p class="product-card-desc">Piastre in composito leggero, sigillatura ambientale per atmosfere non catalogate.</p>
+                  <span class="product-card-price">1.800 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="equipaggiamento">
+                <div class="product-card-image">📡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Equipaggiamento Tattico</span>
+                  <span class="product-card-name">Ricetrasmettitore a Lungo Raggio</span>
+                  <p class="product-card-desc">Aggancio ai ripetitori del Consorzio, funziona anche oltre le rotte di salto note.</p>
+                  <span class="product-card-price">640 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
       </div>
 
-      <div class="product-card" data-category="armi">
-        <div class="product-card-image">🗡</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Armi</span>
-          <span class="product-card-name">Lama Monofilo Vask</span>
-          <p class="product-card-desc">Filo a taglio molecolare, telaio pieghevole. Silenziosa, letale a corto raggio.</p>
-          <span class="product-card-price">1.150 crediti</span>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="astronavi">
-        <div class="product-card-image">🛰</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Astronavi & Veicoli</span>
-          <span class="product-card-name">Navetta da Ricognizione "Corvin-7"</span>
-          <p class="product-card-desc">Scafo leggero per equipaggio ridotto, autonomia estesa per esplorazione di frontiera.</p>
-          <span class="product-card-price">184.000 crediti</span>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="astronavi">
-        <div class="product-card-image">🚀</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Astronavi & Veicoli</span>
-          <span class="product-card-name">Modulo di Salto Kepler Ring</span>
-          <p class="product-card-desc">Unità FTL certificata dalla Gilda dei Naviganti, installazione su scafi fino a classe media.</p>
-          <span class="product-card-price">96.500 crediti</span>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="equipaggiamento">
-        <div class="product-card-image">🛡</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Equipaggiamento Tattico</span>
-          <span class="product-card-name">Corpetto Tattico Ashgate</span>
-          <p class="product-card-desc">Piastre in composito leggero, sigillatura ambientale per atmosfere non catalogate.</p>
-          <span class="product-card-price">1.800 crediti</span>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="equipaggiamento">
-        <div class="product-card-image">📡</div>
-        <div class="product-card-body">
-          <span class="product-card-category">Equipaggiamento Tattico</span>
-          <span class="product-card-name">Ricetrasmettitore a Lungo Raggio</span>
-          <p class="product-card-desc">Aggancio ai ripetitori del Consorzio, funziona anche oltre le rotte di salto note.</p>
-          <span class="product-card-price">640 crediti</span>
-        </div>
+      <div class="market-blast-door" aria-hidden="true">
+        <div class="market-door-panel market-door-left"></div>
+        <div class="market-door-panel market-door-right"></div>
       </div>
     </div>
   </div>
@@ -247,18 +266,6 @@
 </main>
 
 <script src="../../js/ambient-audio.js"></script>
-<script>
-document.querySelectorAll('.market-filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.market-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    document.querySelectorAll('.product-card').forEach(card => {
-      card.style.display = (filter === 'tutti' || card.dataset.category === filter) ? '' : 'none';
-    });
-  });
-});
-</script>
 
 </body>
 </html>

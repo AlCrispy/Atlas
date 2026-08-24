@@ -169,12 +169,6 @@
   border-color: var(--hz-cyan);
 }
 
-.market-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
-
 .product-card {
   background: var(--hz-panel-lt); border: 1px solid var(--hz-steel);
   display: flex; flex-direction: column;
