@@ -4,6 +4,7 @@ import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
 import { STAR_TYPES } from './star-types.js';
 import { PLANET_TYPES } from './planet-types.js';
 import { makePlanetTexture } from './planet-texture.js';
+import { makeStarTexture } from './star-texture.js';
 import { buildOrbitRing, buildPlanetRing, buildDysonSphere } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 import { SOLAR_SYSTEMS } from './solar-system-data.js';
@@ -53,10 +54,10 @@ function colorToRgba(hex, alpha) {
   return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
 }
 
-// Stars glow (they emit light — a sprite reads correctly); planets and
-// moons are solid lit spheres so they read as physical bodies rather than
-// balls of light, shaded by the light rig below.
-function makeStarSprite(color) {
+// Soft additive corona sprite, added as a child of the star's solid mesh
+// below — it billboards to the camera on its own, so it stays a convincing
+// glow around the mesh from any angle without needing per-frame code here.
+function makeStarHalo(color) {
   const texture = makeGlowTexture(colorToRgba(color, 1), colorToRgba(color, 0));
   return new THREE.Sprite(new THREE.SpriteMaterial({
     map: texture,
@@ -67,6 +68,24 @@ function makeStarSprite(color) {
 }
 
 const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
+
+// A star is its own light source, so its surface reads at full, even
+// brightness from any angle — MeshBasicMaterial (unlit) rather than the
+// MeshStandardMaterial planets use. The granulation texture supplies the
+// "real object" detail; the halo sprite (child, so it inherits this mesh's
+// scale) supplies the glow the flat sprite used to provide on its own.
+function makeStarMesh(star) {
+  const texture = makeStarTexture(star.type, star.slug);
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const mesh = new THREE.Mesh(sphereGeometry, material);
+  mesh.userData.spinSpeed = 0.02 + Math.random() * 0.03;
+
+  const halo = makeStarHalo(star.color);
+  halo.scale.setScalar(2.1);
+  mesh.add(halo);
+
+  return mesh;
+}
 
 // Real photo textures for the Sol-system bodies that have one available —
 // downloaded into resources/planet-textures/ (see the folder's own note)
@@ -152,11 +171,12 @@ const sunLight = new THREE.DirectionalLight(0xfff2d6, 1.3);
 sunLight.position.set(40, 60, 30);
 scene.add(sunLight);
 
-// A glow sprite's bright core reads much smaller than its nominal scale
-// (the texture fades out toward the edge), while a solid mesh sphere fills
-// its scale edge-to-edge — these compensate so stars still read as the
-// biggest body in the system despite planets switching to solid meshes.
-const STAR_RENDER_SCALE = 1.8;
+// A solid mesh sphere fills its scale edge-to-edge (unlike the old glow
+// sprite, whose bright core read much smaller than its nominal scale), so
+// this needs to be well above PLANET_RENDER_SCALE only enough for a star
+// to still read as the system's biggest body, not stretched to compensate
+// for a fading texture anymore.
+const STAR_RENDER_SCALE = 1.15;
 const PLANET_RENDER_SCALE = 0.55;
 
 // How far a ring's inner edge sits from the planet's visual surface, and
@@ -230,7 +250,7 @@ function registerBody(object, size, data) {
 // affected star's info card can mention the megastructure too.
 const dysonStarSlug = system.slug === 'sistema-solare' ? 'sole' : null;
 const starObjs = system.stars.map((star) => {
-  const sprite = makeStarSprite(star.color);
+  const sprite = makeStarMesh(star);
   const typeInfo = STAR_TYPES[star.type];
   registerBody(sprite, star.size * STAR_RENDER_SCALE, {
     ...star,
@@ -379,6 +399,9 @@ function animate() {
       sprite.position.set(Math.cos(angle) * data.orbitRadius, 0, Math.sin(angle) * data.orbitRadius);
     });
   }
+  starObjs.forEach(({ sprite }) => {
+    sprite.rotation.y = elapsed * sprite.userData.spinSpeed;
+  });
 
   planetOrbits.forEach(({ sprite, moonAnchor, data, semiMinor, moonOrbits }) => {
     const angle = elapsed * data.speed + data.phase;
