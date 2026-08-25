@@ -87,16 +87,33 @@
   <h1 style="margin-top:16px">🌊 Prototipo oceanico</h1>
   <label><input type="checkbox" id="protoOceanEnabled" checked> Attivo (bypassa makePlanetTexture)</label>
 
-  <label>Colore oceano <input type="color" id="protoOceanColor" value="#3a72a3"></label>
-  <label>Colore terreno <input type="color" id="protoLandColor" value="#a08a5c"></label>
-  <label>Colore foresta <input type="color" id="protoForestColor" value="#2f6b3a"></label>
+  <label>Modalità
+    <select id="oceanMode">
+      <option value="photo" selected>Foto Terra distorta (nuovo)</option>
+      <option value="flat">Livelli piatti (precedente)</option>
+    </select>
+  </label>
 
-  <label>Scala terreno <div class="row"><input type="range" id="protoLandScale" min="1" max="8" step="0.1" value="3"><output></output></div></label>
-  <label>Copertura terreno <div class="row"><input type="range" id="protoLandThreshold" min="0.3" max="0.8" step="0.01" value="0.55"><output></output></div></label>
-  <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.15" step="0.002" value="0.015"><output></output></div></label>
-  <label>Margine oceano ai bordi (anti-giuntura) <div class="row"><input type="range" id="protoSeamMargin" min="0" max="0.25" step="0.005" value="0.12"><output></output></div></label>
-  <label>Scala foresta <div class="row"><input type="range" id="protoForestScale" min="2" max="15" step="0.1" value="6"><output></output></div></label>
-  <label>Copertura foresta <div class="row"><input type="range" id="protoForestThreshold" min="0.3" max="0.8" step="0.01" value="0.5"><output></output></div></label>
+  <div id="photoControls">
+    <label>Scala warp <div class="row"><input type="range" id="protoWarpScale" min="0.5" max="6" step="0.1" value="1.8"><output></output></div></label>
+    <label>Intensità warp <div class="row"><input type="range" id="protoWarpAmount" min="0" max="0.3" step="0.005" value="0.12"><output></output></div></label>
+    <label>Rotazione tonalità <div class="row"><input type="range" id="protoHueShift" min="-0.5" max="0.5" step="0.01" value="0"><output></output></div></label>
+    <label>Saturazione <div class="row"><input type="range" id="protoSatMul" min="0.3" max="1.8" step="0.02" value="1"><output></output></div></label>
+    <label>Luminosità <div class="row"><input type="range" id="protoLightAdd" min="-0.3" max="0.3" step="0.01" value="0"><output></output></div></label>
+  </div>
+
+  <div id="flatControls" style="display:none">
+    <label>Colore oceano <input type="color" id="protoOceanColor" value="#3a72a3"></label>
+    <label>Colore terreno <input type="color" id="protoLandColor" value="#a08a5c"></label>
+    <label>Colore foresta <input type="color" id="protoForestColor" value="#2f6b3a"></label>
+
+    <label>Scala terreno <div class="row"><input type="range" id="protoLandScale" min="1" max="8" step="0.1" value="3"><output></output></div></label>
+    <label>Copertura terreno <div class="row"><input type="range" id="protoLandThreshold" min="0.3" max="0.8" step="0.01" value="0.55"><output></output></div></label>
+    <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.15" step="0.002" value="0.015"><output></output></div></label>
+    <label>Margine oceano ai bordi (anti-giuntura) <div class="row"><input type="range" id="protoSeamMargin" min="0" max="0.25" step="0.005" value="0.12"><output></output></div></label>
+    <label>Scala foresta <div class="row"><input type="range" id="protoForestScale" min="2" max="15" step="0.1" value="6"><output></output></div></label>
+    <label>Copertura foresta <div class="row"><input type="range" id="protoForestThreshold" min="0.3" max="0.8" step="0.01" value="0.5"><output></output></div></label>
+  </div>
 
   <label>Anteprima texture 2D (quella che va sulla sfera)</label>
   <canvas id="preview" class="swatch" width="256" height="128"></canvas>
@@ -155,6 +172,70 @@ scene.add(mesh);
 
 const previewCanvas = document.getElementById('preview');
 const previewCtx = previewCanvas.getContext('2d');
+
+// === Ocean prototype: real Earth photo, warped + recolored per slug ===
+// The flat-layer prototype below still read as too basic/blobby — this
+// mode starts from the actual real_atmos_2048.jpg (same file the real
+// Sol-system Terra page uses) for genuine coastline/terrain/cloud detail,
+// then domain-warps it (so it isn't literally recognizable as Earth) and
+// hue/sat/lightness-shifts it per slug for variety between planets. Only
+// possible because it's a *real equirectangular photo*, already seamless
+// at u=0/u=1 — the warp sampling wraps u with modulo so that stays true.
+const earthPhoto = new Image();
+earthPhoto.src = '../resources/planet-textures/earth_atmos_2048.jpg';
+let earthCanvas = null; // built once the photo has actually loaded
+
+function ensureEarthCanvas() {
+  if (earthCanvas || !earthPhoto.complete || !earthPhoto.naturalWidth) return earthCanvas;
+  earthCanvas = document.createElement('canvas');
+  earthCanvas.width = earthPhoto.naturalWidth;
+  earthCanvas.height = earthPhoto.naturalHeight;
+  earthCanvas.getContext('2d').drawImage(earthPhoto, 0, 0);
+  return earthCanvas;
+}
+earthPhoto.addEventListener('load', () => { ensureEarthCanvas(); regenerate(); });
+
+function paintOceanFromPhoto(ctx, w, h, seed, opts) {
+  const src = ensureEarthCanvas();
+  if (!src) return false; // not loaded yet — caller falls back
+
+  const srcCtx = src.getContext('2d');
+  const srcData = srcCtx.getImageData(0, 0, src.width, src.height).data;
+  const { fbm } = makeNoise2D(seed);
+  const img = ctx.createImageData(w, h);
+  const c = new THREE.Color();
+  const hsl = { h: 0, s: 0, l: 0 };
+
+  for (let y = 0; y < h; y++) {
+    const v = y / h;
+    for (let x = 0; x < w; x++) {
+      const u = x / w;
+      const nx = u * opts.warpScale;
+      const ny = v * opts.warpScale;
+      const wx = (fbm(nx + 11.3, ny + 37.7, 4) - 0.5) * opts.warpAmount;
+      const wy = (fbm(nx - 19.1, ny + 53.9, 4) - 0.5) * opts.warpAmount;
+
+      const su = ((u + wx) % 1 + 1) % 1; // wrap horizontally — keeps the photo's own seam intact
+      const sv = clamp01(v + wy); // clamp vertically, no pole to wrap around
+
+      const sx = Math.min(src.width - 1, Math.floor(su * src.width));
+      const sy = Math.min(src.height - 1, Math.floor(sv * src.height));
+      const sIdx = (sy * src.width + sx) * 4;
+
+      c.setRGB(srcData[sIdx] / 255, srcData[sIdx + 1] / 255, srcData[sIdx + 2] / 255);
+      c.getHSL(hsl);
+      c.setHSL(((hsl.h + opts.hueShift) % 1 + 1) % 1, clamp01(hsl.s * opts.satMul), clamp01(hsl.l + opts.lightAdd));
+
+      const idx = (y * w + x) * 4;
+      img.data[idx] = c.r * 255;
+      img.data[idx + 1] = c.g * 255;
+      img.data[idx + 2] = c.b * 255;
+      img.data[idx + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  return true;
+}
 
 // === Ocean prototype — flat color fields instead of noisy/blurred shading ===
 // The live-tuned replacement for planet-texture.js's paintOcean/paintRegions:
@@ -270,17 +351,32 @@ function makeOceanPrototypeTexture(slug) {
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext('2d');
-  paintOceanPrototype(ctx, w, h, hashString(slug), {
-    oceanColor: $('protoOceanColor').value,
-    landColor: $('protoLandColor').value,
-    forestColor: $('protoForestColor').value,
-    landScale: parseFloat($('protoLandScale').value),
-    landThreshold: parseFloat($('protoLandThreshold').value),
-    edgeSharpness: parseFloat($('protoEdgeSharpness').value),
-    seamMargin: parseFloat($('protoSeamMargin').value),
-    forestScale: parseFloat($('protoForestScale').value),
-    forestThreshold: parseFloat($('protoForestThreshold').value),
-  });
+  const seed = hashString(slug);
+
+  const mode = $('oceanMode').value;
+  let usedPhoto = false;
+  if (mode === 'photo') {
+    usedPhoto = paintOceanFromPhoto(ctx, w, h, seed, {
+      warpScale: parseFloat($('protoWarpScale').value),
+      warpAmount: parseFloat($('protoWarpAmount').value),
+      hueShift: parseFloat($('protoHueShift').value),
+      satMul: parseFloat($('protoSatMul').value),
+      lightAdd: parseFloat($('protoLightAdd').value),
+    });
+  }
+  if (!usedPhoto) {
+    paintOceanPrototype(ctx, w, h, seed, {
+      oceanColor: $('protoOceanColor').value,
+      landColor: $('protoLandColor').value,
+      forestColor: $('protoForestColor').value,
+      landScale: parseFloat($('protoLandScale').value),
+      landThreshold: parseFloat($('protoLandThreshold').value),
+      edgeSharpness: parseFloat($('protoEdgeSharpness').value),
+      seamMargin: parseFloat($('protoSeamMargin').value),
+      forestScale: parseFloat($('protoForestScale').value),
+      forestThreshold: parseFloat($('protoForestThreshold').value),
+    });
+  }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
@@ -325,6 +421,19 @@ $('useRealLighting').addEventListener('change', (e) => {
 $('autoRotate').addEventListener('change', (e) => { controls.autoRotate = e.target.checked; });
 
 $('protoOceanEnabled').addEventListener('change', regenerate);
+$('oceanMode').addEventListener('change', (e) => {
+  const isPhoto = e.target.value === 'photo';
+  $('photoControls').style.display = isPhoto ? '' : 'none';
+  $('flatControls').style.display = isPhoto ? 'none' : '';
+  regenerate();
+});
+['protoWarpScale', 'protoWarpAmount', 'protoHueShift', 'protoSatMul', 'protoLightAdd'].forEach((id) => {
+  $(id).addEventListener('input', (e) => {
+    e.target.parentElement.querySelector('output').textContent = e.target.value;
+    regenerate();
+  });
+  $(id).parentElement.querySelector('output').textContent = $(id).value;
+});
 $('protoOceanColor').addEventListener('input', regenerate);
 $('protoLandColor').addEventListener('input', regenerate);
 $('protoForestColor').addEventListener('input', regenerate);
