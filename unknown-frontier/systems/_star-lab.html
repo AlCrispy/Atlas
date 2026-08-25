@@ -83,8 +83,15 @@
   <label>Saturazione <div class="row"><input type="range" id="uSatBoost" min="0" max="1" step="0.02" value="0.5"><output></output></div></label>
   <label>Fresnel (bordo luminoso) <div class="row"><input type="range" id="uFresnel" min="0" max="1.5" step="0.02" value="0.6"><output></output></div></label>
 
-  <label><input type="checkbox" id="showHalo" checked> Alone esterno (sprite glow)</label>
+  <label><input type="checkbox" id="showHalo" checked> Alone morbido (sprite glow)</label>
   <label>Opacità alone <div class="row"><input type="range" id="haloOpacity" min="0" max="1" step="0.02" value="1"><output></output></div></label>
+
+  <label><input type="checkbox" id="showCorona" checked> Corona frastagliata (animata)</label>
+  <label>Raggio corona <div class="row"><input type="range" id="coronaScale" min="1.05" max="2" step="0.01" value="1.3"><output></output></div></label>
+  <label>Frastagliatura <div class="row"><input type="range" id="uCoronaJagged" min="1" max="20" step="0.2" value="6"><output></output></div></label>
+  <label>Velocità corona <div class="row"><input type="range" id="uCoronaSpeed" min="0" max="1" step="0.01" value="0.25"><output></output></div></label>
+  <label>Intensità corona <div class="row"><input type="range" id="uCoronaIntensity" min="0" max="2" step="0.02" value="1"><output></output></div></label>
+
   <label><input type="checkbox" id="showBaseline"> Confronta con lo sprite piatto attuale</label>
   <label><input type="checkbox" id="autoRotate" checked> Auto-rotazione</label>
 
@@ -237,6 +244,94 @@ const starMaterial = new THREE.ShaderMaterial({ uniforms, vertexShader, fragment
 const starMesh = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 64), starMaterial);
 scene.add(starMesh);
 
+// === Jagged, continuously-shifting corona shell ===
+// A slightly larger sphere around the star, additive-blended, whose alpha
+// is carved out by scrolling 3D fbm noise instead of a static radial
+// gradient — fresnel keeps the disc-facing center nearly invisible so only
+// tendrils near the silhouette show, and re-sampling the noise with uTime
+// makes those tendrils continuously reshape instead of just spinning.
+const coronaFragmentShader = `
+  uniform float uTime;
+  uniform vec3 uColor;
+  uniform float uJagged;
+  uniform float uSpeed;
+  uniform float uIntensity;
+  varying vec3 vNormal;
+  varying vec3 vViewDir;
+  varying vec3 vObjectPos;
+
+  float hash3(vec3 p) {
+    p = fract(p * vec3(443.897, 441.423, 437.195));
+    p += dot(p, p.yzx + 19.19);
+    return fract((p.x + p.y) * p.z);
+  }
+
+  float noise3(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    float n000 = hash3(i + vec3(0.0, 0.0, 0.0));
+    float n100 = hash3(i + vec3(1.0, 0.0, 0.0));
+    float n010 = hash3(i + vec3(0.0, 1.0, 0.0));
+    float n110 = hash3(i + vec3(1.0, 1.0, 0.0));
+    float n001 = hash3(i + vec3(0.0, 0.0, 1.0));
+    float n101 = hash3(i + vec3(1.0, 0.0, 1.0));
+    float n011 = hash3(i + vec3(0.0, 1.0, 1.0));
+    float n111 = hash3(i + vec3(1.0, 1.0, 1.0));
+    float nx00 = mix(n000, n100, f.x);
+    float nx10 = mix(n010, n110, f.x);
+    float nx01 = mix(n001, n101, f.x);
+    float nx11 = mix(n011, n111, f.x);
+    float nxy0 = mix(nx00, nx10, f.y);
+    float nxy1 = mix(nx01, nx11, f.y);
+    return mix(nxy0, nxy1, f.z);
+  }
+
+  float fbm3(vec3 p) {
+    float amp = 0.5;
+    float sum = 0.0;
+    float norm = 0.0;
+    for (int i = 0; i < 5; i++) {
+      sum += noise3(p) * amp;
+      norm += amp;
+      p *= 2.02;
+      amp *= 0.5;
+    }
+    return sum / norm;
+  }
+
+  void main() {
+    vec3 p = normalize(vObjectPos) * uJagged;
+    vec3 flow = vec3(uTime * uSpeed, uTime * uSpeed * 0.7, -uTime * uSpeed * 0.5);
+    float n = fbm3(p + flow);
+
+    float fres = pow(1.0 - max(dot(normalize(vNormal), vViewDir), 0.0), 1.6);
+    float tendrils = smoothstep(0.32, 0.7, n);
+    float alpha = tendrils * fres * uIntensity;
+
+    gl_FragColor = vec4(uColor, alpha);
+  }
+`;
+
+const coronaUniforms = {
+  uTime: { value: 0 },
+  uColor: { value: new THREE.Color(STAR_TYPES.G.color) },
+  uJagged: { value: 6 },
+  uSpeed: { value: 0.25 },
+  uIntensity: { value: 1 },
+};
+const coronaMaterial = new THREE.ShaderMaterial({
+  uniforms: coronaUniforms,
+  vertexShader,
+  fragmentShader: coronaFragmentShader,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const coronaMesh = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 48), coronaMaterial);
+coronaMesh.scale.setScalar(1.3);
+starMesh.add(coronaMesh);
+
 function colorToRgba(hex, alpha) {
   const c = new THREE.Color(hex);
   return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
@@ -266,26 +361,27 @@ scene.add(baseline);
 // === Wire up controls ===
 const $ = (id) => document.getElementById(id);
 
-function bindSlider(id, uniformKey) {
+function bindSlider(id, targetUniforms, uniformKey) {
   const input = $(id);
   const output = input.parentElement.querySelector('output');
   const sync = () => {
-    uniforms[uniformKey].value = parseFloat(input.value);
+    targetUniforms[uniformKey].value = parseFloat(input.value);
     output.textContent = input.value;
   };
   input.addEventListener('input', sync);
   sync();
 }
-bindSlider('uScale', 'uScale');
-bindSlider('uSpeed', 'uSpeed');
-bindSlider('uWarp', 'uWarp');
-bindSlider('uDarkCut', 'uDarkCut');
-bindSlider('uBrightCut', 'uBrightCut');
-bindSlider('uSatBoost', 'uSatBoost');
-bindSlider('uFresnel', 'uFresnel');
+bindSlider('uScale', uniforms, 'uScale');
+bindSlider('uSpeed', uniforms, 'uSpeed');
+bindSlider('uWarp', uniforms, 'uWarp');
+bindSlider('uDarkCut', uniforms, 'uDarkCut');
+bindSlider('uBrightCut', uniforms, 'uBrightCut');
+bindSlider('uSatBoost', uniforms, 'uSatBoost');
+bindSlider('uFresnel', uniforms, 'uFresnel');
 
 function setStarColor(hex) {
   uniforms.uBaseColor.value.set(hex);
+  coronaUniforms.uColor.value.set(hex);
   haloColorHex = hex;
   const tex = makeGlowTexture(colorToRgba(hex, 1), colorToRgba(hex, 0));
   halo.material.map = tex;
@@ -301,6 +397,16 @@ $('haloOpacity').addEventListener('input', (e) => {
   halo.material.opacity = v;
   e.target.parentElement.querySelector('output').textContent = v.toFixed(2);
 });
+$('showCorona').addEventListener('change', (e) => { coronaMesh.visible = e.target.checked; });
+$('coronaScale').addEventListener('input', (e) => {
+  const v = parseFloat(e.target.value);
+  coronaMesh.scale.setScalar(v);
+  e.target.parentElement.querySelector('output').textContent = v.toFixed(2);
+});
+bindSlider('uCoronaJagged', coronaUniforms, 'uJagged');
+bindSlider('uCoronaSpeed', coronaUniforms, 'uSpeed');
+bindSlider('uCoronaIntensity', coronaUniforms, 'uIntensity');
+
 $('showBaseline').addEventListener('change', (e) => {
   const comparing = e.target.checked;
   starMesh.visible = !comparing;
@@ -331,6 +437,7 @@ const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   uniforms.uTime.value = clock.getElapsedTime();
+  coronaUniforms.uTime.value = clock.getElapsedTime();
   controls.update();
   renderer.render(scene, camera);
 }
