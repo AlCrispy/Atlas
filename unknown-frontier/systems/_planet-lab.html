@@ -89,17 +89,22 @@
 
   <label>Modalità
     <select id="oceanMode">
-      <option value="photo" selected>Foto Terra distorta (nuovo)</option>
+      <option value="stamps" selected>Forme preimpostate (nuovo)</option>
       <option value="flat">Livelli piatti (precedente)</option>
     </select>
   </label>
 
-  <div id="photoControls">
-    <label>Scala warp <div class="row"><input type="range" id="protoWarpScale" min="0.5" max="6" step="0.1" value="1.8"><output></output></div></label>
-    <label>Intensità warp <div class="row"><input type="range" id="protoWarpAmount" min="0" max="0.3" step="0.005" value="0.12"><output></output></div></label>
-    <label>Rotazione tonalità <div class="row"><input type="range" id="protoHueShift" min="-0.5" max="0.5" step="0.01" value="0"><output></output></div></label>
-    <label>Saturazione <div class="row"><input type="range" id="protoSatMul" min="0.3" max="1.8" step="0.02" value="1"><output></output></div></label>
-    <label>Luminosità <div class="row"><input type="range" id="protoLightAdd" min="-0.3" max="0.3" step="0.01" value="0"><output></output></div></label>
+  <div id="stampControls">
+    <label>Colore oceano <input type="color" id="stampOceanColor" value="#4d8fc4"></label>
+    <label>Colore terreno <input type="color" id="stampLandColor" value="#c2a35f"></label>
+    <label>Colore foresta <input type="color" id="stampForestColor" value="#2f7a3d"></label>
+
+    <label>N. continenti <div class="row"><input type="range" id="stampCount" min="1" max="10" step="1" value="4"><output></output></div></label>
+    <label>Raggio min <div class="row"><input type="range" id="stampRadiusMin" min="0.03" max="0.3" step="0.005" value="0.07"><output></output></div></label>
+    <label>Raggio max <div class="row"><input type="range" id="stampRadiusMax" min="0.05" max="0.45" step="0.005" value="0.12"><output></output></div></label>
+    <label>Irregolarità costa <div class="row"><input type="range" id="stampJitter" min="0.05" max="0.7" step="0.01" value="0.35"><output></output></div></label>
+    <label>Margine oceano ai bordi <div class="row"><input type="range" id="stampSeamMargin" min="0" max="0.25" step="0.005" value="0.06"><output></output></div></label>
+    <label>Foreste max per continente <div class="row"><input type="range" id="stampForestMax" min="0" max="5" step="1" value="3"><output></output></div></label>
   </div>
 
   <div id="flatControls" style="display:none">
@@ -173,68 +178,86 @@ scene.add(mesh);
 const previewCanvas = document.getElementById('preview');
 const previewCtx = previewCanvas.getContext('2d');
 
-// === Ocean prototype: real Earth photo, warped + recolored per slug ===
-// The flat-layer prototype below still read as too basic/blobby — this
-// mode starts from the actual real_atmos_2048.jpg (same file the real
-// Sol-system Terra page uses) for genuine coastline/terrain/cloud detail,
-// then domain-warps it (so it isn't literally recognizable as Earth) and
-// hue/sat/lightness-shifts it per slug for variety between planets. Only
-// possible because it's a *real equirectangular photo*, already seamless
-// at u=0/u=1 — the warp sampling wraps u with modulo so that stays true.
-const earthPhoto = new Image();
-earthPhoto.src = '../resources/planet-textures/earth_atmos_2048.jpg';
-let earthCanvas = null; // built once the photo has actually loaded
-
-function ensureEarthCanvas() {
-  if (earthCanvas || !earthPhoto.complete || !earthPhoto.naturalWidth) return earthCanvas;
-  earthCanvas = document.createElement('canvas');
-  earthCanvas.width = earthPhoto.naturalWidth;
-  earthCanvas.height = earthPhoto.naturalHeight;
-  earthCanvas.getContext('2d').drawImage(earthPhoto, 0, 0);
-  return earthCanvas;
-}
-earthPhoto.addEventListener('load', () => { ensureEarthCanvas(); regenerate(); });
-
-function paintOceanFromPhoto(ctx, w, h, seed, opts) {
-  const src = ensureEarthCanvas();
-  if (!src) return false; // not loaded yet — caller falls back
-
-  const srcCtx = src.getContext('2d');
-  const srcData = srcCtx.getImageData(0, 0, src.width, src.height).data;
-  const { fbm } = makeNoise2D(seed);
-  const img = ctx.createImageData(w, h);
-  const c = new THREE.Color();
-  const hsl = { h: 0, s: 0, l: 0 };
-
-  for (let y = 0; y < h; y++) {
-    const v = y / h;
-    for (let x = 0; x < w; x++) {
-      const u = x / w;
-      const nx = u * opts.warpScale;
-      const ny = v * opts.warpScale;
-      const wx = (fbm(nx + 11.3, ny + 37.7, 4) - 0.5) * opts.warpAmount;
-      const wy = (fbm(nx - 19.1, ny + 53.9, 4) - 0.5) * opts.warpAmount;
-
-      const su = ((u + wx) % 1 + 1) % 1; // wrap horizontally — keeps the photo's own seam intact
-      const sv = clamp01(v + wy); // clamp vertically, no pole to wrap around
-
-      const sx = Math.min(src.width - 1, Math.floor(su * src.width));
-      const sy = Math.min(src.height - 1, Math.floor(sv * src.height));
-      const sIdx = (sy * src.width + sx) * 4;
-
-      c.setRGB(srcData[sIdx] / 255, srcData[sIdx + 1] / 255, srcData[sIdx + 2] / 255);
-      c.getHSL(hsl);
-      c.setHSL(((hsl.h + opts.hueShift) % 1 + 1) % 1, clamp01(hsl.s * opts.satMul), clamp01(hsl.l + opts.lightAdd));
-
-      const idx = (y * w + x) * 4;
-      img.data[idx] = c.r * 255;
-      img.data[idx + 1] = c.g * 255;
-      img.data[idx + 2] = c.b * 255;
-      img.data[idx + 3] = 255;
-    }
+// === Ocean prototype: pre-shaped "continent stamps" ===
+// The photo-warp attempt (real Earth photo, domain-warped) is scrapped —
+// looked bad. This instead builds each continent as a smooth, closed blob
+// path (a jittered-radius polygon rounded with quadraticCurveTo, like a
+// hand-drawn island shape) and stamps a few of them onto the ocean at
+// random position/size/rotation via canvas transforms — vector fills, so
+// edges are crisp/anti-aliased for free, no per-pixel noise loop or
+// blur/grain anywhere. Forest sub-blobs are drawn with the same generator
+// at a smaller scale *after* clipping to the continent's own path, so they
+// can never spill into the ocean.
+function makeBlobPoints(random, pointCount, jitter) {
+  const h1freq = 2 + Math.floor(random() * 2);
+  const h2freq = 4 + Math.floor(random() * 3);
+  const h1amp = jitter * (0.5 + random() * 0.3);
+  const h2amp = jitter * (0.2 + random() * 0.2);
+  const h1phase = random() * Math.PI * 2;
+  const h2phase = random() * Math.PI * 2;
+  const points = [];
+  for (let i = 0; i < pointCount; i++) {
+    const a = (i / pointCount) * Math.PI * 2;
+    const r = 1 + Math.sin(a * h1freq + h1phase) * h1amp + Math.sin(a * h2freq + h2phase) * h2amp;
+    points.push([Math.cos(a) * r, Math.sin(a) * r]);
   }
-  ctx.putImageData(img, 0, 0);
-  return true;
+  return points;
+}
+
+function traceSmoothBlob(ctx, points) {
+  const n = points.length;
+  const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  const start = mid(points[n - 1], points[0]);
+  ctx.beginPath();
+  ctx.moveTo(start[0], start[1]);
+  for (let i = 0; i < n; i++) {
+    const cur = points[i];
+    const next = points[(i + 1) % n];
+    const m = mid(cur, next);
+    ctx.quadraticCurveTo(cur[0], cur[1], m[0], m[1]);
+  }
+  ctx.closePath();
+}
+
+function paintOceanStamps(ctx, w, h, seed, opts) {
+  const random = mulberry32(seed);
+  ctx.fillStyle = opts.oceanColor;
+  ctx.fillRect(0, 0, w, h);
+
+  for (let i = 0; i < opts.continentCount; i++) {
+    const marginPx = opts.seamMargin * w;
+    const cx = marginPx + random() * (w - marginPx * 2);
+    const cy = random() * h;
+    const radius = (opts.radiusMin + random() * (opts.radiusMax - opts.radiusMin)) * w;
+    const rotation = random() * Math.PI * 2;
+    const points = makeBlobPoints(random, 16, opts.jitter);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
+    ctx.scale(radius, radius);
+    traceSmoothBlob(ctx, points);
+    ctx.fillStyle = opts.landColor;
+    ctx.fill();
+    ctx.clip();
+
+    const forestCount = Math.floor(random() * (opts.forestMax + 1));
+    for (let f = 0; f < forestCount; f++) {
+      const fx = (random() - 0.5) * 1.1;
+      const fy = (random() - 0.5) * 1.1;
+      const fr = 0.2 + random() * 0.35;
+      const fpoints = makeBlobPoints(random, 10, 0.45);
+      ctx.save();
+      ctx.translate(fx, fy);
+      ctx.rotate(random() * Math.PI * 2);
+      ctx.scale(fr, fr);
+      traceSmoothBlob(ctx, fpoints);
+      ctx.fillStyle = opts.forestColor;
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
 }
 
 // === Ocean prototype — flat color fields instead of noisy/blurred shading ===
@@ -293,6 +316,17 @@ function makeNoise2D(seed) {
 }
 
 function clamp01(v) { return Math.min(1, Math.max(0, v)); }
+
+function mulberry32(seed) {
+  let a = seed;
+  return function random() {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 function paintOceanPrototype(ctx, w, h, seed, opts) {
   const { fbm } = makeNoise2D(seed);
@@ -354,17 +388,19 @@ function makeOceanPrototypeTexture(slug) {
   const seed = hashString(slug);
 
   const mode = $('oceanMode').value;
-  let usedPhoto = false;
-  if (mode === 'photo') {
-    usedPhoto = paintOceanFromPhoto(ctx, w, h, seed, {
-      warpScale: parseFloat($('protoWarpScale').value),
-      warpAmount: parseFloat($('protoWarpAmount').value),
-      hueShift: parseFloat($('protoHueShift').value),
-      satMul: parseFloat($('protoSatMul').value),
-      lightAdd: parseFloat($('protoLightAdd').value),
+  if (mode === 'stamps') {
+    paintOceanStamps(ctx, w, h, seed, {
+      oceanColor: $('stampOceanColor').value,
+      landColor: $('stampLandColor').value,
+      forestColor: $('stampForestColor').value,
+      continentCount: parseInt($('stampCount').value, 10),
+      radiusMin: parseFloat($('stampRadiusMin').value),
+      radiusMax: parseFloat($('stampRadiusMax').value),
+      jitter: parseFloat($('stampJitter').value),
+      seamMargin: parseFloat($('stampSeamMargin').value),
+      forestMax: parseInt($('stampForestMax').value, 10),
     });
-  }
-  if (!usedPhoto) {
+  } else {
     paintOceanPrototype(ctx, w, h, seed, {
       oceanColor: $('protoOceanColor').value,
       landColor: $('protoLandColor').value,
@@ -422,12 +458,15 @@ $('autoRotate').addEventListener('change', (e) => { controls.autoRotate = e.targ
 
 $('protoOceanEnabled').addEventListener('change', regenerate);
 $('oceanMode').addEventListener('change', (e) => {
-  const isPhoto = e.target.value === 'photo';
-  $('photoControls').style.display = isPhoto ? '' : 'none';
-  $('flatControls').style.display = isPhoto ? 'none' : '';
+  const isStamps = e.target.value === 'stamps';
+  $('stampControls').style.display = isStamps ? '' : 'none';
+  $('flatControls').style.display = isStamps ? 'none' : '';
   regenerate();
 });
-['protoWarpScale', 'protoWarpAmount', 'protoHueShift', 'protoSatMul', 'protoLightAdd'].forEach((id) => {
+$('stampOceanColor').addEventListener('input', regenerate);
+$('stampLandColor').addEventListener('input', regenerate);
+$('stampForestColor').addEventListener('input', regenerate);
+['stampCount', 'stampRadiusMin', 'stampRadiusMax', 'stampJitter', 'stampSeamMargin', 'stampForestMax'].forEach((id) => {
   $(id).addEventListener('input', (e) => {
     e.target.parentElement.querySelector('output').textContent = e.target.value;
     regenerate();
