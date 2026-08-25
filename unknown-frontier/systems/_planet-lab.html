@@ -87,38 +87,24 @@
   <h1 style="margin-top:16px">🌊 Prototipo oceanico</h1>
   <label><input type="checkbox" id="protoOceanEnabled" checked> Attivo (bypassa makePlanetTexture)</label>
 
-  <label>Modalità
-    <select id="oceanMode">
-      <option value="stamps" selected>Forme preimpostate (nuovo)</option>
-      <option value="flat">Livelli piatti (precedente)</option>
-    </select>
-  </label>
+  <label>Colore oceano <input type="color" id="protoOceanColor" value="#3a72a3"></label>
+  <label>Colore terreno <input type="color" id="protoLandColor" value="#a08a5c"></label>
+  <label>Colore foresta <input type="color" id="protoForestColor" value="#2f6b3a"></label>
+  <label>Colore calotta <input type="color" id="polarCapColor" value="#dfe6e6"></label>
 
-  <div id="stampControls">
-    <label>Colore oceano <input type="color" id="stampOceanColor" value="#4d8fc4"></label>
-    <label>Colore terreno <input type="color" id="stampLandColor" value="#c2a35f"></label>
-    <label>Colore foresta <input type="color" id="stampForestColor" value="#2f7a3d"></label>
+  <label>Scala terreno <div class="row"><input type="range" id="protoLandScale" min="1" max="8" step="0.1" value="3"><output></output></div></label>
+  <label>Copertura terreno <div class="row"><input type="range" id="protoLandThreshold" min="0.3" max="0.8" step="0.01" value="0.55"><output></output></div></label>
+  <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.15" step="0.002" value="0"><output></output></div></label>
+  <label>Scala foresta <div class="row"><input type="range" id="protoForestScale" min="2" max="15" step="0.1" value="6"><output></output></div></label>
+  <label>Copertura foresta <div class="row"><input type="range" id="protoForestThreshold" min="0.3" max="0.8" step="0.01" value="0.5"><output></output></div></label>
 
-    <label>N. continenti <div class="row"><input type="range" id="stampCount" min="1" max="10" step="1" value="4"><output></output></div></label>
-    <label>Raggio min <div class="row"><input type="range" id="stampRadiusMin" min="0.03" max="0.3" step="0.005" value="0.07"><output></output></div></label>
-    <label>Raggio max <div class="row"><input type="range" id="stampRadiusMax" min="0.05" max="0.45" step="0.005" value="0.12"><output></output></div></label>
-    <label>Irregolarità costa <div class="row"><input type="range" id="stampJitter" min="0.05" max="0.7" step="0.01" value="0.35"><output></output></div></label>
-    <label>Margine oceano ai bordi <div class="row"><input type="range" id="stampSeamMargin" min="0" max="0.25" step="0.005" value="0.06"><output></output></div></label>
-    <label>Foreste max per continente <div class="row"><input type="range" id="stampForestMax" min="0" max="5" step="1" value="3"><output></output></div></label>
-  </div>
+  <p class="hint" style="margin-top:14px">Calotte polari</p>
+  <label>Calotta polare (altezza) <div class="row"><input type="range" id="polarCap" min="0" max="0.2" step="0.005" value="0.07"><output></output></div></label>
+  <label>Frastagliatura calotta <div class="row"><input type="range" id="polarJitter" min="0" max="0.08" step="0.002" value="0.03"><output></output></div></label>
+  <label>Spazio acqua dopo calotta <div class="row"><input type="range" id="polarWater" min="0" max="0.2" step="0.005" value="0.06"><output></output></div></label>
+  <label><input type="checkbox" id="debugZone"> Evidenzia area continenti (debug)</label>
 
-  <div id="flatControls" style="display:none">
-    <label>Colore oceano <input type="color" id="protoOceanColor" value="#3a72a3"></label>
-    <label>Colore terreno <input type="color" id="protoLandColor" value="#a08a5c"></label>
-    <label>Colore foresta <input type="color" id="protoForestColor" value="#2f6b3a"></label>
-
-    <label>Scala terreno <div class="row"><input type="range" id="protoLandScale" min="1" max="8" step="0.1" value="3"><output></output></div></label>
-    <label>Copertura terreno <div class="row"><input type="range" id="protoLandThreshold" min="0.3" max="0.8" step="0.01" value="0.55"><output></output></div></label>
-    <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.15" step="0.002" value="0.015"><output></output></div></label>
-    <label>Margine oceano ai bordi (anti-giuntura) <div class="row"><input type="range" id="protoSeamMargin" min="0" max="0.25" step="0.005" value="0.12"><output></output></div></label>
-    <label>Scala foresta <div class="row"><input type="range" id="protoForestScale" min="2" max="15" step="0.1" value="6"><output></output></div></label>
-    <label>Copertura foresta <div class="row"><input type="range" id="protoForestThreshold" min="0.3" max="0.8" step="0.01" value="0.5"><output></output></div></label>
-  </div>
+  <button id="randomizeParams">Randomizza parametri (nuovo pianeta)</button>
 
   <label>Anteprima texture 2D (quella che va sulla sfera)</label>
   <canvas id="preview" class="swatch" width="256" height="128"></canvas>
@@ -178,96 +164,14 @@ scene.add(mesh);
 const previewCanvas = document.getElementById('preview');
 const previewCtx = previewCanvas.getContext('2d');
 
-// === Ocean prototype: pre-shaped "continent stamps" ===
-// The photo-warp attempt (real Earth photo, domain-warped) is scrapped —
-// looked bad. This instead builds each continent as a smooth, closed blob
-// path (a jittered-radius polygon rounded with quadraticCurveTo, like a
-// hand-drawn island shape) and stamps a few of them onto the ocean at
-// random position/size/rotation via canvas transforms — vector fills, so
-// edges are crisp/anti-aliased for free, no per-pixel noise loop or
-// blur/grain anywhere. Forest sub-blobs are drawn with the same generator
-// at a smaller scale *after* clipping to the continent's own path, so they
-// can never spill into the ocean.
-function makeBlobPoints(random, pointCount, jitter) {
-  const h1freq = 2 + Math.floor(random() * 2);
-  const h2freq = 4 + Math.floor(random() * 3);
-  const h1amp = jitter * (0.5 + random() * 0.3);
-  const h2amp = jitter * (0.2 + random() * 0.2);
-  const h1phase = random() * Math.PI * 2;
-  const h2phase = random() * Math.PI * 2;
-  const points = [];
-  for (let i = 0; i < pointCount; i++) {
-    const a = (i / pointCount) * Math.PI * 2;
-    const r = 1 + Math.sin(a * h1freq + h1phase) * h1amp + Math.sin(a * h2freq + h2phase) * h2amp;
-    points.push([Math.cos(a) * r, Math.sin(a) * r]);
-  }
-  return points;
-}
-
-function traceSmoothBlob(ctx, points) {
-  const n = points.length;
-  const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-  const start = mid(points[n - 1], points[0]);
-  ctx.beginPath();
-  ctx.moveTo(start[0], start[1]);
-  for (let i = 0; i < n; i++) {
-    const cur = points[i];
-    const next = points[(i + 1) % n];
-    const m = mid(cur, next);
-    ctx.quadraticCurveTo(cur[0], cur[1], m[0], m[1]);
-  }
-  ctx.closePath();
-}
-
-function paintOceanStamps(ctx, w, h, seed, opts) {
-  const random = mulberry32(seed);
-  ctx.fillStyle = opts.oceanColor;
-  ctx.fillRect(0, 0, w, h);
-
-  for (let i = 0; i < opts.continentCount; i++) {
-    const marginPx = opts.seamMargin * w;
-    const cx = marginPx + random() * (w - marginPx * 2);
-    const cy = random() * h;
-    const radius = (opts.radiusMin + random() * (opts.radiusMax - opts.radiusMin)) * w;
-    const rotation = random() * Math.PI * 2;
-    const points = makeBlobPoints(random, 16, opts.jitter);
-
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation);
-    ctx.scale(radius, radius);
-    traceSmoothBlob(ctx, points);
-    ctx.fillStyle = opts.landColor;
-    ctx.fill();
-    ctx.clip();
-
-    const forestCount = Math.floor(random() * (opts.forestMax + 1));
-    for (let f = 0; f < forestCount; f++) {
-      const fx = (random() - 0.5) * 1.1;
-      const fy = (random() - 0.5) * 1.1;
-      const fr = 0.2 + random() * 0.35;
-      const fpoints = makeBlobPoints(random, 10, 0.45);
-      ctx.save();
-      ctx.translate(fx, fy);
-      ctx.rotate(random() * Math.PI * 2);
-      ctx.scale(fr, fr);
-      traceSmoothBlob(ctx, fpoints);
-      ctx.fillStyle = opts.forestColor;
-      ctx.fill();
-      ctx.restore();
-    }
-    ctx.restore();
-  }
-}
-
 // === Ocean prototype — flat color fields instead of noisy/blurred shading ===
 // The live-tuned replacement for planet-texture.js's paintOcean/paintRegions:
 // user feedback was that the fbm-shaded version reads as too smeared/grainy.
-// This version is three flat-color layers (ocean, then land blobs cut from
-// it, then forest blobs cut from the land) with a near-hard edge instead of
-// a soft coastSoftness gradient — no per-pixel lightness jitter anywhere.
-// Self-contained (own tiny hash/noise) so it can be tuned freely here without
-// touching the real module until the look is locked in.
+// Two earlier alternatives (a real Earth photo warped+recolored, and
+// "continent stamp" vector shapes) were tried and dropped — this flat
+// per-pixel threshold version is the one that stuck. Self-contained (own
+// tiny hash/noise) so it can be tuned freely here without touching the
+// real module until the look is locked in.
 function hashString(str) {
   let h = 2166136261;
   for (let i = 0; i < str.length; i++) {
@@ -277,10 +181,19 @@ function hashString(str) {
   return h >>> 0;
 }
 
-function hashLattice(seed, ix, iy) {
+function smootherstep(t) { return t * t * (3 - 2 * t); }
+
+// 3D value noise, used to sample the land field on a *cylinder* (see
+// paintOceanPrototype below) instead of a flat u/v rectangle — cos/sin of
+// u*2*PI are exactly periodic at u=0/u=1, so wrapping the noise input
+// around a circle that way makes the coastline seamless by construction,
+// the same trick the polar caps already use (sine harmonics) rather than
+// patching a seam after the fact.
+function hashLattice3(seed, ix, iy, iz) {
   let h = seed | 0;
   h ^= Math.imul(ix | 0, 0x27d4eb2f);
   h ^= Math.imul(iy | 0, 0x165667b1);
+  h ^= Math.imul(iz | 0, 0x9e3779b1);
   h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
   h ^= h >>> 13;
   h = Math.imul(h, 0xc2b2ae35);
@@ -288,31 +201,30 @@ function hashLattice(seed, ix, iy) {
   return (h >>> 0) / 4294967295;
 }
 
-function smootherstep(t) { return t * t * (3 - 2 * t); }
-
-function makeNoise2D(seed) {
-  function noise2D(x, y) {
-    const x0 = Math.floor(x), y0 = Math.floor(y);
-    const sx = smootherstep(x - x0), sy = smootherstep(y - y0);
-    const n00 = hashLattice(seed, x0, y0);
-    const n10 = hashLattice(seed, x0 + 1, y0);
-    const n01 = hashLattice(seed, x0, y0 + 1);
-    const n11 = hashLattice(seed, x0 + 1, y0 + 1);
-    const ix0 = n00 + (n10 - n00) * sx;
-    const ix1 = n01 + (n11 - n01) * sx;
-    return ix0 + (ix1 - ix0) * sy;
+function makeNoise3D(seed) {
+  function noise3D(x, y, z) {
+    const x0 = Math.floor(x), y0 = Math.floor(y), z0 = Math.floor(z);
+    const sx = smootherstep(x - x0), sy = smootherstep(y - y0), sz = smootherstep(z - z0);
+    const h = (ix, iy, iz) => hashLattice3(seed, ix, iy, iz);
+    const nx00 = h(x0, y0, z0) + (h(x0 + 1, y0, z0) - h(x0, y0, z0)) * sx;
+    const nx10 = h(x0, y0 + 1, z0) + (h(x0 + 1, y0 + 1, z0) - h(x0, y0 + 1, z0)) * sx;
+    const nx01 = h(x0, y0, z0 + 1) + (h(x0 + 1, y0, z0 + 1) - h(x0, y0, z0 + 1)) * sx;
+    const nx11 = h(x0, y0 + 1, z0 + 1) + (h(x0 + 1, y0 + 1, z0 + 1) - h(x0, y0 + 1, z0 + 1)) * sx;
+    const nxy0 = nx00 + (nx10 - nx00) * sy;
+    const nxy1 = nx01 + (nx11 - nx01) * sy;
+    return nxy0 + (nxy1 - nxy0) * sz;
   }
-  function fbm(x, y, octaves = 4, lacunarity = 2, persistence = 0.5) {
+  function fbm(x, y, z, octaves = 4, lacunarity = 2, persistence = 0.5) {
     let amp = 1, freq = 1, sum = 0, norm = 0;
     for (let o = 0; o < octaves; o++) {
-      sum += noise2D(x * freq, y * freq) * amp;
+      sum += noise3D(x * freq, y * freq, z * freq) * amp;
       norm += amp;
       amp *= persistence;
       freq *= lacunarity;
     }
     return sum / norm;
   }
-  return { noise2D, fbm };
+  return { noise3D, fbm };
 }
 
 function clamp01(v) { return Math.min(1, Math.max(0, v)); }
@@ -328,45 +240,138 @@ function mulberry32(seed) {
   };
 }
 
+// === Polar ice caps ===
+// A sphere's equirectangular top/bottom row all maps to the same single
+// point (the pole) — whatever's painted there always looks like a messy
+// pinch/seam from any angle, no matter how good the coastlines are. A
+// solid ice cap sidesteps the problem: a pinch in a flat field is
+// invisible, and it doubles as a normal-looking polar ice cap. Drawn last
+// so it overlays land/forest near the poles too.
+//
+// The cap's edge is a sum of a few integer-frequency sine harmonics over
+// u*2*PI rather than fbm noise — sin(k*u*2*PI) is exactly periodic at
+// u=0/u=1 for any integer k, so the jagged coastline wraps perfectly at
+// the seam for free, no margin trick needed (unlike the land mask below,
+// whose fbm field isn't periodic in u).
+function makeEdgeProfile(random, harmonicCount, amplitude) {
+  const harmonics = [];
+  for (let i = 0; i < harmonicCount; i++) {
+    harmonics.push({
+      freq: 2 + Math.floor(random() * 4),
+      amp: (amplitude * (0.4 + random() * 0.6)) / (i + 1),
+      phase: random() * Math.PI * 2,
+    });
+  }
+  const maxAmp = harmonics.reduce((sum, h) => sum + h.amp, 0);
+  const edgeAt = (u) => harmonics.reduce((sum, h) => sum + Math.sin(h.freq * u * Math.PI * 2 + h.phase) * h.amp, 0);
+  return { edgeAt, maxAmp };
+}
+
+// Same seeded harmonics computed without touching ctx, so the land mask
+// can know each cap's worst-case (max jagged excursion) edge position in
+// px from its pole *before* anything is drawn, and drawPolarCaps (below)
+// reproduces the identical shape when it actually paints — same seed in,
+// same harmonics out, every time.
+function computeCapMargins(seed, capFraction, jitterFraction, h) {
+  if (capFraction <= 0) return { topMaxPx: 0, botMaxPx: 0 };
+  const baseCapPx = capFraction * h;
+  const jitterPx = jitterFraction * h;
+  const top = makeEdgeProfile(mulberry32(seed ^ 0x51ed270b), 3, jitterPx);
+  const bot = makeEdgeProfile(mulberry32(seed ^ 0x2545f491), 3, jitterPx);
+  return { topMaxPx: baseCapPx + top.maxAmp, botMaxPx: baseCapPx + bot.maxAmp };
+}
+
+function drawPolarCaps(ctx, w, h, seed, capFraction, jitterFraction, color) {
+  if (capFraction <= 0) return;
+  const baseCapPx = capFraction * h;
+  const jitterPx = jitterFraction * h;
+  const steps = Math.max(32, Math.floor(w / 4));
+
+  const top = makeEdgeProfile(mulberry32(seed ^ 0x51ed270b), 3, jitterPx);
+  const bot = makeEdgeProfile(mulberry32(seed ^ 0x2545f491), 3, jitterPx);
+
+  ctx.fillStyle = color;
+
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(w, 0);
+  for (let i = steps; i >= 0; i--) {
+    const x = (i / steps) * w;
+    const y = Math.max(0, baseCapPx + top.edgeAt(x / w));
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(0, h);
+  ctx.lineTo(w, h);
+  for (let i = steps; i >= 0; i--) {
+    const x = (i / steps) * w;
+    const y = Math.min(h, h - baseCapPx + bot.edgeAt(x / w));
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
 function paintOceanPrototype(ctx, w, h, seed, opts) {
-  const { fbm } = makeNoise2D(seed);
+  const { fbm } = makeNoise3D(seed);
   const oc = new THREE.Color(opts.oceanColor);
   const lc = new THREE.Color(opts.landColor);
   const fc = new THREE.Color(opts.forestColor);
   const img = ctx.createImageData(w, h);
   const c = new THREE.Color();
 
+  // No land inside the cap's worst-case jagged reach plus a pure-water
+  // buffer beyond it — otherwise jagged land could poke directly out of
+  // jagged ice with no visual break between them.
+  const capMargins = computeCapMargins(seed, opts.polarCap, opts.polarJitter, h);
+  const waterPx = opts.polarWater * h;
+  const topSafePx = capMargins.topMaxPx + waterPx;
+  const botSafePx = h - capMargins.botMaxPx - waterPx;
+
+  // Sampling a flat 2D noise field at (u*scale, v*scale) isn't periodic in
+  // u, so u=0 and u=1 land on unrelated noise — wrapped onto a sphere
+  // that's the equirectangular seam, showing up as a hard break in the
+  // coastline. Every attempt to patch that after the fact (fading land out
+  // near the edges, then a fixed-width margin, then a per-row-varying
+  // margin) still read as an artificial wall, because the underlying field
+  // itself wasn't actually seamless. The fix instead: sample 3D noise on a
+  // circle (cos(u*2*PI), sin(u*2*PI)) rather than a line — since cos/sin
+  // are exactly periodic, u=0 and u=1 map to the *same* point on that
+  // circle, so the field is seamless by construction and no margin/fade
+  // logic is needed at all.
+  const landRing = opts.landScale / (Math.PI * 2);
+  const forestRing = opts.forestScale / (Math.PI * 2);
+
   for (let y = 0; y < h; y++) {
     const v = y / h;
     for (let x = 0; x < w; x++) {
       const u = x / w;
+      const angle = u * Math.PI * 2;
 
-      const landN = fbm(u * opts.landScale, v * opts.landScale, 4);
+      const landN = fbm(Math.cos(angle) * landRing, Math.sin(angle) * landRing, v * opts.landScale, 4);
       let landT = opts.edgeSharpness > 0
         ? clamp01((landN - opts.landThreshold) / opts.edgeSharpness)
         : (landN > opts.landThreshold ? 1 : 0);
 
-      // The fbm field isn't periodic in u, so u=0 and u=1 sample unrelated
-      // noise — wrapped onto a sphere that's the equirectangular seam
-      // showing up as a visible hard break in the coastline. Rather than
-      // making the noise itself wrap (a bigger rewrite), guarantee a strip
-      // of pure ocean along both edges so the seam is always ocean-meeting-
-      // ocean, which is seamless because it's a single flat color.
-      if (opts.seamMargin > 0) {
-        const edgeDist = Math.min(u, 1 - u);
-        landT *= clamp01(edgeDist / opts.seamMargin);
-      }
+      if (y < topSafePx || y > botSafePx) landT = 0;
 
       if (landT <= 0) {
         c.copy(oc);
       } else {
-        const forestN = fbm(u * opts.forestScale + 50, v * opts.forestScale + 50, 3);
+        const forestN = fbm(Math.cos(angle) * forestRing + 50, Math.sin(angle) * forestRing + 50, v * opts.forestScale, 3);
         const forestT = opts.edgeSharpness > 0
           ? clamp01((forestN - opts.forestThreshold) / opts.edgeSharpness)
           : (forestN > opts.forestThreshold ? 1 : 0);
 
         c.copy(oc).lerp(lc, landT);
         if (forestT > 0) c.lerp(fc, forestT * landT);
+      }
+
+      if (opts.debugZone && y >= topSafePx && y <= botSafePx) {
+        c.lerp(new THREE.Color('#ff00ff'), 0.3);
       }
 
       const idx = (y * w + x) * 4;
@@ -377,6 +382,7 @@ function paintOceanPrototype(ctx, w, h, seed, opts) {
     }
   }
   ctx.putImageData(img, 0, 0);
+  drawPolarCaps(ctx, w, h, seed, opts.polarCap, opts.polarJitter, opts.polarCapColor);
 }
 
 function makeOceanPrototypeTexture(slug) {
@@ -387,32 +393,22 @@ function makeOceanPrototypeTexture(slug) {
   const ctx = canvas.getContext('2d');
   const seed = hashString(slug);
 
-  const mode = $('oceanMode').value;
-  if (mode === 'stamps') {
-    paintOceanStamps(ctx, w, h, seed, {
-      oceanColor: $('stampOceanColor').value,
-      landColor: $('stampLandColor').value,
-      forestColor: $('stampForestColor').value,
-      continentCount: parseInt($('stampCount').value, 10),
-      radiusMin: parseFloat($('stampRadiusMin').value),
-      radiusMax: parseFloat($('stampRadiusMax').value),
-      jitter: parseFloat($('stampJitter').value),
-      seamMargin: parseFloat($('stampSeamMargin').value),
-      forestMax: parseInt($('stampForestMax').value, 10),
-    });
-  } else {
-    paintOceanPrototype(ctx, w, h, seed, {
-      oceanColor: $('protoOceanColor').value,
-      landColor: $('protoLandColor').value,
-      forestColor: $('protoForestColor').value,
-      landScale: parseFloat($('protoLandScale').value),
-      landThreshold: parseFloat($('protoLandThreshold').value),
-      edgeSharpness: parseFloat($('protoEdgeSharpness').value),
-      seamMargin: parseFloat($('protoSeamMargin').value),
-      forestScale: parseFloat($('protoForestScale').value),
-      forestThreshold: parseFloat($('protoForestThreshold').value),
-    });
-  }
+  paintOceanPrototype(ctx, w, h, seed, {
+    oceanColor: $('protoOceanColor').value,
+    landColor: $('protoLandColor').value,
+    forestColor: $('protoForestColor').value,
+    landScale: parseFloat($('protoLandScale').value),
+    landThreshold: parseFloat($('protoLandThreshold').value),
+    edgeSharpness: parseFloat($('protoEdgeSharpness').value),
+    forestScale: parseFloat($('protoForestScale').value),
+    forestThreshold: parseFloat($('protoForestThreshold').value),
+    polarCap: parseFloat($('polarCap').value),
+    polarJitter: parseFloat($('polarJitter').value),
+    polarWater: parseFloat($('polarWater').value),
+    polarCapColor: $('polarCapColor').value,
+    debugZone: $('debugZone').checked,
+  });
+
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
@@ -457,26 +453,12 @@ $('useRealLighting').addEventListener('change', (e) => {
 $('autoRotate').addEventListener('change', (e) => { controls.autoRotate = e.target.checked; });
 
 $('protoOceanEnabled').addEventListener('change', regenerate);
-$('oceanMode').addEventListener('change', (e) => {
-  const isStamps = e.target.value === 'stamps';
-  $('stampControls').style.display = isStamps ? '' : 'none';
-  $('flatControls').style.display = isStamps ? 'none' : '';
-  regenerate();
-});
-$('stampOceanColor').addEventListener('input', regenerate);
-$('stampLandColor').addEventListener('input', regenerate);
-$('stampForestColor').addEventListener('input', regenerate);
-['stampCount', 'stampRadiusMin', 'stampRadiusMax', 'stampJitter', 'stampSeamMargin', 'stampForestMax'].forEach((id) => {
-  $(id).addEventListener('input', (e) => {
-    e.target.parentElement.querySelector('output').textContent = e.target.value;
-    regenerate();
-  });
-  $(id).parentElement.querySelector('output').textContent = $(id).value;
-});
 $('protoOceanColor').addEventListener('input', regenerate);
 $('protoLandColor').addEventListener('input', regenerate);
 $('protoForestColor').addEventListener('input', regenerate);
-['protoLandScale', 'protoLandThreshold', 'protoEdgeSharpness', 'protoSeamMargin', 'protoForestScale', 'protoForestThreshold'].forEach((id) => {
+$('polarCapColor').addEventListener('input', regenerate);
+$('debugZone').addEventListener('change', regenerate);
+['protoLandScale', 'protoLandThreshold', 'protoEdgeSharpness', 'protoForestScale', 'protoForestThreshold', 'polarCap', 'polarJitter', 'polarWater'].forEach((id) => {
   $(id).addEventListener('input', (e) => {
     e.target.parentElement.querySelector('output').textContent = e.target.value;
     regenerate();
@@ -484,6 +466,41 @@ $('protoForestColor').addEventListener('input', regenerate);
   $(id).parentElement.querySelector('output').textContent = $(id).value;
 });
 $('size').parentElement.querySelector('output').textContent = $('size').value;
+
+// Picks a new random value (within its own min/max) for every slider, plus
+// plausible-but-varied hues for the three colors — an "ocean world"
+// shouldn't always be the exact same blue/tan/green. Kept in loose color
+// families (blue-cyan ocean, tan-brown-olive land, green forest) rather
+// than fully random RGB so it stays readable as land/water/vegetation
+// rather than becoming an esotico-style palette.
+function randomInRange(input) {
+  const min = parseFloat(input.min);
+  const max = parseFloat(input.max);
+  const step = parseFloat(input.step) || 0;
+  let v = min + Math.random() * (max - min);
+  if (step > 0) v = Math.round(v / step) * step;
+  return Math.min(max, Math.max(min, v));
+}
+
+function randomHueColor(hueMin, hueMax, satRange, lightRange) {
+  const hue = (hueMin + Math.random() * (hueMax - hueMin)) / 360;
+  const sat = satRange[0] + Math.random() * (satRange[1] - satRange[0]);
+  const light = lightRange[0] + Math.random() * (lightRange[1] - lightRange[0]);
+  return `#${new THREE.Color().setHSL(hue, sat, light).getHexString()}`;
+}
+
+$('randomizeParams').addEventListener('click', () => {
+  ['protoLandScale', 'protoLandThreshold', 'protoForestScale', 'protoForestThreshold', 'polarCap', 'polarJitter', 'polarWater'].forEach((id) => {
+    const input = $(id);
+    input.value = randomInRange(input);
+    input.parentElement.querySelector('output').textContent = input.value;
+  });
+  $('protoOceanColor').value = randomHueColor(185, 225, [0.45, 0.75], [0.35, 0.55]);
+  $('protoLandColor').value = randomHueColor(25, 95, [0.3, 0.65], [0.4, 0.62]);
+  $('protoForestColor').value = randomHueColor(95, 150, [0.3, 0.6], [0.22, 0.4]);
+  $('slug').value = `lab-test-${Math.floor(Math.random() * 100000)}`;
+  regenerate();
+});
 
 regenerate();
 
