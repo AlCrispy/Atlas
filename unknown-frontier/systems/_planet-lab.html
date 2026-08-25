@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Planet Lab — scratch, not linked from the site</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060a0a;
+    color: #ccd4d0;
+    font: 13px/1.4 monospace;
+    overflow: hidden;
+  }
+  #viewport { position: fixed; inset: 0; }
+  #panel {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 260px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    background: rgba(6, 10, 10, 0.88);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  #panel h1 {
+    font-size: 13px;
+    margin: 0 0 10px;
+    color: #c9a84c;
+    letter-spacing: 0.05em;
+  }
+  #panel label { display: block; margin-top: 10px; color: #8fa39c; }
+  #panel select, #panel input[type="text"], #panel input[type="range"] { width: 100%; }
+  #panel input[type="checkbox"] { margin-right: 6px; }
+  #panel .row { display: flex; align-items: center; gap: 8px; }
+  #panel .row output { width: 42px; text-align: right; color: #ccd4d0; }
+  #panel button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 6px;
+    background: #c9a84c;
+    color: #060a0a;
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #panel .hint { color: #5c6f68; margin-top: 12px; font-size: 11px; }
+  #panel .swatch { display: inline-block; width: 100%; margin-top: 6px; border: 1px solid #2a332f; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+
+<div id="viewport"></div>
+
+<div id="panel">
+  <h1>🪐 PLANET LAB (scratch — not linked from the site)</h1>
+
+  <label>Tipo
+    <select id="planetType">
+      <option value="roccioso">Roccioso</option>
+      <option value="desertico">Desertico</option>
+      <option value="vulcanico">Vulcanico</option>
+      <option value="oceanico" selected>Oceanico</option>
+      <option value="glaciale">Glaciale</option>
+      <option value="giungla">Giungla</option>
+      <option value="tossico">Tossico</option>
+      <option value="esotico">Esotico</option>
+      <option value="gg">Gigante gassoso</option>
+      <option value="gh">Gigante di ghiaccio</option>
+      <option value="">(nessuno — fallback per luna)</option>
+    </select>
+  </label>
+
+  <label>Slug (seed) <input type="text" id="slug" value="lab-test-a"></label>
+  <label>Size (per fallback gas/icy roll) <div class="row"><input type="range" id="size" min="0.5" max="3" step="0.05" value="1.5"><output></output></div></label>
+
+  <label><input type="checkbox" id="useRealLighting" checked> Illuminazione reale del sito (Hemisphere + Directional)</label>
+  <label><input type="checkbox" id="autoRotate" checked> Auto-rotazione</label>
+
+  <button id="regen">Rigenera texture (nuovo giro)</button>
+
+  <label>Anteprima texture 2D (quella che va sulla sfera)</label>
+  <canvas id="preview" class="swatch" width="256" height="128"></canvas>
+
+  <p class="hint">Usa la vera <code>makePlanetTexture</code> da js/planet-texture.js — nessuna reimplementazione. Trascina per ruotare · scroll per zoom.</p>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { makePlanetTexture } from '../js/planet-texture.js';
+
+const viewport = document.getElementById('viewport');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 0, 3.2);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+viewport.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 1.4;
+controls.maxDistance = 20;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.2;
+
+// Same rig as solar-system.js's makeBodyMesh lighting, so this lab shows
+// exactly what the real site would render — flip off to isolate whether
+// an issue is in the texture itself vs. how the scene lights it.
+const hemi = new THREE.HemisphereLight(0xffffff, 0x0a0e18, 0.9);
+const sun = new THREE.DirectionalLight(0xfff2d6, 1.3);
+sun.position.set(40, 60, 30);
+scene.add(hemi, sun);
+
+// A flat, even fill so the texture's own colors are visible undistorted
+// by the site's lighting — the "is it the texture or the lighting"
+// toggle's off state.
+const flatLight = new THREE.AmbientLight(0xffffff, 1.2);
+
+const geometry = new THREE.SphereGeometry(1, 48, 48);
+let material = new THREE.MeshStandardMaterial({ roughness: 0.8, metalness: 0.05 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+
+const previewCanvas = document.getElementById('preview');
+const previewCtx = previewCanvas.getContext('2d');
+
+function regenerate() {
+  const type = $('planetType').value || undefined;
+  const slug = $('slug').value || 'lab-test';
+  const size = parseFloat($('size').value);
+
+  const texture = makePlanetTexture('#888888', slug, size, type);
+  texture.needsUpdate = true;
+  material.map = texture;
+  material.needsUpdate = true;
+
+  // The CanvasTexture's own source canvas — draw it straight into the
+  // preview so what's actually painted is visible independent of the
+  // sphere's lighting/UV wrap.
+  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  previewCtx.imageSmoothingEnabled = false;
+  previewCtx.drawImage(texture.image, 0, 0, previewCanvas.width, previewCanvas.height);
+}
+
+const $ = (id) => document.getElementById(id);
+$('planetType').addEventListener('change', regenerate);
+$('slug').addEventListener('input', regenerate);
+$('size').addEventListener('input', (e) => {
+  e.target.parentElement.querySelector('output').textContent = e.target.value;
+  regenerate();
+});
+$('regen').addEventListener('click', () => {
+  $('slug').value = `lab-test-${Math.floor(Math.random() * 100000)}`;
+  regenerate();
+});
+$('useRealLighting').addEventListener('change', (e) => {
+  scene.remove(hemi, sun, flatLight);
+  if (e.target.checked) scene.add(hemi, sun);
+  else scene.add(flatLight);
+});
+$('autoRotate').addEventListener('change', (e) => { controls.autoRotate = e.target.checked; });
+$('size').parentElement.querySelector('output').textContent = $('size').value;
+
+regenerate();
+
+// Debug hook only — lets a devtools console (or a CDP script) poke at the
+// scene directly while iterating; harmless on a scratch/unlinked page.
+window.__lab = { scene, camera, mesh, material, controls, THREE };
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>
