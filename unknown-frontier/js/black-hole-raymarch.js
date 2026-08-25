@@ -98,7 +98,7 @@ const FRAGMENT_SHADER = `
     // back from pure, saturated hues without flattening the light/dark
     // shape of the gradient itself.
     float luma = dot(c, vec3(0.299, 0.587, 0.114));
-    c = mix(c, vec3(luma), 0.3);
+    c = mix(c, vec3(luma), 0.4);
     return c;
   }
 
