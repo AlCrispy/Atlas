@@ -23,7 +23,12 @@ const vertexShader = `
   varying vec3 vViewDir;
   varying vec3 vObjectPos;
   void main() {
-    vObjectPos = position;
+    // Rotation (not translation) part of modelMatrix, so the noise field
+    // below sweeps around as the star's own mesh.rotation spins — sampling
+    // plain local position here would look identical before and after any
+    // rotation, since a unit sphere's vertices don't move relative to its
+    // own local axes no matter how it's spun.
+    vObjectPos = mat3(modelMatrix) * position;
     vNormal = normalize(normalMatrix * normal);
     vec4 worldPos = modelMatrix * vec4(position, 1.0);
     vViewDir = normalize(cameraPosition - worldPos.xyz);
@@ -134,7 +139,7 @@ export function createStarMesh(color) {
   };
   const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
   const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 48), material);
-  mesh.userData.spinSpeed = 0.02 + Math.random() * 0.03;
+  mesh.userData.spinSpeed = 0.06 + Math.random() * 0.05;
 
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({
     map: makeGlowTexture(colorToRgba(color, 1), colorToRgba(color, 0)),

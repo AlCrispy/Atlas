@@ -140,7 +140,9 @@ const vertexShader = `
   varying vec3 vViewDir;
   varying vec3 vObjectPos;
   void main() {
-    vObjectPos = position;
+    // Rotation-only part of modelMatrix — see star-shader.js for why plain
+    // local position wouldn't reveal a spinning mesh here.
+    vObjectPos = mat3(modelMatrix) * position;
     vNormal = normalize(normalMatrix * normal);
     vec4 worldPos = modelMatrix * vec4(position, 1.0);
     vViewDir = normalize(cameraPosition - worldPos.xyz);
