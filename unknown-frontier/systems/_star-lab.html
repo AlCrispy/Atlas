@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Star Lab — scratch, not linked from the site</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060a0a;
+    color: #ccd4d0;
+    font: 13px/1.4 monospace;
+    overflow: hidden;
+  }
+  #viewport { position: fixed; inset: 0; }
+  #panel {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 260px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    background: rgba(6, 10, 10, 0.88);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  #panel h1 {
+    font-size: 13px;
+    margin: 0 0 10px;
+    color: #c9a84c;
+    letter-spacing: 0.05em;
+  }
+  #panel label {
+    display: block;
+    margin-top: 10px;
+    color: #8fa39c;
+  }
+  #panel .row { display: flex; align-items: center; gap: 8px; }
+  #panel .row output { width: 42px; text-align: right; color: #ccd4d0; }
+  #panel select, #panel input[type="range"] { width: 100%; }
+  #panel input[type="checkbox"] { margin-right: 6px; }
+  #panel button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 6px;
+    background: #c9a84c;
+    color: #060a0a;
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #panel .hint { color: #5c6f68; margin-top: 12px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div id="viewport"></div>
+
+<div id="panel">
+  <h1>★ STAR LAB (scratch — not linked from the site)</h1>
+
+  <label>Tipo spettrale
+    <select id="starType">
+      <option value="O">O — Gigante blu</option>
+      <option value="B">B — Blu-bianca</option>
+      <option value="A">A — Bianca</option>
+      <option value="F">F — Bianco-gialla</option>
+      <option value="G" selected>G — Gialla (Sole)</option>
+      <option value="K">K — Arancione</option>
+      <option value="M">M — Nana rossa</option>
+    </select>
+  </label>
+
+  <label>Scala noise <div class="row"><input type="range" id="uScale" min="0.5" max="6" step="0.1" value="2.2"><output></output></div></label>
+  <label>Velocità animazione <div class="row"><input type="range" id="uSpeed" min="0" max="0.5" step="0.005" value="0.05"><output></output></div></label>
+  <label>Domain warp <div class="row"><input type="range" id="uWarp" min="0" max="2" step="0.02" value="0.6"><output></output></div></label>
+  <label>Soglia scuro→base <div class="row"><input type="range" id="uDarkCut" min="0.1" max="0.9" step="0.01" value="0.4"><output></output></div></label>
+  <label>Soglia base→brillante <div class="row"><input type="range" id="uBrightCut" min="0.1" max="0.95" step="0.01" value="0.68"><output></output></div></label>
+  <label>Saturazione <div class="row"><input type="range" id="uSatBoost" min="0" max="1" step="0.02" value="0.5"><output></output></div></label>
+  <label>Fresnel (bordo luminoso) <div class="row"><input type="range" id="uFresnel" min="0" max="1.5" step="0.02" value="0.6"><output></output></div></label>
+
+  <label><input type="checkbox" id="showHalo" checked> Alone esterno (sprite glow)</label>
+  <label>Opacità alone <div class="row"><input type="range" id="haloOpacity" min="0" max="1" step="0.02" value="1"><output></output></div></label>
+  <label><input type="checkbox" id="showBaseline"> Confronta con lo sprite piatto attuale</label>
+  <label><input type="checkbox" id="autoRotate" checked> Auto-rotazione</label>
+
+  <button id="randomize">Rimescola seed</button>
+  <p class="hint">Trascina per ruotare · scroll per zoom. Pagina di prova, non linkata altrove — modifica liberamente lo shader qui sotto.</p>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { makeGlowTexture } from '../js/glow-texture.js';
+import { STAR_TYPES } from '../js/star-types.js';
+
+const viewport = document.getElementById('viewport');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 0, 4.5);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+viewport.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 1.6;
+controls.maxDistance = 30;
+
+// === Experimental shader star ===
+// Raw GLSL (same approach as black-hole-raymarch.js) instead of a canvas
+// texture — 3D noise sampled directly on the sphere avoids the pole
+// pinching an equirectangular canvas texture gets at the top/bottom, and
+// animating it live (vs a static painted texture) is the main thing this
+// lab exists to test after the static/photo-grain version got rejected.
+const vertexShader = `
+  varying vec3 vNormal;
+  varying vec3 vViewDir;
+  varying vec3 vObjectPos;
+  void main() {
+    vObjectPos = position;
+    vNormal = normalize(normalMatrix * normal);
+    vec4 worldPos = modelMatrix * vec4(position, 1.0);
+    vViewDir = normalize(cameraPosition - worldPos.xyz);
+    gl_Position = projectionMatrix * viewMatrix * worldPos;
+  }
+`;
+
+const fragmentShader = `
+  uniform float uTime;
+  uniform vec3 uBaseColor;
+  uniform float uScale;
+  uniform float uSpeed;
+  uniform float uWarp;
+  uniform float uDarkCut;
+  uniform float uBrightCut;
+  uniform float uSatBoost;
+  uniform float uFresnel;
+  uniform vec3 uSeedOffset;
+  varying vec3 vNormal;
+  varying vec3 vViewDir;
+  varying vec3 vObjectPos;
+
+  float hash3(vec3 p) {
+    p = fract(p * vec3(443.897, 441.423, 437.195));
+    p += dot(p, p.yzx + 19.19);
+    return fract((p.x + p.y) * p.z);
+  }
+
+  float noise3(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    float n000 = hash3(i + vec3(0.0, 0.0, 0.0));
+    float n100 = hash3(i + vec3(1.0, 0.0, 0.0));
+    float n010 = hash3(i + vec3(0.0, 1.0, 0.0));
+    float n110 = hash3(i + vec3(1.0, 1.0, 0.0));
+    float n001 = hash3(i + vec3(0.0, 0.0, 1.0));
+    float n101 = hash3(i + vec3(1.0, 0.0, 1.0));
+    float n011 = hash3(i + vec3(0.0, 1.0, 1.0));
+    float n111 = hash3(i + vec3(1.0, 1.0, 1.0));
+    float nx00 = mix(n000, n100, f.x);
+    float nx10 = mix(n010, n110, f.x);
+    float nx01 = mix(n001, n101, f.x);
+    float nx11 = mix(n011, n111, f.x);
+    float nxy0 = mix(nx00, nx10, f.y);
+    float nxy1 = mix(nx01, nx11, f.y);
+    return mix(nxy0, nxy1, f.z);
+  }
+
+  float fbm3(vec3 p) {
+    float amp = 0.5;
+    float sum = 0.0;
+    float norm = 0.0;
+    for (int i = 0; i < 5; i++) {
+      sum += noise3(p) * amp;
+      norm += amp;
+      p *= 2.02;
+      amp *= 0.5;
+    }
+    return sum / norm;
+  }
+
+  void main() {
+    vec3 p = normalize(vObjectPos) * uScale + uSeedOffset;
+    vec3 flow = vec3(0.0, uTime * uSpeed, uTime * uSpeed * 0.6);
+    vec3 warpVec = vec3(
+      fbm3(p + flow + 17.0),
+      fbm3(p + flow + 41.0),
+      fbm3(p + flow + 83.0)
+    ) - 0.5;
+    float n = fbm3(p + flow + warpVec * uWarp);
+
+    vec3 dark = uBaseColor * 0.18;
+    vec3 mid = mix(uBaseColor, vec3(dot(uBaseColor, vec3(0.299, 0.587, 0.114))), 1.0 - uSatBoost);
+    vec3 bright = mix(uBaseColor, vec3(1.0), 0.88);
+
+    vec3 col = mix(dark, mid, smoothstep(uDarkCut - 0.18, uDarkCut + 0.18, n));
+    col = mix(col, bright, smoothstep(uBrightCut - 0.12, uBrightCut + 0.12, n));
+
+    float fres = pow(1.0 - max(dot(normalize(vNormal), vViewDir), 0.0), 2.2);
+    col += fres * uFresnel * bright;
+
+    gl_FragColor = vec4(col, 1.0);
+  }
+`;
+
+const uniforms = {
+  uTime: { value: 0 },
+  uBaseColor: { value: new THREE.Color(STAR_TYPES.G.color) },
+  uScale: { value: 2.2 },
+  uSpeed: { value: 0.05 },
+  uWarp: { value: 0.6 },
+  uDarkCut: { value: 0.4 },
+  uBrightCut: { value: 0.68 },
+  uSatBoost: { value: 0.5 },
+  uFresnel: { value: 0.6 },
+  uSeedOffset: { value: new THREE.Vector3(0, 0, 0) },
+};
+
+const starMaterial = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
+const starMesh = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 64), starMaterial);
+scene.add(starMesh);
+
+function colorToRgba(hex, alpha) {
+  const c = new THREE.Color(hex);
+  return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
+}
+
+let haloColorHex = STAR_TYPES.G.color;
+let halo = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: makeGlowTexture(colorToRgba(haloColorHex, 1), colorToRgba(haloColorHex, 0)),
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+}));
+halo.scale.setScalar(2.4);
+starMesh.add(halo);
+
+// === Baseline comparison: today's live flat glow sprite, unmodified ===
+const baseline = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: makeGlowTexture(colorToRgba(haloColorHex, 1), colorToRgba(haloColorHex, 0)),
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+}));
+baseline.scale.setScalar(1.8 * 2);
+baseline.visible = false;
+scene.add(baseline);
+
+// === Wire up controls ===
+const $ = (id) => document.getElementById(id);
+
+function bindSlider(id, uniformKey) {
+  const input = $(id);
+  const output = input.parentElement.querySelector('output');
+  const sync = () => {
+    uniforms[uniformKey].value = parseFloat(input.value);
+    output.textContent = input.value;
+  };
+  input.addEventListener('input', sync);
+  sync();
+}
+bindSlider('uScale', 'uScale');
+bindSlider('uSpeed', 'uSpeed');
+bindSlider('uWarp', 'uWarp');
+bindSlider('uDarkCut', 'uDarkCut');
+bindSlider('uBrightCut', 'uBrightCut');
+bindSlider('uSatBoost', 'uSatBoost');
+bindSlider('uFresnel', 'uFresnel');
+
+function setStarColor(hex) {
+  uniforms.uBaseColor.value.set(hex);
+  haloColorHex = hex;
+  const tex = makeGlowTexture(colorToRgba(hex, 1), colorToRgba(hex, 0));
+  halo.material.map = tex;
+  halo.material.needsUpdate = true;
+  baseline.material.map = tex;
+  baseline.material.needsUpdate = true;
+}
+$('starType').addEventListener('change', (e) => setStarColor(STAR_TYPES[e.target.value].color));
+
+$('showHalo').addEventListener('change', (e) => { halo.visible = e.target.checked; });
+$('haloOpacity').addEventListener('input', (e) => {
+  const v = parseFloat(e.target.value);
+  halo.material.opacity = v;
+  e.target.parentElement.querySelector('output').textContent = v.toFixed(2);
+});
+$('showBaseline').addEventListener('change', (e) => {
+  const comparing = e.target.checked;
+  starMesh.visible = !comparing;
+  baseline.visible = comparing;
+});
+$('autoRotate').addEventListener('change', (e) => { controls.autoRotate = e.target.checked; });
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.2;
+
+$('randomize').addEventListener('click', () => {
+  uniforms.uSeedOffset.value.set(
+    (Math.random() - 0.5) * 100,
+    (Math.random() - 0.5) * 100,
+    (Math.random() - 0.5) * 100,
+  );
+});
+
+// Initial output labels for non-slider-bound sliders
+$('haloOpacity').parentElement.querySelector('output').textContent = '1.00';
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  uniforms.uTime.value = clock.getElapsedTime();
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>
