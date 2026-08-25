@@ -31,6 +31,42 @@ controls.dampingFactor = 0.06;
 controls.minDistance = 5;
 controls.maxDistance = 220;
 
+// === Camera position persistence ===
+// Remembers where the user left the camera in *this* system so a reload
+// doesn't snap back to HOME_OFFSET — keyed per system slug since each
+// system's scale is wildly different. The "go home" interaction (see
+// scene-interaction.js's homeOffset) is untouched by this; it always
+// resets to HOME_OFFSET regardless of what's saved here.
+const CAMERA_STORAGE_KEY = `unknown-frontier:camera:${system.slug}`;
+
+function saveCameraState() {
+  try {
+    localStorage.setItem(CAMERA_STORAGE_KEY, JSON.stringify({
+      position: camera.position.toArray(),
+      target: controls.target.toArray(),
+    }));
+  } catch {
+    // Storage unavailable (private browsing, quota, etc.) — not essential.
+  }
+}
+
+function restoreCameraState() {
+  try {
+    const raw = localStorage.getItem(CAMERA_STORAGE_KEY);
+    if (!raw) return;
+    const { position, target } = JSON.parse(raw);
+    camera.position.fromArray(position);
+    controls.target.fromArray(target);
+    controls.update();
+  } catch {
+    // Corrupt/missing saved state — keep the HOME_OFFSET default.
+  }
+}
+restoreCameraState();
+
+controls.addEventListener('end', saveCameraState);
+window.addEventListener('beforeunload', saveCameraState);
+
 // === Starfield ===
 function buildStarfield() {
   const positions = new Float32Array(STARFIELD_COUNT * 3);
