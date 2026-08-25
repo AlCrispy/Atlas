@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { makeGlowTexture, makeDotTexture } from './glow-texture.js';
+import { makeDotTexture } from './glow-texture.js';
 import { STAR_TYPES } from './star-types.js';
 import { PLANET_TYPES } from './planet-types.js';
 import { makePlanetTexture } from './planet-texture.js';
+import { createStarMesh } from './star-shader.js';
 import { buildOrbitRing, buildPlanetRing, buildDysonSphere } from './solar-system-shapes.js';
 import { createSceneInteraction } from './scene-interaction.js';
 import { SOLAR_SYSTEMS } from './solar-system-data.js';
@@ -47,24 +48,6 @@ function buildStarfield() {
   scene.add(new THREE.Points(geometry, material));
 }
 buildStarfield();
-
-function colorToRgba(hex, alpha) {
-  const c = new THREE.Color(hex);
-  return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${alpha})`;
-}
-
-// Stars glow (they emit light — a sprite reads correctly); planets and
-// moons are solid lit spheres so they read as physical bodies rather than
-// balls of light, shaded by the light rig below.
-function makeStarSprite(color) {
-  const texture = makeGlowTexture(colorToRgba(color, 1), colorToRgba(color, 0));
-  return new THREE.Sprite(new THREE.SpriteMaterial({
-    map: texture,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-  }));
-}
 
 const sphereGeometry = new THREE.SphereGeometry(1, 24, 24);
 
@@ -152,11 +135,15 @@ const sunLight = new THREE.DirectionalLight(0xfff2d6, 1.3);
 sunLight.position.set(40, 60, 30);
 scene.add(sunLight);
 
-// A glow sprite's bright core reads much smaller than its nominal scale
-// (the texture fades out toward the edge), while a solid mesh sphere fills
-// its scale edge-to-edge — these compensate so stars still read as the
-// biggest body in the system despite planets switching to solid meshes.
-const STAR_RENDER_SCALE = 1.8;
+// A solid mesh sphere fills its scale edge-to-edge, unlike the old glow
+// sprite whose bright core read much smaller than its nominal scale — no
+// boost needed for a star to still read as the system's biggest body.
+// Kept at 1 (not larger) because a handful of systems have their
+// innermost planet orbiting fairly close in; solar-system-data.js's
+// orbitRadius values already account for this scale (see the collision
+// check note below) — raising this constant can put a planet inside the
+// star without a matching orbitRadius bump.
+const STAR_RENDER_SCALE = 1;
 const PLANET_RENDER_SCALE = 0.55;
 
 // How far a ring's inner edge sits from the planet's visual surface, and
@@ -230,7 +217,7 @@ function registerBody(object, size, data) {
 // affected star's info card can mention the megastructure too.
 const dysonStarSlug = system.slug === 'sistema-solare' ? 'sole' : null;
 const starObjs = system.stars.map((star) => {
-  const sprite = makeStarSprite(star.color);
+  const sprite = createStarMesh(star.color);
   const typeInfo = STAR_TYPES[star.type];
   registerBody(sprite, star.size * STAR_RENDER_SCALE, {
     ...star,
@@ -379,6 +366,10 @@ function animate() {
       sprite.position.set(Math.cos(angle) * data.orbitRadius, 0, Math.sin(angle) * data.orbitRadius);
     });
   }
+  starObjs.forEach(({ sprite }) => {
+    sprite.material.uniforms.uTime.value = elapsed;
+    sprite.rotation.y = elapsed * sprite.userData.spinSpeed;
+  });
 
   planetOrbits.forEach(({ sprite, moonAnchor, data, semiMinor, moonOrbits }) => {
     const angle = elapsed * data.speed + data.phase;
