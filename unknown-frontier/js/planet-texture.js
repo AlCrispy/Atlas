@@ -160,7 +160,11 @@ function paintRegions(ctx, w, h, oceanColor, landColors, seed, { scale = 3, warp
       const t = clamp01((n - threshold) / coastSoftness);
 
       if (t <= 0) {
-        c.setHSL(oceanHsl.h, oceanHsl.s, clamp01(oceanHsl.l - (threshold - n) * 0.35));
+        // Kept gentle on purpose — under the scene's real MeshStandardMaterial
+        // lighting (not a flat 2D preview), an already-dark ocean tone pushed
+        // much darker here reads as near-black against the void and the
+        // planet looks like it has no water at all.
+        c.setHSL(oceanHsl.h, oceanHsl.s, clamp01(oceanHsl.l - (threshold - n) * 0.1));
       } else {
         const landNoise = fbm(nx * 0.7 + 100, ny * 0.7 + 100, 2);
         const landIdx = Math.min(landRgb.length - 1, Math.floor(landNoise * landRgb.length));
@@ -502,7 +506,10 @@ const TYPE_PALETTES = {
   roccioso: { tones: ['#9c8b7a', '#8c7a6b', '#a89685', '#7d6c5c'], paint: paintRocky },
   desertico: { tones: ['#d9a066', '#e0c896', '#c9895a', '#e8d2a0'], paint: paintDesert },
   vulcanico: { tones: ['#3a2c26', '#2b2320', '#4a352c'], paint: paintVolcanic },
-  oceanico: { tones: ['#2b5f8a', '#1c3f66', '#3f6f96'], paint: paintOcean },
+  // Brighter than a "realistic" deep ocean would be — a dark, desaturated
+  // blue reads as near-black once the scene's real lighting hits it (see
+  // paintRegions), so the tone needs headroom to still show as water.
+  oceanico: { tones: ['#4d8fc4', '#3a6f9e', '#68abd6'], paint: paintOcean },
   glaciale: { tones: ['#cdeef2', '#9fb8c4', '#b8e2ea'], paint: paintIcy },
   giungla: { tones: ['#2d5c36', '#3f7d4a', '#4a8f52'], paint: paintJungle },
   tossico: { tones: ['#8fae1f', '#c9d94a', '#6f8a1a'], paint: paintToxic },
