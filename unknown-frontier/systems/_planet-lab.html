@@ -93,7 +93,8 @@
 
   <label>Scala terreno <div class="row"><input type="range" id="protoLandScale" min="1" max="8" step="0.1" value="3"><output></output></div></label>
   <label>Copertura terreno <div class="row"><input type="range" id="protoLandThreshold" min="0.3" max="0.8" step="0.01" value="0.55"><output></output></div></label>
-  <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.3" step="0.005" value="0.04"><output></output></div></label>
+  <label>Nitidezza costa <div class="row"><input type="range" id="protoEdgeSharpness" min="0" max="0.15" step="0.002" value="0.015"><output></output></div></label>
+  <label>Margine oceano ai bordi (anti-giuntura) <div class="row"><input type="range" id="protoSeamMargin" min="0" max="0.25" step="0.005" value="0.12"><output></output></div></label>
   <label>Scala foresta <div class="row"><input type="range" id="protoForestScale" min="2" max="15" step="0.1" value="6"><output></output></div></label>
   <label>Copertura foresta <div class="row"><input type="range" id="protoForestThreshold" min="0.3" max="0.8" step="0.01" value="0.5"><output></output></div></label>
 
@@ -226,9 +227,20 @@ function paintOceanPrototype(ctx, w, h, seed, opts) {
       const u = x / w;
 
       const landN = fbm(u * opts.landScale, v * opts.landScale, 4);
-      const landT = opts.edgeSharpness > 0
+      let landT = opts.edgeSharpness > 0
         ? clamp01((landN - opts.landThreshold) / opts.edgeSharpness)
         : (landN > opts.landThreshold ? 1 : 0);
+
+      // The fbm field isn't periodic in u, so u=0 and u=1 sample unrelated
+      // noise — wrapped onto a sphere that's the equirectangular seam
+      // showing up as a visible hard break in the coastline. Rather than
+      // making the noise itself wrap (a bigger rewrite), guarantee a strip
+      // of pure ocean along both edges so the seam is always ocean-meeting-
+      // ocean, which is seamless because it's a single flat color.
+      if (opts.seamMargin > 0) {
+        const edgeDist = Math.min(u, 1 - u);
+        landT *= clamp01(edgeDist / opts.seamMargin);
+      }
 
       if (landT <= 0) {
         c.copy(oc);
@@ -253,7 +265,7 @@ function paintOceanPrototype(ctx, w, h, seed, opts) {
 }
 
 function makeOceanPrototypeTexture(slug) {
-  const w = 256, h = 128;
+  const w = 512, h = 256;
   const canvas = document.createElement('canvas');
   canvas.width = w;
   canvas.height = h;
@@ -265,6 +277,7 @@ function makeOceanPrototypeTexture(slug) {
     landScale: parseFloat($('protoLandScale').value),
     landThreshold: parseFloat($('protoLandThreshold').value),
     edgeSharpness: parseFloat($('protoEdgeSharpness').value),
+    seamMargin: parseFloat($('protoSeamMargin').value),
     forestScale: parseFloat($('protoForestScale').value),
     forestThreshold: parseFloat($('protoForestThreshold').value),
   });
@@ -315,7 +328,7 @@ $('protoOceanEnabled').addEventListener('change', regenerate);
 $('protoOceanColor').addEventListener('input', regenerate);
 $('protoLandColor').addEventListener('input', regenerate);
 $('protoForestColor').addEventListener('input', regenerate);
-['protoLandScale', 'protoLandThreshold', 'protoEdgeSharpness', 'protoForestScale', 'protoForestThreshold'].forEach((id) => {
+['protoLandScale', 'protoLandThreshold', 'protoEdgeSharpness', 'protoSeamMargin', 'protoForestScale', 'protoForestThreshold'].forEach((id) => {
   $(id).addEventListener('input', (e) => {
     e.target.parentElement.querySelector('output').textContent = e.target.value;
     regenerate();
