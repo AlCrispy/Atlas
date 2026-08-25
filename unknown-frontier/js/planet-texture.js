@@ -104,6 +104,129 @@ function makeNoise2D(seed) {
   return { noise2D, fbm };
 }
 
+// Integer lattice hash for 3D value noise — same murmur-style finalizer as
+// hashLattice above, extended with a third input.
+function hashLattice3(seed, ix, iy, iz) {
+  let h = seed | 0;
+  h ^= Math.imul(ix | 0, 0x27d4eb2f);
+  h ^= Math.imul(iy | 0, 0x165667b1);
+  h ^= Math.imul(iz | 0, 0x9e3779b1);
+  h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
+  h ^= h >>> 13;
+  h = Math.imul(h, 0xc2b2ae35);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967295;
+}
+
+// 3D counterpart to makeNoise2D — paintOceanic below samples it on a
+// cylinder (cos/sin of the equirectangular u coordinate) rather than a
+// flat rectangle so the land field is seamless at u=0/u=1 by construction,
+// instead of needing a margin/fade patch at the wrap seam.
+function makeNoise3D(seed) {
+  function noise3D(x, y, z) {
+    const x0 = Math.floor(x);
+    const y0 = Math.floor(y);
+    const z0 = Math.floor(z);
+    const sx = smootherstep(x - x0);
+    const sy = smootherstep(y - y0);
+    const sz = smootherstep(z - z0);
+    const h = (ix, iy, iz) => hashLattice3(seed, ix, iy, iz);
+    const nx00 = h(x0, y0, z0) + (h(x0 + 1, y0, z0) - h(x0, y0, z0)) * sx;
+    const nx10 = h(x0, y0 + 1, z0) + (h(x0 + 1, y0 + 1, z0) - h(x0, y0 + 1, z0)) * sx;
+    const nx01 = h(x0, y0, z0 + 1) + (h(x0 + 1, y0, z0 + 1) - h(x0, y0, z0 + 1)) * sx;
+    const nx11 = h(x0, y0 + 1, z0 + 1) + (h(x0 + 1, y0 + 1, z0 + 1) - h(x0, y0 + 1, z0 + 1)) * sx;
+    const nxy0 = nx00 + (nx10 - nx00) * sy;
+    const nxy1 = nx01 + (nx11 - nx01) * sy;
+    return nxy0 + (nxy1 - nxy0) * sz;
+  }
+
+  function fbm(x, y, z, octaves = 4, lacunarity = 2, persistence = 0.5) {
+    let amp = 1;
+    let freq = 1;
+    let sum = 0;
+    let norm = 0;
+    for (let o = 0; o < octaves; o++) {
+      sum += noise3D(x * freq, y * freq, z * freq) * amp;
+      norm += amp;
+      amp *= persistence;
+      freq *= lacunarity;
+    }
+    return sum / norm;
+  }
+
+  return { noise3D, fbm };
+}
+
+// A sum of a few integer-frequency sine harmonics over u*2*PI — exactly
+// periodic at u=0/u=1 for any integer frequency, so a jagged coastline
+// built from it wraps perfectly at the seam for free. Used for the polar
+// ice caps' edges below.
+function makeEdgeProfile(random, harmonicCount, amplitude) {
+  const harmonics = [];
+  for (let i = 0; i < harmonicCount; i++) {
+    harmonics.push({
+      freq: 2 + Math.floor(random() * 4),
+      amp: (amplitude * (0.4 + random() * 0.6)) / (i + 1),
+      phase: random() * Math.PI * 2,
+    });
+  }
+  const maxAmp = harmonics.reduce((sum, h) => sum + h.amp, 0);
+  const edgeAt = (u) => harmonics.reduce((sum, h) => sum + Math.sin(h.freq * u * Math.PI * 2 + h.phase) * h.amp, 0);
+  return { edgeAt, maxAmp };
+}
+
+// Same seeded harmonics computed without touching ctx, so the land mask
+// can know each cap's worst-case (max jagged excursion) edge position in
+// px from its pole *before* anything is drawn, and drawPolarCaps below
+// reproduces the identical shape when it actually paints.
+function computeCapMargins(seed, capFraction, jitterFraction, h) {
+  if (capFraction <= 0) return { topMaxPx: 0, botMaxPx: 0 };
+  const baseCapPx = capFraction * h;
+  const jitterPx = jitterFraction * h;
+  const top = makeEdgeProfile(mulberry32(seed ^ 0x51ed270b), 3, jitterPx);
+  const bot = makeEdgeProfile(mulberry32(seed ^ 0x2545f491), 3, jitterPx);
+  return { topMaxPx: baseCapPx + top.maxAmp, botMaxPx: baseCapPx + bot.maxAmp };
+}
+
+// A sphere's equirectangular top/bottom row all maps to a single point
+// (the pole) — whatever's painted there always looks like a messy pinch
+// from any angle. A solid ice cap sidesteps it: a pinch in a flat field is
+// invisible, and it doubles as a normal-looking polar ice cap. Drawn last
+// so it overlays land/forest near the poles too.
+function drawPolarCaps(ctx, w, h, seed, capFraction, jitterFraction, color) {
+  if (capFraction <= 0) return;
+  const baseCapPx = capFraction * h;
+  const jitterPx = jitterFraction * h;
+  const steps = Math.max(32, Math.floor(w / 4));
+
+  const top = makeEdgeProfile(mulberry32(seed ^ 0x51ed270b), 3, jitterPx);
+  const bot = makeEdgeProfile(mulberry32(seed ^ 0x2545f491), 3, jitterPx);
+
+  ctx.fillStyle = color;
+
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(w, 0);
+  for (let i = steps; i >= 0; i--) {
+    const x = (i / steps) * w;
+    const y = Math.max(0, baseCapPx + top.edgeAt(x / w));
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(0, h);
+  ctx.lineTo(w, h);
+  for (let i = steps; i >= 0; i--) {
+    const x = (i / steps) * w;
+    const y = Math.min(h, h - baseCapPx + bot.edgeAt(x / w));
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
 // Fills the whole canvas from a warped fbm field, varying lightness (and
 // optionally hue) around `base` — the shared "organic mottling" layer used
 // by every terrain type that isn't discrete land/ocean regions.
@@ -127,54 +250,6 @@ function paintMottled(ctx, w, h, base, seed, { scale = 5, octaves = 4, variance 
       const l = clamp01(baseHsl.l + n * variance);
       const hue = ((baseHsl.h + n * hueVariance) % 1 + 1) % 1;
       c.setHSL(hue, baseHsl.s, l);
-      const idx = (y * w + x) * 4;
-      img.data[idx] = c.r * 255;
-      img.data[idx + 1] = c.g * 255;
-      img.data[idx + 2] = c.b * 255;
-      img.data[idx + 3] = 255;
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-}
-
-// Discrete land/ocean regions from a thresholded, domain-warped fbm field
-// — organic coastlines instead of overlapping ellipse "continents". Land
-// pixels pick one of `landColors` via a second, lower-frequency noise
-// sample so neighbouring landmasses can differ in color like biomes.
-function paintRegions(ctx, w, h, oceanColor, landColors, seed, { scale = 3, warp = 1.1, threshold = 0.55, coastSoftness = 0.05 } = {}) {
-  const { fbm } = makeNoise2D(seed);
-  const landRgb = landColors.map((hex) => new THREE.Color(hex));
-  const oceanHsl = { h: 0, s: 0, l: 0 };
-  oceanColor.getHSL(oceanHsl);
-  const img = ctx.createImageData(w, h);
-  const c = new THREE.Color();
-  for (let y = 0; y < h; y++) {
-    const v = y / h;
-    for (let x = 0; x < w; x++) {
-      const u = x / w;
-      let nx = u * scale;
-      let ny = v * scale;
-      nx += (fbm(nx + 12.3, ny + 44.1, 3) - 0.5) * warp;
-      ny += (fbm(nx - 8.7, ny - 21.9, 3) - 0.5) * warp;
-      const n = fbm(nx, ny, 5);
-      const t = clamp01((n - threshold) / coastSoftness);
-
-      if (t <= 0) {
-        // Kept gentle on purpose — under the scene's real MeshStandardMaterial
-        // lighting (not a flat 2D preview), an already-dark ocean tone pushed
-        // much darker here reads as near-black against the void and the
-        // planet looks like it has no water at all.
-        c.setHSL(oceanHsl.h, oceanHsl.s, clamp01(oceanHsl.l - (threshold - n) * 0.1));
-      } else {
-        const landNoise = fbm(nx * 0.7 + 100, ny * 0.7 + 100, 2);
-        const landIdx = Math.min(landRgb.length - 1, Math.floor(landNoise * landRgb.length));
-        if (t >= 1) {
-          c.copy(landRgb[landIdx]);
-        } else {
-          c.setHSL(oceanHsl.h, oceanHsl.s, oceanHsl.l).lerp(landRgb[landIdx], t);
-        }
-      }
-
       const idx = (y * w + x) * 4;
       img.data[idx] = c.r * 255;
       img.data[idx + 1] = c.g * 255;
@@ -344,24 +419,82 @@ function paintVolcanic(ctx, w, h, base, random, seed) {
   ctx.globalAlpha = 1;
 }
 
-// Earth-like: blue ocean base, green/brown continents, thin white cloud
-// wisps drifting over the top.
-function paintOcean(ctx, w, h, base, random, seed) {
-  const landColors = ['#4a7c3f', '#3f6b36', '#7a5a3a', '#8f6a45', '#5c9450', '#c9a35a'];
-  paintRegions(ctx, w, h, base, landColors, seed, { scale: 2.6, warp: 1.3, threshold: 0.52, coastSoftness: 0.06 });
+// Flat-color ocean/land/forest with a hard (unblurred) coastline, plus
+// jagged polar ice caps — replaces the earlier fbm-shaded paintOcean/
+// paintRegions after feedback that version read as too smeared/grainy.
+// Tuned live in unknown-frontier/systems/_planet-lab.html (kept in the
+// repo for any future revisit); this ports the locked-in look. Colors and
+// the noise/threshold shape are randomized per slug (within ranges tuned
+// in that lab) so oceanic worlds don't all share one palette, narrowed
+// from the lab's full slider ranges to keep every roll reading as an
+// ocean-dominant world rather than occasionally flipping to mostly-land.
+function randomHueColor(random, hueMin, hueMax, satRange, lightRange) {
+  const hue = (hueMin + random() * (hueMax - hueMin)) / 360;
+  const sat = satRange[0] + random() * (satRange[1] - satRange[0]);
+  const light = lightRange[0] + random() * (lightRange[1] - lightRange[0]);
+  return new THREE.Color().setHSL(hue, sat, light);
+}
 
-  ctx.fillStyle = '#f4f8fb';
-  const cloudCount = 6 + Math.floor(random() * 6);
-  for (let i = 0; i < cloudCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 3 + random() * (w * 0.05);
-    ctx.globalAlpha = 0.15 + random() * 0.15;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * 0.35, random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
+function paintOceanic(ctx, w, h, base, random, seed) {
+  const oceanColor = randomHueColor(random, 185, 225, [0.45, 0.75], [0.35, 0.55]);
+  const landColor = randomHueColor(random, 25, 95, [0.3, 0.65], [0.4, 0.62]);
+  const forestColor = randomHueColor(random, 95, 150, [0.3, 0.6], [0.22, 0.4]);
+
+  const landScale = 1.5 + random() * 5;
+  const landThreshold = 0.45 + random() * 0.17;
+  const forestScale = 3 + random() * 10;
+  const forestThreshold = 0.4 + random() * 0.2;
+  const polarCap = 0.05 + random() * 0.04;
+  const polarJitter = 0.02 + random() * 0.025;
+  const polarWater = 0.04 + random() * 0.04;
+
+  const { fbm } = makeNoise3D(seed);
+  const oc = oceanColor;
+  const lc = landColor;
+  const fc = forestColor;
+  const img = ctx.createImageData(w, h);
+  const c = new THREE.Color();
+
+  const capMargins = computeCapMargins(seed, polarCap, polarJitter, h);
+  const waterPx = polarWater * h;
+  const topSafePx = capMargins.topMaxPx + waterPx;
+  const botSafePx = h - capMargins.botMaxPx - waterPx;
+
+  // Sampled on a circle (cos/sin of u*2*PI) rather than a flat u/v
+  // rectangle — cos/sin are exactly periodic, so u=0 and u=1 land on the
+  // *same* point on that circle and the coastline is seamless by
+  // construction. No margin/fade patch needed at the wrap seam.
+  const landRing = landScale / (Math.PI * 2);
+  const forestRing = forestScale / (Math.PI * 2);
+
+  for (let y = 0; y < h; y++) {
+    const v = y / h;
+    for (let x = 0; x < w; x++) {
+      const u = x / w;
+      const angle = u * Math.PI * 2;
+
+      const landN = fbm(Math.cos(angle) * landRing, Math.sin(angle) * landRing, v * landScale, 4);
+      let landT = landN > landThreshold ? 1 : 0;
+
+      if (y < topSafePx || y > botSafePx) landT = 0;
+
+      if (landT <= 0) {
+        c.copy(oc);
+      } else {
+        const forestN = fbm(Math.cos(angle) * forestRing + 50, Math.sin(angle) * forestRing + 50, v * forestScale, 3);
+        const forestT = forestN > forestThreshold ? 1 : 0;
+        c.copy(forestT > 0 ? fc : lc);
+      }
+
+      const idx = (y * w + x) * 4;
+      img.data[idx] = c.r * 255;
+      img.data[idx + 1] = c.g * 255;
+      img.data[idx + 2] = c.b * 255;
+      img.data[idx + 3] = 255;
+    }
   }
-  ctx.globalAlpha = 1;
+  ctx.putImageData(img, 0, 0);
+  drawPolarCaps(ctx, w, h, seed, polarCap, polarJitter, '#dfe6e6');
 }
 
 // Dense green canopy with darker mottling and the occasional brown
@@ -506,10 +639,11 @@ const TYPE_PALETTES = {
   roccioso: { tones: ['#9c8b7a', '#8c7a6b', '#a89685', '#7d6c5c'], paint: paintRocky },
   desertico: { tones: ['#d9a066', '#e0c896', '#c9895a', '#e8d2a0'], paint: paintDesert },
   vulcanico: { tones: ['#3a2c26', '#2b2320', '#4a352c'], paint: paintVolcanic },
-  // Brighter than a "realistic" deep ocean would be — a dark, desaturated
-  // blue reads as near-black once the scene's real lighting hits it (see
-  // paintRegions), so the tone needs headroom to still show as water.
-  oceanico: { tones: ['#4d8fc4', '#3a6f9e', '#68abd6'], paint: paintOcean },
+  // paintOceanic ignores this tone entirely and generates its own
+  // randomized ocean/land/forest palette per slug — kept as a one-entry
+  // array only so the shared dispatch below (which always picks a tone
+  // before calling paint) has something harmless to pick.
+  oceanico: { tones: ['#4d8fc4'], paint: paintOceanic },
   glaciale: { tones: ['#cdeef2', '#9fb8c4', '#b8e2ea'], paint: paintIcy },
   giungla: { tones: ['#2d5c36', '#3f7d4a', '#4a8f52'], paint: paintJungle },
   tossico: { tones: ['#8fae1f', '#c9d94a', '#6f8a1a'], paint: paintToxic },
