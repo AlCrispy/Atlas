@@ -6,6 +6,14 @@ import * as THREE from 'three';
 // spec's "medium complexity, mobile-safe" constraint); the sphere's
 // default UVs are equirectangular, so a plain rectangular canvas wraps
 // cleanly around it.
+//
+// Big-shape layers (continents, rock mottling, cloud bands) come from a
+// seeded 2D value-noise fbm rather than scattered ellipses — reads as
+// organic terrain instead of a field of blobs. A final low-alpha "grain"
+// pass, tiled from a random crop of one of the real Sol-system photos in
+// resources/planet-textures/, adds photographic micro-detail on top —
+// only a small desaturated/contrast-boosted tile is used, never the whole
+// photo, so no planet ends up visibly wearing Mars's continents.
 
 function hashString(str) {
   let h = 2166136261;
@@ -35,6 +43,197 @@ function shade(base, amount) {
   return `#${c.getHexString()}`;
 }
 
+function clamp01(v) {
+  return Math.min(1, Math.max(0, v));
+}
+
+function clamp255(v) {
+  return Math.min(255, Math.max(0, v));
+}
+
+// Integer lattice hash (murmur-style finalizer) — gives a stable,
+// well-distributed value in [0,1] for any (seed, ix, iy), which is all a
+// value-noise grid needs.
+function hashLattice(seed, ix, iy) {
+  let h = seed | 0;
+  h ^= Math.imul(ix | 0, 0x27d4eb2f);
+  h ^= Math.imul(iy | 0, 0x165667b1);
+  h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
+  h ^= h >>> 13;
+  h = Math.imul(h, 0xc2b2ae35);
+  h ^= h >>> 16;
+  return (h >>> 0) / 4294967295;
+}
+
+function smootherstep(t) {
+  return t * t * (3 - 2 * t);
+}
+
+// Seeded 2D value noise plus fbm (fractal sum of octaves). `fbm` returns a
+// value roughly in [0,1] — callers center it themselves (`fbm(...) - 0.5`)
+// when they need a signed offset.
+function makeNoise2D(seed) {
+  function noise2D(x, y) {
+    const x0 = Math.floor(x);
+    const y0 = Math.floor(y);
+    const sx = smootherstep(x - x0);
+    const sy = smootherstep(y - y0);
+    const n00 = hashLattice(seed, x0, y0);
+    const n10 = hashLattice(seed, x0 + 1, y0);
+    const n01 = hashLattice(seed, x0, y0 + 1);
+    const n11 = hashLattice(seed, x0 + 1, y0 + 1);
+    const ix0 = n00 + (n10 - n00) * sx;
+    const ix1 = n01 + (n11 - n01) * sx;
+    return ix0 + (ix1 - ix0) * sy;
+  }
+
+  function fbm(x, y, octaves = 4, lacunarity = 2, persistence = 0.5) {
+    let amp = 1;
+    let freq = 1;
+    let sum = 0;
+    let norm = 0;
+    for (let o = 0; o < octaves; o++) {
+      sum += noise2D(x * freq, y * freq) * amp;
+      norm += amp;
+      amp *= persistence;
+      freq *= lacunarity;
+    }
+    return sum / norm;
+  }
+
+  return { noise2D, fbm };
+}
+
+// Fills the whole canvas from a warped fbm field, varying lightness (and
+// optionally hue) around `base` — the shared "organic mottling" layer used
+// by every terrain type that isn't discrete land/ocean regions.
+function paintMottled(ctx, w, h, base, seed, { scale = 5, octaves = 4, variance = 0.06, hueVariance = 0, warp = 0 } = {}) {
+  const { fbm } = makeNoise2D(seed);
+  const baseHsl = { h: 0, s: 0, l: 0 };
+  base.getHSL(baseHsl);
+  const img = ctx.createImageData(w, h);
+  const c = new THREE.Color();
+  for (let y = 0; y < h; y++) {
+    const v = y / h;
+    for (let x = 0; x < w; x++) {
+      const u = x / w;
+      let nx = u * scale;
+      let ny = v * scale;
+      if (warp) {
+        nx += (fbm(nx + 31.4, ny + 7.1, 2) - 0.5) * warp;
+        ny += (fbm(nx - 17.2, ny - 91.7, 2) - 0.5) * warp;
+      }
+      const n = fbm(nx, ny, octaves) - 0.5;
+      const l = clamp01(baseHsl.l + n * variance);
+      const hue = ((baseHsl.h + n * hueVariance) % 1 + 1) % 1;
+      c.setHSL(hue, baseHsl.s, l);
+      const idx = (y * w + x) * 4;
+      img.data[idx] = c.r * 255;
+      img.data[idx + 1] = c.g * 255;
+      img.data[idx + 2] = c.b * 255;
+      img.data[idx + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// Discrete land/ocean regions from a thresholded, domain-warped fbm field
+// — organic coastlines instead of overlapping ellipse "continents". Land
+// pixels pick one of `landColors` via a second, lower-frequency noise
+// sample so neighbouring landmasses can differ in color like biomes.
+function paintRegions(ctx, w, h, oceanColor, landColors, seed, { scale = 3, warp = 1.1, threshold = 0.55, coastSoftness = 0.05 } = {}) {
+  const { fbm } = makeNoise2D(seed);
+  const landRgb = landColors.map((hex) => new THREE.Color(hex));
+  const oceanHsl = { h: 0, s: 0, l: 0 };
+  oceanColor.getHSL(oceanHsl);
+  const img = ctx.createImageData(w, h);
+  const c = new THREE.Color();
+  for (let y = 0; y < h; y++) {
+    const v = y / h;
+    for (let x = 0; x < w; x++) {
+      const u = x / w;
+      let nx = u * scale;
+      let ny = v * scale;
+      nx += (fbm(nx + 12.3, ny + 44.1, 3) - 0.5) * warp;
+      ny += (fbm(nx - 8.7, ny - 21.9, 3) - 0.5) * warp;
+      const n = fbm(nx, ny, 5);
+      const t = clamp01((n - threshold) / coastSoftness);
+
+      if (t <= 0) {
+        c.setHSL(oceanHsl.h, oceanHsl.s, clamp01(oceanHsl.l - (threshold - n) * 0.35));
+      } else {
+        const landNoise = fbm(nx * 0.7 + 100, ny * 0.7 + 100, 2);
+        const landIdx = Math.min(landRgb.length - 1, Math.floor(landNoise * landRgb.length));
+        if (t >= 1) {
+          c.copy(landRgb[landIdx]);
+        } else {
+          c.setHSL(oceanHsl.h, oceanHsl.s, oceanHsl.l).lerp(landRgb[landIdx], t);
+        }
+      }
+
+      const idx = (y * w + x) * 4;
+      img.data[idx] = c.r * 255;
+      img.data[idx + 1] = c.g * 255;
+      img.data[idx + 2] = c.b * 255;
+      img.data[idx + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+// Turbulent horizontal bands for gas/ice giants — a per-pixel domain warp
+// bends each row's band boundary instead of drawing flat rectangles, which
+// is what turns straight stripes into Jupiter-style turbulence.
+function paintBandedGiant(ctx, w, h, base, random, seed, {
+  bandCountRange = [8, 14],
+  variance = 0.22,
+  warpAmount = 5,
+  stormCount = [1, 3],
+  stormVariance = 0.3,
+} = {}) {
+  const { fbm } = makeNoise2D(seed);
+  const bandCount = bandCountRange[0] + Math.floor(random() * (bandCountRange[1] - bandCountRange[0] + 1));
+  const baseHsl = { h: 0, s: 0, l: 0 };
+  base.getHSL(baseHsl);
+
+  const bandLightness = [];
+  for (let i = 0; i < bandCount; i++) {
+    bandLightness.push(clamp01(baseHsl.l + (random() - 0.5) * variance));
+  }
+
+  const img = ctx.createImageData(w, h);
+  const c = new THREE.Color();
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const u = x / w;
+      const warp = (fbm(u * 5, y * 0.06, 4) - 0.5) * warpAmount;
+      const warpedY = y + warp;
+      const bandIdx = ((Math.floor((warpedY / h) * bandCount) % bandCount) + bandCount) % bandCount;
+      const detail = (fbm(u * 10 + 30, y * 0.1 + 30, 3) - 0.5) * 0.03;
+      c.setHSL(baseHsl.h, baseHsl.s, clamp01(bandLightness[bandIdx] + detail));
+      const idx = (y * w + x) * 4;
+      img.data[idx] = c.r * 255;
+      img.data[idx + 1] = c.g * 255;
+      img.data[idx + 2] = c.b * 255;
+      img.data[idx + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+
+  const storms = stormCount[0] + Math.floor(random() * (stormCount[1] - stormCount[0] + 1));
+  for (let i = 0; i < storms; i++) {
+    const x = random() * w;
+    const sy = random() * h;
+    const r = w * (0.03 + random() * 0.05);
+    ctx.fillStyle = shade(base, (random() - 0.5) * stormVariance);
+    ctx.globalAlpha = 0.5 + random() * 0.2;
+    ctx.beginPath();
+    ctx.ellipse(x, sy, r, r * 0.55, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
 // Fallback for bodies with no declared `type` (moons): gas giants skew
 // toward larger bodies, everything else splits between rocky and icy by
 // chance alone.
@@ -47,23 +246,10 @@ function pickSurfaceType(random, size) {
 
 // Kept close to a single flat tone on purpose — a real airless rock body
 // reads as "one uniform earthy color", not a patchwork.
-function paintRocky(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, -0.03);
-  ctx.fillRect(0, 0, w, h);
+function paintRocky(ctx, w, h, base, random, seed) {
+  paintMottled(ctx, w, h, base, seed, { scale: 5, octaves: 4, variance: 0.05 });
 
-  const blotchCount = 15 + Math.floor(random() * 15);
-  for (let i = 0; i < blotchCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 3 + random() * (w * 0.05);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.08);
-    ctx.globalAlpha = 0.35 + random() * 0.2;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * (0.6 + random() * 0.5), random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  const craterCount = 6 + Math.floor(random() * 8);
+  const craterCount = 10 + Math.floor(random() * 14);
   for (let i = 0; i < craterCount; i++) {
     const x = random() * w;
     const y = random() * h;
@@ -125,22 +311,8 @@ function paintDesert(ctx, w, h, base, random) {
 }
 
 // Dark basalt crust split by branching cracks of glowing lava.
-function paintVolcanic(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, -0.05);
-  ctx.fillRect(0, 0, w, h);
-
-  const patchCount = 20 + Math.floor(random() * 15);
-  for (let i = 0; i < patchCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 2 + random() * (w * 0.04);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.1);
-    ctx.globalAlpha = 0.4 + random() * 0.2;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * (0.6 + random() * 0.4), random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+function paintVolcanic(ctx, w, h, base, random, seed) {
+  paintMottled(ctx, w, h, base, seed, { scale: 6, octaves: 4, variance: 0.05, warp: 0.3 });
 
   const lavaColors = ['#ff6a2b', '#ff9d3f', '#ffce6b'];
   const veinCount = 5 + Math.floor(random() * 5);
@@ -170,28 +342,9 @@ function paintVolcanic(ctx, w, h, base, random) {
 
 // Earth-like: blue ocean base, green/brown continents, thin white cloud
 // wisps drifting over the top.
-function paintOcean(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, 0);
-  ctx.fillRect(0, 0, w, h);
-
+function paintOcean(ctx, w, h, base, random, seed) {
   const landColors = ['#4a7c3f', '#3f6b36', '#7a5a3a', '#8f6a45', '#5c9450', '#c9a35a'];
-  const continentCount = 8 + Math.floor(random() * 6);
-  for (let i = 0; i < continentCount; i++) {
-    const cx = random() * w;
-    const cy = random() * h;
-    ctx.globalAlpha = 0.8;
-    const blobCount = 4 + Math.floor(random() * 5);
-    for (let b = 0; b < blobCount; b++) {
-      const x = cx + (random() - 0.5) * w * 0.18;
-      const y = cy + (random() - 0.5) * h * 0.18;
-      const r = 2 + random() * (w * 0.045);
-      ctx.fillStyle = landColors[Math.floor(random() * landColors.length)];
-      ctx.beginPath();
-      ctx.ellipse(x, y, r, r * (0.6 + random() * 0.4), random() * Math.PI, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-  ctx.globalAlpha = 1;
+  paintRegions(ctx, w, h, base, landColors, seed, { scale: 2.6, warp: 1.3, threshold: 0.52, coastSoftness: 0.06 });
 
   ctx.fillStyle = '#f4f8fb';
   const cloudCount = 6 + Math.floor(random() * 6);
@@ -209,22 +362,8 @@ function paintOcean(ctx, w, h, base, random) {
 
 // Dense green canopy with darker mottling and the occasional brown
 // clearing; cloud wisps like the ocean world but sparser.
-function paintJungle(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, 0.02);
-  ctx.fillRect(0, 0, w, h);
-
-  const canopyCount = 45 + Math.floor(random() * 25);
-  for (let i = 0; i < canopyCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 2 + random() * (w * 0.03);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.2);
-    ctx.globalAlpha = 0.45 + random() * 0.25;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * (0.6 + random() * 0.5), random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+function paintJungle(ctx, w, h, base, random, seed) {
+  paintMottled(ctx, w, h, base, seed, { scale: 7, octaves: 4, variance: 0.12, warp: 0.4 });
 
   const clearingCount = 2 + Math.floor(random() * 3);
   for (let i = 0; i < clearingCount; i++) {
@@ -255,22 +394,8 @@ function paintJungle(ctx, w, h, base, random) {
 
 // Sickly yellow-green turbulence — like a gas band pattern but chaotic and
 // blotchy rather than clean, evoking a corrosive atmosphere.
-function paintToxic(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, -0.02);
-  ctx.fillRect(0, 0, w, h);
-
-  const swirlCount = 10 + Math.floor(random() * 10);
-  for (let i = 0; i < swirlCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 3 + random() * (w * 0.07);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.3);
-    ctx.globalAlpha = 0.35 + random() * 0.25;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * (0.3 + random() * 0.4), random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+function paintToxic(ctx, w, h, base, random, seed) {
+  paintMottled(ctx, w, h, base, seed, { scale: 4, octaves: 5, variance: 0.18, hueVariance: 0.04, warp: 0.8 });
 
   ctx.strokeStyle = shade(base, -0.25);
   ctx.lineWidth = 1;
@@ -318,69 +443,28 @@ function paintExotic(ctx, w, h, base, random) {
 
 // Ice-giant bands: fewer, softer, and cooler than a gas giant's — Uranus
 // and Neptune read almost flat next to Jupiter's storms.
-function paintIceGiant(ctx, w, h, base, random) {
-  const bandCount = 4 + Math.floor(random() * 3);
-  let y = 0;
-  while (y < h) {
-    const bandHeight = (h / bandCount) * (0.7 + random() * 0.6);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.1);
-    ctx.fillRect(0, y, w, bandHeight);
-    y += bandHeight;
-  }
-
-  if (random() < 0.5) {
-    const x = random() * w;
-    const sy = random() * h;
-    const r = w * (0.03 + random() * 0.03);
-    ctx.fillStyle = shade(base, -0.15);
-    ctx.globalAlpha = 0.4;
-    ctx.beginPath();
-    ctx.ellipse(x, sy, r, r * 0.6, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
+function paintIceGiant(ctx, w, h, base, random, seed) {
+  paintBandedGiant(ctx, w, h, base, random, seed, {
+    bandCountRange: [4, 7],
+    variance: 0.12,
+    warpAmount: 3,
+    stormCount: [0, 1],
+    stormVariance: 0.15,
+  });
 }
 
-function paintGasGiant(ctx, w, h, base, random) {
-  const bandCount = 8 + Math.floor(random() * 6);
-  let y = 0;
-  while (y < h) {
-    const bandHeight = (h / bandCount) * (0.6 + random() * 0.8);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.22);
-    ctx.fillRect(0, y, w, bandHeight);
-    y += bandHeight;
-  }
-
-  const swirlCount = 1 + Math.floor(random() * 3);
-  for (let i = 0; i < swirlCount; i++) {
-    const x = random() * w;
-    const sy = random() * h;
-    const r = w * (0.04 + random() * 0.05);
-    ctx.fillStyle = shade(base, (random() - 0.5) * 0.3);
-    ctx.globalAlpha = 0.55;
-    ctx.beginPath();
-    ctx.ellipse(x, sy, r, r * 0.55, 0, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+function paintGasGiant(ctx, w, h, base, random, seed) {
+  paintBandedGiant(ctx, w, h, base, random, seed, {
+    bandCountRange: [8, 14],
+    variance: 0.24,
+    warpAmount: 5,
+    stormCount: [1, 3],
+    stormVariance: 0.3,
+  });
 }
 
-function paintIcy(ctx, w, h, base, random) {
-  ctx.fillStyle = shade(base, 0.04);
-  ctx.fillRect(0, 0, w, h);
-
-  const patchCount = 25 + Math.floor(random() * 20);
-  for (let i = 0; i < patchCount; i++) {
-    const x = random() * w;
-    const y = random() * h;
-    const r = 3 + random() * (w * 0.05);
-    ctx.fillStyle = shade(base, (random() - 0.3) * 0.2);
-    ctx.globalAlpha = 0.4 + random() * 0.3;
-    ctx.beginPath();
-    ctx.ellipse(x, y, r, r * (0.4 + random() * 0.6), random() * Math.PI, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+function paintIcy(ctx, w, h, base, random, seed) {
+  paintMottled(ctx, w, h, base, seed, { scale: 5, octaves: 4, variance: 0.09, warp: 0.5 });
 
   ctx.strokeStyle = shade(base, 0.12);
   ctx.lineWidth = 1;
@@ -427,31 +511,93 @@ const TYPE_PALETTES = {
   gh: { tones: ['#4d7ea8', '#7fd1d9', '#3f5fb0', '#9fb8c4'], paint: paintIceGiant },
 };
 
+// Real Sol-system photos (same files solar-system.js loads directly for
+// mercurio/venere/terra/marte/giove/saturno/urano/nettuno) reused here only
+// as a source of fine grain — a small random crop, desaturated and
+// contrast-boosted, tiled over the finished planet at low opacity. Never
+// the whole photo, so the recognizable macro shapes (Mars's continents,
+// Jupiter's bands) never show through on an unrelated world.
+const GRAIN_SOURCES = [
+  '../resources/planet-textures/mercurymap.jpg',
+  '../resources/planet-textures/venusmap.jpg',
+  '../resources/planet-textures/marsmap1k.jpg',
+  '../resources/planet-textures/jupitermap.jpg',
+  '../resources/planet-textures/saturnmap.jpg',
+  '../resources/planet-textures/uranusmap.jpg',
+  '../resources/planet-textures/neptunemap.jpg',
+  '../resources/planet-textures/earth_atmos_2048.jpg',
+];
+
+// Preloaded eagerly at module load so the images are usually already
+// decoded by the time the first texture is painted; a planet built before
+// its chosen source finishes loading just skips the grain pass (it's a
+// subtle finishing touch, not load-bearing for the type's look).
+const grainImages = GRAIN_SOURCES.map((src) => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
+
+const GRAIN_TILE_SIZE = 48;
+
+function applyGrain(ctx, w, h, slug) {
+  const img = grainImages[hashString(`${slug}:grain`) % grainImages.length];
+  if (!img.complete || !img.naturalWidth) return;
+
+  const sx = hashString(`${slug}:grain-x`) % Math.max(1, img.naturalWidth - GRAIN_TILE_SIZE);
+  const sy = hashString(`${slug}:grain-y`) % Math.max(1, img.naturalHeight - GRAIN_TILE_SIZE);
+
+  const tileCanvas = document.createElement('canvas');
+  tileCanvas.width = GRAIN_TILE_SIZE;
+  tileCanvas.height = GRAIN_TILE_SIZE;
+  const tileCtx = tileCanvas.getContext('2d');
+  tileCtx.drawImage(img, sx, sy, GRAIN_TILE_SIZE, GRAIN_TILE_SIZE, 0, 0, GRAIN_TILE_SIZE, GRAIN_TILE_SIZE);
+
+  const tileData = tileCtx.getImageData(0, 0, GRAIN_TILE_SIZE, GRAIN_TILE_SIZE);
+  const d = tileData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const luma = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    const contrasted = clamp255((luma - 128) * 1.4 + 128);
+    d[i] = d[i + 1] = d[i + 2] = contrasted;
+  }
+  tileCtx.putImageData(tileData, 0, 0);
+
+  ctx.save();
+  ctx.globalAlpha = 0.16;
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.fillStyle = ctx.createPattern(tileCanvas, 'repeat');
+  ctx.fillRect(0, 0, w, h);
+  ctx.restore();
+}
+
 // `hexColor` is the fallback identity color for bodies with no declared
 // `type` (moons); `slug` seeds the deterministic layout; `size` nudges the
 // legacy fallback toward the banded gas-giant look; `type` selects the
 // realistic palette above when present.
 export function makePlanetTexture(hexColor, slug, size, type) {
-  const w = 128;
-  const h = 64;
+  const w = 256;
+  const h = 128;
   const canvas = document.createElement('canvas');
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext('2d');
 
-  const random = mulberry32(hashString(slug));
+  const seed = hashString(slug);
+  const random = mulberry32(seed);
   const classification = TYPE_PALETTES[type];
 
   if (classification) {
     const tone = classification.tones[Math.floor(random() * classification.tones.length)];
-    classification.paint(ctx, w, h, new THREE.Color(tone), random);
+    classification.paint(ctx, w, h, new THREE.Color(tone), random, seed);
   } else {
     const base = new THREE.Color(hexColor);
     const surfaceType = pickSurfaceType(random, size);
-    if (surfaceType === 'gas') paintGasGiant(ctx, w, h, base, random);
-    else if (surfaceType === 'icy') paintIcy(ctx, w, h, base, random);
-    else paintRocky(ctx, w, h, base, random);
+    if (surfaceType === 'gas') paintGasGiant(ctx, w, h, base, random, seed);
+    else if (surfaceType === 'icy') paintIcy(ctx, w, h, base, random, seed);
+    else paintRocky(ctx, w, h, base, random, seed);
   }
+
+  applyGrain(ctx, w, h, slug);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
