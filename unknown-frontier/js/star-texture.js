@@ -21,24 +21,16 @@ const sunImage = new Image();
 sunImage.src = '../resources/star-textures/sun_sdo_aia.jpg';
 const SUN_SAFE_RECT = { x: 500, y: 450, w: 350, h: 300 };
 
-// Dark convection lanes, a hot mid tone, and near-white cell centers — the
-// same "cascading mix" trick as the black hole shader's fire palette,
-// driven by fbm instead of radial heat. The mid tone is pulled warmer and
-// more saturated than the type's flat catalog color (e.g. G-type "Gialla"
-// #ffd23f) — a real photosphere reads as vivid orange/red plasma, not a
-// pastel swatch, and bands are kept narrow (sharp `n` cutoffs below) so
-// the pattern survives being shrunk to a small on-screen sphere instead of
-// blurring into a flat tint.
-function paintGranulation(ctx, w, h, base, seed, { scale = 6, octaves = 5, warp = 1.6 } = {}) {
+// Dark convection lanes, a mid tone at the star's nominal color, and
+// bright cell centers — the same "cascading mix" trick as the black hole
+// shader's fire palette, driven by fbm instead of radial heat.
+function paintGranulation(ctx, w, h, base, seed, { scale = 10, octaves = 5, warp = 1.2 } = {}) {
   const { fbm } = makeNoise2D(seed);
   const baseHsl = { h: 0, s: 0, l: 0 };
   base.getHSL(baseHsl);
 
-  const hotHue = ((baseHsl.h - 0.045) % 1 + 1) % 1;
-  const hotSat = Math.min(1, baseHsl.s * 1.2 + 0.15);
-  const mid = new THREE.Color().setHSL(hotHue, hotSat, clamp01(baseHsl.l * 0.72));
-  const dark = new THREE.Color().setHSL(hotHue, hotSat, clamp01(baseHsl.l * 0.22));
-  const bright = new THREE.Color().setHSL(hotHue, hotSat * 0.4, clamp01(baseHsl.l * 1.5 + 0.35));
+  const dark = new THREE.Color().setHSL(baseHsl.h, Math.min(1, baseHsl.s * 1.1), clamp01(baseHsl.l * 0.45));
+  const bright = new THREE.Color().setHSL(baseHsl.h, baseHsl.s * 0.35, clamp01(baseHsl.l * 1.25 + 0.25));
 
   const img = ctx.createImageData(w, h);
   const c = new THREE.Color();
@@ -52,8 +44,8 @@ function paintGranulation(ctx, w, h, base, seed, { scale = 6, octaves = 5, warp 
       ny += (fbm(nx - 33.1, ny - 8.4, 3) - 0.5) * warp;
       const n = fbm(nx, ny, octaves);
 
-      c.copy(dark).lerp(mid, clamp01((n - 0.1) / 0.35));
-      if (n > 0.62) c.lerp(bright, clamp01((n - 0.62) / 0.22));
+      c.copy(dark).lerp(base, clamp01(n / 0.55));
+      if (n > 0.72) c.lerp(bright, clamp01((n - 0.72) / 0.28));
 
       const idx = (y * w + x) * 4;
       img.data[idx] = c.r * 255;
@@ -76,8 +68,8 @@ function paintActiveRegions(ctx, w, h, random) {
     const y = random() * h;
     const r = w * (0.05 + random() * 0.05);
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
-    gradient.addColorStop(0, 'rgba(255,255,255,0.9)');
-    gradient.addColorStop(0.5, 'rgba(255,255,255,0.45)');
+    gradient.addColorStop(0, 'rgba(255,255,255,0.55)');
+    gradient.addColorStop(0.5, 'rgba(255,255,255,0.22)');
     gradient.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = gradient;
     ctx.beginPath();
@@ -103,7 +95,7 @@ export function makeStarTexture(type, slug) {
 
   paintGranulation(ctx, w, h, base, seed);
   paintActiveRegions(ctx, w, h, random);
-  applyPhotoGrain(ctx, w, h, sunImage, slug, { tileSize: 40, alpha: 0.32, contrast: 2, safeRect: SUN_SAFE_RECT });
+  applyPhotoGrain(ctx, w, h, sunImage, slug, { tileSize: 40, alpha: 0.22, safeRect: SUN_SAFE_RECT });
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;

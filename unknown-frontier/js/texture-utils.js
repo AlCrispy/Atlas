@@ -104,7 +104,7 @@ export function makeNoise2D(seed) {
 // restricts sampling to a sub-region of the source image (e.g. to avoid a
 // photo's background or a bright feature that would read as a repeating
 // artifact if tiled) — omit it to sample the whole image.
-export function applyPhotoGrain(ctx, w, h, img, seedStr, { tileSize = 48, alpha = 0.16, contrast = 1.4, safeRect } = {}) {
+export function applyPhotoGrain(ctx, w, h, img, seedStr, { tileSize = 48, alpha = 0.16, safeRect } = {}) {
   if (!img.complete || !img.naturalWidth) return;
 
   const rect = safeRect || { x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight };
@@ -123,7 +123,7 @@ export function applyPhotoGrain(ctx, w, h, img, seedStr, { tileSize = 48, alpha 
   const d = tileData.data;
   for (let i = 0; i < d.length; i += 4) {
     const luma = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-    const contrasted = clamp255((luma - 128) * contrast + 128);
+    const contrasted = clamp255((luma - 128) * 1.4 + 128);
     d[i] = d[i + 1] = d[i + 2] = contrasted;
   }
   tileCtx.putImageData(tileData, 0, 0);
