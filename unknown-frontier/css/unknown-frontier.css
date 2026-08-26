@@ -69,6 +69,11 @@ body::before {
   letter-spacing: 0.25em; text-transform: uppercase; color: var(--hz-ash);
 }
 .topbar:has(.nav-link-right) .topbar-title { padding-right: 190px; }
+.topbar:has(.nav-links-right) .topbar-title { padding-right: 340px; }
+
+.nav-links-right {
+  display: flex; align-items: center;
+}
 
 .nav-link-right {
   border-right: none;

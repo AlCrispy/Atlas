@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reparto Scientifico — Unknown Frontier</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/unknown-frontier.css">
+<link rel="stylesheet" href="css/system-detail.css">
+<link rel="stylesheet" href="css/lab-hub.css">
+</head>
+<body class="system-detail-body lab-hub-body">
+
+<div class="topbar">
+  <a class="back-btn" href="unknown-frontier.html">← <span>Unknown Frontier</span></a>
+  <span class="topbar-title">Reparto Scientifico</span>
+  <audio id="ambient-audio" src="music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
+  <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
+</div>
+
+<main class="lab-hub">
+  <div class="lab-hub-intro">
+    <p class="placeholder-eyebrow">Area Sperimentale</p>
+    <h1 class="placeholder-title">Reparto Scientifico</h1>
+    <p class="system-desc">Le scene di prototipazione usate per mettere a punto stelle, pianeti e astronavi prima che entrino nella mappa reale. Ambienti di lavoro, non contenuto narrativo — trascina, ruota, sperimenta.</p>
+  </div>
+
+  <div class="lab-grid">
+    <a class="lab-card" href="systems/_star-lab.html">
+      <span class="lab-card-icon">★</span>
+      <span class="lab-card-name">Star Lab</span>
+      <span class="lab-card-desc">Shader GLSL delle stelle: rumore procedurale, soglie colore, alone e corona a confronto in tempo reale.</span>
+      <span class="lab-card-tag">Shader</span>
+    </a>
+    <a class="lab-card" href="systems/_planet-lab.html">
+      <span class="lab-card-icon">🪐</span>
+      <span class="lab-card-name">Planet Lab</span>
+      <span class="lab-card-desc">Texture procedurali dei pianeti per tipologia — oceanico, desertico, vulcanico e le altre — con anteprima 2D e illuminazione reale.</span>
+      <span class="lab-card-tag">Texture</span>
+    </a>
+    <a class="lab-card" href="systems/_ship-lab.html">
+      <span class="lab-card-icon">🚀</span>
+      <span class="lab-card-name">Ship Lab</span>
+      <span class="lab-card-desc">Showcase delle astronavi procedurali — Terrestre, Velmyr, Ythar, Coralith — su piedistalli con vista libera.</span>
+      <span class="lab-card-tag">Geometria</span>
+    </a>
+  </div>
+</main>
+
+<div class="lab-blast-door" aria-hidden="true">
+  <div class="lab-door-panel lab-door-left"></div>
+  <div class="lab-door-panel lab-door-right"></div>
+</div>
+
+<script src="js/ambient-audio.js"></script>
+
+</body>
+</html>

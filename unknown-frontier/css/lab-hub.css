@@ -1,0 +1,123 @@
+/* Reparto Scientifico hub — index of the site's experimental lab pages.
+   Shares tokens/base classes (.topbar, .back-btn, --hz-*) with
+   unknown-frontier.css. The blast-door arrival animation reuses the exact
+   mechanic from market-industrial.css's mercato blast door (two panels
+   sliding apart, glowing seam flash) re-themed to the site's cyan/steel
+   science palette instead of mercato's hazard yellow/orange. */
+
+.lab-hub-body {
+  display: block;
+  height: auto;
+  min-height: 100vh;
+  overflow: auto;
+  position: relative;
+}
+
+.lab-hub {
+  position: relative; z-index: 2;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+.lab-hub-intro {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 48px;
+}
+
+.lab-hub-intro .system-desc {
+  margin-top: 16px;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.lab-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--hz-panel-lt);
+  border: 1px solid var(--hz-steel);
+  padding: 22px 20px;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+.lab-card:hover {
+  border-color: var(--hz-cyan);
+  transform: translateY(-3px);
+  background: var(--hz-panel);
+}
+
+.lab-card-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.lab-card-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--hz-bone);
+  letter-spacing: 0.04em;
+}
+
+.lab-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--hz-ash);
+  flex: 1;
+}
+
+.lab-card-tag {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hz-cyan);
+}
+
+/* ── BLAST DOOR (science-division re-theme of the mercato blast door) ── */
+.lab-blast-door {
+  position: fixed; inset: 0; z-index: 500;
+  display: flex;
+  pointer-events: none;
+}
+
+.lab-door-panel {
+  flex: 1;
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--hz-panel-lt), var(--hz-panel) 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 40px);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
+}
+.lab-door-panel::before {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 3px;
+  background: var(--hz-cyan);
+  box-shadow: 0 0 16px 2px rgba(79,216,232,0.8);
+  animation: labDoorSeamFlash 0.5s ease-out 0.2s both;
+}
+.lab-door-left { animation: labDoorOpenLeft 1s cubic-bezier(0.7,0,0.2,1) 0.55s both; }
+.lab-door-left::before { right: 0; }
+.lab-door-right { animation: labDoorOpenRight 1s cubic-bezier(0.7,0,0.2,1) 0.55s both; }
+.lab-door-right::before { left: 0; }
+
+@keyframes labDoorSeamFlash {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes labDoorOpenLeft {
+  to { transform: translateX(-100%); }
+}
+@keyframes labDoorOpenRight {
+  to { transform: translateX(100%); }
+}
+
+@media (max-width: 640px) {
+  .lab-hub { padding: 48px 16px 60px; }
+}
