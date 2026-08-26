@@ -54,13 +54,20 @@
 {
   "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+    "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.7.8/src/index.js",
+    "three-bvh-csg": "https://cdn.jsdelivr.net/npm/three-bvh-csg@0.0.17/src/index.js"
   }
 }
 </script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { buildStarship, pulseShipGlow } from '../js/starship-shapes.js';
 import { makeLabelTexture } from '../js/label-texture.js';
 
@@ -72,7 +79,27 @@ camera.position.set(0, 1.8, 11);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
 viewport.appendChild(renderer.domElement);
+
+// A procedural neutral-room environment (no external HDR file) so the
+// metal/pearlescent hull materials actually reflect *something* instead of
+// looking flat — a big part of why primitive-built ships read as "toy-like"
+// is that PBR metalness with zero environment just renders as a flat tint.
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
+// Bloom, scoped to this lab page only — the black hole scene deliberately
+// avoids a bloom pipeline (see black-hole-raymarch.js notes), but that was
+// about a specific failed glow-sprite technique there, not bloom itself.
+// Threshold kept high so only genuinely bright emissive parts (engine
+// glow, bussard caps, ring accents) bloom, not the whole lit hull.
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.25, 0.3, 0.92);
+composer.addPass(bloomPass);
+composer.addPass(new OutputPass());
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -157,6 +184,7 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
 });
 
 const clock = new THREE.Clock();
@@ -165,7 +193,7 @@ function animate() {
   const elapsed = clock.getElapsedTime();
   shipGroups.forEach((ship) => pulseShipGlow(ship, elapsed));
   controls.update();
-  renderer.render(scene, camera);
+  composer.render();
 }
 animate();
 </script>

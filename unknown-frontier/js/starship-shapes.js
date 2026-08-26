@@ -1,6 +1,39 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { makeGlowTexture } from './glow-texture.js';
+import { makeHullPanelMaps, makeOrganicSkinMaps } from './hull-detail-texture.js';
+import { Brush, Evaluator, SUBTRACTION } from 'three-bvh-csg';
+
+const csgEvaluator = new Evaluator();
+
+// Cuts cutterGeometry (positioned/rotated at cutterPos/cutterRot, in the
+// same local space baseMesh's own position/rotation already use) out of
+// baseMesh — a real boolean recess instead of a box glued on top, so vents
+// and panel notches actually cut into the hull surface. Returns a new Mesh
+// carrying baseMesh's material, already positioned to replace it 1:1.
+function csgSubtract(baseMesh, cutterGeometry, cutterPos, cutterRot) {
+  const baseBrush = new Brush(baseMesh.geometry, baseMesh.material);
+  baseBrush.position.copy(baseMesh.position);
+  baseBrush.rotation.copy(baseMesh.rotation);
+  baseBrush.updateMatrixWorld();
+
+  const cutterBrush = new Brush(cutterGeometry, baseMesh.material);
+  cutterBrush.position.copy(cutterPos);
+  if (cutterRot) cutterBrush.rotation.copy(cutterRot);
+  cutterBrush.updateMatrixWorld();
+
+  const result = csgEvaluator.evaluate(baseBrush, cutterBrush, SUBTRACTION);
+  result.position.copy(baseMesh.position);
+  result.rotation.copy(baseMesh.rotation);
+  result.material = baseMesh.material;
+  return result;
+}
+
+// Shared normalScale for every hard-surface hull's panel-line normal map —
+// kept subtle (these hulls are small, ~2-3 units long) so it reads as
+// surface detail rather than noisy static.
+const HULL_NORMAL_SCALE = new THREE.Vector2(0.5, 0.5);
+const SKIN_NORMAL_SCALE = new THREE.Vector2(0.7, 0.7);
 
 // Procedural starship hulls — three factions, each a THREE.Group built
 // from primitives (no external model files, matching the rest of the
@@ -71,6 +104,11 @@ export function buildTerranShip() {
   group.userData = { glowMaterials: [], glowSprites: [], faction: 'terran' };
 
   const hullMat = new THREE.MeshStandardMaterial({ color: 0xaab2ba, metalness: 0.55, roughness: 0.45 });
+  const terranDetail = makeHullPanelMaps('terran-hull', { repeat: 3 });
+  hullMat.map = terranDetail.map;
+  hullMat.normalMap = terranDetail.normalMap;
+  hullMat.normalScale = HULL_NORMAL_SCALE;
+  hullMat.roughnessMap = terranDetail.roughnessMap;
   const panelMat = new THREE.MeshStandardMaterial({ color: 0x484f57, metalness: 0.5, roughness: 0.55 });
   const canopyMat = new THREE.MeshStandardMaterial({ color: 0x0a0f14, metalness: 0.2, roughness: 0.15 });
   const engineColor = 0x4fd8e8;
@@ -88,14 +126,27 @@ export function buildTerranShip() {
   const segments = [
     { w: 0.44, h: 0.3, d: 0.43, z: 1.04 },    // stern
     { w: 0.56, h: 0.36, d: 0.55, z: 0.6 },
-    { w: 0.5, h: 0.34, d: 0.7, z: 0.03 },
+    { w: 0.5, h: 0.34, d: 0.7, z: 0.03, cutVent: true },
     { w: 0.34, h: 0.26, d: 0.6, z: -0.58 },
     { w: 0.16, h: 0.14, d: 0.55, z: -1.1 },   // bow taper
   ];
-  segments.forEach(({ w, h, d, z }) => {
-    const mesh = roundedBox(w, h, d, hullMat);
-    mesh.position.z = z;
+  segments.forEach(({ w, h, d, z, cutVent }) => {
+    const base = roundedBox(w, h, d, hullMat);
+    base.position.z = z;
+    if (!cutVent) {
+      group.add(base);
+      return;
+    }
+    // A real recessed vent cut into the mid hull's top surface — a boolean
+    // subtraction instead of another glued-on greeble box, so at least one
+    // surface feature actually reads as cut into the plating.
+    const cutterGeo = new THREE.BoxGeometry(0.16, 0.14, 0.22);
+    const mesh = csgSubtract(base, cutterGeo, new THREE.Vector3(0, h / 2, z + 0.05));
     group.add(mesh);
+
+    const vent = roundedBox(0.13, 0.02, 0.19, panelMat, 1);
+    vent.position.set(0, h / 2 - 0.05, z + 0.05);
+    group.add(vent);
   });
 
   // Dark canopy strip along the forward hull, evoking the reference image's
@@ -168,6 +219,11 @@ export function buildExplorerShip() {
   group.userData = { glowMaterials: [], glowSprites: [], faction: 'velmyr' };
 
   const hullMat = new THREE.MeshStandardMaterial({ color: 0xe8e6e0, metalness: 0.3, roughness: 0.5 });
+  const velmyrDetail = makeHullPanelMaps('velmyr-hull', { repeat: 3 });
+  hullMat.map = velmyrDetail.map;
+  hullMat.normalMap = velmyrDetail.normalMap;
+  hullMat.normalScale = HULL_NORMAL_SCALE;
+  hullMat.roughnessMap = velmyrDetail.roughnessMap;
   const trimMat = new THREE.MeshStandardMaterial({ color: 0xb03a2e, metalness: 0.2, roughness: 0.5 });
   const bussardMat = new THREE.MeshStandardMaterial({
     color: 0x4a1c10, emissive: 0xff6a3a, emissiveIntensity: 1.6, roughness: 0.3, metalness: 0.1,
@@ -201,15 +257,20 @@ export function buildExplorerShip() {
   neck.rotation.x = -0.35;
   group.add(neck);
 
-  // Engineering hull — an elongated capsule running aft, with a small
-  // glowing deflector dish at its forward tip.
-  const engineeringHull = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.7, 4, 12), hullMat);
-  engineeringHull.rotation.x = Math.PI / 2;
-  engineeringHull.position.set(0, -0.32, 0.35);
+  // Engineering hull — an elongated capsule running aft, with a real
+  // recessed socket cut into its forward tip (a boolean subtraction, not a
+  // flat disc glued on top) so the deflector dish sits nested in the hull
+  // instead of floating on its surface.
+  const engineeringHullBase = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 0.7, 4, 12), hullMat);
+  engineeringHullBase.rotation.x = Math.PI / 2;
+  engineeringHullBase.position.set(0, -0.32, 0.35);
+
+  const socketCutter = new THREE.SphereGeometry(0.11, 16, 16);
+  const engineeringHull = csgSubtract(engineeringHullBase, socketCutter, new THREE.Vector3(0, -0.32, 0.02));
   group.add(engineeringHull);
 
-  const deflector = new THREE.Mesh(new THREE.CircleGeometry(0.14, 16), warpGlowMat);
-  deflector.position.set(0, -0.32, -0.02);
+  const deflector = new THREE.Mesh(new THREE.CircleGeometry(0.11, 16), warpGlowMat);
+  deflector.position.set(0, -0.32, -0.06);
   deflector.rotation.y = Math.PI;
   group.add(deflector);
 
@@ -255,6 +316,11 @@ export function buildYtharShip() {
   group.userData = { glowMaterials: [], glowSprites: [], faction: 'ythar' };
 
   const shellMat = new THREE.MeshStandardMaterial({ color: 0x2a2038, metalness: 0.15, roughness: 0.55 });
+  const ytharSkin = makeOrganicSkinMaps('ythar-skin', { repeat: 2 });
+  shellMat.map = ytharSkin.map;
+  shellMat.normalMap = ytharSkin.normalMap;
+  shellMat.normalScale = SKIN_NORMAL_SCALE;
+  shellMat.roughnessMap = ytharSkin.roughnessMap;
   const ribMat = new THREE.MeshStandardMaterial({ color: 0x3a2d4d, metalness: 0.1, roughness: 0.6 });
   const tealMat = new THREE.MeshStandardMaterial({
     color: 0x123330, emissive: 0x6ae8d0, emissiveIntensity: 1.8, roughness: 0.3, metalness: 0.1,
@@ -337,6 +403,11 @@ export function buildCoralithShip() {
   group.userData = { glowMaterials: [], glowSprites: [], faction: 'coralith' };
 
   const bodyMat = new THREE.MeshStandardMaterial({ color: 0xe4e8ee, metalness: 0.75, roughness: 0.15 });
+  const coralithDetail = makeHullPanelMaps('coralith-hull', { repeat: 4 });
+  bodyMat.map = coralithDetail.map;
+  bodyMat.normalMap = coralithDetail.normalMap;
+  bodyMat.normalScale = HULL_NORMAL_SCALE;
+  bodyMat.roughnessMap = coralithDetail.roughnessMap;
   const lineColor = 0x9df0fa;
   const lineMat = new THREE.LineBasicMaterial({ color: lineColor });
   const glowRingMat = new THREE.MeshStandardMaterial({
@@ -379,9 +450,16 @@ export function buildCoralithShip() {
   const bladeMat = bodyMat;
   for (let i = 0; i < 4; i++) {
     const angle = (i * Math.PI) / 2;
-    const blade = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.05, 0.14), bladeMat);
-    blade.position.set(Math.cos(angle) * 0.5, Math.sin(angle) * 0.5, RING_CORE_Z);
-    blade.rotation.z = angle;
+    const bladeBase = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.05, 0.14), bladeMat);
+    bladeBase.position.set(Math.cos(angle) * 0.5, Math.sin(angle) * 0.5, RING_CORE_Z);
+    bladeBase.rotation.z = angle;
+
+    // A real perforation through the blade near its tip — a boolean cut,
+    // not a decal — the cutter cylinder's axis matches the blade's own
+    // rotation so it drills straight through the thin (0.05) dimension.
+    const holeCutter = new THREE.CylinderGeometry(0.055, 0.055, 0.2, 16);
+    const holePos = new THREE.Vector3(Math.cos(angle) * 0.8, Math.sin(angle) * 0.8, RING_CORE_Z);
+    const blade = csgSubtract(bladeBase, holeCutter, holePos, new THREE.Euler(0, 0, angle));
     group.add(blade);
 
     const bladeEdges = new THREE.LineSegments(new THREE.EdgesGeometry(blade.geometry), lineMat);
