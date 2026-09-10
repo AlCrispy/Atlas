@@ -4,6 +4,7 @@ import { makeGlowTexture, makeDotTexture, makeNebulaBlobTexture, makeRingTexture
 import { makeLabelTexture } from './label-texture.js';
 import { createBlackHole } from './black-hole-raymarch.js';
 import { createSceneInteraction } from './scene-interaction.js';
+import { createSpacePhenomena } from './space-phenomena.js';
 
 // === Tunables ===
 const STARFIELD_COUNT = 1500;
@@ -41,7 +42,9 @@ const container = document.getElementById('solar-system');
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+// Far plane covers the far side of the outermost backdrop (~560 units out)
+// even with the camera at maxDistance on the opposite side.
+const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1600);
 const HOME_OFFSET = new THREE.Vector3(0, 160, 300);
 camera.position.copy(HOME_OFFSET);
 
@@ -460,6 +463,16 @@ const GALAXY_LABELS = [
   { name: 'Via Lattea', position: milkyWayGalaxy.position, radius: 45 },
 ];
 
+// === Space phenomena ===
+// Nebulae, clusters, pulsar, quasar (see space-phenomena.js). Gets the live
+// galaxy positions/radii so it can dim anything overlapping a galaxy on
+// screen and keep the galaxies readable.
+const spacePhenomena = createSpacePhenomena({
+  scene,
+  camera,
+  galaxies: GALAXY_LABELS.map(({ position, radius }) => ({ position, radius })),
+});
+
 document.fonts.ready.then(() => {
   GALAXY_LABELS.forEach((entry) => {
     const { name, position, radius } = entry;
@@ -830,6 +843,7 @@ function animate() {
     mini.rotation.y += delta * 0.01;
     mini.visible = mini.position.distanceTo(camera.position) > 120;
   });
+  spacePhenomena.update(delta, elapsed);
   systemLabelSprites.forEach(({ sprite, group, revealDistance }) => {
     sprite.visible = camera.position.distanceTo(group.position) < revealDistance;
   });
