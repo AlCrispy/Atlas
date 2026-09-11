@@ -7,34 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../novandra.html">← <span>Novandra</span></a>
+  <span class="topbar-planet-name">Hexeim</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Hexeim</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta giungla</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta giungla</p>
+      <h1 class="placeholder-title">Hexeim</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta giungla</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,97 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+36 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Respirabile, ricca</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Moderata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Hexeim è il secondo pianeta del sistema Novandra ed è ricoperto da una foresta continua che scala montagne e affonda radici negli oceani poco profondi.</p>
+      <p>La competizione tra specie è così feroce che quasi ogni pianta è velenosa, spinosa o carnivora.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Novandra, galassia Cygnix.</li>
+        <li><strong>Clima:</strong> Caldo e piovoso, con una stagione dei monsoni che allaga le foreste di pianura per mesi.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 28%, spore e pollini in sospensione: respirabile, ma i filtri anti-allergeni sono indispensabili.</li>
+        <li><strong>Gravità:</strong> 0,97 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 23 ore standard.</li>
+        <li><strong>Satelliti:</strong> Hexeim-a, Hexeim-b.</li>
+        <li><strong>Anelli:</strong> sistema di anelli visibile anche con strumenti ottici di bordo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Hexeim dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="novandra-ii" data-type="giungla" data-color="#5f8f5a" data-size="1.479" data-ring-color="#5f8f5a"
+      data-pois='[{"name":"Colonne di Saeiss","lat":13,"lon":178,"desc":"Foresta di alberi titanici con ecosistema sospeso."},{"name":"Radura di Nelrek","lat":13,"lon":-161,"desc":"Radura esagonale sterile, di origine sconosciuta."},{"name":"Delta di Vasiss","lat":1,"lon":-146,"desc":"Pianura alluvionale invasa dai monsoni."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Orrkha colonnare</strong> <em>(Albero titanico)</em> — Tronchi larghi come edifici e alti oltre quattrocento metri; le chiome formano un secondo suolo sospeso.</li>
+        <li><strong>Draveliss a trappola</strong> <em>(Pianta carnivora)</em> — Fiori larghi due metri che imitano l'odore di acqua fresca; digeriscono animali di taglia media in pochi giorni.</li>
+        <li><strong>Dradra a rete</strong> <em>(Micelio planetario)</em> — Rete fungina che collega le radici di intere foreste; segnali elettrici la attraversano più veloci di quanto dovrebbero.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Ulven del sottobosco</strong> <em>(Anfibio velenoso)</em> — Colori sgargianti e secrezioni cutanee paralizzanti; basta toccare dove è passato per sentire gli effetti.</li>
+        <li><strong>Athiss tuono</strong> <em>(Megaerbivoro)</em> — Animale colossale che apre sentieri abbattendo alberi; il suo richiamo si sente a decine di chilometri.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Spore psicoattive:</strong> Nubi di spore che alterano percezione e giudizio; più di una squadra si è persa seguendo allucinazioni.</li>
+        <li><strong>Patogeni sconosciuti:</strong> Batteri e funghi capaci di colonizzare tessuti umani; la quarantena dopo lo sbarco è obbligatoria.</li>
+        <li><strong>Sciami:</strong> Insetti collettivi attratti dal calore dei generatori; possono intasare filtri e prese d'aria in minuti.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico autorizza sbarchi solo con tute sigillate e supporto orbitale attivo: Hexeim non perdona le distrazioni.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Hexeim. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-5337 · NRS Meridiana</h3>
+      <p><strong>Composti medicinali.</strong> Estratti di corteccia con proprietà rigenerative straordinarie. Tre corporazioni farmaceutiche hanno già chiesto i campioni.</p>
+      <h3>RS-4636 · NRS Corvina</h3>
+      <p><strong>Rovine inglobate.</strong> Strutture di pietra completamente avvolte dalle radici degli alberi titanici; stima di età superiore ai diecimila anni.</p>
+      <h3>RS-3089 · NRS Tessitrice</h3>
+      <p><strong>Utensili primitivi.</strong> Oggetti di pietra e osso lavorati trovati sotto la volta: i primati a sei arti potrebbero essere una specie pre-senziente.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

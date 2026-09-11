@@ -7,34 +7,145 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../kethra.html">← <span>Kethra</span></a>
+  <span class="topbar-planet-name">Khar</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Khar</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta roccioso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta roccioso</p>
+      <h1 class="placeholder-title">Khar</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta roccioso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,78 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−180 °C notturni</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Assente</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Bassa</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Khar è il primo pianeta del sistema Kethra: una sfera di roccia nuda, crateri sovrapposti e pianure di basalto antico che nessun vento ha mai levigato.</p>
+      <p>Sotto la regolite si estende una rete di tunnel di lava fossili, abbastanza ampi da ospitare un'intera colonia.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Kethra, galassia Vandrel.</li>
+        <li><strong>Clima:</strong> Freddo e stabile, con tempeste di polvere elettrostatica stagionali che oscurano la superficie per settimane.</li>
+        <li><strong>Atmosfera:</strong> Esosfera trascurabile: la superficie è esposta direttamente al vento stellare.</li>
+        <li><strong>Gravità:</strong> 0,78 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 36 ore standard.</li>
+        <li><strong>Satelliti:</strong> Khar-a, Khar-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Khar dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="kethra-i" data-type="roccioso" data-color="#8c8378" data-size="1.601"
+      data-pois='[{"name":"Pianura Lorvelsy","lat":-19,"lon":-134,"desc":"Distesa basaltica sotto cui il radar ha rilevato strutture rettilinee."},{"name":"Cratere Lorym","lat":-49,"lon":37,"desc":"Bacino da impatto largo centinaia di chilometri, con picco centrale ricco di metalli."},{"name":"Tunnel di Zenthuith","lat":-49,"lon":-49,"desc":"Ingresso della principale rete di tunnel lavici fossili."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Biosfera</h2>
+      <p>Nessuna forma di vita rilevata. Le analisi della regolite non mostrano tracce organiche, né presenti né fossili.</p>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Radiazione stellare diretta:</strong> Senza magnetosfera né atmosfera, una sola esposizione prolungata supera le soglie di sicurezza delle tute standard.</li>
+        <li><strong>Lastre termiche:</strong> Rocce fratturate dagli sbalzi di temperatura che cedono sotto il peso di un veicolo, aprendo crepacci improvvisi.</li>
+        <li><strong>Collassi dei tunnel:</strong> Le gallerie laviche sono instabili: le scosse ritmiche possono farne crollare interi tratti senza preavviso.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico classifica Khar come accessibile a squadre di rilevamento standard, con protocolli ambientali di base.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Khar. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-3843 · Sonda Astrolabio</h3>
+      <p><strong>Struttura sepolta.</strong> Il radar a penetrazione ha restituito il profilo di mura rettilinee sotto una pianura basaltica. Nessuna civiltà nota ha mai reclamato questo sistema.</p>
+      <h3>RS-6890 · Sonda Vigilia-9</h3>
+      <p><strong>Giacimento di iridio.</strong> Concentrazioni di iridio e platino tra le più alte mai registrate dal Reparto Scientifico, affioranti ai bordi di un grande cratere.</p>
+      <h3>RS-2608 · NRS Corvina</h3>
+      <p><strong>Anomalia gravimetrica.</strong> Una massa densa e perfettamente sferica rilevata a quattro chilometri di profondità. Troppo regolare per essere naturale, secondo metà del team.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

@@ -1,0 +1,72 @@
+/* Mercato theme — Velmyr: a white-stone gallery. Cream panels, a single
+   ritual red accent (oath color), serif display type, quiet shadows. Reveal:
+   two cream screens parting vertically along a red seam. */
+
+.market-velmyr {
+  --mk-void: #f3efe6;
+  --mk-panel: #ebe5d8;
+  --mk-panel-lt: #fbf8f2;
+  --mk-steel: #d8cfbd;
+  --mk-steel-lt: #b9ad96;
+  --mk-text: #2a2622;
+  --mk-text-dim: #6f675c;
+  --mk-yellow: #b03a2e;
+  --mk-orange: #8c6d3f;
+
+  background:
+    radial-gradient(ellipse at 50% -10%, #fffdf8 0%, transparent 65%),
+    linear-gradient(180deg, #f6f2ea 0%, #e7dfd0 100%);
+}
+
+/* Ritual red thread hanging from the top edge. */
+.market-velmyr::before {
+  content: '';
+  position: absolute; top: 0; left: 50%; z-index: 0;
+  width: 1px; height: 44px;
+  background: var(--mk-yellow);
+}
+.market-velmyr::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px; z-index: 0;
+  border-bottom: 1px solid var(--mk-steel);
+  background: linear-gradient(90deg, transparent, rgba(176,58,46,0.35), transparent);
+}
+
+.market-velmyr .market-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem; font-weight: 400;
+  letter-spacing: 0.3em; text-transform: uppercase;
+}
+.market-velmyr .market-tagline { font-family: Georgia, 'Times New Roman', serif; }
+
+.market-velmyr .market-filter-btn { background: transparent; border-color: var(--mk-steel-lt); }
+
+.market-velmyr .product-card {
+  border-color: var(--mk-steel);
+  border-top: 3px solid transparent;
+  box-shadow: 0 6px 18px rgba(60,45,30,0.08);
+}
+.market-velmyr .product-card:hover {
+  border-top-color: var(--mk-yellow);
+  box-shadow: 0 12px 28px rgba(60,45,30,0.14);
+}
+.market-velmyr .product-card-image {
+  background: linear-gradient(180deg, #fffdf9, #efe8da);
+  border-bottom-color: var(--mk-steel);
+}
+.market-velmyr .product-card-name { font-family: Georgia, 'Times New Roman', serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; }
+
+/* ── REVEAL: parting screens ── */
+.market-velmyr .market-reveal { display: flex; flex-direction: column; }
+.market-velmyr .market-reveal span { flex: 1; background: #fbf8f2; }
+.market-velmyr .market-reveal span:nth-child(1) {
+  border-bottom: 1px solid var(--mk-yellow);
+  animation: velmyrScreenUp 1s cubic-bezier(0.7,0,0.2,1) 0.35s both;
+}
+.market-velmyr .market-reveal span:nth-child(2) { flex: 0 0 0; }
+.market-velmyr .market-reveal span:nth-child(3) {
+  border-top: 1px solid var(--mk-yellow);
+  animation: velmyrScreenDown 1s cubic-bezier(0.7,0,0.2,1) 0.35s both;
+}
+@keyframes velmyrScreenUp { to { transform: translateY(-100%); } }
+@keyframes velmyrScreenDown { to { transform: translateY(100%); } }

@@ -1,0 +1,80 @@
+/* Mercato theme — Ythar: a living greenhouse. Dark violet flesh, teal
+   bioluminescence that breathes, asymmetric organic radii (matches the
+   grown bio-ships). Reveal: an iris membrane dilating from the center. */
+
+.market-ythar {
+  --mk-void: #0d0714;
+  --mk-panel: #1a0f26;
+  --mk-panel-lt: #22132f;
+  --mk-steel: #3a2552;
+  --mk-steel-lt: #5b3b7d;
+  --mk-text: #efe6ff;
+  --mk-text-dim: #a996c4;
+  --mk-yellow: #6ae8d0;
+  --mk-orange: #c07bff;
+
+  background:
+    radial-gradient(ellipse at 20% 110%, rgba(106,232,208,0.12), transparent 55%),
+    radial-gradient(ellipse at 85% -10%, rgba(192,123,255,0.16), transparent 55%),
+    var(--mk-void);
+}
+
+/* Breathing glow blobs. */
+.market-ythar::before,
+.market-ythar::after {
+  content: '';
+  position: absolute; z-index: 0; pointer-events: none;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: ytharBreathe 7s ease-in-out infinite;
+}
+.market-ythar::before {
+  width: 420px; height: 320px; left: -80px; top: 30%;
+  background: rgba(106,232,208,0.14);
+}
+.market-ythar::after {
+  width: 380px; height: 380px; right: -100px; top: 5%;
+  background: rgba(192,123,255,0.16);
+  animation-delay: -3.5s;
+}
+@keyframes ytharBreathe {
+  50% { transform: scale(1.25); opacity: 0.6; }
+}
+
+.market-ythar .market-title { color: var(--mk-yellow); text-shadow: 0 0 20px rgba(106,232,208,0.55); }
+
+.market-ythar .market-filter-btn { border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%; }
+.market-ythar .market-filter-btn.active { box-shadow: 0 0 18px rgba(106,232,208,0.55); }
+
+.market-ythar .product-card {
+  border-radius: 30px 12px 34px 16px;
+  border-color: rgba(106,232,208,0.2);
+  background: linear-gradient(170deg, #2a1639, #170c22);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.market-ythar .product-card:hover {
+  box-shadow: 0 0 0 1px rgba(106,232,208,0.5), 0 0 30px rgba(106,232,208,0.25);
+}
+.market-ythar .product-card-image {
+  background: radial-gradient(circle at 50% 60%, rgba(192,123,255,0.28), transparent 65%);
+  border-bottom: none;
+}
+.market-ythar .product-card-image { filter: drop-shadow(0 0 10px rgba(106,232,208,0.45)); }
+.market-ythar .product-card:hover .product-card-image { animation: ytharPulse 1.6s ease-in-out infinite; }
+@keyframes ytharPulse {
+  50% { filter: drop-shadow(0 0 22px rgba(106,232,208,0.9)); }
+}
+
+/* ── REVEAL: iris membrane ── */
+.market-ythar .market-reveal span { display: none; }
+.market-ythar .market-reveal span:nth-child(1) {
+  display: block;
+  position: absolute; left: 50%; top: 45%;
+  width: 0; height: 0; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 200vmax #140a1e, 0 0 40px 20px rgba(106,232,208,0.7);
+  animation: ytharIris 1.5s cubic-bezier(0.6,0,0.3,1) 0.3s both;
+}
+@keyframes ytharIris {
+  to { width: 280vmax; height: 280vmax; }
+}

@@ -1,0 +1,76 @@
+/* Mercato theme — Thissari: a frozen nest bazaar. Pale ice palette, a soft
+   aurora along the top, falling snow, frosted cards with a feather-tip cut
+   corner and feather-vane texture. Reveal: frost melting off the glass. */
+
+.market-thissari {
+  --mk-void: #e9f2f7;
+  --mk-panel: #dce9f0;
+  --mk-panel-lt: rgba(255,255,255,0.72);
+  --mk-steel: #b9cfdc;
+  --mk-steel-lt: #8fb0c4;
+  --mk-text: #1d3140;
+  --mk-text-dim: #5a7385;
+  --mk-yellow: #2f7fb0;
+  --mk-orange: #6f7fb8;
+
+  background: linear-gradient(180deg, #f5fafd 0%, #d6e6ef 100%);
+}
+
+/* Aurora ribbon. */
+.market-thissari::before {
+  content: '';
+  position: absolute; top: -40px; left: -10%; right: -10%; height: 180px; z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(106,232,208,0.25), rgba(160,140,255,0.22), rgba(106,200,255,0.25));
+  filter: blur(40px);
+  animation: thissariAurora 12s ease-in-out infinite alternate;
+}
+@keyframes thissariAurora {
+  to { transform: translateX(6%) skewY(-3deg); opacity: 0.6; }
+}
+
+/* Falling snow. */
+.market-thissari::after {
+  content: '';
+  position: absolute; inset: -100% 0 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.95), transparent),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2.5px 2.5px at 85% 20%, rgba(255,255,255,0.85), transparent),
+    radial-gradient(1.5px 1.5px at 40% 85%, rgba(255,255,255,0.9), transparent);
+  background-size: 220px 220px;
+  animation: thissariSnow 18s linear infinite;
+}
+@keyframes thissariSnow {
+  to { transform: translateY(50%); }
+}
+
+.market-thissari .market-title { font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; }
+
+.market-thissari .market-filter-btn { background: rgba(255,255,255,0.6); border-radius: 3px; }
+
+.market-thissari .product-card {
+  clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 0 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(40,80,110,0.12);
+}
+.market-thissari .product-card:hover { background: rgba(255,255,255,0.9); }
+.market-thissari .product-card-image {
+  background:
+    repeating-linear-gradient(115deg, rgba(47,127,176,0.07) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, #f7fbfd, #e1edf4);
+  border-bottom-color: var(--mk-steel);
+}
+
+/* ── REVEAL: frost melting ── */
+.market-thissari .market-reveal {
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.9), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.85), transparent 45%),
+    rgba(225,238,245,0.92);
+  backdrop-filter: blur(14px);
+  animation: thissariThaw 1.4s ease-out 0.3s both;
+}
+@keyframes thissariThaw {
+  to { opacity: 0; backdrop-filter: blur(0); transform: scale(1.06); }
+}

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { makePlanetTexture } from './planet-texture.js';
 
 // Reusable close-up planet viewer — the "Visione Dettagliata" tab on
 // inhabited-planet pages, and the equivalent section on the real Sol-system
@@ -9,6 +10,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // `data-ring-texture`/`data-ring-inner`/`data-ring-outer`/`data-ring-tilt`)
 // so a new planet page needs zero JS changes here — copy the markup, edit
 // the data attributes.
+//
+// Made-up worlds have no photo: without `data-texture`, the globe paints the
+// same procedural texture the system view uses, from `data-color`,
+// `data-slug`, `data-size` and `data-type` (same seed -> same planet in both
+// views). `data-ring-color` adds a plain tinted ring, `data-atmosphere` tints
+// the atmospheric limb.
 
 function latLonToVector3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -71,8 +78,18 @@ function initGlobe(container) {
   const globe = new THREE.Group();
   scene.add(globe);
 
-  const texture = new THREE.TextureLoader().load(textureUrl);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  let texture;
+  if (textureUrl) {
+    texture = new THREE.TextureLoader().load(textureUrl);
+    texture.colorSpace = THREE.SRGBColorSpace;
+  } else {
+    texture = makePlanetTexture(
+      container.dataset.color || '#8c8378',
+      container.dataset.slug || 'unknown',
+      parseFloat(container.dataset.size || '1'),
+      container.dataset.type,
+    );
+  }
   const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(1, 48, 48),
     new THREE.MeshStandardMaterial({ map: texture, roughness: 0.85, metalness: 0.05 }),
@@ -83,10 +100,19 @@ function initGlobe(container) {
   // mini spheres in solar-system.js.
   const atmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(1, 48, 48),
-    new THREE.MeshBasicMaterial({ color: 0x4fd8e8, transparent: true, opacity: 0.12, side: THREE.BackSide }),
+    new THREE.MeshBasicMaterial({ color: container.dataset.atmosphere || 0x4fd8e8, transparent: true, opacity: 0.12, side: THREE.BackSide }),
   );
   atmosphere.scale.setScalar(1.03);
   globe.add(atmosphere);
+
+  if (container.dataset.ringColor && !container.dataset.ringTexture) {
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(1.4, 1.95, 96, 1),
+      new THREE.MeshStandardMaterial({ color: container.dataset.ringColor, side: THREE.DoubleSide, transparent: true, opacity: 0.3, roughness: 0.9, metalness: 0, depthWrite: false }),
+    );
+    ring.rotation.x = -Math.PI / 2 + 0.35;
+    globe.add(ring);
+  }
 
   // Optional textured ring (Saturn, Uranus). RingGeometry's default UVs run
   // oddly for a radial-gradient strip texture, so remap U to radial

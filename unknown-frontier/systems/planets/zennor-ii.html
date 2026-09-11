@@ -7,34 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../zennor.html">← <span>Zennor</span></a>
+  <span class="topbar-planet-name">Gravur</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Gravur</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Gravur</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,28 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+18 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Respirabile, umida</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Gravur è il secondo pianeta del sistema Zennor: un unico oceano che avvolge il globo, profondo fino a sessanta chilometri, interrotto solo da arcipelaghi vulcanici.</p>
+      <p>Sul fondo, a pressioni schiaccianti, sorgenti idrotermali alimentano ecosistemi che non hanno mai visto la luce.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Zennor, galassia Pyxis.</li>
+        <li><strong>Clima:</strong> Mite e stabile grazie all'inerzia termica dell'oceano; tempeste rare ma di dimensioni planetarie.</li>
+        <li><strong>Atmosfera:</strong> Azoto e ossigeno vicini allo standard, umidità costante oltre il 90%.</li>
+        <li><strong>Gravità:</strong> 1,28 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 27 ore standard.</li>
+        <li><strong>Satelliti:</strong> Gravur-a, Gravur-b, Gravur-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Gravur dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="zennor-ii" data-type="oceanico" data-color="#4d7ea8" data-size="1.305"
+      data-pois='[{"name":"Arcipelago di Zensaesae","lat":6,"lon":163,"desc":"Catena di isole vulcaniche, unica terra emersa stabile."},{"name":"Spirale di Saeiss","lat":44,"lon":144,"desc":"Struttura geometrica sul fondale, di origine sconosciuta."},{"name":"Occhio di Grilor","lat":50,"lon":-98,"desc":"Uragano permanente osservato da secoli."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Dronel lucente</strong> <em>(Fitoplancton bioluminescente)</em> — Microrganismi che si illuminano quando vengono disturbati; le scie delle navi restano visibili per ore.</li>
+        <li><strong>Nelkha abissale</strong> <em>(Foresta chemiosintetica)</em> — Colonne di tubi viventi alte come torri attorno alle sorgenti idrotermali, nutrite da zolfo invece che da luce.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Thudra a lanterna</strong> <em>(Branco pelagico)</em> — Pesci luminosi che si muovono in banchi da milioni di individui formando figure geometriche.</li>
+        <li><strong>Veldrokor corazzato</strong> <em>(Crostaceo di scogliera)</em> — Grande quanto un veicolo leggero, filtra l'acqua con appendici piumate; pacifico, a meno di bloccargli la ritirata.</li>
+        <li><strong>Zenkha a medusa</strong> <em>(Colonia fluttuante)</em> — Campane trasparenti larghe decine di metri con filamenti urticanti lunghi un chilometro.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Corrosione salina:</strong> Aerosol carichi di sale che degradano giunti, filtri ed elettronica in pochi giorni di esposizione.</li>
+        <li><strong>Uragani permanenti:</strong> Tempeste vecchie di secoli con venti oltre i trecento chilometri orari; aggirarle allunga di giorni ogni tragitto.</li>
+        <li><strong>Onde planetarie:</strong> Onde lunghe che crescono senza ostacoli fino a decine di metri; nessuna struttura costiera resiste a lungo.</li>
+        <li><strong>Pressione abissale:</strong> Sotto i dieci chilometri servono scafi da trincea; molti batiscafi standard sono implosi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Gravur consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Gravur. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-4165 · NRS Halcyon</h3>
+      <p><strong>Canto strutturato.</strong> Le vocalizzazioni dei mammiferi marini contengono pattern ricorsivi compatibili con un linguaggio. Analisi in corso.</p>
+      <h3>RS-3699 · NRS Ardea</h3>
+      <p><strong>Deposito di idrati.</strong> Enormi riserve di idrati di metano sui fondali polari: una risorsa energetica e un rischio di rilascio catastrofico.</p>
+      <h3>RS-5690 · Sonda Astrolabio</h3>
+      <p><strong>Struttura sommersa.</strong> Il sonar ha mappato una formazione a spirale perfetta sul fondale, larga undici chilometri, priva di sedimenti come se venisse pulita.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

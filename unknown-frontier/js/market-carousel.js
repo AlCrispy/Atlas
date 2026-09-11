@@ -1,11 +1,12 @@
 // Mercato tab behavior: category filter chips + a horizontal product
 // carousel (prev/next arrows, dot indicators). Operates generically on any
-// `.market-industrial` block, so a future planet's market tab can reuse
-// this file just by copying the same markup with different product cards.
-// The blast-door open animation itself is pure CSS (see market-industrial.css)
-// and replays automatically whenever the tab-panel goes display:none -> block.
+// `.market-industrial` block — or any race-themed `.market-shell` block
+// (same inner markup, own skin in css/market-{race}.css) — so a future
+// planet's market tab can reuse this file just by copying the markup with
+// different product cards. Open animations are pure CSS and replay
+// automatically whenever the tab-panel goes display:none -> block.
 
-document.querySelectorAll('.market-industrial').forEach((root) => {
+document.querySelectorAll('.market-industrial, .market-shell').forEach((root) => {
   const filterBtns = root.querySelectorAll('.market-filter-btn');
   const track = root.querySelector('.market-carousel-track');
   const cards = Array.from(track.querySelectorAll('.product-card'));

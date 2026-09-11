@@ -7,33 +7,298 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-thissari.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../novandra.html">← <span>Novandra</span></a>
+  <span class="topbar-planet-name">Torilliven</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Torilliven</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta glaciale</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta glaciale</p>
+      <h1 class="placeholder-title">Torilliven</h1>
+      <span class="placeholder-badge">Colonia degli Stormi</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta glaciale</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">1 rilevato</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Thissari</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~60 milioni</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Torilliven è stata la prima colonia raggiunta da un'Arca di Vento, dopo un viaggio di duecentotrenta anni. Più freddo e più buio di Thissos, è il pianeta preferito dagli stormi tradizionalisti, che vi hanno costruito città di vetro sospese sui crepacci.</p>
+      <p>La colonia vive di pesca negli oceani sotto la crosta, raggiunti attraverso pozzi scavati a mano nel corso dei secoli.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Terzo pianeta del sistema Novandra, galassia Cygnix.</li>
+        <li><strong>Clima:</strong> Gelido e stabile; tormente di cristalli di ghiaccio che riducono la visibilità a pochi metri.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno sufficiente, ma a temperature che bruciano i polmoni senza riscaldatori d'aria.</li>
+        <li><strong>Gravità:</strong> 0,57 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 37 ore standard.</li>
+        <li><strong>Satelliti:</strong> Torilliven-a.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Thugri di disgelo</strong> <em>(Muschio stagionale)</em> — Ricopre in pochi giorni le rive dei laghi estivi, poi si incista e sopravvive congelato per il resto dell'anno.</li>
+        <li><strong>Nyrek dei geyser</strong> <em>(Colonia chemiosintetica)</em> — Pinnacoli minerali abitati da microrganismi attorno alle bocche criovulcaniche.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Zenvasvas delle fratture</strong> <em>(Predatore criofilo)</em> — Corpo allungato e privo di occhi, si muove nell'acqua salata delle fratture cacciando per vibrazione.</li>
+        <li><strong>Draith scavaghiaccio</strong> <em>(Tunnellatore)</em> — Scioglie il ghiaccio con secrezioni calde e scava gallerie abitate da intere colonie.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Torilliven. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="novandra-iii" data-type="glaciale" data-color="#7fd1d9" data-size="1.508"
+      data-pois='[{"name":"Arca Radicata","lat":35,"lon":-30,"desc":"Prima Arca di Vento trasformata in città."},{"name":"Pozzi di Pesca","lat":30,"lon":15,"desc":"Condotti verso l&#39;oceano sotterraneo."},{"name":"Crepaccio dei Canti","lat":40,"lon":75,"desc":"Luogo di insegnamento dei Canti."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Thissari</h2>
+      <p>I Thissari sono avianoidi alti e snelli, con ossa cave, un piumaggio fitto bianco e grigio perla e grandi membrane tra le braccia e i fianchi. Non volano davvero, ma nella gravità leggera e nell'aria densa e fredda di Thissos planano per chilometri giù dalle scogliere di ghiaccio.</p>
+      <p>Hanno occhi enormi adatti alla lunga notte polare e una voce capace di due note contemporaneamente. Tutta la loro memoria collettiva è affidata ai <strong>Canti di Rotta</strong>, che ogni Thissari impara prima ancora di saper leggere.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Clima:</strong> a loro agio fino a −60 °C; sopra i 20 °C soffrono come un umano nel deserto.</li>
+        <li><strong>Ciclo vitale:</strong> depongono uova in covate comuni; maturità a trent'anni, vita fino a 300.</li>
+        <li><strong>Orientamento:</strong> percepiscono i campi magnetici, e riconoscono le stelle a occhio nudo con una precisione da strumento.</li>
+        <li><strong>Muta:</strong> ogni pochi anni cambiano completamente il piumaggio; il colore delle nuove piume segna l'età e il rango nello stormo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>I Thissari vivono in <strong>Stormi</strong>, clan nomadi che si spostano seguendo stagioni e rotte. Il <strong>Consiglio degli Stormi</strong> si riunisce su Thissos una volta ogni ciclo migratorio; la guida passa a rotazione allo stormo che ha compiuto il viaggio più lungo.</p>
+      <p>Ogni stormo ha una <strong>Guida di Rotta</strong>, l'anziano che conosce più Canti. Contraddire una Guida su una rotta è impensabile; contraddirla su tutto il resto è considerato sano.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Canti di Rotta:</strong> poemi lunghissimi che codificano posizioni stellari, venti e distanze. Un Thissari che dimentica un verso può mandare fuori rotta un'arca.</li>
+        <li><strong>Vetro:</strong> il vetro soffiato è la loro arte principale — finestre, vele solari, strumenti. Il vetro di Peraist è venduto in tutta la Frontiera.</li>
+        <li><strong>Ospitalità del freddo:</strong> a un ospite si offre il posto più caldo del nido. Per un umano, significa comunque dormire sotto zero.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Thissari hanno lasciato il loro pianeta circa <strong>2.200 anni fa</strong> a bordo delle <strong>Arche di Vento</strong>: navi generazionali spinte da vele solari larghe centinaia di chilometri, che impiegavano secoli a raggiungere i sistemi vicini. Così hanno colonizzato Cygnix, un volo lento alla volta.</p>
+      <p>Solo <strong>350 anni fa</strong> hanno acquistato dai Coralith i primi reticoli di salto. Molti stormi tradizionalisti continuano a viaggiare a vela, sostenendo che una rotta raggiunta in un istante non entra nei Canti.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Thissari vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Piccoli caldi». Simpatici, curiosi, sempre di fretta. Gli ingegneri umani adorano le vele solari Thissari, e i Thissari adorano vedere gli umani provare a costruirle.</li>
+        <li><strong>Quorai:</strong> Rapporti cordiali e distanti: i Thissari vendono vetro di Peraist e comprano acqua pesante. Nessuno dei due popoli sopporterebbe il clima dell'altro per più di un'ora.</li>
+        <li><strong>Velmyr:</strong> Amici antichi. Condividono l'archivio delle rotte di Cygnix e una passione quasi religiosa per le mappe stellari.</li>
+        <li><strong>Ythar:</strong> Pochi contatti. I Canti li ricordano come «foreste che volano» e raccomandano di non accettare i loro semi.</li>
+        <li><strong>Coralith:</strong> Rispetto e un debito: i reticoli di salto hanno cambiato la civiltà Thissari in una generazione. Alcuni stormi non l'hanno mai perdonato.</li>
+        <li><strong>Vaelun:</strong> «Fratelli del vento». I Thissari e i Vaelun si capiscono senza traduttori: entrambi cantano per ricordare. Uno stormo intero vive in pellegrinaggio permanente attorno a Othouven Major.</li>
+        <li><strong>Kheprani:</strong> I Thissari non capiscono perché i Kheprani si agitino al loro passaggio. I Canti più vecchi, però, parlano di «nidi d'insetti» sui mondi caldi dove gli antenati cacciavano.</li>
+        <li><strong>Nexari:</strong> Le macchine chiedono spesso di registrare i Canti di Rotta. I Thissari acconsentono, ma cantano solo le versioni «per ospiti».</li>
+        <li><strong>Ashkaari:</strong> I Canti più antichi parlano di una «luce verde caduta dal cielo» sulle nevi di Thissos prima della prima migrazione. I Thissari sospettano che fosse Ashkaari.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Arca Radicata:</strong> La prima Arca di Vento, atterrata e trasformata in città. Le sue vele sono ancora stese sul ghiaccio come un lago di vetro.</li>
+        <li><strong>Pozzi di Pesca:</strong> Condotti profondi fino all'oceano sotterraneo, dove i pescatori scendono appesi a funi di vetro filato.</li>
+        <li><strong>Crepaccio dei Canti:</strong> Frattura dove l'eco moltiplica la voce; qui gli stormi insegnano i Canti ai giovani.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Anziana Pescatrice Kiv:</strong> Scende nei Pozzi da ottant'anni e dice di conoscere per nome le creature dell'oceano nero.</li>
+        <li><strong>Stormo-guida Tessar:</strong> Leader dei tradizionalisti, contrario ai reticoli di salto e al commercio con le altre specie.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Nei Pozzi di Pesca più profondi, le funi tornano su a volte annodate in modi che nessun Thissari sa fare. I pescatori lasciano in cambio un verso di Canto inciso nel vetro.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-thissari">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Bazar delle Rotte</p>
+          <p class="market-tagline">Stormo di Nevealta · si accettano crediti, vetro e buoni canti</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="vele">Vele & Scafi</button>
+          <button type="button" class="market-filter-btn" data-filter="vetro">Vetro di Peraist</button>
+          <button type="button" class="market-filter-btn" data-filter="vesti">Piumaggi & Vesti</button>
+          <button type="button" class="market-filter-btn" data-filter="mappe">Canti di Rotta</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="vele">
+                <div class="product-card-image">⛵</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vele & Scafi</span>
+                  <span class="product-card-name">Vela Solare da Scialuppa</span>
+                  <p class="product-card-desc">Membrana di vetro filato larga due chilometri, ripiegabile in una cassa. Nessun carburante, molta pazienza.</p>
+                  <span class="product-card-price">68.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vele">
+                <div class="product-card-image">🪁</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vele & Scafi</span>
+                  <span class="product-card-name">Aliante da Scogliera</span>
+                  <p class="product-card-desc">Ali rigide per planare nelle atmosfere dense e fredde. Consigliato solo a chi pesa poco.</p>
+                  <span class="product-card-price">4.100 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vetro">
+                <div class="product-card-image">🔍</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vetro di Peraist</span>
+                  <span class="product-card-name">Lente di Peraist</span>
+                  <p class="product-card-desc">Vetro ottico senza difetti, soffiato a mano. I telescopi Velmyr ne usano migliaia.</p>
+                  <span class="product-card-price">2.600 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vetro">
+                <div class="product-card-image">🏮</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vetro di Peraist</span>
+                  <span class="product-card-name">Lanterna del Freddo</span>
+                  <p class="product-card-desc">Vetro che assorbe luce di giorno e la restituisce per tutta la notte polare.</p>
+                  <span class="product-card-price">380 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vesti">
+                <div class="product-card-image">🧣</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Piumaggi & Vesti</span>
+                  <span class="product-card-name">Mantello di Piume di Muta</span>
+                  <p class="product-card-desc">Tessuto con piume cadute dopo la muta, caldo fino a −70 °C. Donarlo è segno di grande amicizia.</p>
+                  <span class="product-card-price">1.700 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vesti">
+                <div class="product-card-image">🥶</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Piumaggi & Vesti</span>
+                  <span class="product-card-name">Tuta da Nido per Ospiti Caldi</span>
+                  <p class="product-card-desc">Termica e imbottita, pensata per i visitatori che trovano «tiepido» un nido Thissari.</p>
+                  <span class="product-card-price">950 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="mappe">
+                <div class="product-card-image">📜</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Canti di Rotta</span>
+                  <span class="product-card-name">Canto di Rotta per Ospiti</span>
+                  <p class="product-card-desc">Un poema navigabile verso tre sistemi di Cygnix, con traduzione in coordinate standard. Versione ufficiale, quindi incompleta.</p>
+                  <span class="product-card-price">5.200 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

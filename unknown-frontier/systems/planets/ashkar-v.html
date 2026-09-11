@@ -7,33 +7,299 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-ashkaari.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ashkar.html">← <span>Ashkar</span></a>
+  <span class="topbar-planet-name">Ashkar V</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Ashkar V</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Ashkar V</h1>
+      <span class="placeholder-badge">Mondo Natale Ashkaari</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Ashkaari</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~70 milioni</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Ashkar V è un oceano caldo e poco profondo punteggiato di arcipelaghi, e un tempo era il cuore dell'Egemonia di Ashkar. Oggi le sue città più grandi sono sommerse: torri di pietra verde che emergono dall'acqua come dita, ricoperte di funghi luminosi.</p>
+      <p>Gli Ashkaari superstiti vivono lungo le coste e nelle parti ancora emerse delle antiche capitali. La popolazione cala ogni generazione, e intere isole vengono lasciate all'oceano senza rimpianti apparenti.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quinto pianeta del sistema Ashkar, galassia Vandrel.</li>
+        <li><strong>Clima:</strong> Umido e temperato, con uragani permanenti nelle fasce tropicali e nebbie perenni alle alte latitudini.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 30%: respirabile, ma ogni scintilla rischia di diventare un incendio.</li>
+        <li><strong>Gravità:</strong> 1,17 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 29 ore standard.</li>
+        <li><strong>Satelliti:</strong> Ashkar V-a, Ashkar V-b, Ashkar V-c.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Korkormir galleggiante</strong> <em>(Isola vegetale)</em> — Intrecci di radici e gas che formano isole larghe chilometri, con ecosistemi propri; migrano con le correnti.</li>
+        <li><strong>Torven a vela</strong> <em>(Pianta di superficie)</em> — Foglie rigide che fanno da vela: la pianta naviga controvento cambiando l'inclinazione delle lamine.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Drovelael corazzato</strong> <em>(Crostaceo di scogliera)</em> — Grande quanto un veicolo leggero, filtra l'acqua con appendici piumate; pacifico, a meno di bloccargli la ritirata.</li>
+        <li><strong>Nelvasul d'abisso</strong> <em>(Leviatano)</em> — Sagome lunghe oltre duecento metri rilevate dal sonar a grande profondità; salgono in superficie solo durante le tempeste.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Ashkar V. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ashkar-v" data-type="oceanico" data-color="#4d7ea8" data-size="1.941"
+      data-pois='[{"name":"Ashkar la Sommersa","lat":8,"lon":15,"desc":"Antica capitale sommersa."},{"name":"Baia dei Trapianti","lat":-20,"lon":70,"desc":"Lagune delle cerimonie di trapianto."},{"name":"Cantiere Silente","lat":30,"lon":-100,"desc":"Ultime navi dell&#39;Egemonia."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Ashkaari</h2>
+      <p>Un Ashkaari è due creature in una. L'<strong>ospite</strong> è un anfibio alto e curvo, dalla pelle verde scuro e liscia, con occhi dorati e dita palmate; il <strong>simbionte</strong> è un fungo filamentoso che cresce lungo la spina dorsale e nel cranio, formando una cresta di corolle pallide e luminescenti.</p>
+      <p>Il fungo conserva i ricordi. Quando un ospite muore, i filamenti vengono trapiantati in un nuovo corpo giovane, che eredita la memoria di tutte le vite precedenti. Alcune linee di simbionti ricordano quarantamila anni di storia — e sono, dicono gli Ashkaari, molto stanche.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Memoria ancestrale:</strong> un Ashkaari anziano può ricordare eventi vissuti da decine di ospiti diversi, in lingue che nessuno parla più.</li>
+        <li><strong>Ambiente:</strong> anfibi, prosperano in climi umidi e caldi; il simbionte muore se l'ospite si disidrata.</li>
+        <li><strong>Declino:</strong> i funghi più antichi producono sempre meno spore. La popolazione Ashkaari si riduce da secoli.</li>
+        <li><strong>Fatalismo:</strong> sapere come sono finiti cento imperi prima del proprio rende difficile credere che il prossimo possa andare diversamente.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Ciò che resta degli Ashkaari è guidato dal <strong>Collegio della Memoria</strong>, formato dai portatori delle linee di simbionti più antiche. Il Collegio non comanda: ricorda, e consiglia sulla base di ciò che è già accaduto.</p>
+      <p>Un tempo esisteva l'<strong>Egemonia di Ashkar</strong>, che si estendeva su centinaia di sistemi. Poi due galassie si scontrarono: Vandrel nacque da quella collisione, e l'Egemonia non sopravvisse. Le rovine di Ruinvale sono tra le poche rimaste visibili.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Archivi viventi:</strong> su Kethra II i simbionti dei morti che non hanno trovato un nuovo ospite vengono coltivati in foreste-archivio consultabili.</li>
+        <li><strong>Proverbi:</strong> gli Ashkaari rispondono spesso alle domande con detti antichi. Non per evasività, dicono, ma perché la risposta è già stata data.</li>
+        <li><strong>La Semina:</strong> un tabù. Il Collegio non ne parla con gli stranieri, e neppure con i giovani ospiti.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>Gli Ashkaari viaggiavano tra le stelle circa <strong>40.000 anni fa</strong>, molto prima di qualsiasi altra civiltà conosciuta. Le loro navi erano coltivate e cristallizzate insieme, con tecnologie che oggi ricordano perfettamente ma non sanno più ricostruire.</p>
+      <p>Oggi possiedono meno di cento navi funzionanti, tutte antichissime. Ognuna è considerata insostituibile e viene usata solo per i pellegrinaggi agli archivi e per i rari viaggi diplomatici.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Ashkaari vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Un'altra primavera». Il Collegio ha visto molte specie giovani crescere in fretta; quasi tutte si sono bruciate. Guarda gli umani con affetto e senza speranza.</li>
+        <li><strong>Quorai:</strong> Mercanti avidi e sinceri. Le Madri di Fondale ricordano quasi quanto un simbionte, e il Collegio le considera le uniche interlocutrici alla sua altezza.</li>
+        <li><strong>Velmyr:</strong> Fanno sempre la stessa domanda: perché somigliano agli umani. Il Collegio risponde sempre con lo stesso proverbio: «Due semi dello stesso vento non si conoscono».</li>
+        <li><strong>Ythar:</strong> I figli del Coro vengono in pellegrinaggio su Kethra II per ascoltare le spore della memoria. Il Collegio li accoglie e non conferma nulla.</li>
+        <li><strong>Coralith:</strong> Studiosi rispettosi delle rovine dell'Egemonia. Il Collegio ricorda il tempo in cui i Coralith erano ancora cristalli senza pensiero.</li>
+        <li><strong>Vaelun:</strong> Il Grande Canto ricorda gli Ashkaari, e non con gentilezza. Il Collegio non contesta: la memoria dei Vaelun è quasi lunga quanto la sua.</li>
+        <li><strong>Kheprani:</strong> Saccheggiatori di rovine. Il Collegio vende loro mappe di siti ormai vuoti, e tace su quelli che non lo sono.</li>
+        <li><strong>Nexari:</strong> Il Collegio conosceva i Costruttori di Pyxis. Sa dove sono andati. Considera la domanda dei Nexari la più triste della galassia, e per questo non risponde.</li>
+        <li><strong>Thissari:</strong> «I figli della luce verde». Il Collegio ricorda un'antica nave caduta sulle nevi di Thissos, e non ha mai detto ai Thissari cosa trasportasse.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Ashkar la Sommersa:</strong> L'antica capitale dell'Egemonia, ora in gran parte sotto il mare. Le sue torri più alte ospitano ancora il Collegio della Memoria.</li>
+        <li><strong>Baia dei Trapianti:</strong> Lagune calde dove i simbionti vengono trasferiti da un ospite morente a uno giovane, in cerimonie che durano giorni.</li>
+        <li><strong>Cantiere Silente:</strong> Isola dove riposano le ultime navi funzionanti dell'Egemonia, curate come reliquie.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Decana Oluveth dei Mille Ospiti:</strong> Portatrice della linea di simbionti più antica, oltre quarantamila anni di memoria. Parla raramente, e quasi sempre di cose che non sono ancora successe.</li>
+        <li><strong>Giovane Ospite Sarrik:</strong> Ha ricevuto un simbionte antichissimo a sedici anni e non riesce più a distinguere i propri ricordi da quelli ereditati. Il Collegio lo osserva con preoccupazione.</li>
+        <li><strong>Prof. Anika Sørensen:</strong> Archeologa terrestre che vive ad Ashkar la Sommersa da dodici anni. È l'unica umana a cui il Collegio abbia mai risposto con qualcosa di diverso da un proverbio.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Nel punto più profondo sotto Ashkar la Sommersa esiste una camera asciutta, sigillata prima della collisione delle galassie. Il Collegio sa cosa contiene. Ogni linea di simbionti che lo ricorda si rifiuta di ricordarlo ad alta voce.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-ashkaari">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Bottega della Memoria</p>
+          <p class="market-tagline">Ogni oggetto è più antico della vostra specie · nessun reso</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="reliquie">Reliquie</button>
+          <button type="button" class="market-filter-btn" data-filter="memorie">Memorie Fungine</button>
+          <button type="button" class="market-filter-btn" data-filter="mappe">Mappe Antiche</button>
+          <button type="button" class="market-filter-btn" data-filter="tecnologie">Tecnologie Perdute</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="reliquie">
+                <div class="product-card-image">🏺</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Reliquie</span>
+                  <span class="product-card-name">Anfora dell'Egemonia</span>
+                  <p class="product-card-desc">Contenitore sigillato da trentamila anni. Il contenuto è ignoto; il Collegio sconsiglia di aprirla, ma non lo vieta.</p>
+                  <span class="product-card-price">12.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="reliquie">
+                <div class="product-card-image">🪬</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Reliquie</span>
+                  <span class="product-card-name">Sigillo di Ruinvale</span>
+                  <p class="product-card-desc">Disco di metallo verde che si scalda vicino alle rovine Ashkaari. Utile, se si sa cosa si cerca.</p>
+                  <span class="product-card-price">4.300 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="memorie">
+                <div class="product-card-image">🍄</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Memorie Fungine</span>
+                  <span class="product-card-name">Spora del Ricordo</span>
+                  <p class="product-card-desc">Un'ora vissuta da un ospite di migliaia di anni fa, respirata in un sogno. Effetti collaterali: nostalgia di luoghi mai visti.</p>
+                  <span class="product-card-price">2.800 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="memorie">
+                <div class="product-card-image">🌿</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Memorie Fungine</span>
+                  <span class="product-card-name">Talea d'Archivio</span>
+                  <p class="product-card-desc">Frammento di foresta-archivio da coltivare in serra. Cresce lentamente e, secondo alcuni, sussurra.</p>
+                  <span class="product-card-price">9.900 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="mappe">
+                <div class="product-card-image">🗺</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Mappe Antiche</span>
+                  <span class="product-card-name">Mappa delle Rovine Minori</span>
+                  <p class="product-card-desc">Coordinate di dodici siti dell'Egemonia. Probabilmente già saccheggiati. Probabilmente.</p>
+                  <span class="product-card-price">6.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="tecnologie">
+                <div class="product-card-image">🔮</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Tecnologie Perdute</span>
+                  <span class="product-card-name">Nucleo di Nave Cristallizzato</span>
+                  <p class="product-card-desc">Frammento di motore dell'Egemonia, ancora attivo. Nessuno sa farlo funzionare; tutti vogliono provarci.</p>
+                  <span class="product-card-price">88.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="tecnologie">
+                <div class="product-card-image">💚</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Tecnologie Perdute</span>
+                  <span class="product-card-name">Lanterna della Luce Verde</span>
+                  <p class="product-card-desc">Emette una luce verde costante da un'epoca precedente alla collisione delle galassie. Non si spegne.</p>
+                  <span class="product-card-price">15.000 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

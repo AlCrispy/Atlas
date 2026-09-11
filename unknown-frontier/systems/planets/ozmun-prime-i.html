@@ -7,34 +7,160 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ozmun-prime.html">← <span>Ozmun Prime</span></a>
+  <span class="topbar-planet-name">Urend</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Urend</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta roccioso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta roccioso</p>
+      <h1 class="placeholder-title">Urend</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta roccioso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">1 rilevato</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,90 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−120 °C / +140 °C</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Sottile, azotata</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Mondo roccioso e silenzioso, Urend orbita come primo pianeta di Ozmun Prime. Da orbita appare grigio e uniforme; da vicino rivela canyon profondi chilometri e faglie ancora attive.</p>
+      <p>Il sottosuolo è ricco di metalli pesanti: le compagnie minerarie hanno già presentato tre richieste di concessione al Direttorato Coloniale.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Ozmun Prime, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Assente in senso stretto: giorni roventi e notti glaciali si alternano senza alcuna mediazione atmosferica.</li>
+        <li><strong>Atmosfera:</strong> Sottile velo di azoto, irrespirabile ma sufficiente a trasportare polvere fine.</li>
+        <li><strong>Gravità:</strong> 0,90 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 81 ore standard.</li>
+        <li><strong>Satelliti:</strong> Urend-a.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Urend dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ozmun-prime-i" data-type="roccioso" data-color="#8c8378" data-size="1.183"
+      data-pois='[{"name":"Pianura Ithvasdro","lat":-58,"lon":-151,"desc":"Distesa basaltica sotto cui il radar ha rilevato strutture rettilinee."},{"name":"Tunnel di Khathuvas","lat":13,"lon":-10,"desc":"Ingresso della principale rete di tunnel lavici fossili."},{"name":"Faglia di Khaothdro","lat":50,"lon":-65,"desc":"Frattura attiva da cui provengono le scosse più intense."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Ulkha dei tunnel</strong> <em>(Tappeti microbici)</em> — Pellicole viola che rivestono le pareti dei tunnel di lava, alimentate dal calore residuo del sottosuolo.</li>
+        <li><strong>Thuny delle faglie</strong> <em>(Licheni litotrofi)</em> — Croste nere che si nutrono di ferro e zolfo, crescono di un millimetro ogni secolo nelle fessure ombreggiate.</li>
+        <li><strong>Torkha di brina</strong> <em>(Spore criptobiotiche)</em> — Spore dormienti che si riattivano per poche ore quando la brina dell'alba si scioglie.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Saedro scavaroccia</strong> <em>(Invertebrato litofago)</em> — Organismo segmentato lungo un palmo che scava gallerie nutrendosi di minerali; le sue gallerie spiegano parte delle vibrazioni rilevate.</li>
+        <li><strong>Othmir d'ombra</strong> <em>(Predatore lento)</em> — Creatura piatta e opaca che vive sotto le lastre di roccia e aspetta per settimane che qualcosa ci passi sopra.</li>
+        <li><strong>Syven sismico</strong> <em>(Organismo coloniale)</em> — Migliaia di individui microscopici che si muovono in sincronia, generando le scosse ritmiche registrate dalle sonde.</li>
+        <li><strong>Ulthu dei crateri</strong> <em>(Filtratore sessile)</em> — Coni di guscio minerale che intrappolano la polvere trasportata dalle tempeste e ne estraggono composti organici.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Micrometeoriti:</strong> Pioggia costante di detriti ad alta velocità, capace di perforare scafi leggeri e habitat non schermati.</li>
+        <li><strong>Collassi dei tunnel:</strong> Le gallerie laviche sono instabili: le scosse ritmiche possono farne crollare interi tratti senza preavviso.</li>
+        <li><strong>Polvere elettrostatica:</strong> Particelle finissime che aderiscono a visori e giunti, cortocircuitano l'elettronica e si infilano in ogni guarnizione.</li>
+        <li><strong>Lastre termiche:</strong> Rocce fratturate dagli sbalzi di temperatura che cedono sotto il peso di un veicolo, aprendo crepacci improvvisi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Urend consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Urend. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-8355 · Sonda Astrolabio</h3>
+      <p><strong>Struttura sepolta.</strong> Il radar a penetrazione ha restituito il profilo di mura rettilinee sotto una pianura basaltica. Nessuna civiltà nota ha mai reclamato questo sistema.</p>
+      <h3>RS-6836 · NRS Kestrel-4</h3>
+      <p><strong>Relitto non identificato.</strong> Scafo di foggia sconosciuta incastrato nella parete di un canyon, con segni di impatto vecchi di almeno ottomila anni.</p>
+      <h3>RS-6402 · Sonda Astrolabio</h3>
+      <p><strong>Segnale periodico.</strong> Un impulso radio debole, ripetuto ogni 71 ore, proveniente dal polo sud. La sorgente non è stata localizzata.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

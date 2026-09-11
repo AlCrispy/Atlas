@@ -1,0 +1,103 @@
+/* Shared structure for race-themed Mercato tabs (`.market-shell` +
+   `.market-{race}`). Load after market-industrial.css (unscoped carousel
+   layout driven by --mk-* tokens) and before the race theme file, which
+   sets the tokens and overrides whatever it wants to restyle. Markup:
+   .market-shell > .market-shell-body (heading, filters, carousel, dots)
+                 + .market-reveal (theme-specific open animation, 3 spans). */
+
+.market-shell {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background: var(--mk-void);
+  overflow: hidden;
+}
+
+.market-shell-body {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 56px 32px 60px;
+}
+
+.market-shell .market-heading { text-align: center; margin-bottom: 28px; }
+.market-shell .market-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--mk-text);
+}
+.market-shell .market-tagline {
+  margin-top: 6px;
+  font-size: 0.82rem; font-style: italic; color: var(--mk-text-dim);
+}
+
+.market-shell .market-filters {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-bottom: 26px;
+}
+.market-shell .market-filter-btn {
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.56rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 9px 18px;
+  background: var(--mk-panel-lt); border: 1px solid var(--mk-steel);
+  color: var(--mk-text-dim);
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.market-shell .market-filter-btn:hover { color: var(--mk-yellow); border-color: var(--mk-steel-lt); }
+.market-shell .market-filter-btn.active {
+  color: var(--mk-void); background: var(--mk-yellow); border-color: var(--mk-yellow);
+}
+
+/* Breathing room so hover lifts and floating card animations aren't
+   clipped by the viewport's overflow:hidden; the negative margin keeps the
+   overall layout where it was. */
+.market-shell .market-carousel-viewport { padding: 12px 0; margin: -12px 0; }
+
+.market-shell .product-card {
+  flex: 0 0 240px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  background: var(--mk-panel-lt); border: 1px solid var(--mk-steel);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.market-shell .product-card:hover { border-color: var(--mk-yellow); transform: translateY(-3px); }
+
+.market-shell .product-card-image {
+  width: 100%; aspect-ratio: 4 / 3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+  border-bottom: 1px solid var(--mk-steel);
+}
+
+.market-shell .product-card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.market-shell .product-card-category {
+  font-family: 'Orbitron', sans-serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--mk-orange);
+}
+.market-shell .product-card-name {
+  font-family: 'Orbitron', sans-serif; font-size: 0.85rem;
+  font-weight: 700; color: var(--mk-text);
+}
+.market-shell .product-card-desc {
+  font-size: 0.85rem; color: var(--mk-text-dim);
+  line-height: 1.6; flex: 1;
+}
+.market-shell .product-card-price {
+  font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.05em; color: var(--mk-yellow);
+  margin-top: 4px;
+}
+
+.market-shell .market-reveal {
+  position: absolute; inset: 0; z-index: 5;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .market-shell .product-card { flex-basis: 200px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-shell *, .market-shell::before, .market-shell::after { animation: none !important; }
+  .market-shell .market-reveal { display: none; }
+}

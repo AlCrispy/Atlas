@@ -7,34 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../rakthos.html">← <span>Rakthos</span></a>
+  <span class="topbar-planet-name">Rakthos IV</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Rakthos IV</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Rakthos IV</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">Nessuno rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">Nessuno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,14 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+18 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Ricca di ossigeno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Moderata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Rakthos IV è il quarto pianeta del sistema Rakthos: un unico oceano che avvolge il globo, profondo fino a sessanta chilometri, interrotto solo da arcipelaghi vulcanici.</p>
+      <p>Le maree, spinte dai satelliti, sollevano onde lunghe che percorrono l'intero pianeta senza incontrare ostacoli.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Rakthos, galassia Zhorn.</li>
+        <li><strong>Clima:</strong> Umido e temperato, con uragani permanenti nelle fasce tropicali e nebbie perenni alle alte latitudini.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 30%: respirabile, ma ogni scintilla rischia di diventare un incendio.</li>
+        <li><strong>Gravità:</strong> 1,14 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 33 ore standard.</li>
+        <li><strong>Satelliti:</strong> nessuno rilevato.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Rakthos IV dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="rakthos-iv" data-type="oceanico" data-color="#3f5fb0" data-size="1.809"
+      data-pois='[{"name":"Fossa di Rekdra","lat":43,"lon":37,"desc":"Punto più profondo dell&#39;oceano, sede di leviatani e sorgenti idrotermali."},{"name":"Spirale di Mirul","lat":41,"lon":113,"desc":"Struttura geometrica sul fondale, di origine sconosciuta."},{"name":"Occhio di Mirorrdra","lat":-43,"lon":-34,"desc":"Uragano permanente osservato da secoli."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Othgri a vela</strong> <em>(Pianta di superficie)</em> — Foglie rigide che fanno da vela: la pianta naviga controvento cambiando l'inclinazione delle lamine.</li>
+        <li><strong>Velym di marea</strong> <em>(Alga a nastro)</em> — Nastri lunghi centinaia di metri che si ancorano alle scogliere e si allungano con l'alta marea.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Ulquo delle isole</strong> <em>(Anfibio arboricolo)</em> — Vive sulle isole galleggianti e nuota da una all'altra; costruisce nidi con alghe intrecciate.</li>
+        <li><strong>Ulquooth cantore</strong> <em>(Mammifero marino)</em> — Emette canti a bassa frequenza che viaggiano per migliaia di chilometri; alcuni schemi sembrano rispondere ai segnali delle sonde.</li>
+        <li><strong>Ymdroath a medusa</strong> <em>(Colonia fluttuante)</em> — Campane trasparenti larghe decine di metri con filamenti urticanti lunghi un chilometro.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Corrosione salina:</strong> Aerosol carichi di sale che degradano giunti, filtri ed elettronica in pochi giorni di esposizione.</li>
+        <li><strong>Uragani permanenti:</strong> Tempeste vecchie di secoli con venti oltre i trecento chilometri orari; aggirarle allunga di giorni ogni tragitto.</li>
+        <li><strong>Filamenti urticanti:</strong> Tossine neurotossiche delle colonie fluttuanti, capaci di attraversare i tessuti delle mute standard.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico autorizza sbarchi solo con tute sigillate e supporto orbitale attivo: Rakthos IV non perdona le distrazioni.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Rakthos IV. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-7658 · NRS Ardea</h3>
+      <p><strong>Risposta delle correnti.</strong> Tre sonde diverse hanno registrato deviazioni delle correnti locali entro un'ora dal loro ammaraggio. Coincidenza, secondo il rapporto ufficiale.</p>
+      <h3>RS-1973 · NRS Halcyon</h3>
+      <p><strong>Struttura sommersa.</strong> Il sonar ha mappato una formazione a spirale perfetta sul fondale, larga undici chilometri, priva di sedimenti come se venisse pulita.</p>
+      <h3>RS-4164 · Sonda Lucerna-2</h3>
+      <p><strong>Canto strutturato.</strong> Le vocalizzazioni dei mammiferi marini contengono pattern ricorsivi compatibili con un linguaggio. Analisi in corso.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

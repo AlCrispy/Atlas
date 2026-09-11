@@ -7,33 +7,284 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ferrandis.html">← <span>Ferrandis</span></a>
+  <span class="topbar-planet-name">Creeith Shard</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Creeith Shard</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta glaciale</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta glaciale</p>
+      <h1 class="placeholder-title">Creeith Shard</h1>
+      <span class="placeholder-badge">Colonia di Ricerca Terrestre</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta glaciale</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Umani</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~180.000</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Creeith Shard è una scheggia di ghiaccio azzurro dove il Consorzio Terrestre ha scommesso una fortuna. Sotto venti chilometri di crosta si nasconde un oceano liquido, e nel ghiaccio sopra di esso sono intrappolati isotopi che non esistono in nessun altro luogo conosciuto: il «ghiaccio di Creeith», combustibile per reattori di nuova generazione.</p>
+      <p>La colonia vive in habitat semi-interrati riscaldati dai reattori, collegati da tunnel scavati nel ghiaccio. Metà dei coloni sono ricercatori del Reparto Scientifico, l'altra metà minatori a contratto della Gilda dei Naviganti. Le due metà non si sopportano.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Terzo pianeta del sistema Ferrandis, galassia Via Lattea.</li>
+        <li><strong>Clima:</strong> Glaciale perenne, con venti catabatici che scendono dagli altipiani a velocità da uragano.</li>
+        <li><strong>Atmosfera:</strong> Azoto e tracce di metano; irrespirabile e abbastanza fredda da cristallizzare l'umidità del respiro.</li>
+        <li><strong>Gravità:</strong> 1,10 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 53 ore standard.</li>
+        <li><strong>Satelliti:</strong> Creeith Shard-a, Creeith Shard-b.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Ulquodra a lanterna</strong> <em>(Fungo bioluminescente)</em> — Cresce nelle caverne di ghiaccio e ne illumina le pareti di azzurro; si nutre di sali trasportati dall'acqua di fusione.</li>
+        <li><strong>Griael di disgelo</strong> <em>(Muschio stagionale)</em> — Ricopre in pochi giorni le rive dei laghi estivi, poi si incista e sopravvive congelato per il resto dell'anno.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Quoath d'aurora</strong> <em>(Volatore elettrico)</em> — Piccolo e luminescente, sembra orientarsi seguendo le aurore; si raduna in stormi prima delle tempeste magnetiche.</li>
+        <li><strong>Athsy a pelliccia</strong> <em>(Erbivoro migratore)</em> — Mandrie di grandi animali dal pelo cavo e isolante che attraversano gli altipiani seguendo il disgelo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Creeith Shard. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ferrandis-iii" data-type="glaciale" data-color="hsl(170, 53%, 65%)" data-size="1.662"
+      data-pois='[{"name":"Stazione Abisso-7","lat":-48,"lon":20,"desc":"Trivella verso l&#39;oceano sotterraneo."},{"name":"Borgo Brina","lat":-35,"lon":5,"desc":"Insediamento principale della colonia."},{"name":"Cave di Creeith","lat":-40,"lon":60,"desc":"Estrazione degli isotopi del ghiaccio."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Umani</h2>
+      <p>Gli umani sono bipedi a sangue caldo originari della Terra, nel Sistema Solare. Rispetto alla maggior parte delle specie della Frontiera sono fragili: tollerano una fascia ristretta di temperature e pressioni, dipendono da ossigeno e acqua dolce e vivono poco più di un secolo, anche con le terapie di prolungamento.</p>
+      <p>Compensano con un'adattabilità fuori dal comune. Nessun'altra specie conosciuta ha colonizzato ghiacci, deserti e stazioni orbitali in così poco tempo, e nessun'altra cambia così spesso idea su come farlo.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Respirazione:</strong> ossigeno al 18–25%; al di fuori servono respiratori o habitat sigillati.</li>
+        <li><strong>Ciclo vitale:</strong> maturità a circa vent'anni, aspettativa di vita coloniale tra 90 e 120 anni.</li>
+        <li><strong>Punto di forza:</strong> tolleranza allo stress e capacità di improvvisare con strumenti di fortuna; i Coralith lo chiamano «rumore creativo».</li>
+        <li><strong>Punto debole:</strong> sistemi immunitari impreparati ai patogeni alieni; ogni colonia ha il suo reparto di quarantena.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Le colonie di frontiera rispondono al <strong>Direttorato Coloniale</strong> del Consorzio Terrestre, che nomina un governatore per ogni insediamento. Nei fatti, però, il potere è diviso con le corporazioni che finanziano le rotte: la <strong>Gilda dei Naviganti</strong> controlla gli attracchi, l'<strong>Ordine degli Artefici</strong> l'equipaggiamento.</p>
+      <p>Lontano dalla Terra, la legge della Carta Coloniale si piega spesso alle necessità: chi controlla acqua, energia e rifornimenti conta più di qualunque decreto.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Coloni di terza generazione:</strong> molti non hanno mai visto la Terra e la considerano più un'autorità fiscale che una patria.</li>
+        <li><strong>Pluralità:</strong> lingue, religioni e blocchi regionali terrestri convivono nelle colonie, spesso in quartieri separati.</li>
+        <li><strong>Frontiera:</strong> il mito del pioniere è ovunque — nelle canzoni, nella propaganda del Direttorato e nei contratti capestro delle corporazioni.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>L'umanità ha compiuto il <strong>Primo Salto</strong> poco più di <strong>230 anni fa</strong>: la specie più giovane tra quelle che viaggiano nella Frontiera, e quella che si è espansa più in fretta.</p>
+      <p>Le navi terrestri sono scafi metallici modulari con moduli di salto certificati dalla Gilda dei Naviganti. Brutte, secondo quasi tutti gli alieni. Riparabili con quasi niente, secondo gli umani.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Terrestri vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Quorai:</strong> Partner commerciali indispensabili e contrattatori spietati. I coloni li chiamano «i Polpi», mai davanti a un ambasciatore.</li>
+        <li><strong>Velmyr:</strong> Il primo contatto ha scioccato entrambi: così simili da sembrare uno specchio. Alleati prudenti, rispettati per la disciplina, invidiati per la longevità.</li>
+        <li><strong>Ythar:</strong> Affascinanti e inquietanti. Le loro navi vive sono un sogno per i biologi del Consorzio e un incubo per gli ufficiali di quarantena.</li>
+        <li><strong>Coralith:</strong> Fornitori di tecnologia di precisione e interlocutori impossibili: ogni trattativa con i Coralith dura il triplo del previsto.</li>
+        <li><strong>Vaelun:</strong> Il Consorzio vorrebbe l'elio-3 di Othouven Major; i Vaelun vorrebbero che nessuno lo toccasse. La questione è aperta da decenni.</li>
+        <li><strong>Kheprani:</strong> Clienti affidabili per armi e macchinari, alleati impensabili. Chi ha visto un nido Kheprani da vicino non dorme tranquillo.</li>
+        <li><strong>Nexari:</strong> Nessuno sa cosa vogliano davvero. La Flotta di Sorveglianza tiene sotto osservazione ogni loro sonda che entra nella Via Lattea.</li>
+        <li><strong>Thissari:</strong> Simpatici e lontani. Le loro vele solari hanno ispirato un'intera generazione di ingegneri terrestri.</li>
+        <li><strong>Ashkaari:</strong> Una civiltà antica in rovina che sa più di quanto dica. Tre spedizioni archeologiche del Consorzio sono tornate a mani vuote, una non è tornata.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Stazione di Perforazione Abisso-7:</strong> La trivella più profonda mai costruita dall'umanità, a pochi chilometri dall'oceano sotterraneo.</li>
+        <li><strong>Borgo Brina:</strong> Il principale insediamento: habitat, serre idroponiche e l'unico bar del pianeta, «Il Crepaccio».</li>
+        <li><strong>Cave di Creeith:</strong> Gallerie di estrazione degli isotopi, illuminate dal bagliore azzurrino del ghiaccio radioattivo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Dott.ssa Amara Veltri:</strong> Direttrice scientifica della colonia. Vuole raggiungere l'oceano a ogni costo; il Direttorato vuole solo gli isotopi.</li>
+        <li><strong>Caposquadra Jonas Kade:</strong> Guida i minatori della Gilda. Ha perso tre uomini in un crollo e accusa apertamente i ricercatori di aver ignorato i rischi.</li>
+        <li><strong>Osservatore Vel'Sarin:</strong> Scienziato Velmyr ospite della colonia, ufficialmente per cooperazione. Passa le notti ad ascoltare i sensori sismici.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>I trivellatori di Abisso-7 giurano che, oltre i diciotto chilometri, i sensori registrano colpi regolari provenienti dal basso — come se qualcosa, dall'altra parte del ghiaccio, bussasse. Il registro ufficiale parla di assestamenti termici.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-industrial">
+      <div class="market-industrial-body">
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="armi">Armi</button>
+          <button type="button" class="market-filter-btn" data-filter="astronavi">Astronavi & Veicoli</button>
+          <button type="button" class="market-filter-btn" data-filter="equipaggiamento">Equipaggiamento Tattico</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">⚡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi</span>
+                  <span class="product-card-name">Fucile a Plasma Ashgate Mk.III</span>
+                  <p class="product-card-desc">Standard delle milizie coloniali. Cella ricaricabile, tre modalità di fuoco.</p>
+                  <span class="product-card-price">2.600 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">🔫</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi</span>
+                  <span class="product-card-name">Pistola a Chiodi Industriale</span>
+                  <p class="product-card-desc">Nata come utensile da cantiere, diventata l'arma più diffusa della Frontiera.</p>
+                  <span class="product-card-price">420 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="astronavi">
+                <div class="product-card-image">🚙</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Astronavi & Veicoli</span>
+                  <span class="product-card-name">Rover Cingolato «Mulo»</span>
+                  <p class="product-card-desc">Sei posti, cabina pressurizzata, autonomia di tre settimane. Brutto e indistruttibile.</p>
+                  <span class="product-card-price">38.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="astronavi">
+                <div class="product-card-image">🛰</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Astronavi & Veicoli</span>
+                  <span class="product-card-name">Navetta da Carico «Brennan-2»</span>
+                  <p class="product-card-desc">Stiva modulare, modulo di salto opzionale. Il cavallo da tiro delle colonie.</p>
+                  <span class="product-card-price">142.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="equipaggiamento">
+                <div class="product-card-image">🛡</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Equipaggiamento Tattico</span>
+                  <span class="product-card-name">Corpetto Tattico Ashgate</span>
+                  <p class="product-card-desc">Piastre in composito leggero, sigillatura ambientale per atmosfere non catalogate.</p>
+                  <span class="product-card-price">1.900 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="equipaggiamento">
+                <div class="product-card-image">🧪</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Equipaggiamento Tattico</span>
+                  <span class="product-card-name">Kit di Quarantena da Campo</span>
+                  <p class="product-card-desc">Scanner patogeni, siero ad ampio spettro e tenda sigillante. Obbligatorio per legge, spesso ignorato.</p>
+                  <span class="product-card-price">760 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-blast-door" aria-hidden="true">
+        <div class="market-door-panel market-door-left"></div>
+        <div class="market-door-panel market-door-right"></div>
+      </div>
     </div>
   </div>
 </main>

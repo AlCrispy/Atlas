@@ -7,34 +7,146 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../cerevane.html">← <span>Cerevane</span></a>
+  <span class="topbar-planet-name">Selairiceric</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Selairiceric</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Selairiceric</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">Nessuno rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">Nessuno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">2,72 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−140 °C alla sommità delle nubi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Idrogeno-elio</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Il quarto pianeta di Cerevane è un colosso di idrogeno ed elio. Selairiceric irradia più calore di quanto ne riceva dalla sua stella e ruota così in fretta da apparire schiacciato ai poli.</p>
+      <p>Il suo sistema di satelliti è quasi un sistema solare in miniatura, e le sue lune sono più interessanti del pianeta stesso.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Cerevane, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Bande atmosferiche stabili da millenni, interrotte da vortici che nascono e muoiono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno ed elio con nubi di ammoniaca, idrosolfuro d'ammonio e acqua a strati sempre più profondi.</li>
+        <li><strong>Gravità:</strong> 2,72 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 15 ore standard.</li>
+        <li><strong>Satelliti:</strong> nessuno rilevato.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Selairiceric dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="cerevane-iv" data-type="gg" data-color="#b7502a" data-size="2.149"
+      data-pois='[{"name":"Occhio di Aelorrvel","lat":20,"lon":118,"desc":"Grande tempesta ovale attiva da secoli."},{"name":"Fascia temperata Venzen","lat":-16,"lon":-108,"desc":"Strato di nubi dove vivono i galleggiatori."},{"name":"Aurora di Quothu","lat":-37,"lon":-94,"desc":"Anello aurorale polare generato dalla magnetosfera."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Biosfera</h2>
+      <p>Nessuna forma di vita rilevata nelle nubi. Il Reparto Scientifico non esclude organismi negli strati più profondi, oltre la portata delle sonde.</p>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Fulmini planetari:</strong> Scariche mille volte più potenti di quelle terrestri, capaci di vaporizzare una sonda.</li>
+        <li><strong>Correnti a getto:</strong> Venti opposti che possono strappare un aerostato in due lungo la linea di taglio.</li>
+        <li><strong>Fasce di radiazione:</strong> La magnetosfera intrappola particelle ad altissima energia: pochi minuti in orbita bassa bruciano l'elettronica non schermata.</li>
+        <li><strong>Gravità elevata:</strong> Rientrare in orbita dagli strati alti richiede spinte che pochi scafi leggeri possono garantire.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Selairiceric consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Selairiceric. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-5711 · Sonda Astrolabio</h3>
+      <p><strong>Fascia abitabile.</strong> Strato di nubi a pressione e temperatura compatibili con la vita terrestre, largo venti chilometri. Candidato per stazioni galleggianti.</p>
+      <h3>RS-8264 · NRS Tessitrice</h3>
+      <p><strong>Riserve di elio-3.</strong> Concentrazione di elio-3 sufficiente a rifornire flotte intere di reattori a fusione per secoli.</p>
+      <h3>RS-9085 · NRS Tessitrice</h3>
+      <p><strong>Sagome nelle nubi.</strong> Oggetti lenticolari larghi centinaia di metri si muovono controvento nella fascia temperata. Organici, secondo lo spettrometro.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

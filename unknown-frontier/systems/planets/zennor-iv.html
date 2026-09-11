@@ -7,34 +7,159 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../zennor.html">← <span>Zennor</span></a>
+  <span class="topbar-planet-name">Veliol</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Veliol</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Veliol</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">2,63 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−110 °C alla sommità delle nubi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Idrogeno, metano</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Veliol è il quarto pianeta del sistema Zennor: un gigante gassoso fasciato da bande color crema e ruggine, senza superficie solida su cui posarsi.</p>
+      <p>Una tempesta ovale, attiva da secoli, domina l'emisfero sud e potrebbe contenere tre Terre.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Zennor, galassia Pyxis.</li>
+        <li><strong>Clima:</strong> Tempeste perenni e fulmini grandi come continenti negli strati di nubi d'acqua.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno dominante con tracce di metano e composti organici che colorano le bande.</li>
+        <li><strong>Gravità:</strong> 2,63 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 11 ore standard.</li>
+        <li><strong>Satelliti:</strong> Veliol-a, Veliol-b, Veliol-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Veliol dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="zennor-iv" data-type="gg" data-color="#a85c3a" data-size="2.469"
+      data-pois='[{"name":"Banda di Braquo","lat":-7,"lon":-20,"desc":"Corrente a getto equatoriale, la più veloce del pianeta."},{"name":"Aurora di Rekaelvas","lat":28,"lon":-23,"desc":"Anello aurorale polare generato dalla magnetosfera."},{"name":"Occhio di Droulquo","lat":-3,"lon":-89,"desc":"Grande tempesta ovale attiva da secoli."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Othoth a zattera</strong> <em>(Tappeto sporigeno)</em> — Reti di filamenti larghe chilometri che galleggiano nella fascia temperata trattenendo gas caldi.</li>
+        <li><strong>Venath dei venti</strong> <em>(Aeroplancton)</em> — Minuscoli organismi fotosintetici trasportati dalle correnti; colorano alcune bande di sfumature rossastre.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Vasorr galleggiante</strong> <em>(Galleggiatore)</em> — Organismo simile a una mongolfiera vivente largo mezzo chilometro: scalda l'idrogeno interno per restare in quota e filtra l'aeroplancton.</li>
+        <li><strong>Vasisssy cacciatore</strong> <em>(Predatore aereo)</em> — Veloce e affusolato, caccia in branco i galleggiatori sfruttando le correnti a getto.</li>
+        <li><strong>Ultor fulminivoro</strong> <em>(Colonia elettrica)</em> — Si raduna attorno alle celle temporalesche e assorbe energia dai fulmini; brilla per ore dopo ogni tempesta.</li>
+        <li><strong>Drogri sprofondatore</strong> <em>(Organismo discendente)</em> — Minuscolo e numerosissimo, si nutre in quota finché cresce troppo e sprofonda negli strati caldi, dove muore e rilascia nutrienti.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Nessuna superficie:</strong> Qualsiasi mezzo che perda quota continua a scendere fino a essere schiacciato dalla pressione.</li>
+        <li><strong>Fasce di radiazione:</strong> La magnetosfera intrappola particelle ad altissima energia: pochi minuti in orbita bassa bruciano l'elettronica non schermata.</li>
+        <li><strong>Gravità elevata:</strong> Rientrare in orbita dagli strati alti richiede spinte che pochi scafi leggeri possono garantire.</li>
+        <li><strong>Correnti a getto:</strong> Venti opposti che possono strappare un aerostato in due lungo la linea di taglio.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Veliol consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Veliol. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-8839 · NRS Halcyon</h3>
+      <p><strong>Segnale dal vortice.</strong> Un'emissione radio modulata proviene dal centro della grande tempesta; si interrompe ogni volta che una sonda si avvicina.</p>
+      <h3>RS-6769 · NRS Kestrel-4</h3>
+      <p><strong>Sagome nelle nubi.</strong> Oggetti lenticolari larghi centinaia di metri si muovono controvento nella fascia temperata. Organici, secondo lo spettrometro.</p>
+      <h3>RS-3370 · Sonda Lucerna-2</h3>
+      <p><strong>Fascia abitabile.</strong> Strato di nubi a pressione e temperatura compatibili con la vita terrestre, largo venti chilometri. Candidato per stazioni galleggianti.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

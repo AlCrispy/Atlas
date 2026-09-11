@@ -7,34 +7,153 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../thalir-9.html">← <span>Thalir-9</span></a>
+  <span class="topbar-planet-name">Fyriven</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Fyriven</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante di ghiaccio</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante di ghiaccio</p>
+      <h1 class="placeholder-title">Fyriven</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">Nessuno rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante di ghiaccio</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">Nessuno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,28 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−215 °C alla sommità delle nubi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Metano, ammoniaca</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Fyriven, secondo pianeta di Thalir-9, è un gigante di ghiaccio con l'asse inclinato in modo estremo: ogni polo vive decenni di luce seguiti da decenni di buio.</p>
+      <p>Nel mantello profondo la pressione è tale che, secondo i modelli, il carbonio precipita come pioggia di diamanti.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Thalir-9, galassia Aurvex.</li>
+        <li><strong>Clima:</strong> Venti supersonici e tempeste scure che compaiono e scompaiono nell'arco di mesi.</li>
+        <li><strong>Atmosfera:</strong> Nubi di metano ghiacciato sopra strati di ammoniaca e idrosolfuro.</li>
+        <li><strong>Gravità:</strong> 1,28 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 15 ore standard.</li>
+        <li><strong>Satelliti:</strong> nessuno rilevato.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Fyriven dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="thalir-9-ii" data-type="gh" data-color="#7fd1d9" data-size="2.201"
+      data-pois='[{"name":"Macchia di Drokor","lat":8,"lon":160,"desc":"Grande tempesta scura dal comportamento imprevedibile."},{"name":"Polo di Zenymrek","lat":3,"lon":-160,"desc":"Regione polare immersa in una notte lunga decenni."},{"name":"Corrente Issvelsy","lat":-44,"lon":168,"desc":"Getto supersonico equatoriale."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Ithym criogenica</strong> <em>(Aeroplancton al metano)</em> — Ipotetici organismi a base di metano liquido rilevati come anomalie spettrali negli strati freddi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Mirmirgri di vento blu</strong> <em>(Veleggiatore criogenico)</em> — Forme lente e sottilissime, larghe chilometri, che sembrano scivolare sulle correnti supersoniche. Mai osservate da vicino.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Freddo assoluto:</strong> Temperature vicine ai limiti di funzionamento di scafi, lubrificanti e batterie.</li>
+        <li><strong>Anelli scuri:</strong> Detriti quasi invisibili ai sensori ottici: le rotte vanno tracciate solo con il radar.</li>
+        <li><strong>Venti supersoniche:</strong> Correnti oltre i duemila chilometri orari che rendono impossibile qualsiasi discesa controllata.</li>
+        <li><strong>Magnetosfera disassata:</strong> Tempeste magnetiche improvvise che mandano in tilt navigazione e comunicazioni.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Fyriven consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Fyriven. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-1766 · Sonda Astrolabio</h3>
+      <p><strong>Pioggia di diamanti.</strong> Le misure sismiche confermano cristalli di carbonio che precipitano nel mantello: una miniera irraggiungibile, per ora.</p>
+      <h3>RS-6775 · NRS Halcyon</h3>
+      <p><strong>Macchia scura.</strong> Una tempesta scura grande quanto un continente è scomparsa in dodici giorni. Nessun modello ne spiega la dissoluzione.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

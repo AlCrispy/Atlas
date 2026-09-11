@@ -7,34 +7,145 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../brythe.html">← <span>Brythe</span></a>
+  <span class="topbar-planet-name">Quorouduth</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Quorouduth</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Quorouduth</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,09 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+62 °C all'equatore</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Densa, polverosa</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Bassa</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Quorouduth è un mondo arido e luminoso, secondo in ordine di distanza dalla stella di Brythe. Qui ogni forma di vita ruota attorno a un'unica ossessione: trattenere l'acqua.</p>
+      <p>Le calotte polari, piccole e sporche di polvere, sono l'unica riserva d'acqua visibile dalla superficie.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Brythe, galassia Cygnix.</li>
+        <li><strong>Clima:</strong> Secco e ventoso, con forti escursioni termiche tra il giorno rovente e le notti gelide.</li>
+        <li><strong>Atmosfera:</strong> Atmosfera spessa e calda, con particolato in sospensione che tinge il cielo di arancio anche a mezzogiorno.</li>
+        <li><strong>Gravità:</strong> 1,09 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 33 ore standard.</li>
+        <li><strong>Satelliti:</strong> Quorouduth-a, Quorouduth-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Quorouduth dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="brythe-ii" data-type="desertico" data-color="#cbbfae" data-size="1.617"
+      data-pois='[{"name":"Saline di Veldraquo","lat":43,"lon":-12,"desc":"Distesa bianca sotto cui scorrono falde salmastre."},{"name":"Vetri di Mirthu","lat":-18,"lon":-151,"desc":"Cerchi concentrici di sabbia vetrificata di origine incerta."},{"name":"Archi di Othmir","lat":-10,"lon":-53,"desc":"Altopiano scolpito dal vento in archi e pinnacoli giganteschi."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Biosfera</h2>
+      <p>Nessuna forma di vita complessa rilevata. I campioni di sabbia contengono solo tracce di attività microbica fossile, risalente all'epoca dei mari.</p>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Disidratazione:</strong> Senza sistemi di recupero dell'umidità, una persona sopravvive meno di due giorni in superficie.</li>
+        <li><strong>Sabbie mobili secche:</strong> Sacche di sabbia finissima non compattata che inghiottono veicoli interi senza lasciare traccia.</li>
+        <li><strong>Miraggi elettromagnetici:</strong> Le tempeste caricano l'aria di elettricità statica: sensori e bussole restituiscono dati falsi per ore.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico classifica Quorouduth come accessibile a squadre di rilevamento standard, con protocolli ambientali di base.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Quorouduth. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-9537 · Sonda Lucerna-2</h3>
+      <p><strong>Letto oceanico fossile.</strong> Sotto le dune dell'emisfero nord il radar ha tracciato coste, estuari e scogliere di un mare scomparso da milioni di anni.</p>
+      <h3>RS-8432 · NRS Tessitrice</h3>
+      <p><strong>Città sepolta.</strong> Una tempesta ha scoperto per pochi giorni la sommità di edifici a gradoni, poi di nuovo coperti. Coordinate registrate, nessuna squadra inviata.</p>
+      <h3>RS-1161 · NRS Ardea</h3>
+      <p><strong>Sonda abbandonata.</strong> Un lander di fabbricazione non terrestre, parzialmente sepolto, con i serbatoi d'acqua svuotati dall'interno.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

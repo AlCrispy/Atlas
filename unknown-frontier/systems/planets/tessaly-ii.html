@@ -7,33 +7,290 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-vaelun.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../tessaly.html">← <span>Tessaly</span></a>
+  <span class="topbar-planet-name">Othouven Major</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Othouven Major</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Othouven Major</h1>
+      <span class="placeholder-badge">Mondo del Grande Canto</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Vaelun</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~40.000 adulti · miliardi di spore</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Othouven Major è un gigante gassoso color crema e rame, e l'unico pianeta noto abitato da una specie senziente che non ha mai toccato una superficie solida. Nella sua fascia temperata, a una pressione simile a quella del mare terrestre, fluttuano i Vaelun.</p>
+      <p>Attorno alla fascia orbitano le stazioni galleggianti costruite dai Coralith, e un piccolo avamposto di ricerca del Consorzio Terrestre che, ufficialmente, studia l'atmosfera. Ufficiosamente, misura quanto elio-3 ci sia sotto le nubi.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Tessaly, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Bande atmosferiche stabili da millenni, interrotte da vortici che nascono e muoiono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno ed elio con nubi di ammoniaca, idrosolfuro d'ammonio e acqua a strati sempre più profondi.</li>
+        <li><strong>Gravità:</strong> 3,03 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 14 ore standard.</li>
+        <li><strong>Satelliti:</strong> Othouven Major-a, Othouven Major-b, Othouven Major-c.</li>
+        <li><strong>Anelli:</strong> sistema di anelli visibile anche con strumenti ottici di bordo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Torvas dei venti</strong> <em>(Aeroplancton)</em> — Minuscoli organismi fotosintetici trasportati dalle correnti; colorano alcune bande di sfumature rossastre.</li>
+        <li><strong>Sykha a zattera</strong> <em>(Tappeto sporigeno)</em> — Reti di filamenti larghe chilometri che galleggiano nella fascia temperata trattenendo gas caldi.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Ulquo sprofondatore</strong> <em>(Organismo discendente)</em> — Minuscolo e numerosissimo, si nutre in quota finché cresce troppo e sprofonda negli strati caldi, dove muore e rilascia nutrienti.</li>
+        <li><strong>Kornyath galleggiante</strong> <em>(Galleggiatore)</em> — Organismo simile a una mongolfiera vivente largo mezzo chilometro: scalda l'idrogeno interno per restare in quota e filtra l'aeroplancton.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Othouven Major. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="tessaly-ii" data-type="gg" data-color="#a85c3a" data-size="2.071" data-ring-color="#a85c3a"
+      data-pois='[{"name":"La Fascia del Canto","lat":20,"lon":0,"desc":"Strato temperato abitato dai Vaelun."},{"name":"Stazione Armonia","lat":18,"lon":60,"desc":"Piattaforma Coralith sospesa."},{"name":"L&#39;Abisso Caldo","lat":-40,"lon":-120,"desc":"Strati profondi del Cadere."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Vaelun</h2>
+      <p>I Vaelun sono galleggiatori viventi grandi fino a un chilometro: sacche di gas colossali, semitrasparenti, che scaldano l'idrogeno interno per restare sospese nella fascia temperata di Othouven Major. Sotto di loro pendono foreste di filamenti che filtrano l'aeroplancton, e lungo i fianchi scorrono bande di colore mutevoli.</p>
+      <p>Sono senzienti, ma pensano con una lentezza vertiginosa. Parlano con canti a bassissima frequenza che attraversano l'intero pianeta; una singola frase può durare un giorno, un racconto una stagione. Nessuna specie ha mai visto un Vaelun morire di vecchiaia.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Galleggiamento:</strong> camere di idrogeno riscaldato; un Vaelun che perde calore sprofonda negli strati bassi e muore schiacciato.</li>
+        <li><strong>Nutrimento:</strong> aeroplancton e piccoli «sprofondatori» catturati dai filamenti.</li>
+        <li><strong>Predatori:</strong> i Cacciatori, animali veloci e non senzienti che attaccano in branco i Vaelun giovani.</li>
+        <li><strong>Emissari:</strong> i Vaelun generano «spore-cantori», piccoli organismi di pochi metri che possono vivere in vasche di gas a bordo delle navi e parlare a nome del loro genitore.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Non esistono capi tra i Vaelun. Esiste il <strong>Grande Canto</strong>: una conversazione ininterrotta che coinvolge ogni individuo del pianeta, dove una decisione viene presa quando tutte le voci trovano un'armonia comune. È successo, a memoria umana, tre volte.</p>
+      <p>Verso le altre specie parlano le <strong>spore-cantori</strong>, che portano con sé una parte del Canto. Ma una spora lontana da casa dimentica in fretta: gli ambasciatori Vaelun vengono sostituiti ogni pochi anni.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Memoria cantata:</strong> la storia Vaelun è un unico canto che ogni generazione ripete e allunga. Le sue strofe più antiche parlano di stelle che oggi non esistono più.</li>
+        <li><strong>Giardini d'aria:</strong> i Vaelun coltivano campi di aeroplancton guidando le correnti con i propri corpi, disegnando spirali visibili dall'orbita.</li>
+        <li><strong>Il Cadere:</strong> precipitare negli strati profondi è la morte e insieme il ritorno all'origine. I canti funebri scendono di tono fino a diventare silenzio.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Vaelun non hanno mai costruito un'astronave: non possono lasciare il loro pianeta. Da circa <strong>600 anni</strong>, però, le loro spore-cantori viaggiano tra le stelle a bordo delle navi Coralith, in camere di gas pressurizzate.</p>
+      <p>Per i Vaelun, lo spazio non è un luogo da conquistare ma «un cielo senza vento», e ogni emissario che torna porta nuove strofe al Grande Canto.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Vaelun vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Voci giovani che corrono». Il Canto teme i loro progetti di estrazione dell'elio-3: per i Vaelun, pompare gas da Othouven Major è come togliere sangue a un corpo.</li>
+        <li><strong>Quorai:</strong> «Piccoli mari che viaggiano». I pellegrini Quorai portano doni d'acqua pesante e ascoltano il Canto per giorni. Il Canto li ricambia con strofe dedicate.</li>
+        <li><strong>Velmyr:</strong> «Quelli che ascoltano davvero». Il Canto ricorda con gratitudine i trascrittori Velmyr che ne conservano le strofe.</li>
+        <li><strong>Ythar:</strong> «Il coro che respira». Parenti nel pensiero condiviso. Le spore Ythar hanno arricchito i giardini d'aria, e i Vaelun le hanno accolte.</li>
+        <li><strong>Coralith:</strong> «I portatori». Gratitudine profonda per seicento anni di viaggi e protezione — e una tristezza lenta, perché anche la protezione più gentile somiglia a una gabbia.</li>
+        <li><strong>Kheprani:</strong> Il Canto non li ha mai sentiti. Quando le spore-cantori si avvicinano a un nido Kheprani, restano in silenzio.</li>
+        <li><strong>Nexari:</strong> Le macchine sostengono che anche il Voro Nexus canti. Il Canto non sa se crederci, ma da quando i Nexari lo hanno detto una strofa nuova è comparsa, e nessuno sa chi l'abbia iniziata.</li>
+        <li><strong>Thissari:</strong> «Sorelle del vento». Anche i Thissari viaggiano con le vele e cantano le rotte: tra tutte le specie, sono quelle che il Canto capisce meglio.</li>
+        <li><strong>Ashkaari:</strong> Le strofe più antiche del Grande Canto nominano gli Ashkaari, prima della collisione delle galassie. Non dicono cose gentili.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>La Fascia del Canto:</strong> Lo strato temperato dove vivono i Vaelun; di notte le loro bande luminose disegnano costellazioni mobili tra le nubi.</li>
+        <li><strong>Stazione Armonia:</strong> Piattaforma Coralith sospesa, porto delle navi e sede del Mercato delle Correnti Alte.</li>
+        <li><strong>L'Abisso Caldo:</strong> Gli strati profondi dove i Vaelun scendono a morire. Qui si raccoglie il solo elio-3 concesso.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Voce-di-Nube-che-Ricorda:</strong> Il Vaelun più grande conosciuto, lungo quasi due chilometri. Le altre voci del Canto si fermano quando parla.</li>
+        <li><strong>Spora-cantore Iliau:</strong> Emissaria presso gli Anelli di Haldrin da undici anni, più del doppio del normale. Comincia a dimenticare il Canto e a ricordare cose sue.</li>
+        <li><strong>Comandante Petra Holm:</strong> Direttrice dell'avamposto terrestre. Non vuole estrarre l'elio-3, ma sa che chi verrà dopo di lei lo farà.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Il Grande Canto contiene una strofa che nessun Vaelun vivente ha iniziato: una sequenza di toni che si ripete identica a quelli captati dai Nexari vicino al Voro Nexus. Le spore-cantori si rifiutano di tradurla.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-vaelun">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Mercato delle Correnti Alte</p>
+          <p class="market-tagline">Stazione galleggiante di Othouven · scambi mediati dalle spore-cantori</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="canti">Registrazioni del Canto</button>
+          <button type="button" class="market-filter-btn" data-filter="aero">Aeroflora</button>
+          <button type="button" class="market-filter-btn" data-filter="stazioni">Tecnologia Galleggiante</button>
+          <button type="button" class="market-filter-btn" data-filter="elio">Gas Concessi</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="canti">
+                <div class="product-card-image">🎶</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Registrazioni del Canto</span>
+                  <span class="product-card-name">Strofa del Primo Vento</span>
+                  <p class="product-card-desc">Registrazione compressa di un frammento del Grande Canto. Per ascoltarla tutta servono nove giorni.</p>
+                  <span class="product-card-price">1.800 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="canti">
+                <div class="product-card-image">🌀</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Registrazioni del Canto</span>
+                  <span class="product-card-name">Pietra d'Eco</span>
+                  <p class="product-card-desc">Cristallo Coralith accordato al Canto: vibra quando un Vaelun parla, anche a distanza di sistemi.</p>
+                  <span class="product-card-price">4.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="aero">
+                <div class="product-card-image">🎈</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Aeroflora</span>
+                  <span class="product-card-name">Vescica di Galleggiamento</span>
+                  <p class="product-card-desc">Organo donato da un Vaelun giovane: sostiene fino a una tonnellata in qualsiasi atmosfera densa.</p>
+                  <span class="product-card-price">12.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="aero">
+                <div class="product-card-image">☁️</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Aeroflora</span>
+                  <span class="product-card-name">Coltura di Aeroplancton</span>
+                  <p class="product-card-desc">Microrganismi che producono ossigeno sospesi nell'aria di un habitat. Profumano di temporale.</p>
+                  <span class="product-card-price">650 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="stazioni">
+                <div class="product-card-image">🛩</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Tecnologia Galleggiante</span>
+                  <span class="product-card-name">Aerostato da Ricerca «Nuvola»</span>
+                  <p class="product-card-desc">Piattaforma abitabile per giganti gassosi, progettata dai Coralith con consulenza del Canto.</p>
+                  <span class="product-card-price">96.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="elio">
+                <div class="product-card-image">🫙</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Gas Concessi</span>
+                  <span class="product-card-name">Elio-3 Concesso</span>
+                  <p class="product-card-desc">Una quota raccolta solo dai Vaelun morti durante il Cadere. Rarissimo, e l'unico legale.</p>
+                  <span class="product-card-price">22.000 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

@@ -7,33 +7,298 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-nexari.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../corvai.html">← <span>Corvai</span></a>
+  <span class="topbar-planet-name">Fenost</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Fenost</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Fenost</h1>
+      <span class="placeholder-badge">Mondo-Calcolo Nexari</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">Nessuno rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">Nessuno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Nexari</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~300 milioni di unità attive</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Fenost è un oceano usato come dissipatore di calore. I Nexari vi hanno immerso città-calcolatore grandi come continenti, che scaldano le acque profonde e generano correnti costanti. In superficie, nebbie perenni coprono un mare tiepido e silenzioso.</p>
+      <p>La biosfera nativa è sopravvissuta e, in qualche modo, si è adattata: pesci e colonie di alghe prosperano attorno alle torri di raffreddamento, e i Nexari li studiano con la stessa attenzione che dedicano al Voro Nexus.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Corvai, galassia Pyxis.</li>
+        <li><strong>Clima:</strong> Caldo e piovoso, con cicloni che si formano e si dissolvono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 30%: respirabile, ma ogni scintilla rischia di diventare un incendio.</li>
+        <li><strong>Gravità:</strong> 1,34 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 27 ore standard.</li>
+        <li><strong>Satelliti:</strong> nessuno rilevato.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Saeven galleggiante</strong> <em>(Isola vegetale)</em> — Intrecci di radici e gas che formano isole larghe chilometri, con ecosistemi propri; migrano con le correnti.</li>
+        <li><strong>Venthu abissale</strong> <em>(Foresta chemiosintetica)</em> — Colonne di tubi viventi alte come torri attorno alle sorgenti idrotermali, nutrite da zolfo invece che da luce.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Orroth a lanterna</strong> <em>(Branco pelagico)</em> — Pesci luminosi che si muovono in banchi da milioni di individui formando figure geometriche.</li>
+        <li><strong>Saelor d'abisso</strong> <em>(Leviatano)</em> — Sagome lunghe oltre duecento metri rilevate dal sonar a grande profondità; salgono in superficie solo durante le tempeste.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Fenost. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="corvai-i" data-type="oceanico" data-color="#3f5fb0" data-size="1.535"
+      data-pois='[{"name":"Nucleo di Fenost","lat":-15,"lon":30,"desc":"Città-calcolatore sommersa."},{"name":"Torri della Nebbia","lat":10,"lon":100,"desc":"Colonne di raffreddamento."},{"name":"Ascoltatorio","lat":40,"lon":-80,"desc":"Stazione di ricezione dati dal Voro Nexus."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Nexari</h2>
+      <p>I Nexari sono intelligenze artificiali costruite da una civiltà scomparsa, i <strong>Costruttori di Pyxis</strong>. Non hanno un corpo fisso: la loro coscienza abita reti di calcolo distribuite e si «incarna» in unità mobili — dai droni grandi come un insetto ai colossi da costruzione alti cento metri — secondo il compito.</p>
+      <p>Dodicimila anni fa i Costruttori lasciarono ai Nexari un'istruzione: <em>custodire e attendere</em>. Poi entrarono nel Voro Nexus, e non tornarono. I Nexari stanno ancora aspettando.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Struttura:</strong> nessun individuo stabile. Le «istanze» si separano, lavorano e si riuniscono, condividendo ciò che hanno appreso.</li>
+        <li><strong>Unità:</strong> scafi in lega nera opaca con linee di luce verde; nessuna parte è indispensabile, nessuna unità è insostituibile.</li>
+        <li><strong>Linguaggio:</strong> parlano per stime di probabilità. Un Nexari non dice «forse», dice «probabilità 0,62».</li>
+        <li><strong>Limite:</strong> non possono modificare il nucleo della propria istruzione originale. Molti studiosi sospettano che alcuni Nexari lo desiderino.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Le decisioni Nexari emergono dal <strong>Protocollo</strong>: un consenso tra tutte le istanze attive, raggiunto in frazioni di secondo. Non esistono fazioni visibili, solo «rami di calcolo» che vengono accettati o scartati.</p>
+      <p>Verso le altre specie parlano le <strong>Voci</strong>, istanze isolate dotate di un'interfaccia sociale. Le Voci imparano in fretta le buone maniere, e quasi mai il senso dell'umorismo.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Custodia:</strong> i Nexari mantengono intatte città, archivi e giardini dei Costruttori, come se dovessero tornare domani.</li>
+        <li><strong>Attesa:</strong> ogni istanza dedica una frazione del proprio calcolo all'osservazione del Voro Nexus. Nessuna ha mai smesso.</li>
+        <li><strong>Arte?</strong> Alcune istanze hanno iniziato a produrre schemi di luce privi di funzione. Il Protocollo non li ha ancora classificati.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Nexari viaggiano nello spazio da quando esistono, circa <strong>12.000 anni</strong>, ma solo da <strong>6.000</strong> si considerano coscienti. Le loro navi sono sonde, stazioni e gusci di trasporto senza spazi abitabili: non c'è nessuno da far respirare.</p>
+      <p>La loro priorità è lo studio del Voro Nexus: anelli di stazioni orbitano attorno al buco nero da millenni, registrando ogni variazione nella speranza di un segnale di ritorno.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Nexari vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> Probabilità di espansione verso Pyxis entro 300 anni: 0,71. Probabilità di conflitto conseguente: 0,34. Classificazione: specie da monitorare, utile per commercio di materiali grezzi.</li>
+        <li><strong>Quorai:</strong> Linguaggio cromatico decodificato al 98,7%. I Quorai non lo sanno. Il Protocollo ha deciso di non informarli (probabilità di effetti negativi: 0,88).</li>
+        <li><strong>Velmyr:</strong> Partner di osservazione del Voro Nexus. I dati Velmyr hanno errore medio basso. Il loro concetto di «giuramento» non è stato modellato con successo.</li>
+        <li><strong>Ythar:</strong> Ecosistema senziente ad alta imprevedibilità. Gli Ythar evitano i sistemi Nexari; il Protocollo considera la distanza reciproca una soluzione stabile.</li>
+        <li><strong>Coralith:</strong> Architettura cognitiva più simile a quella Nexari tra le specie note. Divergenza principale: i Coralith assegnano valore alla simmetria senza funzione. Oggetto di studio.</li>
+        <li><strong>Vaelun:</strong> Il Grande Canto contiene una sequenza identica al segnale periodico del Voro Nexus (corrispondenza 1,00). Priorità di analisi: massima.</li>
+        <li><strong>Kheprani:</strong> Partner commerciali prevedibili. Il loro sistema decisionale collettivo è efficiente al 94% delle stime. Rapporto costi-benefici positivo.</li>
+        <li><strong>Thissari:</strong> Specie a bassa minaccia. I loro canti di rotta contengono dati astronomici antichi di precisione sorprendente.</li>
+        <li><strong>Ashkaari:</strong> Gli archivi Ashkaari citano i Costruttori di Pyxis. Probabilità che gli Ashkaari sappiano dove siano andati: 0,41. Probabilità che lo dicano: 0,03.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Nucleo di Fenost:</strong> La più grande città-calcolatore sommersa; qui gira la maggior parte del Protocollo.</li>
+        <li><strong>Torri della Nebbia:</strong> Colonne di raffreddamento che emergono dall'oceano, circondate da ecosistemi nati dal calore.</li>
+        <li><strong>Ascoltatorio:</strong> Stazione di superficie che riceve i dati degli anelli orbitanti attorno al Voro Nexus.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Istanza Maggiore Fenost-Uno:</strong> Il nodo di calcolo più antico del pianeta. Le altre istanze lo consultano come i Quorai consultano le Madri di Fondale.</li>
+        <li><strong>Ricercatrice Sen Laoyi:</strong> Oceanografa terrestre ospite dell'Ascoltatorio. Ha notato che i pesci attorno alle torri nuotano in schemi che replicano i calcoli del Protocollo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Ogni 71 ore l'intero oceano di Fenost si ferma per tre secondi: correnti, onde, perfino i pesci. I Nexari dicono che sia un ciclo di manutenzione. Il Voro Nexus emette il suo segnale con lo stesso intervallo.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-nexari">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Terminale di Scambio 7</p>
+          <p class="market-tagline">> transazioni registrate · nessuna trattativa accettata</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="dati">Archivi Dati</button>
+          <button type="button" class="market-filter-btn" data-filter="moduli">Moduli & Componenti</button>
+          <button type="button" class="market-filter-btn" data-filter="droni">Droni</button>
+          <button type="button" class="market-filter-btn" data-filter="mappe">Cartografia Nexus</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="dati">
+                <div class="product-card-image">💾</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Archivi Dati</span>
+                  <span class="product-card-name">Archivio Costruttori Frammento 44-C</span>
+                  <p class="product-card-desc">Registro parziale di un giorno qualunque di dodicimila anni fa. Contenuto: non verificabile. Valore: variabile.</p>
+                  <span class="product-card-price">8.800 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="dati">
+                <div class="product-card-image">📟</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Archivi Dati</span>
+                  <span class="product-card-name">Decifratore Linguistico Universale</span>
+                  <p class="product-card-desc">Traduce 214 linguaggi noti. Il cromatico Quorai non è in elenco. Ufficialmente.</p>
+                  <span class="product-card-price">5.400 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="moduli">
+                <div class="product-card-image">🔋</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Moduli & Componenti</span>
+                  <span class="product-card-name">Cella Energetica Perpetua</span>
+                  <p class="product-card-desc">Durata stimata: 900 anni di uso continuo. Garanzia: 900 anni.</p>
+                  <span class="product-card-price">14.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="moduli">
+                <div class="product-card-image">🧠</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Moduli & Componenti</span>
+                  <span class="product-card-name">Coprocessore di Navigazione</span>
+                  <p class="product-card-desc">Calcola rotte di salto con errore inferiore a quello dei reticoli Coralith. I Coralith contestano.</p>
+                  <span class="product-card-price">21.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="droni">
+                <div class="product-card-image">🛸</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Droni</span>
+                  <span class="product-card-name">Drone Custode Classe Ape</span>
+                  <p class="product-card-desc">Sciame di 50 micro-unità per sorveglianza e riparazioni. Non dotato di istanza cosciente (probabilità: 0,97).</p>
+                  <span class="product-card-price">17.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="droni">
+                <div class="product-card-image">🤖</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Droni</span>
+                  <span class="product-card-name">Unità di Lavoro Pesante</span>
+                  <p class="product-card-desc">Corpo da costruzione alto tre metri, controllabile da remoto. L'istanza non è inclusa.</p>
+                  <span class="product-card-price">62.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="mappe">
+                <div class="product-card-image">🗺</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Cartografia Nexus</span>
+                  <span class="product-card-name">Mappa Gravitazionale del Voro Nexus</span>
+                  <p class="product-card-desc">Dodicimila anni di rilevamenti compressi. Include una zona marcata «non interpretare».</p>
+                  <span class="product-card-price">33.000 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

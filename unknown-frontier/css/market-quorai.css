@@ -1,0 +1,168 @@
+/* Mercato tab sub-theme for Quorai worlds: a deep-water aquarium. Same
+   markup contract as market-industrial.css (which must also be loaded — it
+   carries the unscoped carousel layout, driven here by the --mk-* tokens),
+   with its own skin: caustic light rippling over a dark ocean, rounded
+   glass cards, and a "water draining" reveal instead of the blast door. */
+
+.market-quorai {
+  --mk-void: #020d16;
+  --mk-panel: #06202e;
+  --mk-panel-lt: #0a2c3d;
+  --mk-steel: #164a5c;
+  --mk-steel-lt: #2a7085;
+  --mk-text: #dff7f5;
+  --mk-text-dim: #8fb9bf;
+  --mk-yellow: #3ee8d0;
+  --mk-orange: #ff7aa2;
+
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(62,232,208,0.18), transparent 60%),
+    linear-gradient(180deg, #03202c 0%, var(--mk-void) 70%);
+  overflow: hidden;
+}
+
+/* Caustic light: two drifting layers of soft blobs, like sunlight through
+   a rippling surface. */
+.market-quorai::before,
+.market-quorai::after {
+  content: '';
+  position: absolute; inset: -20%;
+  pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(closest-side, rgba(120,255,235,0.10), transparent),
+    radial-gradient(closest-side, rgba(120,255,235,0.07), transparent);
+  background-size: 260px 180px, 380px 240px;
+  background-position: 0 0, 120px 80px;
+  animation: quoraiCaustics 18s linear infinite;
+}
+.market-quorai::after {
+  background-size: 320px 220px, 200px 150px;
+  animation-duration: 26s;
+  animation-direction: reverse;
+  opacity: 0.7;
+}
+@keyframes quoraiCaustics {
+  to { background-position: 520px 360px, -260px 480px; }
+}
+
+.market-shell-body {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 56px 32px 60px;
+}
+
+.market-quorai .market-heading {
+  text-align: center; margin-bottom: 28px;
+}
+.market-quorai .market-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--mk-text);
+  text-shadow: 0 0 18px rgba(62,232,208,0.45);
+}
+.market-quorai .market-tagline {
+  margin-top: 6px;
+  font-size: 0.82rem; font-style: italic; color: var(--mk-text-dim);
+}
+
+/* ── REVEAL: water level dropping away from the glass ── */
+.market-quorai .market-reveal {
+  position: absolute; inset: 0; z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(62,232,208,0.35) 0 2px, #04304a 2px, #021420);
+  animation: quoraiDrain 1.3s cubic-bezier(0.6,0,0.3,1) 0.3s both;
+}
+.market-quorai .market-reveal span {
+  position: absolute; bottom: 10%;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid rgba(160,255,240,0.6);
+  animation: quoraiBubble 1.4s ease-in both;
+}
+.market-quorai .market-reveal span:nth-child(1) { left: 22%; }
+.market-quorai .market-reveal span:nth-child(2) { left: 48%; width: 9px; height: 9px; animation-delay: 0.15s; }
+.market-quorai .market-reveal span:nth-child(3) { left: 71%; width: 18px; height: 18px; animation-delay: 0.3s; }
+@keyframes quoraiDrain {
+  to { transform: translateY(100%); }
+}
+@keyframes quoraiBubble {
+  to { transform: translateY(-80vh); opacity: 0; }
+}
+
+/* ── FILTERS: rounded pebbles ── */
+.market-quorai .market-filters {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-bottom: 26px;
+}
+.market-quorai .market-filter-btn {
+  background: rgba(10,44,61,0.8); border: 1px solid var(--mk-steel);
+  border-radius: 999px; cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.56rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--mk-text-dim); padding: 9px 18px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.market-quorai .market-filter-btn:hover { color: var(--mk-yellow); border-color: var(--mk-steel-lt); }
+.market-quorai .market-filter-btn.active {
+  color: var(--mk-void); background: var(--mk-yellow); border-color: var(--mk-yellow);
+  box-shadow: 0 0 16px rgba(62,232,208,0.5);
+}
+
+/* ── CARDS: glass tanks ── */
+.market-quorai .product-card {
+  flex: 0 0 240px;
+  background: linear-gradient(160deg, rgba(20,80,100,0.45), rgba(6,32,46,0.85));
+  border: 1px solid rgba(62,232,208,0.25);
+  border-radius: 18px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.45);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.market-quorai .product-card:hover {
+  border-color: var(--mk-yellow); transform: translateY(-4px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 36px rgba(62,232,208,0.18);
+}
+
+.market-quorai .product-card-image {
+  width: 100%; aspect-ratio: 4 / 3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  background: radial-gradient(circle at 50% 70%, rgba(62,232,208,0.25), transparent 65%);
+  border-bottom: 1px solid rgba(62,232,208,0.15);
+  animation: quoraiBob 5s ease-in-out infinite;
+}
+.market-quorai .product-card:nth-child(2n) .product-card-image { animation-delay: -2.5s; }
+@keyframes quoraiBob {
+  50% { transform: translateY(-5px); }
+}
+
+.market-quorai .product-card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.market-quorai .product-card-category {
+  font-family: 'Orbitron', sans-serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--mk-orange);
+}
+.market-quorai .product-card-name {
+  font-family: 'Orbitron', sans-serif; font-size: 0.85rem;
+  font-weight: 700; color: var(--mk-text);
+}
+.market-quorai .product-card-desc {
+  font-size: 0.85rem; color: var(--mk-text-dim);
+  line-height: 1.6; flex: 1;
+}
+.market-quorai .product-card-price {
+  font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+  letter-spacing: 0.05em; color: var(--mk-yellow);
+  margin-top: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .market-quorai::before, .market-quorai::after, .market-quorai .product-card-image { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .market-quorai .product-card { flex-basis: 200px; }
+}

@@ -7,34 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../thalir-9.html">← <span>Thalir-9</span></a>
+  <span class="topbar-planet-name">Calisk Prime</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Calisk Prime</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Calisk Prime</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">1 rilevato</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,90 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−110 °C alla sommità delle nubi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Idrogeno, metano</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Calisk Prime è il quarto pianeta del sistema Thalir-9: un gigante gassoso fasciato da bande color crema e ruggine, senza superficie solida su cui posarsi.</p>
+      <p>Tra gli strati di nubi esiste una fascia temperata dove pressione e temperatura sono simili a quelle di un mondo abitabile.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Thalir-9, galassia Aurvex.</li>
+        <li><strong>Clima:</strong> Bande atmosferiche stabili da millenni, interrotte da vortici che nascono e muoiono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno dominante con tracce di metano e composti organici che colorano le bande.</li>
+        <li><strong>Gravità:</strong> 1,90 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 11 ore standard.</li>
+        <li><strong>Satelliti:</strong> Calisk Prime-a.</li>
+        <li><strong>Anelli:</strong> sistema di anelli visibile anche con strumenti ottici di bordo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Calisk Prime dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="thalir-9-iv" data-type="gg" data-color="#5f8f5a" data-size="1.758" data-ring-color="#5f8f5a"
+      data-pois='[{"name":"Banda di Droorrthu","lat":-29,"lon":24,"desc":"Corrente a getto equatoriale, la più veloce del pianeta."},{"name":"Aurora di Othvel","lat":-28,"lon":-89,"desc":"Anello aurorale polare generato dalla magnetosfera."},{"name":"Occhio di Lorven","lat":24,"lon":79,"desc":"Grande tempesta ovale attiva da secoli."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Thuven dei venti</strong> <em>(Aeroplancton)</em> — Minuscoli organismi fotosintetici trasportati dalle correnti; colorano alcune bande di sfumature rossastre.</li>
+        <li><strong>Torothorr a zattera</strong> <em>(Tappeto sporigeno)</em> — Reti di filamenti larghe chilometri che galleggiano nella fascia temperata trattenendo gas caldi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Ulbra galleggiante</strong> <em>(Galleggiatore)</em> — Organismo simile a una mongolfiera vivente largo mezzo chilometro: scalda l'idrogeno interno per restare in quota e filtra l'aeroplancton.</li>
+        <li><strong>Orrorrgri sprofondatore</strong> <em>(Organismo discendente)</em> — Minuscolo e numerosissimo, si nutre in quota finché cresce troppo e sprofonda negli strati caldi, dove muore e rilascia nutrienti.</li>
+        <li><strong>Aelthuith fulminivoro</strong> <em>(Colonia elettrica)</em> — Si raduna attorno alle celle temporalesche e assorbe energia dai fulmini; brilla per ore dopo ogni tempesta.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Gravità elevata:</strong> Rientrare in orbita dagli strati alti richiede spinte che pochi scafi leggeri possono garantire.</li>
+        <li><strong>Correnti a getto:</strong> Venti opposti che possono strappare un aerostato in due lungo la linea di taglio.</li>
+        <li><strong>Fulmini planetari:</strong> Scariche mille volte più potenti di quelle terrestri, capaci di vaporizzare una sonda.</li>
+        <li><strong>Fasce di radiazione:</strong> La magnetosfera intrappola particelle ad altissima energia: pochi minuti in orbita bassa bruciano l'elettronica non schermata.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Calisk Prime consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Calisk Prime. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-3536 · NRS Kestrel-4</h3>
+      <p><strong>Segnale dal vortice.</strong> Un'emissione radio modulata proviene dal centro della grande tempesta; si interrompe ogni volta che una sonda si avvicina.</p>
+      <h3>RS-4017 · Sonda Astrolabio</h3>
+      <p><strong>Anelli anomali.</strong> Parte del materiale degli anelli ha composizione metallica raffinata, incompatibile con la formazione naturale.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

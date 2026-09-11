@@ -7,34 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ashkar.html">← <span>Ashkar</span></a>
+  <span class="topbar-planet-name">Iloumiodor</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Iloumiodor</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Iloumiodor</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">2,24 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−140 °C alla sommità delle nubi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Idrogeno, metano</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Iloumiodor, terzo pianeta di Ashkar, è un mondo di nubi stratificate e tempeste più grandi di interi pianeti rocciosi.</p>
+      <p>La magnetosfera è così intensa da rendere letali le orbite basse per qualsiasi nave non schermata.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Terzo pianeta del sistema Ashkar, galassia Vandrel.</li>
+        <li><strong>Clima:</strong> Tempeste perenni e fulmini grandi come continenti negli strati di nubi d'acqua.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno dominante con tracce di metano e composti organici che colorano le bande.</li>
+        <li><strong>Gravità:</strong> 2,24 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 12 ore standard.</li>
+        <li><strong>Satelliti:</strong> Iloumiodor-a, Iloumiodor-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Iloumiodor dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ashkar-iii" data-type="gg" data-color="#a85c3a" data-size="2.276"
+      data-pois='[{"name":"Aurora di Ithym","lat":49,"lon":-53,"desc":"Anello aurorale polare generato dalla magnetosfera."},{"name":"Occhio di Aelny","lat":6,"lon":110,"desc":"Grande tempesta ovale attiva da secoli."},{"name":"Banda di Lorbrakha","lat":21,"lon":-29,"desc":"Corrente a getto equatoriale, la più veloce del pianeta."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Saeiss dei venti</strong> <em>(Aeroplancton)</em> — Minuscoli organismi fotosintetici trasportati dalle correnti; colorano alcune bande di sfumature rossastre.</li>
+        <li><strong>Velsy a zattera</strong> <em>(Tappeto sporigeno)</em> — Reti di filamenti larghe chilometri che galleggiano nella fascia temperata trattenendo gas caldi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Korvasquo cacciatore</strong> <em>(Predatore aereo)</em> — Veloce e affusolato, caccia in branco i galleggiatori sfruttando le correnti a getto.</li>
+        <li><strong>Braym fulminivoro</strong> <em>(Colonia elettrica)</em> — Si raduna attorno alle celle temporalesche e assorbe energia dai fulmini; brilla per ore dopo ogni tempesta.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Correnti a getto:</strong> Venti opposti che possono strappare un aerostato in due lungo la linea di taglio.</li>
+        <li><strong>Fasce di radiazione:</strong> La magnetosfera intrappola particelle ad altissima energia: pochi minuti in orbita bassa bruciano l'elettronica non schermata.</li>
+        <li><strong>Fulmini planetari:</strong> Scariche mille volte più potenti di quelle terrestri, capaci di vaporizzare una sonda.</li>
+        <li><strong>Nessuna superficie:</strong> Qualsiasi mezzo che perda quota continua a scendere fino a essere schiacciato dalla pressione.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Iloumiodor consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Iloumiodor. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-2592 · NRS Halcyon</h3>
+      <p><strong>Segnale dal vortice.</strong> Un'emissione radio modulata proviene dal centro della grande tempesta; si interrompe ogni volta che una sonda si avvicina.</p>
+      <h3>RS-6898 · NRS Kestrel-4</h3>
+      <p><strong>Riserve di elio-3.</strong> Concentrazione di elio-3 sufficiente a rifornire flotte intere di reattori a fusione per secoli.</p>
+      <h3>RS-7875 · NRS Halcyon</h3>
+      <p><strong>Sagome nelle nubi.</strong> Oggetti lenticolari larghi centinaia di metri si muovono controvento nella fascia temperata. Organici, secondo lo spettrometro.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

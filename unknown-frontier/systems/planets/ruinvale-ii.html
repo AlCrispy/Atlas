@@ -7,34 +7,159 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ruinvale.html">← <span>Ruinvale</span></a>
+  <span class="topbar-planet-name">Ruinvale II</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Ruinvale II</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Ruinvale II</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,15 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+35 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Respirabile a fatica</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Ruinvale II, secondo pianeta del sistema Ruinvale, è un oceano di dune color ruggine che si muove lentamente sotto venti costanti. L'acqua esiste, ma solo sepolta o intrappolata nei minerali.</p>
+      <p>Il vento ha scolpito gli altopiani in archi e pinnacoli alti centinaia di metri, visibili anche dalle navi in orbita bassa.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Ruinvale, galassia Vandrel.</li>
+        <li><strong>Clima:</strong> Secco e ventoso, con forti escursioni termiche tra il giorno rovente e le notti gelide.</li>
+        <li><strong>Atmosfera:</strong> Azoto e ossigeno in proporzioni vicine allo standard, ma estremamente secca e carica di polvere fine: servono filtri.</li>
+        <li><strong>Gravità:</strong> 1,15 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 21 ore standard.</li>
+        <li><strong>Satelliti:</strong> Ruinvale II-a, Ruinvale II-b, Ruinvale II-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Ruinvale II dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ruinvale-ii" data-type="desertico" data-color="#c9895a" data-size="1.363"
+      data-pois='[{"name":"Mare di Issul","lat":11,"lon":-44,"desc":"Erg sconfinato attraversato dalle rotte della megafauna fossoria."},{"name":"Oasi di Miroth","lat":-44,"lon":-140,"desc":"Canyon profondo con acqua in superficie e flora rigogliosa."},{"name":"Vetri di Vasissith","lat":-23,"lon":-88,"desc":"Cerchi concentrici di sabbia vetrificata di origine incerta."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Vasissath girovaga</strong> <em>(Cespuglio rotolante)</em> — Si stacca dal terreno nella stagione secca e si lascia trasportare dal vento per centinaia di chilometri, disperdendo semi.</li>
+        <li><strong>Khaven a otre</strong> <em>(Succulenta gigante)</em> — Tronco rigonfio che immagazzina fino a mille litri d'acqua; si ritira sottoterra durante le tempeste.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Syissven delle saline</strong> <em>(Crostaceo alofilo)</em> — Piccolo e corazzato, vive nelle pozze salmastre sotto la crosta di sale; commestibile, se bollito a lungo.</li>
+        <li><strong>Torsy otre</strong> <em>(Erbivoro da carovana)</em> — Quadrupede lento e gobbo che trattiene acqua nei tessuti per mesi; addomesticabile, secondo i primi rapporti.</li>
+        <li><strong>Ithymny planatore</strong> <em>(Volatore termico)</em> — Membrane ampie e corpo leggerissimo: sfrutta le correnti calde per restare in volo giorni senza posarsi.</li>
+        <li><strong>Griothith vetroso</strong> <em>(Rettile termoregolatore)</em> — Squame semitrasparenti che disperdono il calore; resta immobile per ore e sembra un sasso levigato.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Tempeste di sabbia:</strong> Fronti alti chilometri che avanzano a oltre duecento chilometri orari; abrasione sufficiente a opacizzare un visore in minuti.</li>
+        <li><strong>Disidratazione:</strong> Senza sistemi di recupero dell'umidità, una persona sopravvive meno di due giorni in superficie.</li>
+        <li><strong>Colpi di calore:</strong> A mezzogiorno la superficie supera temperature che mandano in crisi i sistemi di raffreddamento delle tute.</li>
+        <li><strong>Megafauna fossoria:</strong> Le vibrazioni dei motori attirano i grandi scavatori; almeno un mezzo di rilevamento è stato perso così.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Ruinvale II consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Ruinvale II. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-2591 · NRS Kestrel-4</h3>
+      <p><strong>Letto oceanico fossile.</strong> Sotto le dune dell'emisfero nord il radar ha tracciato coste, estuari e scogliere di un mare scomparso da milioni di anni.</p>
+      <h3>RS-1406 · NRS Ardea</h3>
+      <p><strong>Vetro da impatto.</strong> Vaste distese di sabbia vetrificata disposte in cerchi concentrici. Alcuni analisti ipotizzano un bombardamento, non un meteorite.</p>
+      <h3>RS-4565 · NRS Fenice Grigia</h3>
+      <p><strong>Falda profonda.</strong> Riserva d'acqua dolce stimata in miliardi di metri cubi a seicento metri di profondità. Da sola potrebbe sostenere una colonia.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

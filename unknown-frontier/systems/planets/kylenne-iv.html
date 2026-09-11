@@ -7,33 +7,298 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-velmyr.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../kylenne.html">← <span>Kylenne</span></a>
+  <span class="topbar-planet-name">Mirelloull</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Mirelloull</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Mirelloull</h1>
+      <span class="placeholder-badge">Colonia Scientifica Velmyr</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">Nessuno rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">Nessuno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Velmyr</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~35 milioni</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Mirelloull è un deserto chiaro e luminoso che i Velmyr hanno trasformato nel più grande osservatorio della Via Lattea. Il cielo limpido e l'aria secca offrono condizioni ideali, e la casata della scienza vi ha costruito campi di specchi larghi decine di chilometri.</p>
+      <p>La colonia è anche un avamposto diplomatico: qui passano le delegazioni verso il territorio del Consorzio, e qui i Velmyr studiano gli umani con la stessa attenzione con cui studiano le stelle.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Kylenne, galassia Via Lattea.</li>
+        <li><strong>Clima:</strong> Semi-arido nelle fasce temperate, torrido all'equatore; piogge brevi e violente una volta ogni pochi anni.</li>
+        <li><strong>Atmosfera:</strong> Atmosfera spessa e calda, con particolato in sospensione che tinge il cielo di arancio anche a mezzogiorno.</li>
+        <li><strong>Gravità:</strong> 1,34 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 29 ore standard.</li>
+        <li><strong>Satelliti:</strong> nessuno rilevato.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Zenoth di brina</strong> <em>(Pianta igroscopica)</em> — Rete di filamenti argentei che si aprono solo di notte per catturare la condensa, poi si richiudono prima dell'alba.</li>
+        <li><strong>Venkha a otre</strong> <em>(Succulenta gigante)</em> — Tronco rigonfio che immagazzina fino a mille litri d'acqua; si ritira sottoterra durante le tempeste.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Ithzeniss delle dune</strong> <em>(Megafauna fossoria)</em> — Invertebrato lungo decine di metri che nuota sotto la sabbia seguendo le vibrazioni. Le carovane evitano i passi ritmici.</li>
+        <li><strong>Venorr delle saline</strong> <em>(Crostaceo alofilo)</em> — Piccolo e corazzato, vive nelle pozze salmastre sotto la crosta di sale; commestibile, se bollito a lungo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Mirelloull. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="kylenne-iv" data-type="desertico" data-color="hsl(73, 38%, 55%)" data-size="1.835"
+      data-pois='[{"name":"Specchi di Mirelloull","lat":25,"lon":10,"desc":"Campi di telescopi a specchio."},{"name":"Città Riflessa","lat":18,"lon":-20,"desc":"Insediamento principale."},{"name":"Casa dello Specchio","lat":20,"lon":-24,"desc":"Ambasciata e centro studi sull&#39;umanità."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Velmyr</h2>
+      <p>I Velmyr sono umanoidi alti in media due metri, con pelle color ardesia attraversata da sottili venature ramate e occhi interamente scuri, senza sclera. A prima vista sembrano umani disegnati da qualcuno che li aveva visti solo di sfuggita — ed è esattamente questo a turbare entrambe le specie.</p>
+      <p>Si sono evoluti nelle chiome delle foreste di Eldousk, e il loro corpo lo ricorda: arti lunghi, presa fortissima, un senso dell'equilibrio che rende naturale camminare su travi sospese a centinaia di metri d'altezza.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Anatomia:</strong> due cuori in serie, sangue ricco di rame dal riflesso bluastro, ossa leggere ma elastiche.</li>
+        <li><strong>Ciclo vitale:</strong> maturità a quarant'anni, aspettativa di vita attorno ai 180 anni.</li>
+        <li><strong>Sonno segmentato:</strong> dormono in quattro brevi fasi al giorno e restano vigili durante la notte di Eldousk.</li>
+        <li><strong>Convergenza:</strong> nessuna parentela genetica con gli umani è mai stata dimostrata, nonostante le somiglianze. Alcuni studiosi Velmyr sospettano un antico intervento esterno.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>La società Velmyr è guidata dall'<strong>Assemblea dei Sette Rami</strong>: sette grandi casate, ciascuna legata a una disciplina — scienza, diplomazia, difesa, costruzione, medicina, memoria e rotta. I seggi si guadagnano con esami e servizio, non per nascita.</p>
+      <p>Ogni Velmyr adulto presta giuramento al <strong>Vel'tar</strong>, il codice del dovere. Mancare alla parola data non è un reato: è peggio, è una vergogna che segue la famiglia per generazioni.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Architettura:</strong> città di pietra bianca e legno vivo intrecciate tra i tronchi degli alberi titanici, collegate da ponti sospesi.</li>
+        <li><strong>Musica del silenzio:</strong> composizioni in cui le pause contano più delle note; un concerto Velmyr può sembrare vuoto a orecchie umane.</li>
+        <li><strong>Colore rituale:</strong> il rosso è riservato ai giuramenti e ai lutti. Le navi portano bande rosse per ricordare che ogni viaggio è una promessa.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Velmyr viaggiano nello spazio da circa <strong>500 anni</strong>. Hanno sviluppato il salto da soli, con un programma durato tre secoli e costato due intere flotte sperimentali.</p>
+      <p>Il primo contatto con gli umani, sessant'anni fa, è ricordato come «lo Specchio»: due equipaggi che si guardavano attraverso i visori, convinti per ore di trovarsi davanti a un'altra fazione della propria specie.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Velmyr vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Lo Specchio». Fascino e disagio in parti uguali: gli umani sembrano Velmyr senza disciplina, capaci di tutto nel bene e nel male. Alleati, sotto stretta osservazione.</li>
+        <li><strong>Quorai:</strong> I contratti più affidabili della Frontiera, se si sa leggere la pelle di chi li firma. I diplomatici Velmyr sono tra i pochi a parlare correntemente il cromatico.</li>
+        <li><strong>Ythar:</strong> Rispetto per la loro scienza della vita, timore per la loro indifferenza ai confini. Ogni nave-seme Ythar entrata nella Via Lattea è stata scortata fuori.</li>
+        <li><strong>Coralith:</strong> Spiriti affini nella precisione. Scambi scientifici regolari, anche se i Coralith trovano i Velmyr «troppo sentimentali».</li>
+        <li><strong>Vaelun:</strong> Una meraviglia da proteggere. La casata della memoria finanzia da decenni la trascrizione del Grande Canto.</li>
+        <li><strong>Kheprani:</strong> Diffidenza. Un popolo senza individui non può prestare giuramento, e ciò che non giura non può essere creduto.</li>
+        <li><strong>Nexari:</strong> Partner di ricerca sul Voro Nexus e interlocutori opachi. I Velmyr non hanno mai capito se i Nexari collaborino o semplicemente li osservino.</li>
+        <li><strong>Thissari:</strong> Amici antichi. Condividono la passione per la cartografia stellare e un archivio comune delle rotte della galassia di Cygnix.</li>
+        <li><strong>Ashkaari:</strong> I Velmyr sospettano che gli Ashkaari sappiano perché umani e Velmyr si somigliano. Gli Ashkaari rispondono con proverbi.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Specchi di Mirelloull:</strong> Campi di telescopi a specchio che puntano verso il Voro Nexus, in collaborazione con i Nexari.</li>
+        <li><strong>Città Riflessa:</strong> L'insediamento principale, costruito sotto tende bianche che respingono il calore.</li>
+        <li><strong>Casa dello Specchio:</strong> Ambasciata e centro studi dedicato all'umanità, con la più grande biblioteca terrestre fuori dalla Via Lattea interna.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Maestra Astronoma Tiv Oranel:</strong> Dirige gli Specchi. Sostiene che il Voro Nexus emetta segnali periodici e che i Nexari lo sappiano da secoli.</li>
+        <li><strong>Ambasciatore Daran Veluth:</strong> Rappresentante presso il Consorzio. Parla un italiano coloniale impeccabile e colleziona musica terrestre.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Un vecchio telescopio abbandonato ai margini del deserto continua a orientarsi da solo verso lo stesso punto del cielo ogni notte. Gli astronomi dicono che punti verso il Sistema Solare.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-velmyr">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Galleria del Ramo Bianco</p>
+          <p class="market-tagline">Ogni oggetto è garantito dal Vel'tar del suo artigiano</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="strumenti">Strumenti di Precisione</button>
+          <button type="button" class="market-filter-btn" data-filter="navi">Scafi</button>
+          <button type="button" class="market-filter-btn" data-filter="vesti">Vesti & Protezioni</button>
+          <button type="button" class="market-filter-btn" data-filter="arte">Arte del Silenzio</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="strumenti">
+                <div class="product-card-image">🔭</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Strumenti di Precisione</span>
+                  <span class="product-card-name">Astrolabio di Rotta</span>
+                  <p class="product-card-desc">Strumento di navigazione a triangolazione stellare, funziona anche con i sistemi di bordo spenti.</p>
+                  <span class="product-card-price">4.200 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="strumenti">
+                <div class="product-card-image">🩺</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Strumenti di Precisione</span>
+                  <span class="product-card-name">Lama Chirurgica a Due Cuori</span>
+                  <p class="product-card-desc">Bisturi a vibrazione calibrato per anatomie diverse; la casata della medicina lo vende anche agli umani.</p>
+                  <span class="product-card-price">1.350 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="navi">
+                <div class="product-card-image">🛸</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Scafi</span>
+                  <span class="product-card-name">Esploratore Classe Veyl</span>
+                  <p class="product-card-desc">Sezione a disco, doppia nacella e laboratori di bordo. L'orgoglio della casata della rotta.</p>
+                  <span class="product-card-price">265.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="navi">
+                <div class="product-card-image">🚤</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Scafi</span>
+                  <span class="product-card-name">Scialuppa Sospesa</span>
+                  <p class="product-card-desc">Veicolo leggero antigravitazionale nato per muoversi tra le chiome di Eldousk.</p>
+                  <span class="product-card-price">22.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vesti">
+                <div class="product-card-image">🧥</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vesti & Protezioni</span>
+                  <span class="product-card-name">Mantello di Giuramento</span>
+                  <p class="product-card-desc">Tessuto bianco con banda rossa, isolante e ignifugo. Indossarlo senza aver giurato è un insulto grave.</p>
+                  <span class="product-card-price">2.100 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="vesti">
+                <div class="product-card-image">🥋</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Vesti & Protezioni</span>
+                  <span class="product-card-name">Armatura del Ramo di Difesa</span>
+                  <p class="product-card-desc">Lamine articolate leggere in lega ceramica, silenziose anche in corsa.</p>
+                  <span class="product-card-price">5.800 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="arte">
+                <div class="product-card-image">🎐</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Arte del Silenzio</span>
+                  <span class="product-card-name">Campana del Silenzio</span>
+                  <p class="product-card-desc">Suona una sola nota, poi resta muta per un giorno intero. I Velmyr la usano per meditare.</p>
+                  <span class="product-card-price">900 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

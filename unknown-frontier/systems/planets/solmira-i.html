@@ -7,34 +7,156 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../solmira.html">← <span>Solmira</span></a>
+  <span class="topbar-planet-name">Dunem</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Dunem</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Dunem</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,84 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+22 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Ricca di ossigeno</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Moderata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Da orbita Dunem brilla di un blu intenso screziato di bianco. Il primo pianeta di Solmira ha meno terre emerse di quante ne abbia una singola regione della Terra.</p>
+      <p>Alcuni oceanografi del Reparto Scientifico sostengono che le correnti rispondano alla presenza delle sonde. Nessuno ha ancora pubblicato i dati.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Solmira, galassia Aurvex.</li>
+        <li><strong>Clima:</strong> Caldo e piovoso, con cicloni che si formano e si dissolvono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 30%: respirabile, ma ogni scintilla rischia di diventare un incendio.</li>
+        <li><strong>Gravità:</strong> 0,84 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 28 ore standard.</li>
+        <li><strong>Satelliti:</strong> Dunem-a, Dunem-b, Dunem-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Dunem dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="solmira-i" data-type="oceanico" data-color="#4d7ea8" data-size="1.318"
+      data-pois='[{"name":"Occhio di Griquony","lat":35,"lon":81,"desc":"Uragano permanente osservato da secoli."},{"name":"Arcipelago di Nelgri","lat":-14,"lon":-42,"desc":"Catena di isole vulcaniche, unica terra emersa stabile."},{"name":"Spirale di Dragri","lat":-33,"lon":169,"desc":"Struttura geometrica sul fondale, di origine sconosciuta."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Braym galleggiante</strong> <em>(Isola vegetale)</em> — Intrecci di radici e gas che formano isole larghe chilometri, con ecosistemi propri; migrano con le correnti.</li>
+        <li><strong>Quoorrkha lucente</strong> <em>(Fitoplancton bioluminescente)</em> — Microrganismi che si illuminano quando vengono disturbati; le scie delle navi restano visibili per ore.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Droven cantore</strong> <em>(Mammifero marino)</em> — Emette canti a bassa frequenza che viaggiano per migliaia di chilometri; alcuni schemi sembrano rispondere ai segnali delle sonde.</li>
+        <li><strong>Griithnel d'abisso</strong> <em>(Leviatano)</em> — Sagome lunghe oltre duecento metri rilevate dal sonar a grande profondità; salgono in superficie solo durante le tempeste.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Onde planetarie:</strong> Onde lunghe che crescono senza ostacoli fino a decine di metri; nessuna struttura costiera resiste a lungo.</li>
+        <li><strong>Pressione abissale:</strong> Sotto i dieci chilometri servono scafi da trincea; molti batiscafi standard sono implosi.</li>
+        <li><strong>Filamenti urticanti:</strong> Tossine neurotossiche delle colonie fluttuanti, capaci di attraversare i tessuti delle mute standard.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico autorizza sbarchi solo con tute sigillate e supporto orbitale attivo: Dunem non perdona le distrazioni.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Dunem. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-9174 · NRS Corvina</h3>
+      <p><strong>Deposito di idrati.</strong> Enormi riserve di idrati di metano sui fondali polari: una risorsa energetica e un rischio di rilascio catastrofico.</p>
+      <h3>RS-8831 · NRS Tessitrice</h3>
+      <p><strong>Canto strutturato.</strong> Le vocalizzazioni dei mammiferi marini contengono pattern ricorsivi compatibili con un linguaggio. Analisi in corso.</p>
+      <h3>RS-3315 · Sonda Vigilia-9</h3>
+      <p><strong>Isola artificiale?.</strong> Un'isola galleggiante percorre una rotta perfettamente circolare da tre cicli di osservazione, contro le correnti prevalenti.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

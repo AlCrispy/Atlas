@@ -7,33 +7,300 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-kheprani.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ninhara.html">← <span>Ninhara</span></a>
+  <span class="topbar-planet-name">Ninhara II</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Ninhara II</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Ninhara II</h1>
+      <span class="placeholder-badge">Mondo Natale Kheprani</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Kheprani</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~11 miliardi</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Ninhara II è il nido originario dei Kheprani: un deserto ocra coperto da foreste di torri-termitaio alte fino a tre chilometri. Ogni torre è una città, e sotto la sabbia le gallerie si estendono per profondità che nessuna mappa straniera conosce.</p>
+      <p>Il clima torrido è regolato dai camini delle arcologie, che nelle ore più calde emettono colonne di vapore visibili dall'orbita. Nelle profondità, attorno ai Pozzi, vivono le Madri del Nido Supremo.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Ninhara, galassia Corvantis.</li>
+        <li><strong>Clima:</strong> Arido estremo, con venti costanti da ovest e tempeste di sabbia stagionali di scala continentale.</li>
+        <li><strong>Atmosfera:</strong> Azoto e ossigeno in proporzioni vicine allo standard, ma estremamente secca e carica di polvere fine: servono filtri.</li>
+        <li><strong>Gravità:</strong> 1,04 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 25 ore standard.</li>
+        <li><strong>Satelliti:</strong> Ninhara II-a, Ninhara II-b, Ninhara II-c.</li>
+        <li><strong>Anelli:</strong> sistema di anelli visibile anche con strumenti ottici di bordo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Brabra a radice profonda</strong> <em>(Albero fossatore)</em> — Chioma bassa e piatta, radici che scendono per oltre cento metri fino alle falde. Le carovane le usano come segnavia.</li>
+        <li><strong>Mirmirquo a specchio</strong> <em>(Pianta fototropica)</em> — Foglie lucide orientabili che concentrano la luce su fiori scuri, ustionando gli insetti che ci si posano.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Tornelzen otre</strong> <em>(Erbivoro da carovana)</em> — Quadrupede lento e gobbo che trattiene acqua nei tessuti per mesi; addomesticabile, secondo i primi rapporti.</li>
+        <li><strong>Saeithzen delle saline</strong> <em>(Crostaceo alofilo)</em> — Piccolo e corazzato, vive nelle pozze salmastre sotto la crosta di sale; commestibile, se bollito a lungo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Ninhara II. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ninhara-ii" data-type="desertico" data-color="#a85c3a" data-size="1.229" data-ring-color="#a85c3a"
+      data-pois='[{"name":"Il Nido Supremo","lat":0,"lon":20,"desc":"Camere delle Madri-Pozzo."},{"name":"Torre degli Emissari","lat":22,"lon":-35,"desc":"Arcologia aperta agli stranieri."},{"name":"Foresta di Torri di Skarr","lat":-18,"lon":110,"desc":"La più grande concentrazione di arcologie."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Kheprani</h2>
+      <p>I Kheprani sono artropodi a sei arti, con carapace iridescente dai riflessi bronzo e verde, occhi composti e antenne piumate che leggono gli odori con una precisione impossibile per qualsiasi strumento umano. Un operaio è grande quanto un cane da slitta; una Madre-Pozzo può superare i venti metri.</p>
+      <p>Ogni Kheprani è intelligente, ma nessuno è davvero un individuo. L'«odore di nido» — una miscela di feromoni prodotta dalle Madri — lega i membri di una colonia in un'unica volontà. Un Kheprani separato dal suo nido per troppo tempo smette di mangiare.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Caste:</strong> Madri-Pozzo (riproduzione e comando), Architetti, Operai, Guerrieri ed Emissari. La casta è decisa dalla dieta delle larve.</li>
+        <li><strong>Resistenza:</strong> carapace capace di sopportare temperature desertiche e pressioni elevate; possono restare settimane senz'acqua.</li>
+        <li><strong>Comunicazione:</strong> feromoni per il nido, stridulazioni ritmiche per le altre specie. I traduttori umani usano sintetizzatori chimici.</li>
+        <li><strong>Emissari:</strong> sterili e con un odore di nido attenuato, sono i Kheprani più simili a individui. Molti nidi li considerano necessari e un po' malati.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Il potere appartiene al <strong>Nido Supremo</strong>, il consiglio delle Madri-Pozzo più antiche dei tre mondi. Le decisioni non vengono discusse: vengono «annusate», finché un unico odore di consenso si diffonde in tutte le colonie.</p>
+      <p>Verso l'esterno parlano gli <strong>Emissari</strong>. Commerciano, negoziano e spiano, e sono gli unici Kheprani capaci di mentire — perché sono gli unici a cui il nido lo permette.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Arcologie-termitaio:</strong> torri di sabbia cementata alte chilometri, con camini che raffreddano milioni di camere. Da orbita sembrano foreste di stalagmiti.</li>
+        <li><strong>Coltivazione:</strong> i Kheprani non cacciano: allevano funghi nutritivi in immense camere umide, alimentate con vegetali raccolti sui mondi giungla.</li>
+        <li><strong>Il Nido non dimentica:</strong> ogni offesa subita viene registrata nell'odore dei tunnel commemorativi, e respirata dalle nuove generazioni.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Kheprani viaggiano nello spazio da circa <strong>900 anni</strong>. Le loro navi-alveare, costruite in chitina cementata, sono lente e colossali: colonie intere che migrano tra le stelle con milioni di membri a bordo.</p>
+      <p>Il salto Kheprani è rudimentale e costoso, e dipende da sali di risonanza estratti su Gravern Expanse. Per questo le loro rotte si scontrano con quelle dei Quorai.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Kheprani vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Nidi di uno». Ogni umano è una colonia con una sola regina, e ogni regina vuole qualcosa di diverso. Clienti eccellenti, alleati impossibili.</li>
+        <li><strong>Quorai:</strong> Concorrenti per il sale di risonanza. I convogli si scontrano da decenni sulle rotte tra Ninhara e Quovar. Il Nido Supremo li rispetta come si rispetta un nido rivale.</li>
+        <li><strong>Velmyr:</strong> I Velmyr non si fidano del Nido, e il Nido lo annusa. Rapporti freddi e formalmente corretti.</li>
+        <li><strong>Ythar:</strong> Un coro che vuole piantare spore nelle camere dei funghi. Due navi-seme Ythar sono state bruciate nei cieli di Olouraaik: il Nido non chiede scusa per difendere il cibo.</li>
+        <li><strong>Coralith:</strong> La Guerra delle Sabbie di Vetro. I Kheprani scavavano sabbie ricche di silicio; i Coralith dicono che fossero tombe. L'odore della guerra è ancora nei tunnel commemorativi.</li>
+        <li><strong>Vaelun:</strong> Troppo lontani per essere nemici, troppo lenti per essere capiti. Il Nido non ha mai trovato un loro odore.</li>
+        <li><strong>Nexari:</strong> Partner utili. Le macchine non hanno odore: non si possono ingannare e non ingannano. Il Nido compra da loro componenti e cartografie.</li>
+        <li><strong>Thissari:</strong> Le leggende Kheprani più antiche parlano di predatori alati che scendevano sui nidi. I Thissari non ne hanno colpa, ma gli operai si agitano quando li vedono.</li>
+        <li><strong>Ashkaari:</strong> Rovine da scavare. Gli Emissari comprano mappe Ashkaari, e i nidi mandano squadre a svuotare ciò che le mappe indicano.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Il Nido Supremo:</strong> Il sistema di camere più profondo del pianeta, dove si radunano le Madri-Pozzo più antiche. Nessuno straniero lo ha mai visto.</li>
+        <li><strong>Torre degli Emissari:</strong> L'unica arcologia aperta alle altre specie, con camere a odore neutro e un piccolo spazioporto.</li>
+        <li><strong>Tunnel della Memoria:</strong> Gallerie commemorative dove l'odore delle guerre passate viene respirato dalle larve.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Madre-Pozzo Vashkarri:</strong> La più antica del Nido Supremo, ha guidato la tregua con i Coralith. Non ha mai lasciato la sua camera in trecento anni.</li>
+        <li><strong>Emissario Kh'vorrith:</strong> Capo degli Emissari. Affabile, curioso, spaventosamente bravo a capire cosa vuole un umano prima che lo dica.</li>
+        <li><strong>Architetto Tzik-Arr:</strong> Progettista delle nuove navi-alveare. Sostiene che il Nido debba espandersi prima che lo facciano i Terrestri.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Sotto il Nido Supremo, dicono gli Emissari quando credono di non essere ascoltati, esiste una camera sigillata con un odore che nessun Kheprani vivente riconosce. Le Madri la chiamano «il nido prima del Nido».</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-kheprani">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Camere di Scambio del Nido</p>
+          <p class="market-tagline">Emissario incaricato: Kh'vorrith · pagamento in crediti o sale</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="armi">Armi del Nido</button>
+          <button type="button" class="market-filter-btn" data-filter="costrutti">Costrutti in Chitina</button>
+          <button type="button" class="market-filter-btn" data-filter="funghi">Coltivazioni</button>
+          <button type="button" class="market-filter-btn" data-filter="feromoni">Feromoni</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">🦂</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi del Nido</span>
+                  <span class="product-card-name">Pungiglione da Guerra</span>
+                  <p class="product-card-desc">Lancia in chitina con serbatoio di veleno paralizzante di casta guerriera. Leggerissima, durissima.</p>
+                  <span class="product-card-price">2.200 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">🪲</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi del Nido</span>
+                  <span class="product-card-name">Scudo-Carapace</span>
+                  <p class="product-card-desc">Placca ricavata da una muta di guerriero adulto. Ferma i proiettili cinetici standard.</p>
+                  <span class="product-card-price">3.400 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="costrutti">
+                <div class="product-card-image">🏺</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Costrutti in Chitina</span>
+                  <span class="product-card-name">Cemento di Nido</span>
+                  <p class="product-card-desc">Pasta biologica che indurisce in un'ora come roccia. Usata da ogni colono che deve costruire in fretta.</p>
+                  <span class="product-card-price">480 crediti / fusto</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="costrutti">
+                <div class="product-card-image">🐜</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Costrutti in Chitina</span>
+                  <span class="product-card-name">Sciame Operaio in Affitto</span>
+                  <p class="product-card-desc">Un migliaio di operai per trenta giorni, con Architetto incluso. Costruiscono qualsiasi cosa, a modo loro.</p>
+                  <span class="product-card-price">58.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="funghi">
+                <div class="product-card-image">🍄</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Coltivazioni</span>
+                  <span class="product-card-name">Fungo Nutriente di Gravern</span>
+                  <p class="product-card-desc">Una razione basta per tre giorni. Il sapore è stato descritto come «cantina bagnata».</p>
+                  <span class="product-card-price">35 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="feromoni">
+                <div class="product-card-image">🧪</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Feromoni</span>
+                  <span class="product-card-name">Odore di Tregua</span>
+                  <p class="product-card-desc">Fiala che rende un non-Kheprani «tollerato» da qualsiasi nido per un giorno. Da non confondere con l'Odore di Preda.</p>
+                  <span class="product-card-price">2.700 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="feromoni">
+                <div class="product-card-image">⚗️</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Feromoni</span>
+                  <span class="product-card-name">Richiamo di Operaio</span>
+                  <p class="product-card-desc">Feromone che attira e rende docili gli insetti sociali di quasi ogni mondo. Vietato in tre sistemi.</p>
+                  <span class="product-card-price">1.900 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

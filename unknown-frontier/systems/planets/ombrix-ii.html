@@ -7,34 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../ombrix.html">← <span>Ombrix</span></a>
+  <span class="topbar-planet-name">Vroum</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Vroum</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Gigante gassoso</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Gigante gassoso</p>
+      <h1 class="placeholder-title">Vroum</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Gigante gassoso</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">3,18 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+20 °C nella fascia temperata</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Idrogeno-elio</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Estrema</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Il secondo pianeta di Ombrix è un colosso di idrogeno ed elio. Vroum irradia più calore di quanto ne riceva dalla sua stella e ruota così in fretta da apparire schiacciato ai poli.</p>
+      <p>Tra gli strati di nubi esiste una fascia temperata dove pressione e temperatura sono simili a quelle di un mondo abitabile.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Ombrix, galassia Vandrel.</li>
+        <li><strong>Clima:</strong> Bande atmosferiche stabili da millenni, interrotte da vortici che nascono e muoiono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Idrogeno ed elio con nubi di ammoniaca, idrosolfuro d'ammonio e acqua a strati sempre più profondi.</li>
+        <li><strong>Gravità:</strong> 3,18 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 11 ore standard.</li>
+        <li><strong>Satelliti:</strong> Vroum-a, Vroum-b, Vroum-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Vroum dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="ombrix-ii" data-type="gg" data-color="#a8c98f" data-size="2.003"
+      data-pois='[{"name":"Occhio di Nelath","lat":0,"lon":-105,"desc":"Grande tempesta ovale attiva da secoli."},{"name":"Fascia temperata Velmirzen","lat":-13,"lon":33,"desc":"Strato di nubi dove vivono i galleggiatori."},{"name":"Banda di Syven","lat":34,"lon":85,"desc":"Corrente a getto equatoriale, la più veloce del pianeta."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Ithgri a zattera</strong> <em>(Tappeto sporigeno)</em> — Reti di filamenti larghe chilometri che galleggiano nella fascia temperata trattenendo gas caldi.</li>
+        <li><strong>Quonyny dei venti</strong> <em>(Aeroplancton)</em> — Minuscoli organismi fotosintetici trasportati dalle correnti; colorano alcune bande di sfumature rossastre.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Synelvel galleggiante</strong> <em>(Galleggiatore)</em> — Organismo simile a una mongolfiera vivente largo mezzo chilometro: scalda l'idrogeno interno per restare in quota e filtra l'aeroplancton.</li>
+        <li><strong>Saerek sprofondatore</strong> <em>(Organismo discendente)</em> — Minuscolo e numerosissimo, si nutre in quota finché cresce troppo e sprofonda negli strati caldi, dove muore e rilascia nutrienti.</li>
+        <li><strong>Athven cacciatore</strong> <em>(Predatore aereo)</em> — Veloce e affusolato, caccia in branco i galleggiatori sfruttando le correnti a getto.</li>
+        <li><strong>Droissdra fulminivoro</strong> <em>(Colonia elettrica)</em> — Si raduna attorno alle celle temporalesche e assorbe energia dai fulmini; brilla per ore dopo ogni tempesta.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Correnti a getto:</strong> Venti opposti che possono strappare un aerostato in due lungo la linea di taglio.</li>
+        <li><strong>Fulmini planetari:</strong> Scariche mille volte più potenti di quelle terrestri, capaci di vaporizzare una sonda.</li>
+        <li><strong>Fasce di radiazione:</strong> La magnetosfera intrappola particelle ad altissima energia: pochi minuti in orbita bassa bruciano l'elettronica non schermata.</li>
+        <li><strong>Gravità elevata:</strong> Rientrare in orbita dagli strati alti richiede spinte che pochi scafi leggeri possono garantire.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Vroum è marcato in rosso nei registri del Reparto Scientifico: nessuno sbarco autorizzato senza via libera del Direttorato Coloniale. Le sonde automatiche sono l'unico approccio raccomandato.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Vroum. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-1993 · Sonda Vigilia-9</h3>
+      <p><strong>Sagome nelle nubi.</strong> Oggetti lenticolari larghi centinaia di metri si muovono controvento nella fascia temperata. Organici, secondo lo spettrometro.</p>
+      <h3>RS-5948 · NRS Fenice Grigia</h3>
+      <p><strong>Riserve di elio-3.</strong> Concentrazione di elio-3 sufficiente a rifornire flotte intere di reattori a fusione per secoli.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

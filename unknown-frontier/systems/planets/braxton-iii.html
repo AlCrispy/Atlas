@@ -7,34 +7,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../braxton.html">← <span>Braxton</span></a>
+  <span class="topbar-planet-name">Creaek</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Creaek</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Creaek</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,80 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+40 °C diurni, −15 °C notturni</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Sottile, secca</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Bassa</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Creaek è un mondo arido e luminoso, terzo in ordine di distanza dalla stella di Braxton. Qui ogni forma di vita ruota attorno a un'unica ossessione: trattenere l'acqua.</p>
+      <p>Durante la notte la temperatura crolla sotto lo zero e l'umidità residua si condensa in brina, raccolta avidamente da piante e animali.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Terzo pianeta del sistema Braxton, galassia Pyxis.</li>
+        <li><strong>Clima:</strong> Secco e ventoso, con forti escursioni termiche tra il giorno rovente e le notti gelide.</li>
+        <li><strong>Atmosfera:</strong> Pressione pari a circa metà dello standard terrestre, con alta concentrazione di anidride carbonica.</li>
+        <li><strong>Gravità:</strong> 0,80 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 25 ore standard.</li>
+        <li><strong>Satelliti:</strong> Creaek-a, Creaek-b, Creaek-c.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Creaek dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="braxton-iii" data-type="desertico" data-color="#e0c896" data-size="1.793"
+      data-pois='[{"name":"Vetri di Vasorr","lat":8,"lon":-23,"desc":"Cerchi concentrici di sabbia vetrificata di origine incerta."},{"name":"Archi di Griothith","lat":13,"lon":149,"desc":"Altopiano scolpito dal vento in archi e pinnacoli giganteschi."},{"name":"Mare di Othven","lat":-29,"lon":-175,"desc":"Erg sconfinato attraversato dalle rotte della megafauna fossoria."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Issveliss a otre</strong> <em>(Succulenta gigante)</em> — Tronco rigonfio che immagazzina fino a mille litri d'acqua; si ritira sottoterra durante le tempeste.</li>
+        <li><strong>Grizengri delle saline</strong> <em>(Alga cristallina)</em> — Crosta rosata che cresce sul sale e riflette la luce per non surriscaldarsi; da lontano sembra un campo di quarzo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Orrvel delle dune</strong> <em>(Megafauna fossoria)</em> — Invertebrato lungo decine di metri che nuota sotto la sabbia seguendo le vibrazioni. Le carovane evitano i passi ritmici.</li>
+        <li><strong>Sydrany cantante</strong> <em>(Insetto sociale)</em> — Sciami che costruiscono torri di sabbia cementata; il vento che le attraversa produce il canto delle dune.</li>
+        <li><strong>Orrsy planatore</strong> <em>(Volatore termico)</em> — Membrane ampie e corpo leggerissimo: sfrutta le correnti calde per restare in volo giorni senza posarsi.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Tempeste di sabbia:</strong> Fronti alti chilometri che avanzano a oltre duecento chilometri orari; abrasione sufficiente a opacizzare un visore in minuti.</li>
+        <li><strong>Disidratazione:</strong> Senza sistemi di recupero dell'umidità, una persona sopravvive meno di due giorni in superficie.</li>
+        <li><strong>Megafauna fossoria:</strong> Le vibrazioni dei motori attirano i grandi scavatori; almeno un mezzo di rilevamento è stato perso così.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico classifica Creaek come accessibile a squadre di rilevamento standard, con protocolli ambientali di base.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Creaek. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-5062 · NRS Corvina</h3>
+      <p><strong>Falda profonda.</strong> Riserva d'acqua dolce stimata in miliardi di metri cubi a seicento metri di profondità. Da sola potrebbe sostenere una colonia.</p>
+      <h3>RS-1029 · NRS Meridiana</h3>
+      <p><strong>Letto oceanico fossile.</strong> Sotto le dune dell'emisfero nord il radar ha tracciato coste, estuari e scogliere di un mare scomparso da milioni di anni.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

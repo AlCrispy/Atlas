@@ -7,33 +7,289 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-coralith.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../haldrin.html">← <span>Haldrin</span></a>
+  <span class="topbar-planet-name">Haldrin I</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Haldrin I</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Haldrin I</h1>
+      <span class="placeholder-badge">Mondo Natale Coralith</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">1 rilevato</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Coralith</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~600 milioni</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Haldrin I è un deserto rovente di sabbia e vetro, il primo pianeta di un sistema dalla stella antica e bianca. Per un umano la superficie è mortale; per i Coralith è la temperatura perfetta.</p>
+      <p>Le città Coralith sorgono come geodi aperti: cattedrali di cristallo simmetriche che catturano la luce della stella e la distribuiscono all'interno. In orbita, tre anelli concentrici di stazioni riproducono su scala planetaria la forma delle loro navi.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Haldrin, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Arido estremo, con venti costanti da ovest e tempeste di sabbia stagionali di scala continentale.</li>
+        <li><strong>Atmosfera:</strong> Pressione pari a circa metà dello standard terrestre, con alta concentrazione di anidride carbonica.</li>
+        <li><strong>Gravità:</strong> 0,93 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 21 ore standard.</li>
+        <li><strong>Satelliti:</strong> Haldrin I-a.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Orroth a radice profonda</strong> <em>(Albero fossatore)</em> — Chioma bassa e piatta, radici che scendono per oltre cento metri fino alle falde. Le carovane le usano come segnavia.</li>
+        <li><strong>Aththu girovaga</strong> <em>(Cespuglio rotolante)</em> — Si stacca dal terreno nella stagione secca e si lascia trasportare dal vento per centinaia di chilometri, disperdendo semi.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Zenael cantante</strong> <em>(Insetto sociale)</em> — Sciami che costruiscono torri di sabbia cementata; il vento che le attraversa produce il canto delle dune.</li>
+        <li><strong>Rekorr otre</strong> <em>(Erbivoro da carovana)</em> — Quadrupede lento e gobbo che trattiene acqua nei tessuti per mesi; addomesticabile, secondo i primi rapporti.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Haldrin I. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="haldrin-i" data-type="desertico" data-color="#e8d2a0" data-size="1.591"
+      data-pois='[{"name":"Aurea Simmetria","lat":15,"lon":0,"desc":"Capitale esagonale."},{"name":"Distese Incise","lat":-30,"lon":80,"desc":"Deserti di vetro memoriale."},{"name":"Pozzo Termico di Vaar","lat":5,"lon":-110,"desc":"Fonte geotermica che alimenta la capitale."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Coralith</h2>
+      <p>I Coralith sono esseri viventi a base di silicio: corpi di reticolo cristallino traslucido, alti quasi tre metri, con un nucleo luminoso che pulsa al ritmo del pensiero. La loro biochimica funziona solo ad alte temperature, dove le molecole di carbonio si sfalderebbero — per questo sono nati sui deserti roventi di Haldrin.</p>
+      <p>Pensano con la luce. Gli impulsi rifratti nel reticolo interno sono i loro processi mentali, e parlano tra loro con toni armonici che fanno vibrare l'aria come un diapason. Per le orecchie umane, una discussione tra Coralith suona come un coro di cristalli.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Metabolismo:</strong> lentissimo; si nutrono di minerali e calore, e possono restare immobili per mesi.</li>
+        <li><strong>Ciclo vitale:</strong> non invecchiano in senso biologico, ma accumulano micro-fratture. I più antichi hanno migliaia di anni.</li>
+        <li><strong>Riproduzione:</strong> per gemmazione. Un frammento staccato con precisione cresce fino a diventare un nuovo individuo, con parte dei ricordi del genitore.</li>
+        <li><strong>Vulnerabilità:</strong> il freddo e le vibrazioni armoniche sbagliate. Una nota precisa può frantumare un Coralith.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>La civiltà Coralith è retta dalla <strong>Simmetria</strong>, un consenso calcolato: ogni decisione viene modellata in anticipo da migliaia di menti in rete, fino a trovare la soluzione con il minor numero di «imperfezioni». Un voto Coralith può richiedere anni, ma raramente viene rivisto.</p>
+      <p>Il crimine, per i Coralith, non esiste come concetto morale: esiste l'<strong>imperfezione</strong>, un errore da correggere. I recidivi vengono «ritagliati» — il loro reticolo ricomposto — e tornano cittadini diversi.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Estetica:</strong> architettura perfettamente simmetrica, città disegnate come cristalli, anelli orbitali concentrici.</li>
+        <li><strong>Tempo:</strong> un Coralith pianifica in secoli. La fretta delle specie a base di carbonio è considerata una malattia.</li>
+        <li><strong>Tombe di vetro:</strong> i Coralith morti vengono fusi nella sabbia dei deserti sacri, creando distese di vetro inciso con i loro ricordi.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Coralith viaggiano tra le stelle da circa <strong>9.000 anni</strong>, e sono la civiltà attiva più antica della Frontiera dopo gli Ashkaari.</p>
+      <p>Le loro navi armillari usano <strong>reticoli di salto</strong>: cristalli cresciuti per risuonare con precise frequenze dello spazio-tempo. I Coralith li vendono a Quorai e Thissari, mantenendo segreta la tecnica di crescita.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Coralith vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> «Rumore». Imprecisi, emotivi, incoerenti — eppure capaci di intuizioni che la Simmetria non aveva calcolato. Oggetto di studio ufficiale.</li>
+        <li><strong>Quorai:</strong> Clienti preziosi e caotici. I Coralith trovano insopportabile il loro modo di cambiare prezzo a metà frase, ma i sali di risonanza senza reticolo sono inutili.</li>
+        <li><strong>Velmyr:</strong> La specie di carbonio più vicina alla perfezione. Troppo sentimentali, ma il loro Vel'tar è quasi una forma di simmetria.</li>
+        <li><strong>Ythar:</strong> Crescita senza forma, morte senza fine: il Coro è per i Coralith la definizione stessa di imperfezione. Il confine con Aurvex è presidiato.</li>
+        <li><strong>Vaelun:</strong> Protetti. Da seicento anni i Coralith mantengono le stazioni di Othouven Major e trasportano gli emissari Vaelun tra le stelle. La Simmetria li considera un patrimonio da conservare.</li>
+        <li><strong>Kheprani:</strong> Quattrocento anni fa le cave dei nidi Kheprani raggiunsero i deserti sacri di Norvun e ne macinarono le tombe di vetro. La Guerra delle Sabbie di Vetro è finita in una tregua, non in una pace.</li>
+        <li><strong>Nexari:</strong> Menti logiche e parenti lontani nella struttura del pensiero. Ma i Nexari calcolano senza cercare la bellezza, e questo li rende pericolosi.</li>
+        <li><strong>Thissari:</strong> Acquirenti corretti e rispettosi dei reticoli di salto venduti trecentocinquant'anni fa. Nessuna imperfezione registrata nei rapporti.</li>
+        <li><strong>Ashkaari:</strong> L'unica civiltà più antica. I Coralith ne studiano le rovine con reverenza, cercando la simmetria perduta del loro antico impero.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Aurea Simmetria:</strong> La capitale: una città a pianta perfettamente esagonale, dove il consenso calcolato prende forma nella Sala delle Mille Menti.</li>
+        <li><strong>Distese Incise:</strong> Deserti di vetro formato dai Coralith defunti; ogni lastra conserva i ricordi di un individuo.</li>
+        <li><strong>Anelli di Haldrin:</strong> Tre anelli orbitali di stazioni, unico luogo del sistema con ambienti a temperatura sopportabile per le specie di carbonio.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Primo Calcolatore Aeon-Theris:</strong> Il Coralith più antico ancora in servizio, 7.000 anni. Parla solo per frasi già verificate dalla Simmetria.</li>
+        <li><strong>Frammento Ilyx:</strong> Giovane Coralith nato da gemmazione imperfetta. Ricorda cose che il genitore aveva cancellato, ed è diventato un caso politico.</li>
+        <li><strong>Ingegnera Ruth Addo:</strong> Unica umana ammessa agli Anelli come studiosa dei reticoli di salto. Sospettata dal Consorzio di essere troppo vicina ai Coralith.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Nelle Distese Incise esiste una lastra di vetro che non contiene ricordi Coralith, ma immagini di esseri a base di carbonio, anfibi e antichissimi. La Simmetria l'ha classificata come «imperfezione non risolta».</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-coralith">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Galleria Armonica</p>
+          <p class="market-tagline">Tolleranza di fabbricazione garantita: 0,0001%</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="reticoli">Reticoli di Salto</button>
+          <button type="button" class="market-filter-btn" data-filter="strumenti">Strumenti Armonici</button>
+          <button type="button" class="market-filter-btn" data-filter="armi">Armi a Risonanza</button>
+          <button type="button" class="market-filter-btn" data-filter="navi">Scafi Armillari</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="reticoli">
+                <div class="product-card-image">💠</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Reticoli di Salto</span>
+                  <span class="product-card-name">Reticolo di Salto Classe Prima</span>
+                  <p class="product-card-desc">Cristallo accordato per salti di precisione assoluta. Non compatibile con motori di fabbricazione terrestre senza adattatore.</p>
+                  <span class="product-card-price">38.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="reticoli">
+                <div class="product-card-image">🔹</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Reticoli di Salto</span>
+                  <span class="product-card-name">Frammento Stabilizzatore</span>
+                  <p class="product-card-desc">Riduce le vibrazioni dei sali di risonanza Quorai. I Quorai lo comprano lamentandosi del prezzo.</p>
+                  <span class="product-card-price">11.500 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="strumenti">
+                <div class="product-card-image">🎼</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Strumenti Armonici</span>
+                  <span class="product-card-name">Diapason di Analisi</span>
+                  <p class="product-card-desc">Una sola nota rivela la composizione interna di qualsiasi minerale. Usato da ogni geologo serio della Frontiera.</p>
+                  <span class="product-card-price">2.900 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="strumenti">
+                <div class="product-card-image">🔮</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Strumenti Armonici</span>
+                  <span class="product-card-name">Memoria di Vetro</span>
+                  <p class="product-card-desc">Cristallo che conserva registrazioni olografiche per diecimila anni. Nessun formato più affidabile esiste.</p>
+                  <span class="product-card-price">1.200 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="armi">
+                <div class="product-card-image">🔊</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Armi a Risonanza</span>
+                  <span class="product-card-name">Lancia Armonica</span>
+                  <p class="product-card-desc">Emette una frequenza che frattura la materia solida. Vendita vietata ai Kheprani.</p>
+                  <span class="product-card-price">9.600 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="navi">
+                <div class="product-card-image">⚙️</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Scafi Armillari</span>
+                  <span class="product-card-name">Scafo Armillare «Tre Anelli»</span>
+                  <p class="product-card-desc">Nave simmetrica con nucleo giroscopico e ali radiali. Consegna in ventidue anni: la perfezione richiede tempo.</p>
+                  <span class="product-card-price">410.000 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

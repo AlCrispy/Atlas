@@ -1,0 +1,89 @@
+/* Mercato theme — Vaelun: the upper clouds of a gas giant at dusk. Indigo
+   to rose gradient sky, drifting cloud banks, frosted cards that float.
+   Reveal: two cloud banks parting up and down. */
+
+.market-vaelun {
+  --mk-void: #1e1838;
+  --mk-panel: #2c2148;
+  --mk-panel-lt: rgba(255,240,250,0.1);
+  --mk-steel: rgba(255,220,240,0.22);
+  --mk-steel-lt: rgba(255,220,240,0.4);
+  --mk-text: #fff4f8;
+  --mk-text-dim: #dcc7da;
+  --mk-yellow: #ffc2a8;
+  --mk-orange: #c9b4ff;
+
+  background: linear-gradient(180deg, #1e1838 0%, #3f2a5c 45%, #8a5478 85%, #b56f7f 100%);
+}
+
+/* Slowly drifting cloud banks. */
+.market-vaelun::before,
+.market-vaelun::after {
+  content: '';
+  position: absolute; left: -50%; width: 200%; z-index: 0;
+  pointer-events: none;
+  filter: blur(18px);
+  animation: vaelunDrift 40s linear infinite;
+}
+.market-vaelun::before {
+  top: 18%; height: 120px;
+  background:
+    radial-gradient(ellipse 12% 50% at 15% 50%, rgba(255,230,240,0.14), transparent),
+    radial-gradient(ellipse 18% 60% at 45% 40%, rgba(255,230,240,0.1), transparent),
+    radial-gradient(ellipse 14% 55% at 78% 55%, rgba(255,230,240,0.12), transparent);
+}
+.market-vaelun::after {
+  bottom: 6%; height: 160px;
+  background:
+    radial-gradient(ellipse 16% 50% at 25% 50%, rgba(255,200,210,0.18), transparent),
+    radial-gradient(ellipse 20% 60% at 65% 45%, rgba(255,200,210,0.14), transparent);
+  animation-duration: 60s;
+  animation-direction: reverse;
+}
+@keyframes vaelunDrift {
+  to { transform: translateX(25%); }
+}
+
+.market-vaelun .market-title {
+  font-weight: 400; letter-spacing: 0.18em;
+  text-shadow: 0 0 24px rgba(255,194,168,0.5);
+}
+
+.market-vaelun .market-filter-btn {
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.market-vaelun .product-card {
+  border-radius: 24px;
+  background: rgba(255,240,250,0.09);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px rgba(20,10,40,0.35);
+  animation: vaelunFloat 6s ease-in-out infinite;
+}
+.market-vaelun .product-card:nth-child(2n) { animation-delay: -2s; }
+.market-vaelun .product-card:nth-child(3n) { animation-delay: -4s; }
+.market-vaelun .product-card:hover { transform: none; box-shadow: 0 0 0 1px var(--mk-yellow), 0 20px 44px rgba(20,10,40,0.45); }
+@keyframes vaelunFloat {
+  50% { transform: translateY(-8px); }
+}
+.market-vaelun .product-card-image {
+  background: radial-gradient(circle at 50% 65%, rgba(255,194,168,0.25), transparent 65%);
+  border-bottom-color: rgba(255,220,240,0.15);
+}
+
+/* ── REVEAL: parting cloud banks ── */
+.market-vaelun .market-reveal span { position: absolute; left: -10%; right: -10%; filter: blur(10px); }
+.market-vaelun .market-reveal span:nth-child(1) {
+  top: -10%; height: 65%;
+  background: linear-gradient(180deg, #f2d3e2 70%, transparent);
+  animation: vaelunCloudUp 1.4s cubic-bezier(0.6,0,0.3,1) 0.3s both;
+}
+.market-vaelun .market-reveal span:nth-child(2) { display: none; }
+.market-vaelun .market-reveal span:nth-child(3) {
+  bottom: -10%; height: 65%;
+  background: linear-gradient(0deg, #e8b8c6 70%, transparent);
+  animation: vaelunCloudDown 1.4s cubic-bezier(0.6,0,0.3,1) 0.3s both;
+}
+@keyframes vaelunCloudUp { to { transform: translateY(-110%); opacity: 0.4; } }
+@keyframes vaelunCloudDown { to { transform: translateY(110%); opacity: 0.4; } }

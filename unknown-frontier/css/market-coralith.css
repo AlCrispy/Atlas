@@ -1,0 +1,76 @@
+/* Mercato theme — Coralith: a crystal gallery. Deep slate with a faint
+   triangular lattice, a prismatic light sweep, faceted (clipped-corner)
+   cards and white-blue lines like the armillary ships. Reveal: a crystal
+   pane fracturing into three shards. */
+
+.market-coralith {
+  --mk-void: #070b12;
+  --mk-panel: #0e1622;
+  --mk-panel-lt: #131e2d;
+  --mk-steel: #2a3b52;
+  --mk-steel-lt: #4b6585;
+  --mk-text: #eef6ff;
+  --mk-text-dim: #9fb2c8;
+  --mk-yellow: #9df0fa;
+  --mk-orange: #c9b8ff;
+
+  background:
+    repeating-linear-gradient(60deg, rgba(157,240,250,0.045) 0 1px, transparent 1px 70px),
+    repeating-linear-gradient(-60deg, rgba(157,240,250,0.045) 0 1px, transparent 1px 70px),
+    radial-gradient(ellipse at 50% 0%, #152338, var(--mk-void) 70%);
+}
+
+/* Prismatic sweep across the lattice. */
+.market-coralith::before {
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(157,240,250,0.07) 40%, rgba(201,184,255,0.08) 60%, transparent);
+  animation: coralithSweep 9s linear infinite;
+}
+@keyframes coralithSweep {
+  to { transform: translateX(560%); }
+}
+
+.market-coralith .market-title { letter-spacing: 0.25em; text-transform: uppercase; }
+
+.market-coralith .market-filter-btn {
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  padding: 9px 22px;
+}
+
+.market-coralith .product-card {
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
+  background: linear-gradient(160deg, #182a40, #0e1622 60%);
+  border-color: rgba(157,240,250,0.25);
+}
+.market-coralith .product-card:hover { background: linear-gradient(160deg, #1e3552, #111b29 60%); }
+.market-coralith .product-card-image {
+  background:
+    linear-gradient(135deg, rgba(157,240,250,0.16), transparent 45%, transparent 55%, rgba(201,184,255,0.16)),
+    var(--mk-panel);
+  border-bottom: 1px solid rgba(157,240,250,0.3);
+}
+.market-coralith .product-card-image { filter: drop-shadow(0 0 8px rgba(157,240,250,0.35)); }
+
+/* ── REVEAL: fracturing pane ── */
+.market-coralith .market-reveal span {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #1b2c42, #0e1622);
+  animation: 0.9s cubic-bezier(0.5,0,0.8,0.4) 0.45s both;
+}
+.market-coralith .market-reveal span:nth-child(1) {
+  clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
+  animation-name: coralithShardA;
+}
+.market-coralith .market-reveal span:nth-child(2) {
+  clip-path: polygon(60% 0, 100% 0, 100% 100%, 70% 100%);
+  animation-name: coralithShardB;
+}
+.market-coralith .market-reveal span:nth-child(3) {
+  clip-path: polygon(60% 0, 70% 100%, 30% 100%);
+  animation-name: coralithShardC;
+}
+@keyframes coralithShardA { to { transform: translate(-35%, 12%) rotate(-9deg); opacity: 0; } }
+@keyframes coralithShardB { to { transform: translate(35%, -12%) rotate(9deg); opacity: 0; } }
+@keyframes coralithShardC { to { transform: translateY(60%) scale(0.9); opacity: 0; } }

@@ -7,34 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../braxton.html">← <span>Braxton</span></a>
+  <span class="topbar-planet-name">Rasok</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Rasok</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta giungla</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta giungla</p>
+      <h1 class="placeholder-title">Rasok</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta giungla</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,84 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+27 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Respirabile, ricca</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Da orbita Rasok sembra velluto verde scuro. Il primo pianeta di Braxton è una giungla stratificata, dove il suolo non vede luce da milioni di anni.</p>
+      <p>Le piogge sono quotidiane e brevi; l'umidità costante alimenta nebbie che salgono dalle valli ogni mattina.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Braxton, galassia Pyxis.</li>
+        <li><strong>Clima:</strong> Umido e nebbioso nelle valli, temperato sugli altopiani coperti di foresta nana.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 28%, spore e pollini in sospensione: respirabile, ma i filtri anti-allergeni sono indispensabili.</li>
+        <li><strong>Gravità:</strong> 0,84 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 24 ore standard.</li>
+        <li><strong>Satelliti:</strong> Rasok-a, Rasok-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Rasok dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="braxton-i" data-type="giungla" data-color="#5f8f5a" data-size="1.721"
+      data-pois='[{"name":"Colonne di Dramir","lat":31,"lon":132,"desc":"Foresta di alberi titanici con ecosistema sospeso."},{"name":"Rovine di Drovasthu","lat":33,"lon":95,"desc":"Strutture antiche inglobate dalle radici."},{"name":"Radura di Khaiss","lat":-32,"lon":-161,"desc":"Radura esagonale sterile, di origine sconosciuta."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Ithsae a rete</strong> <em>(Micelio planetario)</em> — Rete fungina che collega le radici di intere foreste; segnali elettrici la attraversano più veloci di quanto dovrebbero.</li>
+        <li><strong>Nyvenbra colonnare</strong> <em>(Albero titanico)</em> — Tronchi larghi come edifici e alti oltre quattrocento metri; le chiome formano un secondo suolo sospeso.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Droorrael tuono</strong> <em>(Megaerbivoro)</em> — Animale colossale che apre sentieri abbattendo alberi; il suo richiamo si sente a decine di chilometri.</li>
+        <li><strong>Rektorsae d'agguato</strong> <em>(Predatore mimetico)</em> — Pelle che replica colori e trame della corteccia; i sensori termici sono l'unico modo di individuarlo.</li>
+        <li><strong>Vensaeny tessitore</strong> <em>(Aracnide architetto)</em> — Costruisce reti tra i tronchi larghe centinaia di metri, così resistenti da fermare un drone.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Predatori mimetici:</strong> Cacciatori invisibili a occhio nudo; le perdite tra le squadre di rilevamento sono le più alte del settore.</li>
+        <li><strong>Patogeni sconosciuti:</strong> Batteri e funghi capaci di colonizzare tessuti umani; la quarantena dopo lo sbarco è obbligatoria.</li>
+        <li><strong>Flora aggressiva:</strong> Liane, spine e piante carnivore rendono ogni campo base un assedio lento.</li>
+        <li><strong>Spore psicoattive:</strong> Nubi di spore che alterano percezione e giudizio; più di una squadra si è persa seguendo allucinazioni.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Rasok consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Rasok. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-6229 · NRS Ardea</h3>
+      <p><strong>Radura geometrica.</strong> Una radura perfettamente esagonale nel cuore della foresta, dove nulla cresce. Il suolo è sterile ma non contaminato.</p>
+      <h3>RS-9031 · NRS Corvina</h3>
+      <p><strong>Utensili primitivi.</strong> Oggetti di pietra e osso lavorati trovati sotto la volta: i primati a sei arti potrebbero essere una specie pre-senziente.</p>
+      <h3>RS-8176 · NRS Tessitrice</h3>
+      <p><strong>Rovine inglobate.</strong> Strutture di pietra completamente avvolte dalle radici degli alberi titanici; stima di età superiore ai diecimila anni.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

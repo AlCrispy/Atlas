@@ -7,33 +7,298 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-ythar.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../kaion-rift.html">← <span>Kaion Rift</span></a>
+  <span class="topbar-planet-name">Dunathund Major</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Dunathund Major</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta giungla</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta giungla</p>
+      <h1 class="placeholder-title">Dunathund Major</h1>
+      <span class="placeholder-badge">Mondo-Vivaio Ythar</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta giungla</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Ythar</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~800 milioni di nodi</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Dunathund Major è il cantiere navale degli Ythar, anche se nessuno vi costruisce nulla. In giungle gigantesche, dentro alberi-matrice alti chilometri, crescono le navi-seme: bozzoli che impiegano decenni a maturare prima di staccarsi e salire in orbita.</p>
+      <p>Il pianeta è sorvegliato dalle navi più antiche del Coro, ormai troppo vecchie per viaggiare, che orbitano come sentinelle addormentate.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Kaion Rift, galassia Aurvex.</li>
+        <li><strong>Clima:</strong> Tropicale umido su tutto il pianeta, con piogge quotidiane e temperature quasi costanti.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno al 28%, spore e pollini in sospensione: respirabile, ma i filtri anti-allergeni sono indispensabili.</li>
+        <li><strong>Gravità:</strong> 0,88 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 27 ore standard.</li>
+        <li><strong>Satelliti:</strong> Dunathund Major-a, Dunathund Major-b.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Athquo a rete</strong> <em>(Micelio planetario)</em> — Rete fungina che collega le radici di intere foreste; segnali elettrici la attraversano più veloci di quanto dovrebbero.</li>
+        <li><strong>Dravelorr strangolatrice</strong> <em>(Liana predatrice)</em> — Si muove lentamente verso fonti di calore; nei campi base va potata ogni giorno.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Saeym del sottobosco</strong> <em>(Anfibio velenoso)</em> — Colori sgargianti e secrezioni cutanee paralizzanti; basta toccare dove è passato per sentire gli effetti.</li>
+        <li><strong>Velaelbra delle chiome</strong> <em>(Primate a sei arti)</em> — Vive in gruppi sociali complessi nella volta; usa strumenti rudimentali e sembra riconoscere le tute umane.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Dunathund Major. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="kaion-rift-iv" data-type="giungla" data-color="#a8c98f" data-size="1.806"
+      data-pois='[{"name":"Alberi-Matrice di Dun&#39;Arak","lat":-12,"lon":55,"desc":"Foresta delle navi-seme."},{"name":"Palude del Primo Seme","lat":20,"lon":-95,"desc":"Fossile della prima nave Ythar."},{"name":"Radura della Partenza","lat":0,"lon":150,"desc":"Dove le navi mature si staccano e salgono in orbita."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Ythar</h2>
+      <p>Un Ythar non è mai davvero solo. Ogni individuo — un corpo alto e sottile, coperto di placche traslucide sotto cui pulsano vene bioluminescenti — è un «nodo» del Coro: una mente condivisa che si propaga attraverso spore e feromoni nell'aria.</p>
+      <p>Più nodi sono vicini, più il Coro è intelligente. Un Ythar isolato su una nave terrestre è lento, confuso, quasi infantile; mille Ythar in una foresta di Holailis pensano più velocemente di qualsiasi computer.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Biochimica:</strong> base carbonio, ma con un sistema di spore simbionti che trasporta memoria e segnali tra gli individui.</li>
+        <li><strong>Comunicazione:</strong> luce delle vene per le emozioni, spore per il pensiero. Traduzione umana possibile solo con filtri chimici.</li>
+        <li><strong>Ciclo vitale:</strong> i nodi nascono da baccelli coltivati e alla morte vengono assorbiti dal Coro, spesso diventando parte di una nave o di una città viva.</li>
+        <li><strong>Plasmatori:</strong> gli Ythar non costruiscono nulla. Coltivano edifici, strumenti e astronavi guidando la crescita di organismi per decenni.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Non esiste un governo Ythar in senso umano. Esiste il <strong>Coro</strong>, e le sue decisioni emergono come un clima: lentamente, poi tutte insieme. I diplomatici delle altre specie trattano con i <strong>Tessitori</strong>, nodi specializzati che «traducono» la volontà del Coro in qualcosa di comprensibile.</p>
+      <p>I <strong>Semi</strong> sono nodi addestrati a vivere lontano dal Coro: esploratori, messaggeri e piloti delle navi-seme. Tornano a casa cambiati, e il Coro li riassorbe con cautela.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>La Semina:</strong> diffondere la vita è l'atto più sacro. Donare spore a un mondo è per gli Ythar ciò che per gli umani è un dono di pace.</li>
+        <li><strong>Nessuna morte, solo ritorno:</strong> ciò che muore diventa nutrimento, casa o nave. Le carcasse metalliche delle navi altrui li disturbano profondamente.</li>
+        <li><strong>Il Silenzio:</strong> la condizione più temuta è la disconnessione dal Coro; la pena peggiore è l'esilio in una stanza sigillata.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>Gli Ythar viaggiano nello spazio da circa <strong>3.000 anni</strong>. Le loro navi vengono coltivate da semi stellari su Dunathund Major e impiegano decenni a maturare.</p>
+      <p>Non hanno motori: organi pulsanti chiamati «ventricoli» piegano lo spazio con un processo che nessun'altra specie ha replicato. Una nave Ythar può ammalarsi, guarire e, secondo alcuni rapporti, avere paura.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Ythar vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> Giovani, rumorosi e circondati di metallo morto. Il Coro li trova affascinanti come si trova affascinante un incendio.</li>
+        <li><strong>Quorai:</strong> La ferita di Revaix. Due secoli fa il Coro inviò una nave-seme come dono alle acque dove nascono i Quorai; le spore uccisero una generazione di larve. Gli Ythar offrono doni riparatori ogni anno. I Quorai li distruggono ogni anno.</li>
+        <li><strong>Velmyr:</strong> Un popolo che ama le foreste ma le abita come ospite, non come parte. Rispetto reciproco, molta distanza.</li>
+        <li><strong>Coralith:</strong> «I morti che pensano». Menti di cristallo che non crescono e non marciscono: l'opposto di tutto ciò che il Coro comprende. Il confine con Meridian è teso.</li>
+        <li><strong>Vaelun:</strong> Fratelli del cielo. Il Coro ha cantato con i Vaelun per la prima volta secoli fa, e considera Othouven Major un giardino da proteggere.</li>
+        <li><strong>Kheprani:</strong> Anche loro sono molti in uno, ma sono sordi: il loro nido non canta. La contesa per le giungle di Olouraaik ha già visto navi vive bruciare.</li>
+        <li><strong>Nexari:</strong> Il Silenzio fatto popolo. Il Coro evita i sistemi Nexari e non accetta a bordo nulla che abbiano toccato.</li>
+        <li><strong>Thissari:</strong> Pochi contatti. Il Coro li ricorda come «piume nel vento freddo» e li considera innocui.</li>
+        <li><strong>Ashkaari:</strong> Gli Ythar chiamano le spore della memoria Ashkaari «la nonna del Coro». Pellegrinaggi di nodi raggiungono Kethra II per ascoltarle.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Alberi-Matrice di Dun'Arak:</strong> Foresta dove maturano le navi-seme, ciascuna appesa come un frutto enorme.</li>
+        <li><strong>Anello delle Sentinelle:</strong> Orbita delle navi anziane, che reagiscono a qualsiasi scafo non annunciato.</li>
+        <li><strong>Palude del Primo Seme:</strong> Dove crebbe la prima nave Ythar, oggi fossile vivente venerato dal Coro.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Coltivatrice Oss'Hemel:</strong> Guida la maturazione delle navi. Si dice che conosca per nome ogni bozzolo del pianeta.</li>
+        <li><strong>La Nave Senza Nome:</strong> Una nave-seme nata «sbagliata», che rifiuta di staccarsi dal suo albero e canta di notte. Il Coro non ha deciso cosa farne.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>La nave-seme che contaminò Revaix Cradle è ancora in orbita attorno a Dunathund Major, sigillata. Il Coro la tiene lì come promemoria — o, sussurrano i Semi, perché nessuno sa come ucciderla.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-ythar">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Serra del Coro</p>
+          <p class="market-tagline">Ogni articolo è vivo · nutrire secondo le istruzioni</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="semi">Semi & Innesti</button>
+          <button type="button" class="market-filter-btn" data-filter="navi">Navi Coltivate</button>
+          <button type="button" class="market-filter-btn" data-filter="simbionti">Simbionti</button>
+          <button type="button" class="market-filter-btn" data-filter="essenze">Essenze</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="semi">
+                <div class="product-card-image">🌱</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Semi & Innesti</span>
+                  <span class="product-card-name">Seme di Rifugio</span>
+                  <p class="product-card-desc">Piantato nel terreno, cresce in tre giorni fino a diventare una cupola abitabile per quattro persone.</p>
+                  <span class="product-card-price">6.400 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="semi">
+                <div class="product-card-image">🍄</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Semi & Innesti</span>
+                  <span class="product-card-name">Innesto di Filtraggio</span>
+                  <p class="product-card-desc">Fungo che vive nei filtri della tuta e purifica l'aria da spore e tossine. Da nutrire con zuccheri.</p>
+                  <span class="product-card-price">980 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="navi">
+                <div class="product-card-image">🐛</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Navi Coltivate</span>
+                  <span class="product-card-name">Larva di Nave «Ossh'Ven»</span>
+                  <p class="product-card-desc">Nave giovane per un equipaggio ridotto. Matura in otto anni; nel frattempo va nutrita e rassicurata.</p>
+                  <span class="product-card-price">190.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="navi">
+                <div class="product-card-image">🫀</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Navi Coltivate</span>
+                  <span class="product-card-name">Ventricolo di Ricambio</span>
+                  <p class="product-card-desc">Organo di propulsione per navi Ythar ferite. Deve essere accettato dalla nave, non installato.</p>
+                  <span class="product-card-price">74.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="simbionti">
+                <div class="product-card-image">🪱</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Simbionti</span>
+                  <span class="product-card-name">Verme Suturatore</span>
+                  <p class="product-card-desc">Richiude le ferite cucendole con la propria seta. Inquietante, ma più efficace di qualsiasi kit medico.</p>
+                  <span class="product-card-price">1.600 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="simbionti">
+                <div class="product-card-image">🦠</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Simbionti</span>
+                  <span class="product-card-name">Pelle Corazza</span>
+                  <p class="product-card-desc">Colonia simbionte che indurisce la pelle dell'ospite in placche. Reversibile, secondo i Tessitori.</p>
+                  <span class="product-card-price">7.200 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="essenze">
+                <div class="product-card-image">🧴</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Essenze</span>
+                  <span class="product-card-name">Spora del Coro</span>
+                  <p class="product-card-desc">Un respiro e, per qualche minuto, si sente il pensiero di chi è accanto. Vietata dal Consorzio Terrestre.</p>
+                  <span class="product-card-price">3.300 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

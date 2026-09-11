@@ -7,34 +7,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../cerevane.html">← <span>Cerevane</span></a>
+  <span class="topbar-planet-name">Cerevane II</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Cerevane II</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta desertico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta desertico</p>
+      <h1 class="placeholder-title">Cerevane II</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta desertico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,11 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">+62 °C all'equatore</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Densa, polverosa</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Estrema</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Cerevane II, secondo pianeta del sistema Cerevane, è un oceano di dune color ruggine che si muove lentamente sotto venti costanti. L'acqua esiste, ma solo sepolta o intrappolata nei minerali.</p>
+      <p>Le calotte polari, piccole e sporche di polvere, sono l'unica riserva d'acqua visibile dalla superficie.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Secondo pianeta del sistema Cerevane, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Semi-arido nelle fasce temperate, torrido all'equatore; piogge brevi e violente una volta ogni pochi anni.</li>
+        <li><strong>Atmosfera:</strong> Atmosfera spessa e calda, con particolato in sospensione che tinge il cielo di arancio anche a mezzogiorno.</li>
+        <li><strong>Gravità:</strong> 1,11 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 31 ore standard.</li>
+        <li><strong>Satelliti:</strong> Cerevane II-a, Cerevane II-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Cerevane II dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="cerevane-ii" data-type="desertico" data-color="#d9a066" data-size="1.526"
+      data-pois='[{"name":"Mare di Zenorr","lat":36,"lon":-161,"desc":"Erg sconfinato attraversato dalle rotte della megafauna fossoria."},{"name":"Saline di Zengri","lat":-10,"lon":78,"desc":"Distesa bianca sotto cui scorrono falde salmastre."},{"name":"Oasi di Velrek","lat":55,"lon":57,"desc":"Canyon profondo con acqua in superficie e flora rigogliosa."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Orrgri a radice profonda</strong> <em>(Albero fossatore)</em> — Chioma bassa e piatta, radici che scendono per oltre cento metri fino alle falde. Le carovane le usano come segnavia.</li>
+        <li><strong>Braael di brina</strong> <em>(Pianta igroscopica)</em> — Rete di filamenti argentei che si aprono solo di notte per catturare la condensa, poi si richiudono prima dell'alba.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Orrvasthu delle saline</strong> <em>(Crostaceo alofilo)</em> — Piccolo e corazzato, vive nelle pozze salmastre sotto la crosta di sale; commestibile, se bollito a lungo.</li>
+        <li><strong>Saedro dell'ombra</strong> <em>(Predatore notturno)</em> — Cacciatore in branco, esce solo al crepuscolo; comunica con fischi ultrasonici che le tute registrano come interferenze.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Miraggi elettromagnetici:</strong> Le tempeste caricano l'aria di elettricità statica: sensori e bussole restituiscono dati falsi per ore.</li>
+        <li><strong>Sabbie mobili secche:</strong> Sacche di sabbia finissima non compattata che inghiottono veicoli interi senza lasciare traccia.</li>
+        <li><strong>Megafauna fossoria:</strong> Le vibrazioni dei motori attirano i grandi scavatori; almeno un mezzo di rilevamento è stato perso così.</li>
+        <li><strong>Tempeste di sabbia:</strong> Fronti alti chilometri che avanzano a oltre duecento chilometri orari; abrasione sufficiente a opacizzare un visore in minuti.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Cerevane II è marcato in rosso nei registri del Reparto Scientifico: nessuno sbarco autorizzato senza via libera del Direttorato Coloniale. Le sonde automatiche sono l'unico approccio raccomandato.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Cerevane II. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-8291 · Sonda Lucerna-2</h3>
+      <p><strong>Città sepolta.</strong> Una tempesta ha scoperto per pochi giorni la sommità di edifici a gradoni, poi di nuovo coperti. Coordinate registrate, nessuna squadra inviata.</p>
+      <h3>RS-4104 · NRS Ardea</h3>
+      <p><strong>Falda profonda.</strong> Riserva d'acqua dolce stimata in miliardi di metri cubi a seicento metri di profondità. Da sola potrebbe sostenere una colonia.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

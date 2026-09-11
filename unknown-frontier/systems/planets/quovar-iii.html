@@ -7,33 +7,309 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<link rel="stylesheet" href="../../css/market-industrial.css">
+<link rel="stylesheet" href="../../css/market-shell.css">
+<link rel="stylesheet" href="../../css/market-quorai.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script src="../../js/market-carousel.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../quovar.html">← <span>Quovar</span></a>
+  <span class="topbar-planet-name">Quoraix Halo</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('specie', this)">Specie</button>
+    <button class="tab-btn" onclick="switchTab('civilta', this)">Civiltà</button>
+    <button class="tab-btn" onclick="switchTab('relazioni', this)">Relazioni</button>
+    <button class="tab-btn" onclick="switchTab('luoghi', this)">Luoghi & Personaggi</button>
+    <button class="tab-btn" onclick="switchTab('mercato', this)">Mercato</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Quoraix Halo</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Mondo oceanico</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Mondo oceanico</p>
+      <h1 class="placeholder-title">Quoraix Halo</h1>
+      <span class="placeholder-badge">Mondo Natale Quorai</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">3 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Mondo oceanico</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">3 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Specie dominante</span>
+        <span class="system-stat-value">Quorai</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Popolazione</span>
+        <span class="system-stat-value">~3,1 miliardi</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Quoraix Halo è la culla dei Quorai e il cuore del Concordato delle Maree. Il nome deriva dall'alone luminoso che circonda il pianeta di notte: fioriture di plancton bioluminescente così vaste da essere visibili dall'orbita come un anello di luce.</p>
+      <p>Le città Quorai non sono costruite ma coltivate: barriere coralline modellate per millenni, che scendono dalla superficie fino alle fosse abissali. I visitatori non acquatici restano confinati nelle «Bolle Secche», habitat pressurizzati ancorati alle scogliere.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Terzo pianeta del sistema Quovar, galassia Zhorn.</li>
+        <li><strong>Clima:</strong> Caldo e piovoso, con cicloni che si formano e si dissolvono in pochi giorni.</li>
+        <li><strong>Atmosfera:</strong> Azoto e ossigeno vicini allo standard, umidità costante oltre il 90%.</li>
+        <li><strong>Gravità:</strong> 0,95 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 36 ore standard.</li>
+        <li><strong>Satelliti:</strong> Quoraix Halo-a, Quoraix Halo-b, Quoraix Halo-c.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Biosfera Nativa</h2>
+      <h3>Flora</h3>
+      <ul>
+        <li><strong>Syny di marea</strong> <em>(Alga a nastro)</em> — Nastri lunghi centinaia di metri che si ancorano alle scogliere e si allungano con l'alta marea.</li>
+        <li><strong>Zenaelath galleggiante</strong> <em>(Isola vegetale)</em> — Intrecci di radici e gas che formano isole larghe chilometri, con ecosistemi propri; migrano con le correnti.</li>
+      </ul>
+      <h3>Fauna</h3>
+      <ul>
+        <li><strong>Aelul delle isole</strong> <em>(Anfibio arboricolo)</em> — Vive sulle isole galleggianti e nuota da una all'altra; costruisce nidi con alghe intrecciate.</li>
+        <li><strong>Nelthu a lanterna</strong> <em>(Branco pelagico)</em> — Pesci luminosi che si muovono in banchi da milioni di individui formando figure geometriche.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Vista orbitale ravvicinata di Quoraix Halo. Trascina per ruotare, scroll per zoom, click su un marker per informazioni sul punto di interesse.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="quovar-iii" data-type="oceanico" data-color="#3f5fb0" data-size="1.653"
+      data-pois='[{"name":"Fondale del Primo Patto","lat":-12,"lon":40,"desc":"Fossa sacra delle Madri di Fondale."},{"name":"Bolle Secche di Qor-Vel","lat":22,"lon":-60,"desc":"Habitat pressurizzati per stranieri e spazioporto."},{"name":"Anello di Luce","lat":2,"lon":150,"desc":"Fioritura equatoriale di plancton bioluminescente."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-specie" class="tab-panel">
+    <section class="content-block">
+      <h2>Quorai</h2>
+      <p>I Quorai sono anfibi a simmetria radiale, con un mantello muscoloso e otto braccia prensili disposte attorno a un becco corneo. Un adulto giovane misura poco più di un metro; gli anziani non smettono mai di crescere e superano i dieci metri.</p>
+      <p>Non hanno corde vocali. Parlano con la pelle: milioni di cromatofori che cambiano colore, luminosità e trama in frazioni di secondo. Una conversazione tra Quorai è una tempesta di luce silenziosa, e i traduttori umani devono essere addestrati a leggerla con visori speciali.</p>
+      <h3>Biologia</h3>
+      <ul>
+        <li><strong>Respirazione:</strong> branchie interne e una sacca polmonare secondaria che permette qualche ora fuori dall'acqua, a patto di restare umidi.</li>
+        <li><strong>Cognizione:</strong> ogni braccio ospita un ganglio nervoso quasi autonomo. Un Quorai può contrattare con una mano e riparare un motore con un'altra.</li>
+        <li><strong>Ciclo vitale:</strong> nascono a milioni nelle acque di Revaix Cradle; pochissimi sopravvivono all'età adulta. La crescita non si arresta mai: dimensione e anzianità coincidono.</li>
+        <li><strong>Morte:</strong> i più anziani, troppo grandi per muoversi, si ancorano al fondale e diventano «Madri di Fondale», archivi viventi consultati per secoli.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-civilta" class="tab-panel">
+    <section class="content-block">
+      <h2>Governo & Società</h2>
+      <p>Il potere appartiene al <strong>Concordato delle Maree</strong>, una rete di consigli dove il peso di ogni voce dipende letteralmente dalla stazza. Le decisioni più alte spettano alle Madri di Fondale, che però parlano lentamente: un loro verdetto può richiedere mesi di luce.</p>
+      <p>Sotto di loro, le <strong>Correnti</strong> — Quorai giovani e mobili — commerciano, esplorano e combattono. Una Corrente che torna ricca da un viaggio cresce più in fretta, e sale di rango con il proprio corpo.</p>
+      <h3>Cultura</h3>
+      <ul>
+        <li><strong>Contratto come preghiera:</strong> un accordo commerciale viene scritto sulla pelle dei contraenti con pigmenti permanenti. Rompere un patto significa portarne la cicatrice cromatica per sempre.</li>
+        <li><strong>Estetica della luce:</strong> l'arte Quorai è fatta di sequenze luminose, «canti» di colore che possono durare giorni e che gli umani faticano persino a percepire tutte.</li>
+        <li><strong>Il Secco:</strong> ogni Quorai teme l'aria aperta. Lavorare sui mondi desertici è un sacrificio onorato, ricompensato con quote di sale di risonanza.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Viaggi Spaziali</h2>
+      <p>I Quorai viaggiano nello spazio da circa <strong>1.400 anni terrestri</strong> — molto prima dell'umanità. Le loro navi sono gusci allagati: gli equipaggi vivono immersi, e i ponti di comando sono vasche dove il pilota avvolge le braccia attorno ai comandi.</p>
+      <p>Il salto FTL Quorai dipende dai <strong>sali di risonanza</strong>, cristalli che vibrano a frequenze precise quando sono disciolti in acqua ad alta pressione. I sali si trovano quasi solo nei letti di mari evaporati: per questo i Quorai, creature d'acqua, hanno colonizzato proprio i deserti.</p>
+    </section>
+  </div>
+
+  <div id="tab-relazioni" class="tab-panel">
+    <section class="content-block">
+      <h2>Rapporti con le Altre Civiltà</h2>
+      <p>Come i Quorai vedono i popoli conosciuti della Frontiera.</p>
+      <ul>
+        <li><strong>Terrestri:</strong> Li chiamano «i Secchi». Clienti eccellenti e partner rumorosi, ma si espandono troppo in fretta e cambiano idea troppo spesso: un Terrestre non porta cicatrici dei patti che rompe.</li>
+        <li><strong>Velmyr:</strong> Rispettati per disciplina e parola data. Noiosi, dicono le Correnti, ma i contratti con i Velmyr sono i più sicuri della galassia.</li>
+        <li><strong>Ythar:</strong> Diffidenza profonda. Una nave-seme Ythar ha contaminato con spore un intero bacino di Revaix Cradle due secoli fa; il Concordato non ha mai accettato le scuse.</li>
+        <li><strong>Coralith:</strong> Ammirati e un po' temuti. I reticoli cristallini Coralith sono i migliori stabilizzatori per i sali di risonanza, ma i Coralith considerano i Quorai caotici e imprecisi.</li>
+        <li><strong>Vaelun:</strong> Oggetto di venerazione quasi religiosa: i galleggianti di Othouven Major sono visti come «mari che hanno imparato a volare». Nessuna Corrente tratta con un Vaelun senza offrire un dono.</li>
+        <li><strong>Kheprani:</strong> Concorrenti diretti nell'estrazione del sale. Le rotte di Ninhara e Quovar si incrociano, e le scaramucce tra convogli sono più frequenti di quanto il Concordato ammetta.</li>
+        <li><strong>Nexari:</strong> Paura. Le macchine non hanno pelle, non cambiano colore, non si capisce quando mentono. I Quorai commerciano con i Nexari solo attraverso intermediari.</li>
+        <li><strong>Thissari:</strong> Rapporti cordiali e distanti. I Thissari comprano acqua pesante e vendono vetro di Peraist; nessuno dei due popoli ama il clima dell'altro.</li>
+        <li><strong>Ashkaari:</strong> Pietà mescolata ad avidità. Gli archivi Ashkaari valgono una fortuna, e le Madri di Fondale li considerano la cosa più vicina a sé stesse fuori dal Concordato.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-luoghi" class="tab-panel">
+    <section class="content-block">
+      <h2>Luoghi Notevoli</h2>
+      <ul>
+        <li><strong>Fondale del Primo Patto:</strong> La fossa dove riposano le Madri di Fondale più antiche. Ogni decisione del Concordato viene «illuminata» qui prima di diventare legge.</li>
+        <li><strong>Bolle Secche di Qor-Vel:</strong> Quartiere diplomatico per specie che respirano aria. Mercati, ambasciate e l'unico spazioporto aperto agli stranieri.</li>
+        <li><strong>Anello di Luce:</strong> Fascia equatoriale di plancton bioluminescente, luogo di pellegrinaggio e di canti cromatici che durano intere stagioni.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Personaggi Notevoli</h2>
+      <ul>
+        <li><strong>Madre Ysqorra-Vaal:</strong> La più grande Madre di Fondale ancora cosciente, lunga oltre quaranta metri. Parla una frase ogni pochi giorni; il Concordato attende da due anni la fine del suo ultimo discorso.</li>
+        <li><strong>Corrente Qeth-Imari:</strong> Ambasciatrice presso i Terrestri, cresciuta a vista d'occhio grazie ai contratti firmati con la Gilda dei Naviganti. Porta sulla pelle più patti di chiunque altro della sua età.</li>
+        <li><strong>Vul-Soreth «Cicatrice»:</strong> Contrabbandiere di sali coperto di cicatrici cromatiche per i patti infranti. Nessun Quorai rispettabile lo guarda negli occhi, ma tutti sanno dove trovarlo.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Leggende e Segreti</h2>
+      <p>Si racconta che la prima Madre di Fondale non sia mai morta, ma sia scesa oltre il fondo dell'oceano, in un mare più profondo di cui le sonde non trovano traccia. Alcuni canti cromatici la chiamano ancora.</p>
+    </section>
+  </div>
+
+  </div>
+
+  <div id="tab-mercato" class="tab-panel market-page">
+    <div class="market-shell market-quorai">
+      <div class="market-shell-body">
+        <div class="market-heading">
+          <p class="market-title">Emporio delle Correnti</p>
+          <p class="market-tagline">Prezzi in crediti · accettate perle di marea</p>
+        </div>
+
+        <div class="market-filters">
+          <button type="button" class="market-filter-btn active" data-filter="tutti">Tutti</button>
+          <button type="button" class="market-filter-btn" data-filter="bio">Biotecnologia</button>
+          <button type="button" class="market-filter-btn" data-filter="scafi">Scafi & Vasche</button>
+          <button type="button" class="market-filter-btn" data-filter="mute">Mute & Sopravvivenza</button>
+          <button type="button" class="market-filter-btn" data-filter="sali">Sali di Risonanza</button>
+        </div>
+
+        <div class="market-carousel">
+          <button type="button" class="market-carousel-arrow market-carousel-prev" aria-label="Prodotto precedente">‹</button>
+          <div class="market-carousel-viewport">
+            <div class="market-carousel-track">
+              <div class="product-card" data-category="bio">
+                <div class="product-card-image">🦑</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Biotecnologia</span>
+                  <span class="product-card-name">Innesto Cromatoforo</span>
+                  <p class="product-card-desc">Pellicola viva applicata alla pelle umana: permette di emettere i colori base del linguaggio Quorai. Pruriginosa i primi mesi.</p>
+                  <span class="product-card-price">3.600 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="bio">
+                <div class="product-card-image">🪸</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Biotecnologia</span>
+                  <span class="product-card-name">Corallo Guaritore</span>
+                  <p class="product-card-desc">Colonia simbionte che richiude ferite superficiali in poche ore. Va tenuta in acqua salata o muore.</p>
+                  <span class="product-card-price">780 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="scafi">
+                <div class="product-card-image">🐚</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Scafi & Vasche</span>
+                  <span class="product-card-name">Guscio da Corrente «Vel-Qor»</span>
+                  <p class="product-card-desc">Nave leggera allagata per quattro Quorai o due passeggeri in muta. Sale di risonanza incluso per sei salti.</p>
+                  <span class="product-card-price">212.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="scafi">
+                <div class="product-card-image">🫧</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Scafi & Vasche</span>
+                  <span class="product-card-name">Vasca di Salto Portatile</span>
+                  <p class="product-card-desc">Modulo pressurizzato che converte una stiva standard in camera di risonanza Quorai.</p>
+                  <span class="product-card-price">58.000 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="mute">
+                <div class="product-card-image">💧</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Mute & Sopravvivenza</span>
+                  <span class="product-card-name">Mantello Umido</span>
+                  <p class="product-card-desc">L'inverso di una tuta del deserto: trattiene acqua attorno al corpo invece di recuperarla. Standard sui mondi secchi.</p>
+                  <span class="product-card-price">1.250 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="mute">
+                <div class="product-card-image">🤿</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Mute & Sopravvivenza</span>
+                  <span class="product-card-name">Muta Abissale Classe Fondale</span>
+                  <p class="product-card-desc">Permette a un umano di scendere fino a quattro chilometri nelle vasche cerimoniali. Ingombrante, affidabile.</p>
+                  <span class="product-card-price">4.900 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="sali">
+                <div class="product-card-image">💎</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Sali di Risonanza</span>
+                  <span class="product-card-name">Sale di Risonanza Grezzo</span>
+                  <p class="product-card-desc">Una dose da salto singolo, non stabilizzata. Illegale fuori dal territorio del Concordato.</p>
+                  <span class="product-card-price">9.400 crediti</span>
+                </div>
+              </div>
+
+              <div class="product-card" data-category="sali">
+                <div class="product-card-image">🔷</div>
+                <div class="product-card-body">
+                  <span class="product-card-category">Sali di Risonanza</span>
+                  <span class="product-card-name">Reticolo Stabilizzato</span>
+                  <p class="product-card-desc">Sale di risonanza incastonato in un reticolo cristallino Coralith. Salti più precisi, prezzo più alto.</p>
+                  <span class="product-card-price">16.800 crediti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="market-carousel-arrow market-carousel-next" aria-label="Prodotto successivo">›</button>
+        </div>
+
+        <div class="market-carousel-dots"></div>
+      </div>
+
+      <div class="market-reveal" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
   </div>
 </main>

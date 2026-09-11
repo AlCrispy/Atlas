@@ -1,0 +1,85 @@
+/* Mercato theme — Nexari: a machine terminal. Phosphor green on black,
+   monospace everything, CRT scanlines and flicker, blinking cursor.
+   Reveal: a stepped scan wipe with a bright leading line. */
+
+.market-nexari {
+  --mk-void: #020604;
+  --mk-panel: #06110a;
+  --mk-panel-lt: #081a0e;
+  --mk-steel: #134d26;
+  --mk-steel-lt: #1f7a3d;
+  --mk-text: #b8ffcb;
+  --mk-text-dim: #5fae78;
+  --mk-yellow: #39ff7a;
+  --mk-orange: #9dffb9;
+
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(57,255,122,0.06), transparent 70%),
+    var(--mk-void);
+}
+
+/* Scanlines + subtle flicker over everything. */
+.market-nexari::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.35) 0 1px, transparent 1px 3px);
+  animation: nexariFlicker 4s steps(1) infinite;
+}
+@keyframes nexariFlicker {
+  0%, 100% { opacity: 1; }
+  47% { opacity: 0.85; }
+  48% { opacity: 1; }
+  82% { opacity: 0.9; }
+}
+
+.market-nexari .market-title,
+.market-nexari .market-tagline,
+.market-nexari .market-filter-btn,
+.market-nexari .product-card-category,
+.market-nexari .product-card-name,
+.market-nexari .product-card-desc,
+.market-nexari .product-card-price {
+  font-family: 'Courier New', ui-monospace, monospace;
+}
+
+.market-nexari .market-title {
+  font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.12em;
+  text-shadow: 0 0 10px rgba(57,255,122,0.6);
+}
+.market-nexari .market-title::after {
+  content: '_';
+  margin-left: 4px;
+  animation: nexariBlink 1s steps(1) infinite;
+}
+@keyframes nexariBlink { 50% { opacity: 0; } }
+.market-nexari .market-tagline { font-style: normal; }
+
+.market-nexari .market-filter-btn { font-size: 0.72rem; letter-spacing: 0.08em; }
+.market-nexari .market-filter-btn::before { content: '['; margin-right: 4px; }
+.market-nexari .market-filter-btn::after { content: ']'; margin-left: 4px; }
+
+.market-nexari .product-card { border-radius: 0; }
+.market-nexari .product-card:hover { transform: none; box-shadow: 0 0 16px rgba(57,255,122,0.25); }
+.market-nexari .product-card-image {
+  background: repeating-linear-gradient(90deg, rgba(57,255,122,0.05) 0 1px, transparent 1px 12px), var(--mk-panel);
+  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(3) brightness(0.95);
+}
+.market-nexari .product-card-name { font-size: 0.9rem; }
+.market-nexari .product-card-name::before { content: '> '; color: var(--mk-yellow); }
+.market-nexari .product-card-price::before { content: 'COSTO: '; color: var(--mk-text-dim); }
+
+/* ── REVEAL: stepped scan wipe ── */
+.market-nexari .market-reveal {
+  background: #020604;
+  animation: nexariWipe 1s steps(20) 0.3s both;
+}
+.market-nexari .market-reveal span { display: none; }
+.market-nexari .market-reveal span:nth-child(1) {
+  display: block;
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--mk-yellow);
+  box-shadow: 0 0 14px 3px rgba(57,255,122,0.8);
+}
+@keyframes nexariWipe {
+  to { clip-path: inset(0 0 100% 0); }
+}

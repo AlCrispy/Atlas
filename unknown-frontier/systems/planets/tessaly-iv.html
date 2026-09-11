@@ -7,34 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../tessaly.html">← <span>Tessaly</span></a>
+  <span class="topbar-planet-name">Nolaidid Verge</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Nolaidid Verge</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta glaciale</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta glaciale</p>
+      <h1 class="placeholder-title">Nolaidid Verge</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">2 rilevati</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta glaciale</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">2 rilevati</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">1,13 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−20 °C all'equatore</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Respirabile, gelida</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Elevata</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Nolaidid Verge, quarto pianeta del sistema Tessaly, è un mondo sepolto sotto chilometri di ghiaccio. In superficie domina il bianco; sotto, secondo le sonde, si nasconde un oceano liquido.</p>
+      <p>Getti d'acqua salata eruttano dalle fratture polari fino all'orbita bassa, ricadendo come neve fine.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Quarto pianeta del sistema Tessaly, galassia Meridian.</li>
+        <li><strong>Clima:</strong> Gelido e stabile; tormente di cristalli di ghiaccio che riducono la visibilità a pochi metri.</li>
+        <li><strong>Atmosfera:</strong> Ossigeno sufficiente, ma a temperature che bruciano i polmoni senza riscaldatori d'aria.</li>
+        <li><strong>Gravità:</strong> 1,13 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 31 ore standard.</li>
+        <li><strong>Satelliti:</strong> Nolaidid Verge-a, Nolaidid Verge-b.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Nolaidid Verge dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="tessaly-iv" data-type="glaciale" data-color="#7fd1d9" data-size="1.777"
+      data-pois='[{"name":"Caverne di Velvas","lat":34,"lon":-97,"desc":"Grotte di ghiaccio illuminate da funghi bioluminescenti."},{"name":"Lago di Sybra","lat":-52,"lon":10,"desc":"Lago liquido sotto la calotta, sede di un&#39;anomalia termica."},{"name":"Altopiano Droith","lat":5,"lon":-90,"desc":"Ghiacciaio spazzato dai venti catabatici."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Tororr sottoghiaccio</strong> <em>(Alga criofila)</em> — Venature verde scuro visibili nel ghiaccio trasparente, dove la luce filtra abbastanza per la fotosintesi.</li>
+        <li><strong>Zenithsae di disgelo</strong> <em>(Muschio stagionale)</em> — Ricopre in pochi giorni le rive dei laghi estivi, poi si incista e sopravvive congelato per il resto dell'anno.</li>
+        <li><strong>Othorr dei geyser</strong> <em>(Colonia chemiosintetica)</em> — Pinnacoli minerali abitati da microrganismi attorno alle bocche criovulcaniche.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Uldra d'oceano nero</strong> <em>(Fauna abissale)</em> — Organismi traslucidi dell'oceano interno, rilevati solo dalle telecamere delle sonde di perforazione.</li>
+        <li><strong>Quoorrquo d'aurora</strong> <em>(Volatore elettrico)</em> — Piccolo e luminescente, sembra orientarsi seguendo le aurore; si raduna in stormi prima delle tempeste magnetiche.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Crepacci nascosti:</strong> Ponti di neve sottile coprono fratture profonde chilometri; i sensori a penetrazione sono obbligatori.</li>
+        <li><strong>Ipotermia di sistema:</strong> Batterie, lubrificanti e giunti si degradano in fretta; un guasto al riscaldamento della tuta è fatale in minuti.</li>
+        <li><strong>Venti catabatici:</strong> Masse d'aria gelida che scendono dagli altipiani a oltre duecento chilometri orari, senza preavviso.</li>
+        <li><strong>Tormente di cristalli:</strong> Visibilità azzerata e cristalli taglienti trasportati dal vento; perdersi a venti metri dal campo è comune.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Sbarchi su Nolaidid Verge consentiti solo a squadre specializzate, con finestra di evacuazione garantita. Due missioni su cinque rientrano prima del previsto.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Nolaidid Verge. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-9551 · Sonda Vigilia-9</h3>
+      <p><strong>Ombra nel ghiaccio.</strong> A tre chilometri di profondità il radar mostra una sagoma lunga quattrocento metri, affusolata, intrappolata nel ghiaccio antico.</p>
+      <h3>RS-1448 · Sonda Vigilia-9</h3>
+      <p><strong>Composti organici nei geyser.</strong> I getti polari contengono amminoacidi complessi: qualcosa, là sotto, è vivo o lo è stato.</p>
+      <h3>RS-6282 · NRS Halcyon</h3>
+      <p><strong>Luci sotto la crosta.</strong> Durante l'inverno, dalle fratture filtra una luminescenza pulsante che le sonde non riescono a riprendere da vicino.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 

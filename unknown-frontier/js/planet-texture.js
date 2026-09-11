@@ -658,16 +658,19 @@ const TYPE_PALETTES = {
 // contrast-boosted, tiled over the finished planet at low opacity. Never
 // the whole photo, so the recognizable macro shapes (Mars's continents,
 // Jupiter's bands) never show through on an unrelated world.
+// Resolved against this module's own URL, not the page's — the module is
+// loaded from pages at different folder depths (systems/*.html and
+// systems/planets/*.html), where a page-relative path would 404.
 const GRAIN_SOURCES = [
-  '../resources/planet-textures/mercurymap.jpg',
-  '../resources/planet-textures/venusmap.jpg',
-  '../resources/planet-textures/marsmap1k.jpg',
-  '../resources/planet-textures/jupitermap.jpg',
-  '../resources/planet-textures/saturnmap.jpg',
-  '../resources/planet-textures/uranusmap.jpg',
-  '../resources/planet-textures/neptunemap.jpg',
-  '../resources/planet-textures/earth_atmos_2048.jpg',
-];
+  'mercurymap.jpg',
+  'venusmap.jpg',
+  'marsmap1k.jpg',
+  'jupitermap.jpg',
+  'saturnmap.jpg',
+  'uranusmap.jpg',
+  'neptunemap.jpg',
+  'earth_atmos_2048.jpg',
+].map((file) => new URL(`../resources/planet-textures/${file}`, import.meta.url).href);
 
 // Preloaded eagerly at module load so the images are usually already
 // decoded by the time the first texture is painted; a planet built before

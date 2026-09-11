@@ -7,34 +7,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/unknown-frontier.css">
 <link rel="stylesheet" href="../../css/system-detail.css">
+<link rel="stylesheet" href="../../css/planet-detail.css">
+<script src="../../js/planet-tabs.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="../../js/planet-globe.js"></script>
 </head>
 <body class="system-detail-body">
 
 <div class="topbar">
   <a class="back-btn" href="../vallor-deep.html">← <span>Vallor Deep</span></a>
+  <span class="topbar-planet-name">Quoreid</span>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('panoramica', this)">Panoramica</button>
+    <button class="tab-btn" onclick="switchTab('globo', this)">Visione Dettagliata</button>
+    <button class="tab-btn" onclick="switchTab('biosfera', this)">Biosfera</button>
+    <button class="tab-btn" onclick="switchTab('pericoli', this)">Pericoli</button>
+    <button class="tab-btn" onclick="switchTab('rilevamenti', this)">Rilevamenti</button>
+  </nav>
   <audio id="ambient-audio" src="../../music/Beyond-the-Nebula.mp3" loop preload="auto"></audio>
   <button type="button" id="audio-toggle" class="audio-toggle" aria-pressed="false" aria-label="Attiva o disattiva la musica">♪</button>
 </div>
 
-<main class="system-page">
-  <p class="placeholder-eyebrow">Pianeta</p>
-  <h1 class="placeholder-title">Quoreid</h1>
-  <span class="placeholder-badge">In Costruzione</span>
-  <p class="system-desc">Questo pianeta non è ancora stato esplorato. Composizione, clima ed eventuali forme di vita restano sconosciuti.</p>
+<main>
+  <div class="planet-content">
 
-  <div class="system-stats">
-    <div class="system-stat">
-      <span class="system-stat-label">Classificazione</span>
-      <span class="system-stat-value">Pianeta glaciale</span>
+  <div id="tab-panoramica" class="tab-panel active">
+    <div class="planet-header">
+      <p class="placeholder-eyebrow">Pianeta · Pianeta glaciale</p>
+      <h1 class="placeholder-title">Quoreid</h1>
+      <span class="placeholder-badge">Non colonizzato</span>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Satelliti</span>
-      <span class="system-stat-value">1 rilevato</span>
+
+    <div class="system-stats">
+      <div class="system-stat">
+        <span class="system-stat-label">Classificazione</span>
+        <span class="system-stat-value">Pianeta glaciale</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Satelliti</span>
+        <span class="system-stat-value">1 rilevato</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Gravità</span>
+        <span class="system-stat-value">0,59 G</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Temperatura</span>
+        <span class="system-stat-value">−130 °C medi</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Atmosfera</span>
+        <span class="system-stat-value">Stagionale</span>
+      </div>
+      <div class="system-stat">
+        <span class="system-stat-label">Pericolosità</span>
+        <span class="system-stat-value">Bassa</span>
+      </div>
     </div>
-    <div class="system-stat">
-      <span class="system-stat-label">Fazioni note</span>
-      <span class="system-stat-value">Nessuna registrata</span>
+
+    <section class="content-block">
+      <h2>Descrizione</h2>
+      <p>Il primo pianeta di Vallor Deep è una sfera di ghiaccio azzurro percorsa da fratture lunghe migliaia di chilometri. Quoreid è freddo, silenzioso e sorprendentemente attivo.</p>
+      <p>Le aurore sono così intense da proiettare ombre sul ghiaccio anche nella notte più profonda.</p>
+    </section>
+
+    <section class="content-block">
+      <h2>Ambiente & Orbita</h2>
+      <ul>
+        <li><strong>Posizione:</strong> Primo pianeta del sistema Vallor Deep, galassia Corvantis.</li>
+        <li><strong>Clima:</strong> Glaciale perenne, con venti catabatici che scendono dagli altipiani a velocità da uragano.</li>
+        <li><strong>Atmosfera:</strong> Si forma d'estate per sublimazione del ghiaccio e ricade al suolo d'inverno.</li>
+        <li><strong>Gravità:</strong> 0,59 G.</li>
+        <li><strong>Durata del giorno:</strong> circa 25 ore standard.</li>
+        <li><strong>Satelliti:</strong> Quoreid-a.</li>
+        <li><strong>Anelli:</strong> sistema di anelli visibile anche con strumenti ottici di bordo.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-globo" class="tab-panel">
+    <section class="content-block">
+      <h2>Visione Dettagliata</h2>
+      <p>Ricostruzione orbitale di Quoreid dai dati delle navi scientifiche. Trascina per ruotare, scroll per zoom, click su un marker per i punti rilevati.</p>
+    </section>
+
+    <div class="globe-viewport"
+      data-slug="vallor-deep-i" data-type="glaciale" data-color="#9fb8c4" data-size="1.498" data-ring-color="#9fb8c4"
+      data-pois='[{"name":"Frattura di Quobra","lat":-5,"lon":131,"desc":"Crepaccio lunghissimo da cui eruttano i geyser salati."},{"name":"Caverne di Saesyym","lat":-3,"lon":-33,"desc":"Grotte di ghiaccio illuminate da funghi bioluminescenti."},{"name":"Lago di Thuny","lat":26,"lon":-103,"desc":"Lago liquido sotto la calotta, sede di un&#39;anomalia termica."}]'>
+      <p class="globe-hint">Trascina per ruotare · Scroll per zoom · Click su un marker per info</p>
+      <div class="poi-card">
+        <button type="button" class="poi-card-close" aria-label="Chiudi">&times;</button>
+        <p class="poi-card-eyebrow">Punto di Interesse</p>
+        <h3 class="poi-card-title"></h3>
+        <p class="poi-card-desc"></p>
+      </div>
     </div>
+  </div>
+
+  <div id="tab-biosfera" class="tab-panel">
+    <section class="content-block">
+      <h2>Flora</h2>
+      <ul>
+        <li><strong>Othkor sottoghiaccio</strong> <em>(Alga criofila)</em> — Venature verde scuro visibili nel ghiaccio trasparente, dove la luce filtra abbastanza per la fotosintesi.</li>
+        <li><strong>Thuath dei geyser</strong> <em>(Colonia chemiosintetica)</em> — Pinnacoli minerali abitati da microrganismi attorno alle bocche criovulcaniche.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Fauna</h2>
+      <ul>
+        <li><strong>Mirithkor delle fratture</strong> <em>(Predatore criofilo)</em> — Corpo allungato e privo di occhi, si muove nell'acqua salata delle fratture cacciando per vibrazione.</li>
+        <li><strong>Bradroym scavaghiaccio</strong> <em>(Tunnellatore)</em> — Scioglie il ghiaccio con secrezioni calde e scava gallerie abitate da intere colonie.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="tab-pericoli" class="tab-panel">
+    <section class="content-block">
+      <h2>Pericoli Noti</h2>
+      <ul>
+        <li><strong>Ipotermia di sistema:</strong> Batterie, lubrificanti e giunti si degradano in fretta; un guasto al riscaldamento della tuta è fatale in minuti.</li>
+        <li><strong>Tormente di cristalli:</strong> Visibilità azzerata e cristalli taglienti trasportati dal vento; perdersi a venti metri dal campo è comune.</li>
+        <li><strong>Venti catabatici:</strong> Masse d'aria gelida che scendono dagli altipiani a oltre duecento chilometri orari, senza preavviso.</li>
+      </ul>
+    </section>
+
+    <section class="content-block">
+      <h2>Valutazione del Reparto Scientifico</h2>
+      <p>Il Reparto Scientifico classifica Quoreid come accessibile a squadre di rilevamento standard, con protocolli ambientali di base.</p>
+    </section>
+  </div>
+
+  <div id="tab-rilevamenti" class="tab-panel">
+    <section class="content-block">
+      <h2>Registro dei Rilevamenti</h2>
+      <p>Estratti dai rapporti delle navi del Reparto Scientifico che hanno sorvolato Quoreid. I dati non verificati sono riportati così come trasmessi.</p>
+      <h3>RS-8721 · NRS Ardea</h3>
+      <p><strong>Calore localizzato.</strong> Un punto caldo sotto la calotta sud mantiene un lago liquido a pochi metri dalla superficie. Troppo stabile per essere vulcanico.</p>
+      <h3>RS-9513 · Sonda Astrolabio</h3>
+      <p><strong>Oceano sotterraneo.</strong> La sismologia conferma un oceano liquido sotto diciotto chilometri di ghiaccio, con un volume superiore a tutti i mari terrestri.</p>
+    </section>
+  </div>
+
   </div>
 </main>
 
