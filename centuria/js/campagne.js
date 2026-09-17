@@ -71,6 +71,12 @@ const SESSIONS = [
     title: "I Segreti della Magione",
     date: "",
     summary: "La festa in maschera prosegue e la magione di Mobius rivela le sue stanze: al piano terra gioco d'azzardo, sala da pranzo, sala del fumo, stanza da ballo e stanza del sonno; al primo piano un albero gigante dalle foglie verdi ma mai fiorito, i rami carichi di sacchetti appesi. I sacchetti donano visioni: uno di voi si vede re del Kassendyr, il proprio obiettivo compiuto — ma Zavash lo ammonisce: non è ancora la sua ora. Elaris, avvicinata da un inserviente, scopre il lato oscuro di Mobius: scomparse di persone, famiglie che non le ricordano, schiavitù e affari illegali. Solo i «Preferiti», i valletti più fidati, accedono alle aree interdette del palazzo — e Nemeia ne ha abbordato uno. Mentre Eutirox parla con Mobius, che sembra molto interessato al gruppo, una stanza nascosta rivela un rituale: incappucciati che scuoiano un animale, sangue sui muri a formare parole incomprensibili e la statua di un demone scheletrico."
+  },
+  {
+    num: 12,
+    title: "L'Arena di Mobius",
+    date: "",
+    summary: "Cercate di riunirvi mentre la festa prosegue. Seguite una decina di ospiti e quattro Preferiti fino al terzo piano, dove una porta è sorvegliata da due guardie: riuscite a convincerle a lasciarvi entrare e cogliete la parola d'ordine — «cubo gelatinoso». Oltre la porta si apre un'arena, e al centro c'è Eutirox, senza equipaggiamento, pronto a essere gettato contro un grande mostro. Scendete a salvarlo e affrontate la manticora, ma è Mobius stesso a rivelarsi il vero pericolo: un combattente formidabile, avvolto dalla sua melma che lo ingloba come armatura e si protende come arma. Vi dà molto filo da torcere, poi, mentre le guardie cittadine stanno arrivando, riesce a fuggire."
   }
 ];
 
