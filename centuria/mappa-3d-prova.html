@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centuria — Mappa 3D (prova)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/world-map.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<style>
+/* Sandbox page for the 3D world map: the map fills the viewport. */
+.map-lab { padding: 72px 24px 24px; max-width: 1600px; margin: 0 auto; }
+.map-lab #centuria-map { aspect-ratio: auto; height: calc(100vh - 140px); min-height: 360px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="centuria.html">← <span>Centuria</span></a>
+  <span class="topbar-title">Mappa 3D · Prova</span>
+</div>
+
+<main class="map-lab">
+  <div class="world-map">
+    <div id="centuria-map">
+      <button type="button" id="centuria-map-reset" class="map3d-reset">Centra</button>
+    </div>
+    <div class="world-map-caption">Versione sperimentale · Trascina per spostarti · rotella per zoomare · tasto destro per ruotare</div>
+  </div>
+</main>
+
+<script type="module" src="js/world-map.js"></script>
+</body>
+</html>
