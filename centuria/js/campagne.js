@@ -77,6 +77,12 @@ const SESSIONS = [
     title: "L'Arena di Mobius",
     date: "",
     summary: "Cercate di riunirvi mentre la festa prosegue. Seguite una decina di ospiti e quattro Preferiti fino al terzo piano, dove una porta è sorvegliata da due guardie: riuscite a convincerle a lasciarvi entrare e cogliete la parola d'ordine — «cubo gelatinoso». Oltre la porta si apre un'arena, e al centro c'è Eutirox, senza equipaggiamento, pronto a essere gettato contro un grande mostro. Scendete a salvarlo e affrontate la manticora, ma è Mobius stesso a rivelarsi il vero pericolo: un combattente formidabile, avvolto dalla sua melma che lo ingloba come armatura e si protende come arma. Vi dà molto filo da torcere, poi, mentre le guardie cittadine stanno arrivando, riesce a fuggire."
+  },
+  {
+    num: 13,
+    title: "Verso Atarak",
+    date: "",
+    summary: "Le guardie vi scortano fuori dall'arena. Tornati nella stanza delle tre poste, esaminate una porta corazzata: è sigillata da lucchetti arcani e meccanici, segno che custodisce qualcosa di importante. Si scopre che Mobius era in contatto con Xartamas, e tra le sue carte emergono scritti provenienti da Atarak, la città fantasma. Il concilio organizza una spedizione per esplorarla e chiede espressamente di voi. Atarak si trova a quattro giorni di viaggio, oltre un bosco distante due giorni. Fate provviste al mercato, dove Magnus stringe amicizia con il mercante Theodonius. La spedizione conta tre carovane: per i Consacratori la zelota Ratia e fratello Belzak; per i Sapienti l'arcanista Varos, che per ora rifiuta di scambiare incantesimi, e la studiosa Alison; per il concilio quattro guardie cittadine — Irma, Taurion, Mania e Romeo; per la gilda voi, con il cuoco Gastone e il cartografo Temakle. Alison vi avverte: Atarak è difficile da trovare, sempre avvolta nella nebbia, e chi ne torna nutre un rancore inspiegabile verso Sitryll. Il quarto giorno vi svegliate e scoprite che due giorni di razioni sono spariti. Non potete fare altro che proseguire e cercare una soluzione lungo la strada."
   }
 ];
 
