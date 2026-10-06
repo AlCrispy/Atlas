@@ -83,6 +83,12 @@ const SESSIONS = [
     title: "Verso Atarak",
     date: "",
     summary: "Le guardie vi scortano fuori dall'arena. Tornati nella stanza delle tre poste, esaminate una porta corazzata: è sigillata da lucchetti arcani e meccanici, segno che custodisce qualcosa di importante. Si scopre che Mobius era in contatto con Xartamas, e tra le sue carte emergono scritti provenienti da Atarak, la città fantasma. Il concilio organizza una spedizione per esplorarla e chiede espressamente di voi. Atarak si trova a quattro giorni di viaggio, oltre un bosco distante due giorni. Fate provviste al mercato, dove Magnus stringe amicizia con il mercante Tabalion, titolare di «Da Tabalion e le sue meraviglie». La spedizione conta tre carovane: per i Consacratori la zelota Ratia e fratello Belzak; per i Sapienti l'arcanista Varos, che per ora rifiuta di scambiare incantesimi, e la studiosa Alison; per il concilio quattro guardie cittadine — Irma, Taurion, Mania e Romeo; per la gilda voi, con il cuoco Gastone e il cartografo Temakle. Alison vi avverte: Atarak è difficile da trovare, sempre avvolta nella nebbia, e chi ne torna nutre un rancore inspiegabile verso Sitryll. Il quarto giorno vi svegliate e scoprite che due giorni di razioni sono spariti. Non potete fare altro che proseguire e cercare una soluzione lungo la strada."
+  },
+  {
+    num: 14,
+    title: "Il muro di nebbia",
+    date: "",
+    summary: "Giungete davanti a un muro di nebbia alto una trentina di metri, che si estende a perdita d'occhio. Prima di entrare provate a rintracciare con un incantesimo chi vi ha rubato le razioni, ma il punto in cui dovrebbe trovarsi il cibo continua a spostarsi: non riuscite a capire di cosa si tratti e decidete di non perdere altro tempo. Varcate la nebbia e, dopo varie peripezie, raggiungete una zona disseminata di statue simili a manichini, fatte di un materiale che ricorda la pelle: alcune vestite di stracci, altre completamente nude. All'improvviso i manichini si animano e vi attaccano. Nella fuga perdete le quattro guardie, il cartografo Temakle, il cuoco Gastone, la zelota Ratia e il sacerdote, fratello Belzak."
   }
 ];
 
