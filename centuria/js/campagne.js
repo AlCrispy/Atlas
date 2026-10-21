@@ -89,6 +89,12 @@ const SESSIONS = [
     title: "Il muro di nebbia",
     date: "",
     summary: "Giungete davanti a un muro di nebbia alto una trentina di metri, che si estende a perdita d'occhio. Prima di entrare provate a rintracciare con un incantesimo chi vi ha rubato le razioni, ma il punto in cui dovrebbe trovarsi il cibo continua a spostarsi: non riuscite a capire di cosa si tratti e decidete di non perdere altro tempo. Varcate la nebbia e, dopo varie peripezie, raggiungete una zona disseminata di statue simili a manichini, fatte di un materiale che ricorda la pelle: alcune vestite di stracci, altre completamente nude. All'improvviso i manichini si animano e vi attaccano. Nella fuga perdete le quattro guardie, il cartografo Temakle, il cuoco Gastone, la zelota Ratia e il sacerdote, fratello Belzak."
+  },
+  {
+    num: 15,
+    title: "Il custode della lanterna",
+    date: "",
+    summary: "Nella nebbia scorgete una luce violacea: è una lanterna sorretta da un braccio che sprofonda nel terreno. Il suo custode, Trandel Morti, vi racconta la storia di Atarak. Un tempo la città era ricca e opulenta, celebre per gli oggetti magici che vi si costruivano e catalogavano. Poi una pandemia falciò molti dei suoi abitanti, e il sovrano Atarak, per salvare la città, tentò di imbrigliare la malattia a prezzo di un enorme sacrificio. Lentamente la sua mente si sgretolò: cominciò a vedere ombre e nemici dove non c'erano, e a poco a poco spostò la colpa su Sitryll, convinto che fossero stati proprio i suoi doni a portare il morbo. Così sigillò la città dall'esterno con una nebbia perenne, e le sue ultime parole furono una maledizione contro Sitryll. Trandel vi sottopone tre indovinelli: ne risolvete due e superate la prova. Recuperate la lanterna che dovrebbe guidarvi ad Atarak, e il custode vi chiede di portare i suoi saluti al sovrano. Seguendo la sua luce raggiungete la città: case e palazzi consumati e grigiastri, grandi vetrate, un'arietta fredda e un silenzio tombale nella piazza. Aprite uno scrigno e ne esce un'infinità di topi che vi inseguono; riuscite a sfuggire, ma nella piazza successiva vi attende un'altra trappola, un'enorme ragnatela tesa da un capo all'altro e popolata di ragni. Fuggite ancora e trovate riparo su alcuni cuscini magici. Al risveglio, molte ore dopo, vedete un'ombra gigantesca aggirarsi tra le strade trascinando con sé un'enorme mannaia."
   }
 ];
 
