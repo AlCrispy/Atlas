@@ -211,6 +211,10 @@ A second, self-contained setting under `unknown-frontier/` (same pattern as `cen
 
 The `claude-in-chrome` extension isn't reliably available in every session. When it isn't: run `python -m http.server 8000` from the repo root, then drive a **separate, disposable** headless Chrome instance via the Chrome DevTools Protocol (CDP) — launch with `--remote-debugging-port=<port>`, connect over the `webSocketDebuggerUrl` from `http://localhost:<port>/json/version`, and use `Page.navigate` + `Page.captureScreenshot` (add `Input.dispatchMouseEvent` for drag/scroll/zoom simulation) to get real screenshots instead of guessing. Real GPU-backed WebGPU is reachable this way too (`--enable-unsafe-webgpu --enable-features=Vulkan`, no `--use-angle=swiftshader`) — but note the lesson above: this session's own hardware is not a proxy for the user's, especially for anything WebGPU-related.
 
+## Avaret Setting
+
+Third self-contained setting under `avaret/` (classic fantasy, parchment/walnut palette). Currently a skeleton: `avaret/avaret.html` (hero, world intro, map placeholder, locked realm cards, campaign placeholder) styled by `avaret/css/avaret.css`; images go in `avaret/resources/`. Linked from the root hub with a CSS placeholder thumbnail (`.world-thumb-placeholder.av-parchment` in `hub.css`) until a real image exists.
+
 ## Git Workflow
 
 1. Create a feature branch: `git checkout -b feature/new-content`
