@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaret — Il Mondo</title>
+<title>Avaret — La Campagna</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/avaret.css">
+<script type="module" src="js/avaret-campaign.js"></script>
 </head>
 <body>
 
@@ -15,79 +16,52 @@
 </nav>
 
 <header class="hero">
-  <p class="hero-eyebrow">Atlante del Mondo Conosciuto</p>
+  <p class="hero-eyebrow">Diario della Compagnia</p>
   <h1 class="hero-title">Avaret</h1>
   <div class="hero-rule"><span>✦</span></div>
-  <p class="hero-subtitle">Terre antiche, regni in bilico e sentieri ancora da tracciare sulla pergamena.</p>
+  <div class="hero-stats">
+    <div><span id="count-sessions">0</span><small>Sessioni</small></div>
+    <div><span id="count-places">0</span><small>Luoghi</small></div>
+    <div><span id="count-items">0</span><small>Oggetti</small></div>
+  </div>
 </header>
 
-<main class="content">
+<main class="campaign-layout">
 
-  <section class="chapter">
+  <aside class="panel panel-places" aria-labelledby="places-heading">
+    <div class="panel-head">
+      <h2 id="places-heading" class="panel-title">Luoghi Esplorati</h2>
+      <span class="panel-count" id="places-count">0</span>
+    </div>
+    <ul class="place-list" id="places"></ul>
+  </aside>
+
+  <section class="timeline-col" aria-labelledby="timeline-heading">
     <div class="chapter-heading">
-      <span class="chapter-num">I</span>
-      <span class="chapter-title">Il Mondo</span>
+      <span class="chapter-title" id="timeline-heading">Cronologia delle Sessioni</span>
       <div class="chapter-line"></div>
     </div>
-    <p class="placeholder-text">Le cronache di Avaret attendono di essere scritte. Qui troverà posto la descrizione del mondo: la sua storia, le sue genti, i suoi miti.</p>
+    <div class="timeline" id="timeline"></div>
   </section>
 
-  <section class="chapter">
-    <div class="chapter-heading">
-      <span class="chapter-num">II</span>
-      <span class="chapter-title">La Mappa</span>
-      <div class="chapter-line"></div>
+  <aside class="panel panel-inventory" aria-labelledby="inventory-heading">
+    <div class="panel-head">
+      <h2 id="inventory-heading" class="panel-title">Inventario</h2>
+      <span class="panel-count" id="inventory-count">0</span>
     </div>
-    <div class="map-placeholder">
-      <svg class="compass" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="0.8"/>
-        <circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="0.4" stroke-dasharray="2 2"/>
-        <polygon points="50,8 55,50 50,92 45,50" fill="currentColor" opacity="0.85"/>
-        <polygon points="8,50 50,45 92,50 50,55" fill="currentColor" opacity="0.5"/>
-        <text x="50" y="6" text-anchor="middle" font-size="6" fill="currentColor" font-family="Cinzel, serif">N</text>
-      </svg>
-      <p>La mappa di Avaret è ancora in fase di stesura.</p>
+    <div class="slot-grid" id="inventory"></div>
+    <div class="inventory-lost" id="inventory-lost" hidden>
+      <p class="panel-subtitle">Perduti o consegnati</p>
+      <div class="slot-grid"></div>
     </div>
-  </section>
-
-  <section class="chapter">
-    <div class="chapter-heading">
-      <span class="chapter-num">III</span>
-      <span class="chapter-title">Regni Conosciuti</span>
-      <div class="chapter-line"></div>
-    </div>
-    <div class="realm-grid">
-      <div class="realm-card locked">
-        <p class="realm-tag">Regno</p>
-        <h3 class="realm-name">Ignoto</h3>
-        <p class="realm-desc">Un regno ancora da scoprire.</p>
-        <span class="coming-soon">In arrivo</span>
-      </div>
-      <div class="realm-card locked">
-        <p class="realm-tag">Regno</p>
-        <h3 class="realm-name">Ignoto</h3>
-        <p class="realm-desc">Un regno ancora da scoprire.</p>
-        <span class="coming-soon">In arrivo</span>
-      </div>
-      <div class="realm-card locked">
-        <p class="realm-tag">Regno</p>
-        <h3 class="realm-name">Ignoto</h3>
-        <p class="realm-desc">Un regno ancora da scoprire.</p>
-        <span class="coming-soon">In arrivo</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="chapter">
-    <div class="chapter-heading">
-      <span class="chapter-num">IV</span>
-      <span class="chapter-title">Cronache della Campagna</span>
-      <div class="chapter-line"></div>
-    </div>
-    <p class="placeholder-text">Nessuna sessione ancora registrata. Il diario si aprirà con la prima avventura.</p>
-  </section>
+  </aside>
 
 </main>
+
+<dialog class="detail-dialog" id="detail-dialog">
+  <button class="detail-close" type="button" aria-label="Chiudi">✕</button>
+  <div class="detail-body"></div>
+</dialog>
 
 <footer class="footer">Avaret · Atlante delle Ambientazioni</footer>
 

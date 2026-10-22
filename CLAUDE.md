@@ -213,7 +213,10 @@ The `claude-in-chrome` extension isn't reliably available in every session. When
 
 ## Avaret Setting
 
-Third self-contained setting under `avaret/` (classic fantasy, parchment/walnut palette). Currently a skeleton: `avaret/avaret.html` (hero, world intro, map placeholder, locked realm cards, campaign placeholder) styled by `avaret/css/avaret.css`; images go in `avaret/resources/`. Linked from the root hub with a CSS placeholder thumbnail (`.world-thumb-placeholder.av-parchment` in `hub.css`) until a real image exists.
+Third self-contained setting under `avaret/` (classic fantasy, parchment/walnut palette). Unlike Centuria, Avaret is organised around the campaign being played, not around nations: `avaret/avaret.html` is a single campaign page — places explored (left), session timeline (centre), party inventory (right). Clicking an item or place (in its panel, a timeline chip, or a link inside the dialog) opens a shared `<dialog>` with its description. Styles in `avaret/css/avaret.css`; images in `avaret/resources/`. Linked from the root hub with a CSS placeholder thumbnail (`.world-thumb-placeholder.av-parchment` in `hub.css`).
+
+- **All content lives in `avaret/js/avaret-data.js`** (`SESSIONS`, `ITEMS`, `PLACES`); `avaret/js/avaret-campaign.js` renders everything from it, including the header counters — never put content in the HTML.
+- **Adding a session from notes:** add a `SESSIONS` entry (`num`, `title`, `date`, `summary` in Italian, second person plural "voi"); add a `PLACES` entry for each new location (`id`, `name`, `region`, `session` of first visit, `description`); add an `ITEMS` entry for each notable object found (`id`, `name`, `type`, `session`, `place` id, `carried`, `description`). Items the party loses or hands over stay in the list with `carried: false` (shown under "Perduti o consegnati"). Item `type` picks the slot glyph (`TYPE_GLYPHS` in `avaret-campaign.js`).
 
 ## Git Workflow
 

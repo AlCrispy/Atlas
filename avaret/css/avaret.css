@@ -91,18 +91,8 @@ body::before {
   max-width: 560px; margin: 0 auto;
 }
 
-/* ── CONTENT ── */
-.content {
-  position: relative; z-index: 1;
-  max-width: 960px; margin: 0 auto; padding: 0 24px 80px;
-}
-.chapter { margin-bottom: 64px; }
 .chapter-heading {
   display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
-}
-.chapter-num {
-  font-family: 'Cinzel Decorative', serif; font-size: 1.3rem;
-  color: var(--av-gold);
 }
 .chapter-title {
   font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700;
@@ -113,59 +103,189 @@ body::before {
   flex: 1; height: 1px;
   background: linear-gradient(90deg, var(--av-gold-dk), transparent);
 }
-.placeholder-text { color: var(--av-sepia); font-style: italic; }
 
-/* ── MAP PLACEHOLDER ── */
-.map-placeholder {
-  aspect-ratio: 16 / 9;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
-  background:
-    radial-gradient(ellipse at center, rgba(201,162,74,0.07), transparent 70%),
-    var(--av-leather);
-  border: 1px solid var(--av-umber);
-  box-shadow: inset 0 0 60px rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.5);
-  color: var(--av-gold-dk);
-  font-style: italic; text-align: center; padding: 24px;
+/* ── HERO STATS ── */
+.hero { padding-bottom: 40px; }
+.hero-stats {
+  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
 }
-.map-placeholder p { color: var(--av-sepia); }
-.compass { width: min(160px, 40%); height: auto; }
+.hero-stats div { display: flex; flex-direction: column; align-items: center; }
+.hero-stats span {
+  font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: var(--av-gold);
+  line-height: 1.2;
+}
+.hero-stats small {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--av-sepia);
+}
 
-/* ── REALMS ── */
-.realm-grid {
+/* ── LAYOUT: places | timeline | inventory ── */
+.campaign-layout {
+  position: relative; z-index: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
+  grid-template-columns: 250px minmax(0, 1fr) 290px;
+  grid-template-areas: 'places timeline inventory';
+  gap: 32px; align-items: start;
+  max-width: 1320px; margin: 0 auto; padding: 0 24px 80px;
 }
-.realm-card {
+.panel-places    { grid-area: places; }
+.timeline-col    { grid-area: timeline; }
+.panel-inventory { grid-area: inventory; }
+
+.panel {
+  position: sticky; top: 76px;
+  max-height: calc(100vh - 96px); overflow-y: auto;
   background: linear-gradient(180deg, var(--av-leather-lt) 0%, var(--av-leather) 100%);
   border: 1px solid var(--av-umber);
   border-top: 3px solid var(--av-gold-dk);
-  padding: 22px 22px 24px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-  transition: transform 0.25s, box-shadow 0.25s;
-  text-decoration: none; display: block;
+  padding: 18px 18px 20px;
 }
-a.realm-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 18px rgba(201,162,74,0.12);
+.panel-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid var(--av-umber-dk);
+  padding-bottom: 10px; margin-bottom: 14px;
 }
-.realm-card.locked { opacity: 0.5; pointer-events: none; }
-.realm-tag {
+.panel-title {
+  font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--av-parchment);
+}
+.panel-count { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--av-gold); }
+.panel-subtitle {
   font-family: 'Cinzel', serif; font-size: 0.55rem;
   letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--av-sepia); margin-bottom: 8px;
+  color: var(--av-sepia); margin: 18px 0 10px;
 }
-.realm-name {
-  font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700;
-  color: var(--av-parchment); letter-spacing: 0.05em; text-transform: uppercase;
-  margin-bottom: 6px;
+.empty-note { color: var(--av-sepia); font-style: italic; font-size: 0.92rem; }
+
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+button:focus-visible { outline: 1px solid var(--av-gold); outline-offset: 2px; }
+
+/* ── PLACES ── */
+.place-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.place-row {
+  width: 100%; text-align: left;
+  display: flex; flex-direction: column;
+  padding: 8px 10px 8px 14px;
+  border-left: 2px solid var(--av-umber);
+  transition: background 0.2s, border-color 0.2s;
 }
-.realm-desc { font-size: 0.92rem; color: var(--av-sepia); line-height: 1.6; }
-.coming-soon {
-  display: inline-block; font-family: 'Cinzel', serif;
-  font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase;
-  border: 1px solid var(--av-umber); color: var(--av-sepia);
-  padding: 3px 9px; margin-top: 12px;
+.place-row:hover { background: rgba(201,162,74,0.06); border-left-color: var(--av-gold); }
+.place-name { color: var(--av-parchment); font-size: 1rem; line-height: 1.3; }
+.place-meta {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--av-sepia);
+}
+
+/* ── TIMELINE ── */
+.timeline { position: relative; display: flex; flex-direction: column; gap: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 21px; top: 8px; bottom: 8px; width: 1px;
+  background: linear-gradient(180deg, var(--av-gold-dk), var(--av-umber-dk));
+}
+.tl-entry { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 18px; }
+.tl-marker {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--av-ink); border: 1px solid var(--av-gold-dk);
+  font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--av-gold);
+  position: relative; z-index: 1;
+}
+.tl-body {
+  background: var(--av-leather);
+  border: 1px solid var(--av-umber-dk);
+  padding: 16px 20px 18px;
+}
+.tl-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--av-sepia);
+}
+.tl-title {
+  font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+  color: var(--av-parchment); letter-spacing: 0.04em; margin: 2px 0 8px;
+}
+.tl-summary { font-size: 1rem; }
+
+/* ── CHIPS ── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.85rem; padding: 3px 10px;
+  border: 1px solid var(--av-umber); color: var(--av-parchment);
+  transition: border-color 0.2s, background 0.2s;
+}
+.chip:hover { border-color: var(--av-gold); background: rgba(201,162,74,0.07); }
+.chip-glyph { color: var(--av-gold); }
+.chip-place .chip-glyph { color: #b5806a; }
+
+/* ── INVENTORY ── */
+.slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.slot {
+  aspect-ratio: 1; padding: 6px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  background: radial-gradient(circle at 50% 40%, rgba(201,162,74,0.08), transparent 70%), var(--av-ink);
+  border: 1px solid var(--av-umber);
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.slot:hover { border-color: var(--av-gold); transform: translateY(-2px); }
+.slot-glyph { font-size: 1.5rem; color: var(--av-gold); line-height: 1; }
+.slot-name {
+  font-size: 0.68rem; line-height: 1.2; text-align: center; color: var(--av-parchment);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.inventory-lost .slot { opacity: 0.5; }
+
+/* ── DETAIL DIALOG ── */
+.detail-dialog {
+  margin: auto; width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  background: linear-gradient(180deg, var(--av-leather-lt) 0%, var(--av-leather) 100%);
+  color: var(--av-parchment);
+  border: 1px solid var(--av-umber);
+  border-top: 3px solid var(--av-gold);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  padding: 32px 32px 28px;
+}
+.detail-dialog::backdrop { background: rgba(10,7,4,0.72); backdrop-filter: blur(3px); }
+.detail-close {
+  position: absolute; top: 12px; right: 14px;
+  color: var(--av-sepia); font-size: 1rem; padding: 4px 8px;
+}
+.detail-close:hover { color: var(--av-gold); }
+.detail-glyph { font-size: 2.4rem; color: var(--av-gold); line-height: 1; margin-bottom: 12px; }
+.detail-tag {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--av-sepia);
+}
+.detail-title {
+  font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 0.04em; margin: 4px 0 14px;
+}
+.detail-meta {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 16px;
+  padding: 10px 0; margin-bottom: 14px;
+  border-top: 1px solid var(--av-umber-dk); border-bottom: 1px solid var(--av-umber-dk);
+  font-size: 0.92rem;
+}
+.detail-meta dt {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--av-sepia); align-self: center;
+}
+.detail-subhead {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--av-sepia); margin-top: 18px;
+}
+.inline-link { color: var(--av-gold-lt); border-bottom: 1px dotted var(--av-gold-dk); padding: 0; }
+.inline-link:hover { color: var(--av-gold); }
+
+/* Tablet: timeline full width on top, panels side by side below */
+@media (max-width: 1080px) {
+  .campaign-layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'timeline timeline' 'inventory places';
+  }
+  .panel { position: static; max-height: none; }
 }
 
 /* ── FOOTER ── */
@@ -177,9 +297,16 @@ a.realm-card:hover {
   letter-spacing: 0.25em; text-transform: uppercase; color: var(--av-umber);
 }
 
-@media (max-width: 620px) {
+@media (max-width: 680px) {
   .topbar-title { padding-right: 0; }
-  .hero { padding: 64px 16px 48px; }
-  .content { padding: 0 16px 64px; }
+  .hero { padding: 56px 16px 32px; }
+  .hero-stats { gap: 28px; }
+  .campaign-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'timeline' 'inventory' 'places';
+    padding: 0 16px 64px; gap: 24px;
+  }
+  .slot-grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+  .detail-dialog { padding: 28px 20px 22px; }
   .chapter-title { white-space: normal; }
 }
