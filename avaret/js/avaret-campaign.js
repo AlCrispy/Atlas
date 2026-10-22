@@ -35,7 +35,13 @@ const dialogBody = dialog.querySelector('.detail-body');
 function openDetail(kind, id) {
   const entry = kind === 'item' ? itemById.get(id) : placeById.get(id);
   if (!entry) return;
-  dialogBody.replaceChildren(kind === 'item' ? itemDetail(entry) : placeDetail(entry));
+  const content = kind === 'item' ? itemDetail(entry) : placeDetail(entry);
+  // Text goes in its own column so it stays readable next to the image.
+  const text = el('div', 'detail-text');
+  const image = content.querySelector('.detail-image');
+  if (image) image.remove();
+  text.append(content);
+  dialogBody.replaceChildren(...(image ? [image, text] : [text]));
   dialog.classList.toggle('has-image', Boolean(entry.image));
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
