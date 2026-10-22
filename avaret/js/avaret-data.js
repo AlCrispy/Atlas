@@ -86,6 +86,7 @@ export const PLACES = [
     name: 'La Sala dell\'Altare',
     region: 'Grotta della Luce Blu',
     session: 1,
+    image: 'resources/places/sala-altare.jpg',
     description: 'Una stanza nel cuore della grotta. Sulle pareti sono incisi i simboli del medaglione; su un altare giaceva un mazzo di carte. Un guardiano è apparso per allontanarvi, ma è stato sconfitto.',
   },
 ];
