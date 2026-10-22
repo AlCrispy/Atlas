@@ -71,6 +71,7 @@ export const PLACES = [
     name: 'La Grotta della Luce Blu',
     region: 'Bosco di Quercia Nera',
     session: 1,
+    image: 'resources/places/grotta-luce-blu.jpg',
     description: 'Un\'apertura nel bosco che conduce a una caverna, trovata seguendo le voci di una strana luce blu riferite da una volpe di Roccaquercia.',
   },
   {
