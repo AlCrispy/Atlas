@@ -180,16 +180,17 @@ function slot(item) {
   btn.type = 'button';
   btn.dataset.item = item.id;
   btn.title = item.name;
+  // Square frame holds the picture; the name sits below it so it is never cut off.
+  const frame = el('span', 'slot-frame');
   if (item.image) {
     const img = el('img', 'slot-image');
     img.src = item.image;
     img.alt = '';
-    btn.append(img);
-    btn.classList.add('has-image');
+    frame.append(img);
   } else {
-    btn.append(el('span', 'slot-glyph', glyphFor(item)));
+    frame.append(el('span', 'slot-glyph', glyphFor(item)));
   }
-  btn.append(el('span', 'slot-name', item.name));
+  btn.append(frame, el('span', 'slot-name', item.name));
   return btn;
 }
 
