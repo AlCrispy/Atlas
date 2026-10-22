@@ -6,6 +6,8 @@
 //           `place` = id of the PLACES entry where it was found (optional),
 //           `carried` = true while the party still has it with them.
 // PLACES:   explored locations. `session` = session of the first visit.
+// Places and items accept an optional `image` (path relative to avaret.html,
+// e.g. 'resources/places/{id}.jpg'), shown in the detail dialog.
 
 export const SESSIONS = [
   {
@@ -24,6 +26,7 @@ export const ITEMS = [
     session: 1,
     place: 'mulino-roccaquercia',
     carried: true,
+    image: 'resources/items/medaglione-quattro-simboli.jpg',
     description: 'Lasciato cadere dal mephit fuggito dal mulino in fiamme. Reca quattro simboli: una fiamma al centro, circondata da una padella, un guscio e una zampa. Tre di essi sembrano richiamare proprio voi; il quarto resta un mistero. Gli stessi simboli sono incisi sulle pareti della sala dell\'altare nella grotta.',
   },
   {
@@ -33,6 +36,7 @@ export const ITEMS = [
     session: 1,
     place: 'sala-altare',
     carried: true,
+    image: 'resources/items/mazzo-il-quarto.jpg',
     description: 'Il mazzo trovato sull\'altare della grotta. Tre carte, girate a mostrare i simboli del medaglione, sono state divorate dalle fiamme all\'apparire del guardiano. L\'ultima carta rimasta raffigura una figura oscura e incappucciata, con sopra un nome: «Il Quarto».',
   },
   {
@@ -52,19 +56,20 @@ export const PLACES = [
     name: 'Roccaquercia',
     region: 'Città',
     session: 1,
-    description: 'La città in cui inizia il viaggio. Durante la festa del raccolto la piazza grande si riempie di cucine, zuppe e birra, finché l\'esplosione del mulino non interrompe i festeggiamenti.',
+    image: 'resources/places/roccaquercia.jpg',
+    description: '«Tra le radici il domani.» La città in cui inizia il viaggio, cresciuta attorno alla Grande Quercia e protetta da mura, con la Cittadella, il Mercato Grande, la locanda La Quercia e il Boccale, il porto sul fiume e la Porta della Foresta. Durante la festa del raccolto la Piazza del Raccolto si riempie di cucine, zuppe e birra, finché l\'esplosione del Vecchio Mulino non interrompe i festeggiamenti.',
   },
   {
     id: 'mulino-roccaquercia',
-    name: 'Il Mulino di Roccaquercia',
+    name: 'Il Vecchio Mulino',
     region: 'Roccaquercia',
     session: 1,
-    description: 'Il mulino della città, avvolto dalle fiamme dopo un\'esplosione improvvisa. All\'interno non c\'era nessuno, se non due mephit che vi hanno attaccato. Uno è stato catturato ma è riuscito a fuggire in volo.',
+    description: 'Il mulino della città, sul fiume ai margini delle mura, avvolto dalle fiamme dopo un\'esplosione improvvisa. All\'interno non c\'era nessuno, se non due mephit che vi hanno attaccato. Uno è stato catturato ma è riuscito a fuggire in volo.',
   },
   {
     id: 'grotta-luce-blu',
     name: 'La Grotta della Luce Blu',
-    region: 'Bosco di Roccaquercia',
+    region: 'Bosco di Quercia Nera',
     session: 1,
     description: 'Un\'apertura nel bosco che conduce a una caverna, trovata seguendo le voci di una strana luce blu riferite da una volpe di Roccaquercia.',
   },

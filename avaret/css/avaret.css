@@ -171,6 +171,12 @@ button:focus-visible { outline: 1px solid var(--av-gold); outline-offset: 2px; }
   transition: background 0.2s, border-color 0.2s;
 }
 .place-row:hover { background: rgba(201,162,74,0.06); border-left-color: var(--av-gold); }
+.place-row.has-thumb { flex-direction: row; align-items: center; gap: 10px; padding-left: 10px; }
+.place-text { display: flex; flex-direction: column; min-width: 0; }
+.place-thumb {
+  width: 46px; height: 46px; object-fit: cover; flex-shrink: 0;
+  border: 1px solid var(--av-umber);
+}
 .place-name { color: var(--av-parchment); font-size: 1rem; line-height: 1.3; }
 .place-meta {
   font-family: 'Cinzel', serif; font-size: 0.52rem;
@@ -234,6 +240,12 @@ button:focus-visible { outline: 1px solid var(--av-gold); outline-offset: 2px; }
   font-size: 0.68rem; line-height: 1.2; text-align: center; color: var(--av-parchment);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
+.slot.has-image { position: relative; overflow: hidden; justify-content: flex-end; padding: 0; }
+.slot-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot.has-image .slot-name {
+  position: relative; width: 100%; padding: 10px 4px 4px;
+  background: linear-gradient(180deg, transparent, rgba(10,7,4,0.92));
+}
 .inventory-lost .slot { opacity: 0.5; }
 
 /* ── DETAIL DIALOG ── */
@@ -247,6 +259,14 @@ button:focus-visible { outline: 1px solid var(--av-gold); outline-offset: 2px; }
   box-shadow: 0 20px 60px rgba(0,0,0,0.8);
   padding: 32px 32px 28px;
 }
+.detail-dialog.has-image { width: min(880px, calc(100vw - 32px)); }
+.detail-image {
+  display: block; margin: -4px 0 20px;
+  border: 1px solid var(--av-umber);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  cursor: zoom-in;
+}
+.detail-image img { display: block; width: 100%; height: auto; }
 .detail-dialog::backdrop { background: rgba(10,7,4,0.72); backdrop-filter: blur(3px); }
 .detail-close {
   position: absolute; top: 12px; right: 14px;

@@ -36,12 +36,28 @@ function openDetail(kind, id) {
   const entry = kind === 'item' ? itemById.get(id) : placeById.get(id);
   if (!entry) return;
   dialogBody.replaceChildren(kind === 'item' ? itemDetail(entry) : placeDetail(entry));
-  dialog.showModal();
+  dialog.classList.toggle('has-image', Boolean(entry.image));
+  if (!dialog.open) dialog.showModal();
+  dialog.scrollTop = 0;
+}
+
+// Image links to the full-size file so maps can be inspected in detail.
+function detailImage(entry) {
+  const link = el('a', 'detail-image');
+  link.href = entry.image;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  const img = el('img');
+  img.src = entry.image;
+  img.alt = entry.name;
+  link.append(img);
+  return link;
 }
 
 function itemDetail(item) {
   const frag = document.createDocumentFragment();
-  frag.append(el('div', 'detail-glyph', glyphFor(item)));
+  if (item.image) frag.append(detailImage(item));
+  else frag.append(el('div', 'detail-glyph', glyphFor(item)));
   frag.append(el('p', 'detail-tag', `Oggetto · ${item.type || 'vario'}`));
   frag.append(el('h2', 'detail-title', item.name));
   frag.append(metaList([
@@ -55,6 +71,7 @@ function itemDetail(item) {
 
 function placeDetail(place) {
   const frag = document.createDocumentFragment();
+  if (place.image) frag.append(detailImage(place));
   frag.append(el('p', 'detail-tag', `Luogo · ${place.region || 'regione ignota'}`));
   frag.append(el('h2', 'detail-title', place.name));
   frag.append(metaList([['Prima visita', `Sessione ${place.session}`]]));
@@ -157,7 +174,16 @@ function slot(item) {
   btn.type = 'button';
   btn.dataset.item = item.id;
   btn.title = item.name;
-  btn.append(el('span', 'slot-glyph', glyphFor(item)), el('span', 'slot-name', item.name));
+  if (item.image) {
+    const img = el('img', 'slot-image');
+    img.src = item.image;
+    img.alt = '';
+    btn.append(img);
+    btn.classList.add('has-image');
+  } else {
+    btn.append(el('span', 'slot-glyph', glyphFor(item)));
+  }
+  btn.append(el('span', 'slot-name', item.name));
   return btn;
 }
 
@@ -173,10 +199,19 @@ function renderPlaces() {
     const btn = el('button', 'place-row');
     btn.type = 'button';
     btn.dataset.place = place.id;
-    btn.append(
+    if (place.image) {
+      const thumb = el('img', 'place-thumb');
+      thumb.src = place.image;
+      thumb.alt = '';
+      btn.append(thumb);
+      btn.classList.add('has-thumb');
+    }
+    const text = el('span', 'place-text');
+    text.append(
       el('span', 'place-name', place.name),
       el('span', 'place-meta', `${place.region || 'Regione ignota'} · Sess. ${place.session}`),
     );
+    btn.append(text);
     const li = el('li');
     li.append(btn);
     list.append(li);
